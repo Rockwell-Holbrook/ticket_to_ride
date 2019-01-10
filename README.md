@@ -20,11 +20,12 @@ communicator, server communicator, and server facade. Please see the supplemente
 details.
 Capabilities
 A player must be able to
-● register
-● log in
-● create a new game
-● join a game that has not yet started
-● provide a means for a game to start with two to five players
+- register
+- log in
+- create a new game
+- join a game that has not yet started
+- provide a means for a game to start with two to five players
+
 The list of existing games must automatically update as games are created, joined, started, etc.
 Constraints
 The design documentation must be done using both UML class diagrams and sequence diagrams.
@@ -73,62 +74,62 @@ include descriptions, parameter definitions (if any), exception definitions, and
 The class description must provide invariants as needed.
 Capabilities (These may be adjusted slightly depending on design)
 Game setup capabilities:
-● Assign a color to each player
-● Determine player turn order
-● Have the server randomly select 4 train cards for each player.
-● For each player, have the server select 3 destination cards for the player, and allow
+- Assign a color to each player
+-Determine player turn order
+- Have the server randomly select 4 train cards for each player.
+- For each player, have the server select 3 destination cards for the player, and allow
 the player to discard 0 or 1 of them (initial destination card selection). This must be
 fully implemented i.e. the server knows which (if any) card the player discarded and
 it gets returned to the destination card deck.
 Game view capabilities:
-● Map/Game view:
-o Show the map including all the cities and the routes between them.
-o For claimed routes, show which player owns the route. Route ownership
+- Map/Game view:
+- Show the map including all the cities and the routes between them.
+- For claimed routes, show which player owns the route. Route ownership
 must be indicated on the map itself (not elsewhere).
-● PlayerInfo view:
-o Have some sort of window, drawer, dialog box, or otherwise that shows
+- PlayerInfo view:
+- Have some sort of window, drawer, dialog box, or otherwise that shows
 information about all players in the game. This includes their names, colors,
 points, the order in which the players take turns, and indicate whose turn it
 currently is.
-o For this player, also show the specific train cards (i.e. their colors) and
+- For this player, also show the specific train cards (i.e. their colors) and
 destination cards owned (dealt by server at game initialization). For each
 opponent player, show the number of train cards and destination cards
 owned.
-● Cards and card decks:
-o For the train card deck, show the top 5 cards that are visible. Also show the
+- Cards and card decks:
+- For the train card deck, show the top 5 cards that are visible. Also show the
 number of invisible cards in the deck.
-o For the destination card deck, show the number of cards in the deck.
-● Demonstrate that your views update dynamically when your client model is modified.
+- For the destination card deck, show the number of cards in the deck.
+- Demonstrate that your views update dynamically when your client model is modified.
 This can be done through a variety of ways. One way would be to add a temporary
 button to your main view. When pressed, this button could call a method on the
 view’s presenter that makes a series of changes to the client model. For each change,
 the presenter could:
-o Call the view to display a toast describing the change (e.g., “Updating player
+- Call the view to display a toast describing the change (e.g., “Updating player
 points”).
-o Make the indicated change to the local client model (no server interaction is
+- Make the indicated change to the local client model (no server interaction is
 involved here). This should cause your client model to notify presenters of
 the model changes, and presenters should update their views appropriately.
-o The following items should be demonstrated:
-● Update player points
-● Add/remove train cards for this player
-● Add/remove player destination cards for this player
-● Update the number of train cards for opponent players
-● Update the number of train cars for opponent players
-● Update the number of destination cards for opponent players
-● Update the visible (face up) cards in the train card deck
-● Update the number of invisible (face down) cards in train card deck
-● Update the number of cards in destination card deck
-● Add claimed route (for any player). Show this on the map.
-● Add chat message from any player
-● Advance player turn (change the turn indicator so it indicates another
+- The following items should be demonstrated:
+- Update player points
+- Add/remove train cards for this player
+- Add/remove player destination cards for this player
+- Update the number of train cards for opponent players
+- Update the number of train cars for opponent players
+- Update the number of destination cards for opponent players
+- Update the visible (face up) cards in the train card deck
+- Update the number of invisible (face down) cards in train card deck
+- Update the number of cards in destination card deck
+- Add claimed route (for any player). Show this on the map.
+- Add chat message from any player
+- Advance player turn (change the turn indicator so it indicates another
 player)
-o Include pauses as needed to allow the TA to see each change.
-o Each of the capabilities must be implemented by modifying the client model
+- Include pauses as needed to allow the TA to see each change.
+- Each of the capabilities must be implemented by modifying the client model
 which in return uses the observable to notify the presenters (controllers),
 which update the views.
 Chat and Chat History:
-● Fully implement the Chat feature.
-● Players should be able to send chat messages at any time (even when it is not their
+- Fully implement the Chat feature.
+- Players should be able to send chat messages at any time (even when it is not their
 turn). Chat messages should appear in the same order on each player’s screen.
 Constraints
 The design documentation must be done using both UML class diagrams and sequence diagrams. It must
@@ -169,47 +170,47 @@ and classes for the server model. Also, include any new classes for command mana
 server.
 Capabilities (These may be adjusted slightly depending on design)
 In general you should provide for the following game playing activities
-● Claim a route
-● Ask for destination cards
-● Send back 1 or 2 destination cards
-● Select 1 or 2 train cards
-o You must handle all the associated rules
+- Claim a route
+- Ask for destination cards
+- Send back 1 or 2 destination cards
+- Select 1 or 2 train cards
+- You must handle all the associated rules
 The following are high-level view events generated by the GUI that you must handle (depending
 on your design, these operations may cause the server to send commands back to the originating
 client). The GUI must call methods on the “Presenters”. The presenters will then delegate
 functionality to the state, which will know which actions are allowed and how to respond at any
 given time.
-● Claim a route
-● Request destination cards
-● Return destination card
-● Choose face-up train card
-● Choose train card from deck
-● Chat
+- Claim a route
+- Request destination cards
+- Return destination card
+- Choose face-up train card
+- Choose train card from deck
+- Chat
 High-level operations the server will send to all players
-● Last round
-● Route claimed by player (you may include the number of train pieces needed to claim
+- Last round
+- Route claimed by player (you may include the number of train pieces needed to claim
 the route)
-● Current player requested destination cards
-● Current player returned destination card
-● Player chose train card of specific color from face-up train cards
-● Player chose wild card
-● New face up card chosen from deck
-● Chat
-● Game history update
-● Display result page.
-● Player’s turn ended
-● Train card placed face up
-● Update players points
-● Game history
+- Current player requested destination cards
+- Current player returned destination card
+- Player chose train card of specific color from face-up train cards
+- Player chose wild card
+- New face up card chosen from deck
+- Chat
+- Game history update
+- Display result page.
+- Player’s turn ended
+- Train card placed face up
+- Update players points
+- Game history
 The result page need not be elaborate but must designate the winning player, and, for each player show:
-● Number of points from claimed routes. The number of points for a claimed route must be
+- Number of points from claimed routes. The number of points for a claimed route must be
 proportional to the length of the route as defined in the rules.
-● Number of points for reached destinations.
-● Number of negative points for unreached destinations.
-● Number of points for having the most claimed routes (this is a simplification from a
+- Number of points for reached destinations.
+- Number of negative points for unreached destinations.
+- Number of points for having the most claimed routes (this is a simplification from a
 requirement to calculate and give points for the longest route).
-● The total number of points for the player.
-● (Extra Credit) If the player has the longest path, show the number of points for that
+- The total number of points for the player.
+- (Extra Credit) If the player has the longest path, show the number of points for that
 accomplishment (this will substitute giving points for having the most claimed routes and will
 be awarded extra credit).
 Constraints
