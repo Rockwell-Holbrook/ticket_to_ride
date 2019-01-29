@@ -1,4 +1,15 @@
 <resources>
-    <string name="app_name">ticketToRide</string>
+    <string name="app_name">Ticket to Ride</string>
     <string name="action_settings">Settings</string>
+    <string name="name">Name</string>
+    <string name="host">Host</string>
+    <string name="create_game">Create Game</string>
+    <string name="join_game">Join Game</string>
+    <string name="create_new_game">Create New Game</string>
+    <string name="game_name">Game Name</string>
+    <string name="private_question">Private?</string>
+    <string name="players">Players</string>
+    <string name="color">Color</string>
+    <string name="cancel">Cancel</string>
+    <string name="OK">OK</string>
 </resources>
