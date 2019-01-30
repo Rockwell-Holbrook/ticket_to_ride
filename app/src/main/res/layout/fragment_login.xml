@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:id="@+id/linearLayout">
+    <TextView
+            android:text="@string/login_greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/login_greeting"/>
+    <Button
+            android:text="Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/loginButton" tools:layout_editor_absoluteY="138dp"
+            tools:layout_editor_absoluteX="0dp"/>
+    <Button
+            android:text="Register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/registerButton" tools:layout_editor_absoluteY="138dp"
+            tools:layout_editor_absoluteX="99dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Username"
+            android:ems="10"
+            android:id="@+id/UsernameInput" tools:layout_editor_absoluteY="27dp" tools:layout_editor_absoluteX="0dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/PasswordInput" tools:layout_editor_absoluteY="82dp" tools:layout_editor_absoluteX="0dp"
+    />
+</android.support.constraint.ConstraintLayout>
