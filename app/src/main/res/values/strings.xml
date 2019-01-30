@@ -12,4 +12,6 @@
     <string name="color">Color</string>
     <string name="cancel">Cancel</string>
     <string name="OK">OK</string>
+    <string name="register_greeting">Register Your Account</string>
+    <string name="register_button">Register</string>
 </resources>
