@@ -2,7 +2,7 @@ apply plugin: 'java-library'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('C:/Users/rholbrook/Documents/school/ticketToRide/ticket_to_ride/gson-2.8.5.jar')
+    implementation files('../gson-2.8.5.jar')
     implementation project(':shared')
 }
 
