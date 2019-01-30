@@ -3,6 +3,7 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('../gson-2.8.5.jar')
+    testImplementation 'junit:junit:4.12'
     implementation project(':shared')
 }
 

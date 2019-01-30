@@ -1,24 +1,21 @@
 package socket_server;
 
+import org.java_websocket.WebSocket;
+import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.WebSocketServer;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
-
-import org.java_websocket.WebSocket;
-import org.java_websocket.WebSocketImpl;
-import org.java_websocket.framing.Framedata;
-import org.java_websocket.handshake.ClientHandshake;
-import org.java_websocket.server.WebSocketServer;
 
 /**
  * Socket server that sends and receives commands
  * TODO Implement methods for command pattern
  */
 public class SocketServer extends WebSocketServer {
-    public SocketServer( int port ) throws UnknownHostException {
+    public SocketServer( int port ) {
         super( new InetSocketAddress( port ) );
     }
 
