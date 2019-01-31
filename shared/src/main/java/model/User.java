@@ -5,11 +5,10 @@ public class User {
     private String password;
 
     User(String userName, String password) throws Exception {
-        validateUserName();
-        validatePassword();
-
         this.userName = userName;
         this.password = password;
+        validateUserName();
+        validatePassword();
     }
 
     public void validateUserName() throws Exception {

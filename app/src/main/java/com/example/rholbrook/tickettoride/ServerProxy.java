@@ -1,12 +1,11 @@
 package com.example.rholbrook.tickettoride;
 
+import com.google.gson.Gson;
+
 public class ServerProxy {
     private static ServerProxy instance;
-    private String url;
 
-    public ServerProxy() {
-
-    }
+    public ServerProxy() { }
 
     public static synchronized ServerProxy getInstance() {
         if (instance == null) {
