@@ -4,6 +4,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':shared')
     implementation files('libs/gson-2.8.5.jar')
+    implementation files('libs/sqlite-jdbc-3.8.7.jar')
 }
 
 sourceCompatibility = "7"

@@ -4,12 +4,12 @@ public class User {
     private String userName;
     private String password;
 
-    User(String userName, String password) throws Exception {
-        validateUserName();
-        validatePassword();
-
+    public User(String userName, String password) throws Exception {
         this.userName = userName;
         this.password = password;
+
+        validateUserName();
+        validatePassword();
     }
 
     public void validateUserName() throws Exception {
@@ -22,5 +22,21 @@ public class User {
         if(this.password == null || this.password.equals("") || this.password.trim().equals("")) {
             throw new Exception("Invalid Password!!");
         }
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
