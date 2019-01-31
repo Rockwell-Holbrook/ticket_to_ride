@@ -1,10 +1,16 @@
 apply plugin: 'java-library'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('../gson-2.8.5.jar')
     testImplementation 'junit:junit:4.12'
     implementation project(':shared')
+    implementation 'javax.websocket:javax.websocket-api:1.1'
+
 }
 
 sourceCompatibility = "7"
