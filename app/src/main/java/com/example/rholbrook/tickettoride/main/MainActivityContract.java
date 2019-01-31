@@ -1,10 +1,14 @@
 package com.example.rholbrook.tickettoride.main;
 
+import model.Game;
+
+import java.util.List;
+
 public class MainActivityContract {
     public interface View {
         void showToast(String message);
-        void updateGameList();
-
+        void updateGameList(List<Game> games);
+        void createGame();
     }
 
     public interface Presenter {
