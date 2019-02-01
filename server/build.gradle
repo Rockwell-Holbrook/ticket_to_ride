@@ -9,7 +9,7 @@ dependencies {
     implementation files('../gson-2.8.5.jar')
     testImplementation 'junit:junit:4.12'
     implementation project(':shared')
-    implementation 'javax.websocket:javax.websocket-api:1.1'
+    compile "org.java-websocket:Java-WebSocket:1.3.9"
 
 }
 
