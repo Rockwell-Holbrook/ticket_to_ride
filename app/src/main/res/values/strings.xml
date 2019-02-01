@@ -12,4 +12,17 @@
     <string name="color">Color</string>
     <string name="cancel">Cancel</string>
     <string name="OK">OK</string>
+    <string-array name="player_number_array">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="player_colors_array">
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Black</item>
+    </string-array>
 </resources>
