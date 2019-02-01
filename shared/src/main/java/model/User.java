@@ -7,7 +7,6 @@ public class User {
     public User(String userName, String password) throws Exception {
         this.userName = userName;
         this.password = password;
-
         validateUserName();
         validatePassword();
     }
