@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:background="@color/colorPrimaryDark">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" android:id="@+id/linearLayout2" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="8dp" android:layout_marginStart="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+                android:text="#"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/current_player_count_text_view"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"/>
+        <TextView
+                android:text="/"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:id="@+id/textView"/>
+        <TextView
+                android:text="#"
+                android:id="@+id/max_player_count_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:padding="3dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+    <TextView
+            android:text="@string/name"
+            android:id="@+id/game_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="start"
+            android:textColor="#B0B0B0"
+            android:padding="3dp"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout2" android:layout_marginStart="44dp"
+            android:layout_marginLeft="44dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+            android:text="@string/host"
+            android:id="@+id/host_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="2"
+            android:textColor="#B0B0B0"
+            android:padding="3dp"
+            app:layout_constraintStart_toEndOf="@+id/game_name_text_view" android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="8dp"
+            app:layout_constraintHorizontal_bias="0.5"/>
+</android.support.constraint.ConstraintLayout>
