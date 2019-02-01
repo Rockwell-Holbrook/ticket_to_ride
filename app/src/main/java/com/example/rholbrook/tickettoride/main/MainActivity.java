@@ -13,6 +13,7 @@ import com.example.rholbrook.tickettoride.R;
 import model.Game;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements
         MainActivityContract.View,
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity implements
     public void createGame() {
         CreateGameDialogFragment dialog = new CreateGameDialogFragment();
         dialog.show(getSupportFragmentManager(), "CreateGameDialogFragment");
+    }
+
+    @Override
+    public void selectGame(UUID gameNumber) {
+        mPresenter.setSelectedGameId(gameNumber);
     }
 
     @Override

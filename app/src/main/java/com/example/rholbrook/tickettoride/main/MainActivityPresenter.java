@@ -5,10 +5,12 @@ import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivityPresenter implements MainActivityContract.Presenter {
     private MainActivityContract.View viewCallback;
     private MainActivityModel mModel;
+    private UUID selectedGameId;
 
     public MainActivityPresenter(MainActivityContract.View viewCallback){
         this.viewCallback = viewCallback;
@@ -48,5 +50,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
                 this.joinGame();
                 break;
         }
+    }
+
+    @Override
+    public void setSelectedGameId(UUID id) {
+        this.selectedGameId = id;
     }
 }

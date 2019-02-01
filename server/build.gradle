@@ -1,9 +1,14 @@
 apply plugin: 'java-library'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('C:/Users/rholbrook/Documents/school/ticketToRide/ticket_to_ride/gson-2.8.5.jar')
+    implementation files('../gson-2.8.5.jar')
     implementation project(':shared')
+    compile "org.java-websocket:Java-WebSocket:1.3.9"
 }
 
 sourceCompatibility = "7"
