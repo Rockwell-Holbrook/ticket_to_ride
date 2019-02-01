@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent" android:padding="12dp">
 
     <TextView
             android:layout_width="wrap_content"
@@ -32,13 +32,6 @@
                 android:ems="10"
                 android:id="@+id/game_name_edit_text"
                 android:layout_weight="1"/>
-
-        <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/private_question"
-                android:id="@+id/private_checkbox"
-                android:layout_weight="1" android:layout_marginLeft="4dp"/>
     </LinearLayout>
 
     <LinearLayout

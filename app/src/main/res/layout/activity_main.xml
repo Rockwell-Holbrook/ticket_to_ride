@@ -78,7 +78,8 @@
                 app:layout_constraintBottom_toTopOf="@id/game_buttons"
                 android:id="@+id/game_list_recycler_view"
                 tools:listitem="@layout/list_item_game"
-                tools:itemCount="10" app:layout_constraintVertical_chainStyle="packed">
+                tools:itemCount="10"
+                app:layout_constraintVertical_chainStyle="packed">
         </android.support.v7.widget.RecyclerView>
         <TextView
                 android:layout_width="match_parent"

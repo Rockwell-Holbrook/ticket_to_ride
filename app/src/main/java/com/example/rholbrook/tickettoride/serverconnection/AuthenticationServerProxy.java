@@ -1,4 +1,4 @@
-package com.example.rholbrook.tickettoride;
+package com.example.rholbrook.tickettoride.serverconnection;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;

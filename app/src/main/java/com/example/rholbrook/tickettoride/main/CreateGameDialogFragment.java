@@ -41,7 +41,6 @@ public class CreateGameDialogFragment extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_create_game, null);
         EditText gameName = dialogView.findViewById(R.id.game_name_edit_text);
-        CheckBox privateCheckbox = dialogView.findViewById(R.id.private_checkbox);
         Spinner playerNumberSpinner = dialogView.findViewById(R.id.player_number_spinner);
         ArrayAdapter<CharSequence> numberAdapter = ArrayAdapter.createFromResource(getContext(), R.array.player_number_array, android.R.layout.simple_spinner_item);
         numberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

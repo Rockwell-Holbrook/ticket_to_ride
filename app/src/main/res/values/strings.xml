@@ -25,4 +25,16 @@
         <item>Yellow</item>
         <item>Black</item>
     </string-array>
+    <string name="send">Send</string>
+    <string name="newMessage">New Message</string>
+    <string name="username">Username</string>
+    <string name="playerImage">Player Image</string>
+    <string name="connectedPlayers">Connected Players</string>
+    <string name="message">Message</string>
+    <string name="time">Time</string>
+    <string name="welcomeMessage">Welcome to Ticket To Ride</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="notRegisteredMessage">Not a User? Register Here</string>
+    <string name="startGame">Start Game</string>
 </resources>
