@@ -11,9 +11,11 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 
 public class SocketClientCommunicator extends WebSocketClient {
+    private ClientFacade facadeCallback;
 
     public SocketClientCommunicator(URI uri) {
         super(uri);
+        facadeCallback = ClientFacade.getInstance();
     }
 
     @Override

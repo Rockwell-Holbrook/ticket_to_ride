@@ -1,9 +1,9 @@
-package model;
+package com.example.shared.model;
 
 import java.util.UUID;
 
 public class Game {
-    private UUID gameId;
+    private String gameId;
     private boolean isPlaying;
     private Player host;
     private Player[] playerList;
@@ -18,11 +18,11 @@ public class Game {
         this.gameName = gameName;
     }
 
-    public UUID getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(UUID gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 

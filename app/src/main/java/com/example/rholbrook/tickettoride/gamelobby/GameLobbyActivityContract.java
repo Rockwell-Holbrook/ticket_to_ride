@@ -1,6 +1,6 @@
 package com.example.rholbrook.tickettoride.gamelobby;
 
-public class GameLobbyFragmentContract {
+public class GameLobbyActivityContract {
     public interface View {
 
     }

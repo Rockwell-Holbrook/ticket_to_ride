@@ -1,7 +1,8 @@
 package com.example.rholbrook.tickettoride.main;
 
-import model.Game;
-import model.Player;
+import com.example.shared.model.Game;
+import com.example.shared.model.Player;
+import com.example.shared.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.UUID;
 public class MainActivityPresenter implements MainActivityContract.Presenter {
     private MainActivityContract.View viewCallback;
     private MainActivityModel mModel;
-    private UUID selectedGameId;
+    private String selectedGameId;
 
     public MainActivityPresenter(MainActivityContract.View viewCallback){
         this.viewCallback = viewCallback;
@@ -20,7 +21,7 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     @Override
     public void init() {
         List<Game> gamesList = new ArrayList<>();
-        Player playerExample = new Player("player", true);
+        Player playerExample = new Player("player", true, Player.PlayerColor.BLACK);
         Game gameExample1 = new Game(playerExample, 3, 1, "Test Game");
         Game gameExample2 = new Game(playerExample, 5, 4, "Test Game 2");
         Game gameExample3 = new Game(playerExample, 4, 2, "Test Game 3");
@@ -32,12 +33,16 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
 
     @Override
     public void createGame() {
-
+        try {
+            mModel.createGame(User.getInstance().getUserName());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     @Override
     public void joinGame() {
-
+        mModel.joinGame(selectedGameId);
     }
 
     @Override
@@ -53,7 +58,17 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
-    public void setSelectedGameId(UUID id) {
+    public void setSelectedGameId(String id) {
         this.selectedGameId = id;
+    }
+
+    @Override
+    public void joinedGame() {
+        viewCallback.startGameLobbyFragment();
+    }
+
+    @Override
+    public void newGameList(List<Game> games) {
+        viewCallback.updateGameList(games);
     }
 }

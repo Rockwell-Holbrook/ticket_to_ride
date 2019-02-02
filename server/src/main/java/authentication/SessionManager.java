@@ -1,7 +1,7 @@
 package authentication;
 
-import model.Message;
-import model.User;
+import com.example.shared.model.Message;
+import com.example.shared.model.User;
 
 public class SessionManager {
 
