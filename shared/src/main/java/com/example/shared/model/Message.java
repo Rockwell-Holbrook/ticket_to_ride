@@ -1,8 +1,8 @@
 package com.example.shared.model;
 
 public class Message {
-    boolean success;
-    String message;
+    private boolean success;
+    private String message;
 
     public Message(boolean success, String message) {
         this.success = success;
