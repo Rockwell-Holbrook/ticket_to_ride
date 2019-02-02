@@ -1,6 +1,6 @@
 package authentication;
 
-import model.User;
+import com.example.shared.model.User;
 
 import java.sql.*;
 

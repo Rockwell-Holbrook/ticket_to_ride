@@ -1,4 +1,4 @@
-package model;
+package com.example.shared.model;
 
 public class User {
     private String userName;

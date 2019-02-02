@@ -1,6 +1,6 @@
 package com.example.rholbrook.tickettoride.main;
 
-import model.Game;
+import com.example.shared.model.Game;
 
 import java.util.List;
 import java.util.UUID;

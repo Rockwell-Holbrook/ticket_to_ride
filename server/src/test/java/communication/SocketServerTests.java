@@ -1,4 +1,4 @@
-package socket_server;
+package communication;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;

@@ -7,7 +7,7 @@ Objectives
 ability for players to register, login, create a new game, and join an existing game that has not yet
 started. You must also provide a means of starting a game with two to five players.
 2. Understand how to create and document a design.
-3. Understand and be able to use the model-view-presenter, observer, and facade patterns.
+3. Understand and be able to use the com.example.shared.model-view-presenter, observer, and facade patterns.
 New Patterns
 1. Model-View-Presenter
 2. Observer
@@ -15,7 +15,7 @@ New Patterns
 Requirements
 Design
 Create and document the architecture of this phase. You should include the GUI with its view or views,
-the corresponding presenters, a client and server model with their classes, a poller, a server proxy, client
+the corresponding presenters, a client and server com.example.shared.model with their classes, a poller, a server proxy, client
 communicator, server communicator, and server facade. Please see the supplemented Design Rubric for
 details.
 Capabilities
@@ -50,7 +50,7 @@ Objectives
 - game setup including the selection of 2 or 3 destination cards
 - the Chat feature.
 2. In the client side only: Implement all views for displaying game state except the game summary
-(the last view). Demonstrate that views are updated for any modification to the client model for
+(the last view). Demonstrate that views are updated for any modification to the client com.example.shared.model for
 any part of the game except the game summary (the last view). (The server side of these views
 will be implemented in the next phase).
 3. Understand how to create and document a design.
@@ -99,16 +99,16 @@ owned.
 - For the train card deck, show the top 5 cards that are visible. Also show the
 number of invisible cards in the deck.
 - For the destination card deck, show the number of cards in the deck.
-- Demonstrate that your views update dynamically when your client model is modified.
+- Demonstrate that your views update dynamically when your client com.example.shared.model is modified.
 This can be done through a variety of ways. One way would be to add a temporary
 button to your main view. When pressed, this button could call a method on the
-view’s presenter that makes a series of changes to the client model. For each change,
+view’s presenter that makes a series of changes to the client com.example.shared.model. For each change,
 the presenter could:
 - Call the view to display a toast describing the change (e.g., “Updating player
 points”).
-- Make the indicated change to the local client model (no server interaction is
-involved here). This should cause your client model to notify presenters of
-the model changes, and presenters should update their views appropriately.
+- Make the indicated change to the local client com.example.shared.model (no server interaction is
+involved here). This should cause your client com.example.shared.model to notify presenters of
+the com.example.shared.model changes, and presenters should update their views appropriately.
 - The following items should be demonstrated:
 - Update player points
 - Add/remove train cards for this player
@@ -124,7 +124,7 @@ the model changes, and presenters should update their views appropriately.
 - Advance player turn (change the turn indicator so it indicates another
 player)
 - Include pauses as needed to allow the TA to see each change.
-- Each of the capabilities must be implemented by modifying the client model
+- Each of the capabilities must be implemented by modifying the client com.example.shared.model
 which in return uses the observable to notify the presenters (controllers),
 which update the views.
 Chat and Chat History:
@@ -142,7 +142,7 @@ Deliverables
 Design documentation
 A partially running Ticket to Ride game that can be setup and whose design follows the submitted design.
 It must provide all of the capabilities described above.
-You must provide a routine that can be run to test and demonstrate all of the client model updates and
+You must provide a routine that can be run to test and demonstrate all of the client com.example.shared.model updates and
 subsequent view updates (through the observable) for all capabilities described above. For every test case
 the routine should describe what the test case is to do, and do it. It is to then wait a sufficient amount of
 time (about 5 seconds) for the TA to read the description and observe the result in the GUI.
@@ -165,8 +165,8 @@ Requirements
 Design
 Provide a diagram or picture of how the final results page will look.
 Create and document the architecture of this phase. You should provide UML diagrams for all
-classes created or modified for Phase 3. These should include classes for both the client model
-and classes for the server model. Also, include any new classes for command management on the
+classes created or modified for Phase 3. These should include classes for both the client com.example.shared.model
+and classes for the server com.example.shared.model. Also, include any new classes for command management on the
 server.
 Capabilities (These may be adjusted slightly depending on design)
 In general you should provide for the following game playing activities
@@ -250,11 +250,11 @@ Requirements
 Modify your Ticket-to-Ride server to save its state to persistent storage. It should be possible to
 shutdown your server and restart it without losing user account or game information. This
 includes both intentional shutdowns and unintentional shutdowns caused by a crash, power
-failure, etc. This will require you to keep the state of your in-memory server model and
+failure, etc. This will require you to keep the state of your in-memory server com.example.shared.model and
 persistent storage in sync at all times. To achieve this, you should introduce a persistence
 subsystem. After creating the persistence subsystem, you should modify your server’s web API
 1
-handlers to call the persistence subsystem to keep the in-memory model in sync with persistent
+handlers to call the persistence subsystem to keep the in-memory com.example.shared.model in sync with persistent
 storage.
 Define the API for your persistence subsystem using abstract interfaces that can be implemented
 using a variety of different underlying technologies (relational DB, document DB, cloud storage,
