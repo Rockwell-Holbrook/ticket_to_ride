@@ -1,5 +1,40 @@
 <resources>
-    <string name="app_name">ticketToRide</string>
+    <string name="app_name">Ticket to Ride</string>
     <string name="action_settings">Settings</string>
-    <string name="login_greeting">Welcome to Ticket to Ride</string>
+    <string name="name">Name</string>
+    <string name="host">Host</string>
+    <string name="create_game">Create Game</string>
+    <string name="join_game">Join Game</string>
+    <string name="create_new_game">Create New Game</string>
+    <string name="game_name">Game Name</string>
+    <string name="private_question">Private?</string>
+    <string name="players">Players</string>
+    <string name="color">Color</string>
+    <string name="cancel">Cancel</string>
+    <string name="OK">OK</string>
+    <string-array name="player_number_array">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="player_colors_array">
+        <item>Blue</item>
+        <item>Red</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Black</item>
+    </string-array>
+    <string name="send">Send</string>
+    <string name="newMessage">New Message</string>
+    <string name="username">Username</string>
+    <string name="playerImage">Player Image</string>
+    <string name="connectedPlayers">Connected Players</string>
+    <string name="message">Message</string>
+    <string name="time">Time</string>
+    <string name="welcomeMessage">Welcome to Ticket To Ride</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="notRegisteredMessage">Not a User? Register Here</string>
+    <string name="startGame">Start Game</string>
 </resources>

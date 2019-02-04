@@ -1,3 +1,6 @@
+#database
+server/userDatabase.db
+
 # Built application files
 *.apk
 *.ap_

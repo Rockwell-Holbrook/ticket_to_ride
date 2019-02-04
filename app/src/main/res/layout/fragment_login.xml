@@ -5,32 +5,55 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:id="@+id/linearLayout">
-    <TextView
-            android:text="@string/login_greeting"
+    <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/login_greeting"/>
-    <Button
-            android:text="Login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/loginButton" tools:layout_editor_absoluteY="138dp"
-            tools:layout_editor_absoluteX="0dp"/>
-    <Button
-            android:text="Register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/registerButton" tools:layout_editor_absoluteY="138dp"
-            tools:layout_editor_absoluteX="99dp"/>
+            android:layout_height="wrap_content" app:srcCompat="@drawable/logo"
+            android:id="@+id/logo" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+    />
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
-            android:text="Username"
+            android:hint="@string/login_username"
             android:ems="10"
-            android:id="@+id/UsernameInput" tools:layout_editor_absoluteY="27dp" tools:layout_editor_absoluteX="0dp"/>
+            android:id="@+id/UsernameInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            app:layout_constraintBottom_toTopOf="@+id/PasswordInput"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
+            android:hint="@string/login_password"
             android:ems="10"
-            android:id="@+id/PasswordInput" tools:layout_editor_absoluteY="82dp" tools:layout_editor_absoluteX="0dp"
+            android:id="@+id/PasswordInput"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/UsernameInput"
+            app:layout_constraintBottom_toTopOf="@+id/loginButton" android:layout_marginBottom="8dp"/>
+    <Button
+            android:text="@string/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="32dp" app:layout_constraintVertical_bias="0.88"
     />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/registerLink"
+            android:textSize="20sp"
+            android:text="@string/login_registration"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.9"/>
 </android.support.constraint.ConstraintLayout>
