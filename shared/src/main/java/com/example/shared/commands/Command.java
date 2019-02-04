@@ -1,11 +1,12 @@
 package com.example.shared.commands;
 
+
 import com.google.gson.Gson;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class CommandToClient {
+public class Command {
     private static Gson gson = new Gson();
 
     private String methodName;
@@ -16,9 +17,9 @@ public class CommandToClient {
     //I don't generate the parameter type names from the
     //parameters because some of the parameters might be
     //null.
-    public CommandToClient(String methodName,
-                           String[] parameterTypeNames,
-                           Object[] parameters) {
+    public Command(String methodName,
+                   String[] parameterTypeNames,
+                   Object[] parameters) {
         this.methodName = methodName;
         this.parameterTypeNames = parameterTypeNames;
         this.parametersAsJsonStrings = new String[parameters.length];
@@ -27,8 +28,8 @@ public class CommandToClient {
         }
     }
 
-    public CommandToClient(String serializedCmd) {
-        CommandToServer tempCommand = gson.fromJson(serializedCmd, CommandToServer.class);
+    public Command(String serializedCmd) {
+        Command tempCommand = gson.fromJson(serializedCmd, Command.class);
 
         methodName = tempCommand.getMethodName();
         parameterTypeNames = tempCommand.getParameterTypeNames();
@@ -90,10 +91,10 @@ public class CommandToClient {
         return result.toString();
     }
 
-    public void execute() {
+    public void execute(Object cls) {
         try {
-            Method method = ClientFacade.class.getMethod(methodName, parameterTypes);
-            method.invoke(ClientFacade.getInstance(), parameters);
+            Method method = cls.getClass().getMethod(methodName, parameterTypes);
+            method.invoke(cls, parameters);
         } catch (NoSuchMethodException | SecurityException e) {
             System.out.println("ERROR: Could not find the method " + methodName + ", or, there was a security error");
             e.printStackTrace();

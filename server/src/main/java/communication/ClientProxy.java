@@ -8,6 +8,16 @@ import com.example.shared.model.Player;
 import java.util.List;
 
 public class ClientProxy implements IClientInGame, IClientNotInGame {
+    private String gameId;
+
+    public ClientProxy(){
+        gameId = null;
+    }
+
+    public ClientProxy(String gameId){
+        this.gameId = gameId;
+    }
+
     @Override
     public void chatReceived(String username, String message) {
 

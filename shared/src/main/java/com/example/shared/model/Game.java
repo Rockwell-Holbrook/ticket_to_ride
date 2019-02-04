@@ -1,6 +1,8 @@
 package com.example.shared.model;
 
-import clientProxy.IClientIsInGame;
+
+import com.example.shared.interfaces.IClientInGame;
+import communication.ClientProxy;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -26,33 +28,7 @@ public class Game {
         addPlayer(host);
     }
 
-    IClientIsInGame clientProxy = new IClientIsInGame() {
-
-        @Override
-        public void chatReceived() {
-
-        }
-
-        @Override
-        public void cardsDrawn() {
-
-        }
-
-        @Override
-        public void routeCliamed() {
-
-        }
-
-        @Override
-        public void ticketsDrawn() {
-
-        }
-
-        @Override
-        public void ticketsReturned() {
-
-        }
-    };
+    IClientInGame clientProxy = new ClientProxy();
 
     public void addPlayer(Player player) {
         playerList.add(player);

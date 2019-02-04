@@ -1,7 +1,6 @@
 package communication;
 
-import com.example.shared.commands.CommandToClient;
-import com.example.shared.commands.CommandToServer;
+import com.example.shared.commands.Command;
 import com.google.gson.Gson;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -53,8 +52,8 @@ public class SocketServer extends WebSocketServer {
 
     @Override
     public void onMessage( WebSocket conn, String message ) {
-        CommandToServer cmd = new CommandToServer(message);
-        cmd.execute();
+        Command cmd = new Command(message);
+        cmd.execute(ServerFacade.getInstance());
     }
 
 
@@ -97,7 +96,7 @@ public class SocketServer extends WebSocketServer {
      * Sends command to all connected to management server "/management"
      * @param cmd CommandToClient to be run on all clients connected to management
      */
-    public void broadcastToManagement(CommandToClient cmd){
+    public void broadcastToManagement(Command cmd){
         String serializedCmd = gson.toJson(cmd);
         broadcast(serializedCmd, managementConnections);
     }
@@ -107,7 +106,7 @@ public class SocketServer extends WebSocketServer {
      * @param cmd CommandToClient to be run on all clients connected to game at game_id
      * @param gameId Id of game in question
      */
-    public void broadcastToGame(CommandToClient cmd, String gameId){
+    public void broadcastToGame(Command cmd, String gameId){
 
     }
 
