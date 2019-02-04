@@ -27,7 +27,8 @@
                 android:background="@color/gameListHeadersBackground"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/linearLayout">
+                android:id="@+id/linearLayout"
+                app:layout_constraintTop_toTopOf="parent">
             <TextView
                     android:text="#"
                     android:layout_width="wrap_content"
@@ -77,7 +78,8 @@
                 app:layout_constraintBottom_toTopOf="@id/game_buttons"
                 android:id="@+id/game_list_recycler_view"
                 tools:listitem="@layout/list_item_game"
-                tools:itemCount="10" app:layout_constraintVertical_chainStyle="packed">
+                tools:itemCount="10"
+                app:layout_constraintVertical_chainStyle="packed">
         </android.support.v7.widget.RecyclerView>
         <TextView
                 android:layout_width="match_parent"

@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574b</color>
+    <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="gameListBackground">#e04c4c4c</color>
-    <color name="gameListHeadersBackground">#e0808080</color>
-    <color name="white">#ffffff</color>
+    <color name="gameListBackground">#E04C4C4C</color>
+    <color name="gameListHeadersBackground">#E0808080</color>
+    <color name="gameListEntryBackgroundEven">#606060</color>
+    <color name="gameListEntryBackgroundOdd">#696969</color>
+    <color name="white">#FFFFFF</color>
+    <color name="selectedGameListEntry">#DD909090</color>
+    <color name="chatMessageEven">#D2B482</color>
+    <color name="chatMessageOdd">#D1C4A5</color>
+    <color name="sendButton">#2F9DE8</color>
+    <color name="chatListBackground">#C09E66</color>
+    <color name="black">#000000</color>
+    <color name="gold">#FFD700</color>
+    <color name="welcomeTextColor">#B22222</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="blue">#219EFA</color>
+    <color name="red">#E01313</color>
 </resources>
