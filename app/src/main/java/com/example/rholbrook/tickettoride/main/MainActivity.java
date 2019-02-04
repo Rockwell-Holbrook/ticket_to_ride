@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
-import model.Game;
+import com.example.shared.model.Game;
 
 import java.util.List;
 import java.util.UUID;

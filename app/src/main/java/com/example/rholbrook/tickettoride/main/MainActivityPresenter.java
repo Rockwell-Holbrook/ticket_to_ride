@@ -1,7 +1,7 @@
 package com.example.rholbrook.tickettoride.main;
 
-import model.Game;
-import model.Player;
+import com.example.shared.model.Game;
+import com.example.shared.model.Player;
 
 import java.util.ArrayList;
 import java.util.List;

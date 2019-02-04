@@ -1,4 +1,4 @@
-package model;
+package com.example.shared.model;
 
 public class Player {
     private String username;
@@ -23,5 +23,9 @@ public class Player {
 
     public void setHost(boolean host) {
         isHost = host;
+    }
+
+    public enum PlayerColor {
+        GREEN, BLUE, YELLOW, RED, BLACK;
     }
 }
