@@ -1,38 +1,33 @@
-package com.example.shared.model;
+package model;
 
 public class User {
-    private static User instance;
     private String userName;
     private String password;
 
-    public static synchronized User getInstance() throws Throwable {
-        if (instance == null){
-            throw new Exception("Nobody is logged in");
-        }
-        return instance;
-    }
-
-    User(String userName, String password) throws Exception {
+    public User(String userName, String password) throws Exception {
         this.userName = userName;
         this.password = password;
         validateUserName();
         validatePassword();
-        instance = this;
     }
 
     public void validateUserName() throws Exception {
-        if(this.userName == null || this.userName.equals("") || this.userName.equals(" ")) {
+        if(this.userName == null || this.userName.equals("") || this.userName.trim().equals("")) {
             throw new Exception("Invalid UserName!!");
         }
     }
 
     public void validatePassword() throws Exception {
-        if(this.password == null || this.password.equals("") || this.password.equals(" ")) {
+        if(this.password == null || this.password.equals("") || this.password.trim().equals("")) {
             throw new Exception("Invalid Password!!");
         }
     }
 
     public String getUserName() {
         return userName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
