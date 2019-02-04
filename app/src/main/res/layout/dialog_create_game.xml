@@ -38,6 +38,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:id="@+id/create_instruction_linear_layout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"
+                  android:text="@string/numberOfPlayers"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:paddingBottom="8dp">

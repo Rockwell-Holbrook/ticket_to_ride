@@ -10,6 +10,7 @@ public class MainActivityContract {
         void showToast(String message);
         void updateGameList(List<Game> games);
         void createGame();
+        void joinGame();
         void selectGame(String gameNumber);
         void startGameLobbyFragment();
     }

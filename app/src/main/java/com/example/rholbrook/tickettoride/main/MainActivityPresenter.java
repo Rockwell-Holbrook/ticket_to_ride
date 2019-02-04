@@ -2,7 +2,6 @@ package com.example.rholbrook.tickettoride.main;
 
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
-import com.example.shared.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +21,9 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     public void init() {
         List<Game> gamesList = new ArrayList<>();
         Player playerExample = new Player("player", true, Player.PlayerColor.BLACK);
-        Game gameExample1 = new Game(playerExample, 3, 1, "Test Game");
-        Game gameExample2 = new Game(playerExample, 5, 4, "Test Game 2");
-        Game gameExample3 = new Game(playerExample, 4, 2, "Test Game 3");
+        Game gameExample1 = new Game(playerExample, "Test Game");
+        Game gameExample2 = new Game(playerExample, "Test Game 2");
+        Game gameExample3 = new Game(playerExample,"Test Game 3");
         gamesList.add(gameExample1);
         gamesList.add(gameExample2);
         gamesList.add(gameExample3);
@@ -34,7 +33,7 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     @Override
     public void createGame() {
         try {
-            mModel.createGame(User.getInstance().getUserName());
+            mModel.createGame("username");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -52,7 +51,7 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
                 viewCallback.createGame();
                 break;
             case MainActivityModel.JOIN_GAME_BUTTON:
-                this.joinGame();
+                viewCallback.joinGame();
                 break;
         }
     }

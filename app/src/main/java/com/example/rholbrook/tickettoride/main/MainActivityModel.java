@@ -37,7 +37,7 @@ public class MainActivityModel {
 
     public void joinedGame(String gameId){
         try {
-            ServerProxy.getInstance().connectToGameSocket(gameId, User.getInstance().getUserName());
+            ServerProxy.getInstance().connectToGameSocket(gameId, "username");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class MainActivityModel {
     public void joinGame(String selectedGameId) {
         //Call the joinGame method in ServerProxy
         try {
-            ServerProxy.getInstance().joinGame(User.getInstance().getUserName(), selectedGameId);
+            ServerProxy.getInstance().joinGame("username", selectedGameId);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class MainActivityModel {
 
     public void createGame(String username) {
         try {
-            ServerProxy.getInstance().createGame(User.getInstance().getUserName());
+            ServerProxy.getInstance().createGame("username");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

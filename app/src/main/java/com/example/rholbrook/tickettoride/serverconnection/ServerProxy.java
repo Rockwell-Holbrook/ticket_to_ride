@@ -1,12 +1,9 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
 import com.example.shared.interfaces.IServer;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.UUID;
 
 public class ServerProxy implements IServer {
     private static ServerProxy instance;

@@ -1,16 +1,14 @@
-package model;
+package com.example.shared.model;
 
 import clientProxy.IClientIsInGame;
 
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 
 public class Game {
-    private UUID gameId;
+    private String gameId;
     private boolean isPlaying;
     private Player host;
-    private Set<Player> playerList = new TreeSet<>();
+    private Set<Player> playerList = new HashSet<>();
     private int maxPlayers;
     private int currentPlayers;
     private String gameName;
@@ -21,7 +19,7 @@ public class Game {
         this.isPlaying = false;
         this.maxPlayers = 5;
         this.currentPlayers = 0;
-        this.gameId = UUID.randomUUID();
+        this.gameId = UUID.randomUUID().toString();
 
         addPlayer(host);
     }
@@ -65,7 +63,7 @@ public class Game {
 
     /* *********** GETTERS AND SETTERS *********** */
 
-    public UUID getGameId() {
+    public String getGameId() {
         return gameId;
     }
 

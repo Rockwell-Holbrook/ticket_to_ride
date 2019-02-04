@@ -1,8 +1,8 @@
 package game;
 
-import model.Game;
-import model.Player;
 import clientProxy.IClientNotInGame;
+import com.example.shared.model.Game;
+import com.example.shared.model.Player;
 
 import java.util.HashMap;
 import java.util.Map;

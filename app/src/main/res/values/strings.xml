@@ -37,4 +37,6 @@
     <string name="login">Login</string>
     <string name="notRegisteredMessage">Not a User? Register Here</string>
     <string name="startGame">Start Game</string>
+    <string name="chooseAColor">Choose a Color"</string>
+    <string name="numberOfPlayers">Number of Players</string>
 </resources>
