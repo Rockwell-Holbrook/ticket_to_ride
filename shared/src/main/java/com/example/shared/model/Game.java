@@ -2,7 +2,6 @@ package com.example.shared.model;
 
 
 import com.example.shared.interfaces.IClientInGame;
-import communication.ClientProxy;
 
 import java.util.*;
 
@@ -26,7 +25,7 @@ public class Game {
         addPlayer(host);
     }
 
-    IClientInGame clientProxy = new ClientProxy();
+    IClientInGame clientProxy;
 
     public void addPlayer(Player player) {
         playerList.add(player);
