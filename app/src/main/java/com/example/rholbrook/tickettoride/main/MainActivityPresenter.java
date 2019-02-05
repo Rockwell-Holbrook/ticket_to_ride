@@ -21,9 +21,9 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     public void init() {
         List<Game> gamesList = new ArrayList<>();
         Player playerExample = new Player("player", true, Player.PlayerColor.BLACK);
-        Game gameExample1 = new Game(playerExample, "Test Game");
-        Game gameExample2 = new Game(playerExample, "Test Game 2");
-        Game gameExample3 = new Game(playerExample,"Test Game 3");
+        Game gameExample1 = new Game(playerExample,3, "Test Game");
+        Game gameExample2 = new Game(playerExample,4, "Test Game 2");
+        Game gameExample3 = new Game(playerExample,5,"Test Game 3");
         gamesList.add(gameExample1);
         gamesList.add(gameExample2);
         gamesList.add(gameExample3);
