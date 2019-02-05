@@ -47,7 +47,7 @@ public class MainActivityModel {
     public void joinGame(String selectedGameId) {
         //Call the joinGame method in ServerProxy
         try {
-            ServerProxy.getInstance().joinGame("username", selectedGameId);
+            ServerProxy.getInstance().joinGame(selectedGameId, new Player("username", false, Player.PlayerColor.BLUE));
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -59,7 +59,7 @@ public class MainActivityModel {
 
     public void createGame(String username) {
         try {
-            ServerProxy.getInstance().createGame("username");
+            ServerProxy.getInstance().createGame(new Player("username", true, Player.PlayerColor.GREEN), 1, "test");
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
