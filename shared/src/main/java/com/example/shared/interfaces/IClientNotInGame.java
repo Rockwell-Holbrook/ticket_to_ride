@@ -14,7 +14,8 @@ public interface IClientNotInGame {
 
     /**
      * Sends a response to the MainActivityContract to connect to the game websocket
+     * @param username Name of user who is joining game
      * @param gameId Query for the connecting to the game websocket
      */
-    void joinGameComplete(String gameId);
+    void joinGameComplete(String username, String gameId);
 }
