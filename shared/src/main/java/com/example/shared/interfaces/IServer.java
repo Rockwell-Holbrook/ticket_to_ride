@@ -1,18 +1,23 @@
 package com.example.shared.interfaces;
 
+import com.example.shared.model.Player;
+
 public interface IServer {
     /**
      * Creates a game on a server
-     * @param username the name of the host user
+     * @param host Player who created the game
+     * @param maxPlayers max players
+     * @param gameName Name of the game
      */
-      void createGame(String username);
+    void createGame(Player host, int maxPlayers, String gameName);
+
 
     /**
      * Join un-started game from game list
      * @param username User who is joining the game
      * @param gameId Id of the game to join
      */
-    void joinGame(String username, String gameId);
+    void joinGame(String gameId, Player player);
 
     /**
      * Start a game

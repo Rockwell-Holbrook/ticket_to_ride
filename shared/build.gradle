@@ -4,7 +4,7 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     compile 'org.slf4j:slf4j-api:1.7.25'
-    implementation files('libs/gson-2.8.5.jar')
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 sourceCompatibility = "7"
