@@ -29,14 +29,22 @@ public class Game {
         addPlayer(host);
     }
 
-
-
+    /**
+     *
+     * @param player The player that will be added.
+     *
+     * This function will add a player to an existing game.
+     */
     public void addPlayer(Player player) {
         playerList.add(player);
         currentPlayers++;
     }
 
+    /**
+     * Start the full game by setting isPlaying to true.
+     */
     public void startGame() {
+        //Todo: Create a command and return it possibly? Needs to be more functional.
         isPlaying = true;
     }
 

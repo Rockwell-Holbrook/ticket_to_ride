@@ -6,6 +6,12 @@ import com.example.shared.model.User;
 public class SessionManager {
     private DatabaseAccess databaseAccess = new DatabaseAccess();
 
+    /**
+     * Add the specified user to the database and log them in. If there is a duplicate return an error message back to the client.
+     *
+     * @param user The user to be logged in.
+     * @return Returns a success or failure message.
+     */
     public Message register(User user) {
         try {
             databaseAccess.store(user);
@@ -18,6 +24,12 @@ public class SessionManager {
         return new Message(true, "Some future endpoint for the Socket Server");
     }
 
+    /**
+     * The user to login is verified to be within the database. If an error occurs it is sent back to the client to be handled.
+     *
+     * @param user The user to be logged in.
+     * @return Returns a success or failure message.
+     */
     public Message login(User user) {
         User databaseUser;
         try {
