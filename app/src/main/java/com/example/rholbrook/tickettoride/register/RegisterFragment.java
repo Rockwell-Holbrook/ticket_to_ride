@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.shared.model.Message;
+import com.example.rholbrook.tickettoride.R;
 
 /**
  * Created by Blaine Johnson on 1/29/19.
@@ -37,6 +38,15 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         void onLogin();
     }
 
+    public static RegisterFragment newInstance() {
+        RegisterFragment fragment = new RegisterFragment();
+        Bundle paramas = new Bundle();
+
+        fragment.setArguments(paramas);
+
+        return fragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +57,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_register, container, false);
 
-        mUsernameField = v.findViewById(R.id.register_username_field, container, false);
+        mUsernameField = v.findViewById(R.id.register_username_field);
         mUsernameField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,7 +81,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             }
         });
 
-        mPasswordField = v.findViewById(R.id.register_password_field, container, false);
+        mPasswordField = v.findViewById(R.id.register_password_field);
         mPasswordField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,7 +105,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             }
         });
 
-        mConfPasswordField = v.findViewById(R.id.register_conf_password_field, container, false);
+        mConfPasswordField = v.findViewById(R.id.register_conf_password_field);
         mConfPasswordField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
