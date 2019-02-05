@@ -21,6 +21,8 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         return instance;
     }
 
+//    Phase 1 Connections
+//    GameLobby
     @Override
     public void chatReceived(String username, String message) {
 
@@ -31,6 +33,18 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     }
 
+//    MainActivity
+    @Override
+    public void updateGameList(List<Game> games) {
+        MainActivityModel.getInstance().newGameListRetrieved(games);
+    }
+
+    @Override
+    public void joinGameComplete(String gameId) {
+        MainActivityModel.getInstance().joinedGame(gameId);
+    }
+
+//    Phase 2 Connections
     @Override
     public void cardDrawn() {
 
@@ -51,12 +65,5 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     }
 
-    @Override
-    public void updateGameList(List<Game> games) {
 
-    }
-
-    @Override
-    public void joinGameComplete(String gameId){
-    }
 }

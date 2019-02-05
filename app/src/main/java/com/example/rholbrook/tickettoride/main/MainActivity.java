@@ -18,7 +18,8 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity implements
         MainActivityContract.View,
         View.OnClickListener,
-        CreateGameDialogFragment.CreateGameDialogInterface {
+        CreateGameDialogFragment.CreateGameDialogInterface,
+        JoinGameDialogFragment.JoinGameDialogInterface {
 
     private MainActivityContract.Presenter mPresenter;
 
@@ -70,8 +71,19 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void selectGame(UUID gameNumber) {
+    public void joinGame() {
+        JoinGameDialogFragment dialog = new JoinGameDialogFragment();
+        dialog.show(getSupportFragmentManager(), "JoinGameDialogFragment");
+    }
+
+    @Override
+    public void selectGame(String gameNumber) {
         mPresenter.setSelectedGameId(gameNumber);
+    }
+
+    @Override
+    public void startGameLobbyFragment() {
+
     }
 
     @Override
@@ -81,6 +93,13 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onCreatePressed(DialogFragment dialog) {
+        mPresenter.createGame();
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onJoinPressed(DialogFragment dialog) {
+        mPresenter.joinGame();
         dialog.dismiss();
     }
 

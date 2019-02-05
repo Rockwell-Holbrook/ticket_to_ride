@@ -3,8 +3,8 @@ package com.example.rholbrook.tickettoride.serverconnection;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import model.Message;
-import model.User;
+import com.example.shared.model.Message;
+import com.example.shared.model.User;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

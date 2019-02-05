@@ -10,7 +10,9 @@ public class MainActivityContract {
         void showToast(String message);
         void updateGameList(List<Game> games);
         void createGame();
-        void selectGame(UUID gameNumber);
+        void joinGame();
+        void selectGame(String gameNumber);
+        void startGameLobbyFragment();
     }
 
     public interface Presenter {
@@ -18,6 +20,8 @@ public class MainActivityContract {
         void createGame();
         void joinGame();
         void onClick(int id);
-        void setSelectedGameId(UUID id);
+        void setSelectedGameId(String id);
+        void joinedGame();
+        void newGameList(List<Game> games);
     }
 }
