@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.rholbrook.tickettoride.R;
-
 /**
  * Created by Blaine Johnson on 1/29/19.
  */
