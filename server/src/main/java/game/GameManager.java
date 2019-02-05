@@ -4,6 +4,7 @@ import com.example.shared.interfaces.IClientNotInGame;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 import communication.ClientProxy;
+import communication.SocketServer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +13,6 @@ import java.util.Map;
 public class GameManager {
     private static final GameManager instance = new GameManager();
 
-    //private constructor to avoid client applications to use constructor
     private GameManager(){}
 
     public static GameManager getInstance(){
@@ -23,22 +23,24 @@ public class GameManager {
 
     private IClientNotInGame clientProxy = new ClientProxy();
 
-    void createGame(Player host, int maxPlayers, String gameName) {
-        Game game = new Game(host, gameName);
+    // TODO JavaDoc
+    public void createGame(Player host, int maxPlayers, String gameName) {
+        Game game = new Game(host, maxPlayers, gameName);
+        game.setClientProxy(new ClientProxy(game.getGameId()));
         this.gameList.put(gameName, game);
+        SocketServer.getInstance().addGame(game.getGameId());
         clientProxy.updateGameList(new ArrayList<>(gameList.values()));
     }
 
-    void joinGame(String gameName, Player player) {
-        Game game = this.gameList.get(gameName);
+    public void joinGame(String gameId, Player player) {
+        Game game = this.gameList.get(gameId);
         game.addPlayer(player);
-        clientProxy.joinGameComplete(gameName);
+        clientProxy.joinGameComplete(player.getUsername(), gameId);
     }
 
-    void startGame(String gameName) {
-        Game game = this.gameList.get(gameName);
+    public void startGame(String gameId) {
+        Game game = this.gameList.get(gameId);
         game.startGame();
-        // TODO ClientProxy.startGame() of sorts
     }
 
     public Map<String, Game> getGameList() {

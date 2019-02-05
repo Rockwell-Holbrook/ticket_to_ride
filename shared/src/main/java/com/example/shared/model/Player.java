@@ -28,4 +28,9 @@ public class Player {
     public enum PlayerColor {
         GREEN, BLUE, YELLOW, RED, BLACK;
     }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
 }
