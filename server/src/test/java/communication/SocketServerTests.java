@@ -68,8 +68,7 @@ public class SocketServerTests {
             sleep(1000 * 5);
             cc2.connect();
             sleep(1000 * 5);
-            cc.send("Hello friend");
-            sleep(1000* 5);
+
 
         } catch (Exception e) {
             e.printStackTrace();

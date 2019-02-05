@@ -2,33 +2,34 @@ package com.example.shared.model;
 
 
 import com.example.shared.interfaces.IClientInGame;
-import communication.ClientProxy;
+import com.example.shared.interfaces.IClientNotInGame;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.UUID;
 
 public class Game {
-    private UUID gameId;
+    private String gameId;
     private boolean isPlaying;
     private Player host;
-    private Set<Player> playerList = new TreeSet<>();
+    private Set<Player> playerList = new HashSet<>();
     private int maxPlayers;
     private int currentPlayers;
     private String gameName;
+    private IClientInGame clientProxy;
 
-    public Game(Player host, String gameName) {
+    public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;
         this.gameName = gameName;
         this.isPlaying = false;
-        this.maxPlayers = 5;
+        this.maxPlayers = maxPlayers;
         this.currentPlayers = 0;
-        this.gameId = UUID.randomUUID();
+        this.gameId = UUID.randomUUID().toString();
 
         addPlayer(host);
     }
 
-    IClientInGame clientProxy = new ClientProxy();
+
 
     public void addPlayer(Player player) {
         playerList.add(player);
@@ -41,7 +42,7 @@ public class Game {
 
     /* *********** GETTERS AND SETTERS *********** */
 
-    public UUID getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
@@ -72,4 +73,6 @@ public class Game {
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
+
+    public void setClientProxy(IClientInGame clientProxy) {this.clientProxy = clientProxy;}
 }
