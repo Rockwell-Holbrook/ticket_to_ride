@@ -44,4 +44,7 @@
     <string name="register_username_field">Username\ \ \ \ \ \ \ \ \ \ \ \ \ </string>
     <string name="register_password_field">Password\ \ \ \ \ \ \ \ \ \ \ \ \ </string>
     <string name="register_confirm_password_field">Confirm Password</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
