@@ -23,7 +23,13 @@ public class GameManager {
 
     private IClientNotInGame clientProxy = new ClientProxy();
 
-    // TODO JavaDoc
+    /**
+     * Creates the game and adds it to the gameList and to the socketServer using gameID as the key.
+     *
+     * @param host The Player hosting the game. This player will be set to host upon creation.
+     * @param maxPlayers The max number of players this game needs before it can start. An int between 2-5.
+     * @param gameName The name of the game.
+     */
     public void createGame(Player host, int maxPlayers, String gameName) {
         Game game = new Game(host, maxPlayers, gameName);
         game.setClientProxy(new ClientProxy(game.getGameId()));
@@ -32,12 +38,23 @@ public class GameManager {
         clientProxy.updateGameList(new ArrayList<>(gameList.values()));
     }
 
+    /**
+     * Starts the game specified by the gameID.
+     *
+     * @param gameId The ID of the game that needs to be started.
+     */
     public void joinGame(String gameId, Player player) {
         Game game = this.gameList.get(gameId);
         game.addPlayer(player);
         clientProxy.joinGameComplete(player.getUsername(), gameId);
     }
 
+    /**
+     *
+     * @param gameId The ID of the game that needs to be started.
+     *
+     * Starts the game specified by the gameID.
+     */
     public void startGame(String gameId) {
         Game game = this.gameList.get(gameId);
         game.startGame();

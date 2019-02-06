@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class DatabaseAccess {
 
-    public void store(User user) throws SQLException {
+    void store(User user) throws SQLException {
         Connection con = getConnected();
 
         PreparedStatement p = con.prepareStatement("INSERT INTO user " +
@@ -21,7 +21,7 @@ public class DatabaseAccess {
         con.close();
     }
 
-    public User retrieve(String username) throws SQLException {
+    User retrieve(String username) throws SQLException {
         Connection con = getConnected();
 
         PreparedStatement p = con.prepareStatement("SELECT password " +
