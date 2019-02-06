@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
+import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
 import com.example.shared.interfaces.IClientInGame;
 import com.example.shared.interfaces.IClientNotInGame;
@@ -25,15 +26,20 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 //    GameLobby
     @Override
     public void chatReceived(String username, String message) {
-
+        GameLobbyActivityModel.getInstance().newMessageReceived(username, message);
     }
 
     @Override
     public void playerJoinedGame(String username, Player.PlayerColor color) {
-
+        GameLobbyActivityModel.getInstance().newPlayerJoined(username, color);
     }
 
-//    MainActivity
+    @Override
+    public void gameStarted() {
+        GameLobbyActivityModel.getInstance().gameStarted();
+    }
+
+    //    MainActivity
     @Override
     public void updateGameList(List<Game> games) {
         MainActivityModel.getInstance().newGameListRetrieved(games);

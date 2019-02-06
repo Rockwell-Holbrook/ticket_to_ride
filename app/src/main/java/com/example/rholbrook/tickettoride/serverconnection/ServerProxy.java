@@ -40,7 +40,8 @@ public class ServerProxy implements IServer {
             if (socketClientCommunicator != null) {
                 socketClientCommunicator.close();
             }
-            socketClientCommunicator = new SocketClientCommunicator(new URI("ws://10.0.2.2:7777/game/" + gameId + "?user=" + username));
+            String url = "ws://10.0.2.2:7777/game/" + gameId + "?user=" + username;
+            socketClientCommunicator = new SocketClientCommunicator(new URI(url));
             socketClientCommunicator.connect();
         } catch (URISyntaxException e) {
             throw e;
