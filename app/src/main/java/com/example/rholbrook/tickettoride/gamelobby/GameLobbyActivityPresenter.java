@@ -4,8 +4,10 @@ import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.model.Player;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Presenter {
+public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Presenter, Observer {
     private GameLobbyActivityContract.View viewCallback;
     private GameLobbyActivityModel mModel;
 
@@ -63,5 +65,10 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     @Override
     public void sendChat(String message) {
         mModel.sendChat(message);
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+
     }
 }

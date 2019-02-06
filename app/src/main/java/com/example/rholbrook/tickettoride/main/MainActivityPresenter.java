@@ -6,8 +6,10 @@ import com.example.shared.model.Player;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MainActivityPresenter implements MainActivityContract.Presenter {
+public class MainActivityPresenter implements MainActivityContract.Presenter, Observer {
     private MainActivityContract.View viewCallback;
     private MainActivityModel mModel;
 
@@ -104,5 +106,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
             }
         }
         return availableColors;
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+
     }
 }

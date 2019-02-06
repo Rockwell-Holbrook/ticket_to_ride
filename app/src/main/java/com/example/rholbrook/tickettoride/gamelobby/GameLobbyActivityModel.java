@@ -5,8 +5,9 @@ import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Player;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class GameLobbyActivityModel {
+public class GameLobbyActivityModel extends Observable {
     private static GameLobbyActivityModel instance;
     private GameLobbyActivityContract.Presenter mListener;
 

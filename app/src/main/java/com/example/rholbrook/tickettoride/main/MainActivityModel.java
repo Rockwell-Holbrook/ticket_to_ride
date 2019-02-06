@@ -7,9 +7,10 @@ import com.example.shared.model.User;
 
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Observable;
 import java.util.UUID;
 
-public class MainActivityModel {
+public class MainActivityModel extends Observable {
     public final static int CREATE_GAME_BUTTON = 0;
     public final static int JOIN_GAME_BUTTON = 1;
     private static MainActivityContract.Presenter mPresenter;
