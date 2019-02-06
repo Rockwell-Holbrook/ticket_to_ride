@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.register;
 
+import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.AuthenticationServerProxy;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Message;
@@ -47,6 +48,7 @@ public class RegisterModel {
                 User user = new User(username, password);
                 message = AuthenticationServerProxy.getInstance().register(user);
                 ServerProxy.getInstance().connectToManagementSocket(username);
+                Authentication.getInstance().setUsername(username);
                 success = true;
             } catch (Throwable e) {
                 message = e.getMessage();

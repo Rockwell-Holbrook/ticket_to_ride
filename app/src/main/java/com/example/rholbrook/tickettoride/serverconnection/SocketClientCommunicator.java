@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
 import android.util.Log;
+import com.example.shared.commands.Command;
 import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ClientHandshake;
@@ -20,22 +21,23 @@ public class SocketClientCommunicator extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-
+        System.out.println(handshakedata.getHttpStatusMessage());
     }
 
     @Override
     public void onMessage(String message) {
-
-    }
+        Command cmd = new Command(message);
+        cmd.execute(facadeCallback);
+}
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-
+        System.out.println("Disconnected from Websocket: " + reason);
     }
 
     @Override
     public void onError(Exception ex) {
-
+        ex.printStackTrace();
     }
 
 }

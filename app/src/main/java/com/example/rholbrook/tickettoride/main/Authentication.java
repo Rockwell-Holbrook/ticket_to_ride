@@ -3,7 +3,7 @@ package com.example.rholbrook.tickettoride.main;
 import com.example.shared.model.User;
 
 public class Authentication {
-    private User user;
+    private String username;
     private static Authentication instance;
 
     public static Authentication getInstance() {
@@ -15,11 +15,11 @@ public class Authentication {
 
     public Authentication() {}
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

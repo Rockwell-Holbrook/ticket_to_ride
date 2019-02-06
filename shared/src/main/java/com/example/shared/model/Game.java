@@ -4,9 +4,7 @@ package com.example.shared.model;
 import com.example.shared.interfaces.IClientInGame;
 import com.example.shared.interfaces.IClientNotInGame;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class Game {
     private String gameId;
@@ -17,6 +15,7 @@ public class Game {
     private int currentPlayers;
     private String gameName;
     private IClientInGame clientProxy;
+    private List<Player.PlayerColor> availableColors;
 
     public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;
@@ -25,15 +24,26 @@ public class Game {
         this.maxPlayers = maxPlayers;
         this.currentPlayers = 0;
         this.gameId = UUID.randomUUID().toString();
-
+        newAvailableColorsSet();
         addPlayer(host);
     }
 
-
+    public void newAvailableColorsSet() {
+        availableColors = new ArrayList<>();
+        availableColors.add(Player.PlayerColor.BLUE);
+        availableColors.add(Player.PlayerColor.BLACK);
+        availableColors.add(Player.PlayerColor.GREEN);
+        availableColors.add(Player.PlayerColor.RED);
+        availableColors.add(Player.PlayerColor.YELLOW);
+    }
 
     public void addPlayer(Player player) {
         playerList.add(player);
         currentPlayers++;
+    }
+
+    public void updateAvailableColors(Player player) {
+        availableColors.remove(player.getColor());
     }
 
     public void startGame() {
@@ -75,4 +85,12 @@ public class Game {
     }
 
     public void setClientProxy(IClientInGame clientProxy) {this.clientProxy = clientProxy;}
+
+    public List<Player.PlayerColor> getAvailableColors() {
+        return availableColors;
+    }
+
+    public void setAvailableColors(List<Player.PlayerColor> availableColors) {
+        this.availableColors = availableColors;
+    }
 }

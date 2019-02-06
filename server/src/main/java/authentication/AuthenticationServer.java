@@ -18,7 +18,7 @@ public class AuthenticationServer {
 
     private static final int MAX_WAITING_CONNECTIONS = 12;
 
-    private void run(String portNumber) {
+    public void run(String portNumber) {
 
         /* Server Initialization */
 

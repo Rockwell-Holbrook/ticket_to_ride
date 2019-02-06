@@ -134,6 +134,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             @Override
             public void onClick(View v) {
                 register();
+                getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
+
             }
         });
         return v;
