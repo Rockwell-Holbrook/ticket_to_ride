@@ -18,7 +18,12 @@ public class AuthenticationServer {
 
     private static final int MAX_WAITING_CONNECTIONS = 12;
 
-    private void run(String portNumber) {
+    /**
+     * Starts the HTTP AuthenticationServer on port 8080. Is called in the Server class along with the SocketServer.
+     *
+     * @param portNumber Should be set to 8080.
+     */
+    public void run(String portNumber) {
 
         /* Server Initialization */
 
@@ -45,15 +50,6 @@ public class AuthenticationServer {
         server.createContext("/authenticate/login", new LoginHandler());
 
         server.start();
-    }
-
-    /**
-     *
-     * Main function that will use the other classes to do the entire working of the server.
-     */
-    public static void main(String[] args) {
-        String portNumber = args[0];
-        AuthenticationServer.getInstance().run(portNumber);
     }
 }
 
