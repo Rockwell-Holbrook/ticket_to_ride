@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
 import com.example.shared.interfaces.IServer;
+import com.example.shared.model.Player;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -43,12 +44,12 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void createGame(String username) {
+    public void createGame(Player username, int num, String string) {
 
     }
 
     @Override
-    public void joinGame(String username, String gameId) {
+    public void joinGame(String username, Player gameId) {
 
     }
 

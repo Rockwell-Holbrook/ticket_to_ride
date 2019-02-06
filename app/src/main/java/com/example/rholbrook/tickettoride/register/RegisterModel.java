@@ -5,6 +5,7 @@ import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 
+import java.util.Objects;
 import java.util.TreeSet;
 
 /**
@@ -13,6 +14,7 @@ import java.util.TreeSet;
 
 public class RegisterModel {
     private static final RegisterModel ourInstance = new RegisterModel();
+    private RegisterContract.Presenter mPresenter;
 
     private String username;
     private String password;
@@ -39,28 +41,40 @@ public class RegisterModel {
         this.confPassword = confPassword;
     }
 
-    public Message register() {
-        String message;
-        boolean success;
+    public void register() {
         if (passwordsMatch()) {
             try {
                 User user = new User(username, password);
-                message = AuthenticationServerProxy.getInstance().register(user);
-                ServerProxy.getInstance().connectToManagementSocket(username);
-                success = true;
+                RegisterTask registerTask = new RegisterTask();
+                registerTask.setListener(new ListeningTask.Listener() {
+                    @Override
+                    public void onComplete(Object result) {
+                        Message message = (Message) result;
+                        if (message.isSuccess()) {
+                            ServerProxy.getInstance().connectToManagementSocket(username);
+                            mPresenter.onSuccess();
+                        } else {
+                            mPresenter.onFailure(message.getMessage());
+                        }
+                    }
+                });
+                registerTask.execute(user);
             } catch (Throwable e) {
-                message = e.getMessage();
-                success = false;
+                mPresenter.onFailure(e.getMessage());
             }
         } else {
-            message = "Passwords do not match";
-            success = false;
+            mPresenter.onFailure("Passwords do not match!");
         }
-        return new Message(success, message);
     }
 
     private boolean passwordsMatch() {
-        if (password.equals(confPassword)) return true;
+            if (Objects.equals(password, confPassword)) {
+                return true;
+            }
         return false;
+    }
+
+    public void setPresenter(RegisterContract.Presenter presenter) {
+        mPresenter = presenter;
     }
 }

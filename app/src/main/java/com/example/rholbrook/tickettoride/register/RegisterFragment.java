@@ -21,7 +21,7 @@ import com.example.shared.model.Message;
 
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     // TODO: Is there a way to avoid referring to RegisterPresenter at all? //
-    private RegisterContract.Presenter mPresenter = new RegisterPresenter();
+    private RegisterContract.Presenter mPresenter = new RegisterPresenter(this);
 
     private Button mRegisterButton;
     private EditText mUsernameField;
@@ -31,10 +31,14 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private boolean usernameFilled;
     private boolean passwordFilled;
     private boolean confPasswordFilled;
-    private Listener mListener;
 
-    public interface Listener {
-        void onLogin();
+    public static RegisterFragment newInstance() {
+        RegisterFragment fragment = new RegisterFragment();
+        Bundle paramas = new Bundle();
+
+        fragment.setArguments(paramas);
+
+        return fragment;
     }
 
     @Override
@@ -123,7 +127,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
+                mPresenter.register();
             }
         });
         return v;
@@ -138,25 +142,12 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         }
     }
 
-    private void register() {
-        RegisterTask registerTask = new RegisterTask();
-        registerTask.setListener(new ListeningTask.Listener() {
-            @Override
-            public void onComplete(Object result) {
-                Message message = (Message) result;
-                checkStatus(message);
-            }
-        });
-        registerTask.execute();
+    public void onSuccess() {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
     }
 
-    private void checkStatus(Message message) {
-        if (message.isSuccess()) {
-            mListener.onLogin();
-        }
-        else {
-            showToast(message.getMessage());
-        }
+    public void onFailure(String message) {
+        showToast(message);
     }
 
     public void showToast(String message) {

@@ -8,14 +8,17 @@ import com.example.shared.model.Message;
 
 public class RegisterContract {
     interface View {
-
+        void onSuccess();
+        void onFailure(String message);
     }
 
     interface Presenter {
         void updateUsername(String username);
         void updatePassword(String password);
         void updateConfPassword(String password);
-        Message register();
+        void register();
+        void onSuccess();
+        void onFailure(String message);
     }
 
 }

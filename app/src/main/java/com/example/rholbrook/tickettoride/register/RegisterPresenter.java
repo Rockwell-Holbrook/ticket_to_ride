@@ -7,15 +7,19 @@ import com.example.shared.model.Message;
  */
 
 public class RegisterPresenter implements RegisterContract.Presenter {
-    RegisterModel mModel;
 
-    public RegisterPresenter() {
+    RegisterModel mModel;
+    RegisterContract.View mView;
+
+    public RegisterPresenter(RegisterContract.View view) {
         mModel = RegisterModel.getInstance();
+        mModel.setPresenter(this);
+        mView = view;
     }
 
     @Override
-    public Message register() {
-        return mModel.register();
+    public void register() {
+        mModel.register();
     }
 
     @Override
@@ -31,5 +35,13 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     @Override
     public void updateUsername(String username) {
         mModel.setUsername(username);
+    }
+
+    public void onSuccess() {
+        mView.onSuccess();
+    }
+
+    public void onFailure(String message) {
+        mView.onFailure(message);
     }
 }

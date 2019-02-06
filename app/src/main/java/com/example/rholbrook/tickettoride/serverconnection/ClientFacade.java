@@ -40,7 +40,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void joinGameComplete(String gameId) {
+    public void joinGameComplete(String gameId, String string) {
         MainActivityModel.getInstance().joinedGame(gameId);
     }
 
