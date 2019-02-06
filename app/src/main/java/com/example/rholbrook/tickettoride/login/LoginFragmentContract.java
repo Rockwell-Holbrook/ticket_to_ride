@@ -1,5 +1,7 @@
 package com.example.rholbrook.tickettoride.login;
 
+import model.Message;
+
 public class LoginFragmentContract {
 
     public interface View {
@@ -9,7 +11,7 @@ public class LoginFragmentContract {
     }
 
     public interface Presenter {
-        public void login(String username, String password);
+        public Message login(String username, String password);
 
     }
 

@@ -1,6 +1,11 @@
 package com.example.rholbrook.tickettoride.login;
 
-public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
+import model.Message;
+
+import java.util.Observable;
+import java.util.Observer;
+
+public class LoginFragmentPresenter extends Observable implements LoginFragmentContract.Presenter {
 
     private LoginFragmentContract.View viewCallback;
     private LoginFragmentModel mModel;
@@ -11,17 +16,22 @@ public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
     }
 
     private void initialize() {
-
+        mModel.addObserver((Observer) this);
     }
 
-    public void login(String username, String password) {
+    public Message login(String username, String password) {
 
         try {
-            mModel.login(username, password);
+            return mModel.login(username, password);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             viewCallback.showToast(throwable.getMessage());
+            return new Message(false, throwable.getMessage());
         }
+    }
+
+    public void successfulLogin() {
+
     }
 
 }
