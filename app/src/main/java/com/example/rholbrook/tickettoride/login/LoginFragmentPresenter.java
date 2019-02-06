@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.login;
 
-import model.Message;
+
+import com.example.shared.model.Message;
 
 import java.util.Observable;
 import java.util.Observer;

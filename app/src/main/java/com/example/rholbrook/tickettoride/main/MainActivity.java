@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivity;
+import com.example.rholbrook.tickettoride.login.LoginFragment;
 import com.example.rholbrook.tickettoride.register.RegisterFragment;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Game;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements
         mPresenter = new MainActivityPresenter(this);
         mPresenter.init();
 
-//        Fragment firstFragment = RegisterFragment.newInstance();
+//        Fragment firstFragment = LoginFragment.newInstance();
 //        getSupportFragmentManager().beginTransaction()
 //                .add(R.id.authentication_fragment_container, firstFragment).commit();
     }

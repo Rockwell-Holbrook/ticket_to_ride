@@ -2,8 +2,8 @@ package com.example.rholbrook.tickettoride.login;
 
 import com.example.rholbrook.tickettoride.serverconnection.AuthenticationServerProxy;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
-import model.Message;
-import model.User;
+import com.example.shared.model.Message;
+import com.example.shared.model.User;
 
 import java.util.Observable;
 
