@@ -78,7 +78,7 @@ public class SocketServer extends WebSocketServer {
 
     @Override
     public void onStart() {
-        System.out.println("Server started!");
+        System.out.println("Socket Server started!");
         setConnectionLostTimeout(0);
         setConnectionLostTimeout(100);
     }
