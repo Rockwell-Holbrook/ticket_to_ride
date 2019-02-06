@@ -42,15 +42,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         return fragment;
     }
 
-    public static RegisterFragment newInstance() {
-        RegisterFragment fragment = new RegisterFragment();
-        Bundle paramas = new Bundle();
-
-        fragment.setArguments(paramas);
-
-        return fragment;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +65,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                     usernameFilled = false;
                 } else {
                     usernameFilled = true;
-                    mPresenter.updateUsername(s.toString());
                 }
                 onFieldsChanged();
             }
@@ -98,7 +88,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                     passwordFilled = false;
                 } else {
                     passwordFilled = true;
-                    mPresenter.updatePassword(s.toString());
                 }
                 onFieldsChanged();
             }
@@ -122,7 +111,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                     confPasswordFilled = false;
                 } else {
                     confPasswordFilled = true;
-                    mPresenter.updateConfPassword(s.toString());
                 }
                 onFieldsChanged();
             }
@@ -134,9 +122,13 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         });
 
         mRegisterButton = v.findViewById(R.id.register_button);
+        mRegisterButton.setEnabled(false);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mPresenter.updateUsername(mUsernameField.getText().toString());
+                mPresenter.updatePassword(mPasswordField.getText().toString());
+                mPresenter.updateConfPassword(mConfPasswordField.getText().toString());
                 mPresenter.register();
             }
         });
@@ -160,7 +152,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         showToast(message);
     }
 
-    public void showToast(String message) {
+    private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

@@ -8,13 +8,14 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="10dp"
         android:text="@string/register_greeting"
         android:textSize="20sp"
-        android:textColor="@color/white"
+        android:textColor="@color/welcomeTextColor"
+        android:fontFamily="@font/chippewafallsnf"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +23,7 @@
 
     <EditText
         android:id="@+id/register_username_field"
-        android:layout_width="wrap_content"
+        android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/input_edit_text"
@@ -35,7 +36,7 @@
 
     <EditText
         android:id="@+id/register_password_field"
-        android:layout_width="wrap_content"
+        android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/input_edit_text"
@@ -47,7 +48,7 @@
 
     <EditText
         android:id="@+id/register_conf_password_field"
-        android:layout_width="wrap_content"
+        android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
         android:background="@drawable/input_edit_text"

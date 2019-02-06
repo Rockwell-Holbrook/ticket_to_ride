@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.register;
 
+import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.AuthenticationServerProxy;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Message;
@@ -44,7 +45,7 @@ public class RegisterModel {
     public void register() {
         if (passwordsMatch()) {
             try {
-                User user = new User(username, password);
+                final User user = new User(username, password);
                 RegisterTask registerTask = new RegisterTask();
                 registerTask.setListener(new ListeningTask.Listener() {
                     @Override
@@ -52,6 +53,7 @@ public class RegisterModel {
                         Message message = (Message) result;
                         if (message.isSuccess()) {
                             ServerProxy.getInstance().connectToManagementSocket(username);
+                            Authentication.getInstance().setUser(user);
                             mPresenter.onSuccess();
                         } else {
                             mPresenter.onFailure(message.getMessage());
