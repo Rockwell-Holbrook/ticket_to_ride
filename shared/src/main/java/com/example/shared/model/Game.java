@@ -28,6 +28,7 @@ public class Game {
         addPlayer(host);
     }
 
+
     public void newAvailableColorsSet() {
         availableColors = new ArrayList<>();
         availableColors.add(Player.PlayerColor.BLUE);
@@ -37,16 +38,28 @@ public class Game {
         availableColors.add(Player.PlayerColor.YELLOW);
     }
 
+    /**
+     *
+     * @param player The player that will be added.
+     *
+     * This function will add a player to an existing game.
+     */
     public void addPlayer(Player player) {
         playerList.add(player);
         currentPlayers++;
     }
 
+
     public void updateAvailableColors(Player player) {
         availableColors.remove(player.getColor());
     }
 
+
+    /**
+     * Start the full game by setting isPlaying to true.
+     */
     public void startGame() {
+        //Todo: Create a command and return it possibly? Needs to be more functional.
         isPlaying = true;
     }
 
