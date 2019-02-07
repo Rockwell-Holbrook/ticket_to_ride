@@ -17,6 +17,11 @@ public interface IClientInGame {
      */
     void playerJoinedGame(String username, Player.PlayerColor color);
 
+    /**
+     * Signals the GameLobbyFragmentModel to start the Game Activity
+     */
+    void gameStarted();
+
     void cardDrawn();
     void routeClaimed();
     void ticketsDrawn();

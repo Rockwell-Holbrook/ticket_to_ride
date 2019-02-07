@@ -21,7 +21,7 @@ public class SocketServer extends WebSocketServer {
     private Set<WebSocket> managementConnections;
     private Map<String, Set<WebSocket>> gameConnections;
 
-    private SocketServer(int port) {
+    public SocketServer(int port) {
         super(new InetSocketAddress(port));
         managementConnections = new HashSet<>();
         gameConnections = new HashMap<>();

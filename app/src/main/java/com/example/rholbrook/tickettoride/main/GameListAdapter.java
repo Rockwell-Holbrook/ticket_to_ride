@@ -48,7 +48,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         viewHolder.gameListItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.selectGame(game.getGameId());
+                mListener.selectGame(game);
                 if (currentlySelectedViewHolder != null) {
                     if ((currentlySelectedViewHolder.getAdapterPosition() % 2) == 0) {
                         currentlySelectedViewHolder.gameListItemLayout.setBackgroundResource(R.color.gameListEntryBackgroundEven);

@@ -13,13 +13,13 @@ public class User {
 
     public void validateUserName() throws Exception {
         if(this.userName == null || this.userName.equals("") || this.userName.trim().equals("")) {
-            throw new Exception("Invalid UserName!!");
+            throw new Exception("Invalid Username");
         }
     }
 
     public void validatePassword() throws Exception {
         if(this.password == null || this.password.equals("") || this.password.trim().equals("")) {
-            throw new Exception("Invalid Password!!");
+            throw new Exception("Invalid Password");
         }
     }
 

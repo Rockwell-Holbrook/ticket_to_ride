@@ -13,11 +13,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import com.example.rholbrook.tickettoride.R;
+import com.example.shared.model.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateGameDialogFragment extends DialogFragment {
 
     public interface CreateGameDialogInterface {
-        public void onCreatePressed(DialogFragment dialog);
+        public void onCreatePressed(DialogFragment dialog, String gameName, int maxPlayers, Player.PlayerColor selectedColor);
         public void onCancelPressed(DialogFragment dialog);
     }
 
@@ -37,22 +41,25 @@ public class CreateGameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_create_game, null);
-        EditText gameName = dialogView.findViewById(R.id.game_name_edit_text);
-        Spinner playerNumberSpinner = dialogView.findViewById(R.id.player_number_spinner);
-        ArrayAdapter<CharSequence> numberAdapter = ArrayAdapter.createFromResource(getContext(), R.array.player_number_array, android.R.layout.simple_spinner_item);
+        final EditText gameName = dialogView.findViewById(R.id.game_name_edit_text);
+        final Spinner playerNumberSpinner = dialogView.findViewById(R.id.player_number_spinner);
+        final ArrayAdapter<CharSequence> numberAdapter = ArrayAdapter.createFromResource(getContext(), R.array.player_number_array, android.R.layout.simple_spinner_item);
         numberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerNumberSpinner.setAdapter(numberAdapter);
-        Spinner playerColorSpinner = dialogView.findViewById(R.id.player_color_spinner);
+        final Spinner playerColorSpinner = dialogView.findViewById(R.id.player_color_spinner);
+        final List<Player.PlayerColor> availableColors = new ArrayList<>();
+        getAvailableColors(availableColors);
         ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getContext(), R.array.player_colors_array, android.R.layout.simple_spinner_item);
         colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColorSpinner.setAdapter(colorAdapter);
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onCreatePressed(CreateGameDialogFragment.this);
+                mListener.onCreatePressed(CreateGameDialogFragment.this,
+                        gameName.getText().toString(),
+                        Integer.valueOf(playerNumberSpinner.getSelectedItem().toString()), availableColors.get(playerColorSpinner.getSelectedItemPosition()));
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -65,5 +72,13 @@ public class CreateGameDialogFragment extends DialogFragment {
 
         builder.setView(dialogView);
         return builder.create();
+    }
+
+    private void getAvailableColors(List<Player.PlayerColor> availableColors) {
+        availableColors.add(Player.PlayerColor.BLUE);
+        availableColors.add(Player.PlayerColor.BLACK);
+        availableColors.add(Player.PlayerColor.GREEN);
+        availableColors.add(Player.PlayerColor.RED);
+        availableColors.add(Player.PlayerColor.YELLOW);
     }
 }
