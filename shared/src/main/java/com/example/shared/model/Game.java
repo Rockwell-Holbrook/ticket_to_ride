@@ -58,7 +58,6 @@ public class Game {
      * Start the full game by setting isPlaying to true.
      */
     public void startGame() {
-        //Todo: Create a command and return it possibly? Needs to be more functional.
         isPlaying = true;
     }
 

@@ -23,7 +23,8 @@ public class        ServerFacade implements IServer {
      */
     @Override
     public void createGame(Player host, int maxPlayers, String gameName) {
-        gameManager.createGame(host, maxPlayers, gameName);
+        String gameId = gameManager.createGame(host, maxPlayers, gameName);
+        gameManager.joinGame(gameId, host);
     }
 
     /**

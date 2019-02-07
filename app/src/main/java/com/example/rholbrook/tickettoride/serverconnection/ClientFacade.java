@@ -8,6 +8,8 @@ import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class ClientFacade implements IClientInGame, IClientNotInGame {
@@ -30,8 +32,13 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void playerJoinedGame(String username, Player.PlayerColor color) {
-        GameLobbyActivityModel.getInstance().newPlayerJoined(username, color);
+    public void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList) {
+
+    }
+
+    @Override
+    public void hostStartedGame(String gameId) {
+    
     }
 
     @Override
@@ -70,6 +77,4 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     public void ticketsReturned() {
 
     }
-
-
 }
