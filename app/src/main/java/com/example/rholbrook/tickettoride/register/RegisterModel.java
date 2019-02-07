@@ -1,21 +1,19 @@
 package com.example.rholbrook.tickettoride.register;
 
 import com.example.rholbrook.tickettoride.main.Authentication;
-import com.example.rholbrook.tickettoride.serverconnection.AuthenticationServerProxy;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 
 import java.util.Objects;
-import java.util.TreeSet;
+import java.util.Observable;
 
 /**
  * Created by chocobj on 2/4/19.
  */
 
-public class RegisterModel {
+public class RegisterModel extends Observable {
     private static final RegisterModel ourInstance = new RegisterModel();
-    private RegisterContract.Presenter mPresenter;
 
     private String username;
     private String password;
@@ -44,28 +42,9 @@ public class RegisterModel {
 
     public void register() {
         if (passwordsMatch()) {
-            try {
-                final User user = new User(username, password);
-                RegisterTask registerTask = new RegisterTask();
-                registerTask.setListener(new ListeningTask.Listener() {
-                    @Override
-                    public void onComplete(Object result) {
-                        Message message = (Message) result;
-                        if (message.isSuccess()) {
-                            ServerProxy.getInstance().connectToManagementSocket(username);
-                            Authentication.getInstance().setUser(user);
-                            mPresenter.onSuccess();
-                        } else {
-                            mPresenter.onFailure(message.getMessage());
-                        }
-                    }
-                });
-                registerTask.execute(user);
-            } catch (Throwable e) {
-                mPresenter.onFailure(e.getMessage());
-            }
+            startRegisterTask();
         } else {
-            mPresenter.onFailure("Passwords do not match!");
+            notifyObservers(new Message(false, "Passwords do not match!"));
         }
     }
 
@@ -77,6 +56,28 @@ public class RegisterModel {
     }
 
     public void setPresenter(RegisterContract.Presenter presenter) {
-        mPresenter = presenter;
+       addObserver(presenter);
     }
+
+    private void startRegisterTask() {
+        try {
+            final User user = new User(username, password);
+            RegisterTask registerTask = new RegisterTask();
+            registerTask.setListener(new ListeningTask.Listener() {
+                @Override
+                public void onComplete(Object result) {
+                    Message message = (Message) result;
+                    if (message.isSuccess()) {
+                        ServerProxy.getInstance().connectToManagementSocket(username);
+                        Authentication.getInstance().setUser(user);
+                    }
+                    notifyObservers(message);
+                }
+            });
+            registerTask.execute(user);
+        } catch (Throwable e) {
+            notifyObservers(new Message(false, e.getMessage()));
+        }
+    }
+    
 }

@@ -2,6 +2,8 @@ package com.example.rholbrook.tickettoride.register;
 
 import com.example.shared.model.Message;
 
+import java.util.Observable;
+
 /**
  * Created by chocobj on 2/4/19.
  */
@@ -37,11 +39,13 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         mModel.setUsername(username);
     }
 
-    public void onSuccess() {
-        mView.onSuccess();
-    }
-
-    public void onFailure(String message) {
-        mView.onFailure(message);
+    @Override
+    public void update(Observable o, Object arg) {
+        Message message = (Message) arg;
+        if (message.isSuccess()) {
+            mView.onSuccess();
+        } else {
+            mView.onFailure(message.getMessage());
+        }
     }
 }

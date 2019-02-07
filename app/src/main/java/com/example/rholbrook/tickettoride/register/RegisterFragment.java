@@ -135,15 +135,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         return v;
     }
 
-    private void onFieldsChanged() {
-        if (usernameFilled && passwordFilled && confPasswordFilled) {
-            mRegisterButton.setEnabled(true);
-        }
-        else {
-            mRegisterButton.setEnabled(false);
-        }
-    }
-
     public void onSuccess() {
         getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
     }
@@ -155,5 +146,15 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
+
+    private void onFieldsChanged() {
+        if (usernameFilled && passwordFilled && confPasswordFilled) {
+            mRegisterButton.setEnabled(true);
+        }
+        else {
+            mRegisterButton.setEnabled(false);
+        }
+    }
+
 }
 
