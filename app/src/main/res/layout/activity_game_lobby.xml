@@ -15,14 +15,14 @@
             android:background="@color/chatListBackground"
             tools:listitem="@layout/list_item_lobby_chat"
     />
+
     <android.support.constraint.ConstraintLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/linearLayout4"
             android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@+id/divider_chat"
-    >
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toEndOf="@+id/divider_chat">
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

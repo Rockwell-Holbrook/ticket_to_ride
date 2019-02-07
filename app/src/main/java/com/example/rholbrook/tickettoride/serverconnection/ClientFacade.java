@@ -36,6 +36,18 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     }
 
+//    MainActivity
+    @Override
+    public void updateGameList(List<Game> games) {
+        MainActivityModel.getInstance().newGameListRetrieved(games);
+    }
+
+    @Override
+    public void joinGameComplete(String gameId, String string) {
+        MainActivityModel.getInstance().joinedGame(gameId);
+    }
+
+//    Phase 2 Connections
     @Override
     public void hostStartedGame(String gameId) {
     

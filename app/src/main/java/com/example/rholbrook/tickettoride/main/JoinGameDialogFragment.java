@@ -66,7 +66,7 @@ public class JoinGameDialogFragment extends DialogFragment {
         builder.setView(dialogView);
         return builder.create();
     }
-
+  
     private ArrayList<String> getColorStrings(List<Player.PlayerColor> availableColors) {
         ArrayList<String> colors = new ArrayList<>();
         for (Player.PlayerColor color : availableColors) {

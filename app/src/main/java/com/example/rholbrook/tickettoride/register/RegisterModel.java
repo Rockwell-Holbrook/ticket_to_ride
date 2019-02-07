@@ -1,18 +1,21 @@
 package com.example.rholbrook.tickettoride.register;
 
 import com.example.rholbrook.tickettoride.main.Authentication;
-import com.example.rholbrook.tickettoride.serverconnection.AuthenticationServerProxy;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 
-import java.util.TreeSet;
+import java.util.Objects;
+import java.util.Observable;
+
 
 /**
  * Created by chocobj on 2/4/19.
  */
 
-public class RegisterModel {
+
+public class RegisterModel extends Observable {
+
     private static final RegisterModel ourInstance = new RegisterModel();
 
     private String username;
@@ -40,29 +43,43 @@ public class RegisterModel {
         this.confPassword = confPassword;
     }
 
-    public Message register() {
-        String message;
-        boolean success;
+    public void register() {
         if (passwordsMatch()) {
-            try {
-                User user = new User(username, password);
-                message = AuthenticationServerProxy.getInstance().register(user);
-                ServerProxy.getInstance().connectToManagementSocket(username);
-                Authentication.getInstance().setUsername(username);
-                success = true;
-            } catch (Throwable e) {
-                message = e.getMessage();
-                success = false;
-            }
+            startRegisterTask();
         } else {
-            message = "Passwords do not match";
-            success = false;
+            notifyObservers(new Message(false, "Passwords do not match!"));
         }
-        return new Message(success, message);
     }
 
     private boolean passwordsMatch() {
-        if (password.equals(confPassword)) return true;
+            if (Objects.equals(password, confPassword)) {
+                return true;
+            }
         return false;
+    }
+
+    public void setPresenter(RegisterContract.Presenter presenter) {
+       addObserver(presenter);
+    }
+
+    private void startRegisterTask() {
+        try {
+            final User user = new User(username, password);
+            RegisterTask registerTask = new RegisterTask();
+            registerTask.setListener(new ListeningTask.Listener() {
+                @Override
+                public void onComplete(Object result) {
+                    Message message = (Message) result;
+                    if (message.isSuccess()) {
+                        ServerProxy.getInstance().connectToManagementSocket(username);
+                        Authentication.getInstance().setUser(user);
+                    }
+                    notifyObservers(message);
+                }
+            });
+            registerTask.execute(user);
+        } catch (Throwable e) {
+            notifyObservers(new Message(false, e.getMessage()));
+        }
     }
 }

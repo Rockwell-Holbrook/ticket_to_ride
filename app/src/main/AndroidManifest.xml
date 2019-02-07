@@ -37,6 +37,10 @@
                   android:screenOrientation="landscape"
                   android:theme="@style/Theme.Design.NoActionBar">
         </activity>
+        <activity android:name=".gamelobby.GameLobbyActivity"
+                  android:screenOrientation="landscape"
+                  android:theme="@style/Theme.Design.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

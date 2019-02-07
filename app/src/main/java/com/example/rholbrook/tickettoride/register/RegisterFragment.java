@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.shared.model.Message;
+
 import com.example.rholbrook.tickettoride.R;
 
 /**
@@ -22,7 +23,7 @@ import com.example.rholbrook.tickettoride.R;
 
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     // TODO: Is there a way to avoid referring to RegisterPresenter at all? //
-    private RegisterContract.Presenter mPresenter = new RegisterPresenter();
+    private RegisterContract.Presenter mPresenter = new RegisterPresenter(this);
 
     private Button mRegisterButton;
     private EditText mUsernameField;
@@ -130,15 +131,30 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         });
 
         mRegisterButton = v.findViewById(R.id.register_button);
+        mRegisterButton.setEnabled(false);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
-                getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
-
+                mPresenter.updateUsername(mUsernameField.getText().toString());
+                mPresenter.updatePassword(mPasswordField.getText().toString());
+                mPresenter.updateConfPassword(mConfPasswordField.getText().toString());
+                mPresenter.register();
             }
         });
         return v;
+    }
+
+
+    public void onSuccess() {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
+    }
+
+    public void onFailure(String message) {
+        showToast(message);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     private void onFieldsChanged() {
@@ -148,31 +164,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         else {
             mRegisterButton.setEnabled(false);
         }
-    }
-
-    private void register() {
-        RegisterTask registerTask = new RegisterTask();
-        registerTask.setListener(new ListeningTask.Listener() {
-            @Override
-            public void onComplete(Object result) {
-                Message message = (Message) result;
-                checkStatus(message);
-            }
-        });
-        registerTask.execute();
-    }
-
-    private void checkStatus(Message message) {
-        if (message.isSuccess()) {
-            mListener.onLogin();
-        }
-        else {
-            showToast(message.getMessage());
-        }
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }
 

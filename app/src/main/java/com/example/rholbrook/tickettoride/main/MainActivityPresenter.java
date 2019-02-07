@@ -16,7 +16,6 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     public MainActivityPresenter(MainActivityContract.View viewCallback){
         this.viewCallback = viewCallback;
         this.mModel = MainActivityModel.getInstance();
-        connectToManagementServer();
     }
 
 
@@ -110,6 +109,15 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
 
     @Override
     public void update(Observable observable, Object o) {
+    }
 
+    @Override
+    public void joinedGame() {
+        viewCallback.startGameLobbyFragment();
+    }
+
+    @Override
+    public void newGameList(List<Game> games) {
+        viewCallback.updateGameList(games);
     }
 }
