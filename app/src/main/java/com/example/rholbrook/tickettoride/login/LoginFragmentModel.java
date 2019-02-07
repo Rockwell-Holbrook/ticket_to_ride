@@ -23,24 +23,36 @@ class LoginFragmentModel extends Observable {
 
 
     public Message login(String username, String password) throws Throwable {
-        String message;
-        boolean success;
+        final String[] message = new String[1];
+        final boolean[] success = new boolean[1];
 
         try {
-            User user = new User(username, password);
-            message = AuthenticationServerProxy.getInstance().login(user);
-            success = true;
+            final User user = new User(username, password);
+            LoginTask loginTask = new LoginTask();
+            loginTask.setListener(new ListeningTask.Listener() {
+                @Override
+                public void onComplete(Object result) {
+                    try {
+                        message[0] = AuthenticationServerProxy.getInstance().login(user);
+                        success[0] = true;
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                        success[0] = false;
+                    }
+                }
+            });
+
 
         } catch (Exception e) {
             e.printStackTrace();
-            success = false;
+            success[0] = false;
             throw e;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-            success = false;
+            success[0] = false;
             throw throwable;
         }
-        return new Message(success, message);
+        return new Message(success[0], message[0]);
 
     }
 
