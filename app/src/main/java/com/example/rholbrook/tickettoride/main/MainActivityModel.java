@@ -4,7 +4,6 @@ import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 import com.example.shared.model.User;
-
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Observable;

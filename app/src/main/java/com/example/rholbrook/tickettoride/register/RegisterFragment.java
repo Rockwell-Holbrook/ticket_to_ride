@@ -1,6 +1,5 @@
 package com.example.rholbrook.tickettoride.register;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -73,7 +72,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 } else {
                     usernameFilled = true;
                     mPresenter.updateUsername(s.toString());
-                    mUsernameField.setTextColor(Color.BLACK);
                 }
                 onFieldsChanged();
             }
@@ -98,7 +96,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 } else {
                     passwordFilled = true;
                     mPresenter.updatePassword(s.toString());
-                    mPasswordField.setTextColor(Color.BLACK);
                 }
                 onFieldsChanged();
             }
@@ -123,7 +120,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 } else {
                     confPasswordFilled = true;
                     mPresenter.updateConfPassword(s.toString());
-                    mConfPasswordField.setTextColor(Color.BLACK);                }
+                }
                 onFieldsChanged();
             }
 
@@ -134,11 +131,14 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         });
 
         mRegisterButton = v.findViewById(R.id.register_button);
+        mRegisterButton.setEnabled(false);
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register();
-
+                mPresenter.updateUsername(mUsernameField.getText().toString());
+                mPresenter.updatePassword(mPasswordField.getText().toString());
+                mPresenter.updateConfPassword(mConfPasswordField.getText().toString());
+                mPresenter.register();
             }
         });
         return v;
@@ -150,6 +150,19 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         if (callback != null) {
             callback.onCall(SUCCESSFUL_AUTHENTICATION);
         }
+    }
+
+
+    public void onSuccess() {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
+    }
+
+    public void onFailure(String message) {
+        showToast(message);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     private void onFieldsChanged() {
@@ -175,10 +188,10 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     private void checkStatus(Message message) {
         if (message.isSuccess()) {
-            getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
+           onSuccess();
         }
         else {
-            showToast(message.getMessage());
+            onFailure(message.getMessage());
         }
     }
 

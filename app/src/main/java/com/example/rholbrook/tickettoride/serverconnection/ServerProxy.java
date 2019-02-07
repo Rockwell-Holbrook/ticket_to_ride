@@ -4,7 +4,6 @@ import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Player;
 import com.google.gson.Gson;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -34,6 +33,7 @@ public class ServerProxy implements IServer {
             throw e;
         }
     }
+
 
     public void connectToGameSocket(String gameId, String username) throws URISyntaxException {
         try {
