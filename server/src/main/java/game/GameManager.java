@@ -1,6 +1,5 @@
 package game;
 
-import com.example.shared.interfaces.IClientNotInGame;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 import communication.ClientProxy;
@@ -21,7 +20,7 @@ public class GameManager {
 
     private Map<String, Game> gameList = new HashMap<>();
 
-    private IClientNotInGame clientProxy = new ClientProxy();
+    private ClientProxy clientProxy = new ClientProxy();
 
     /**
      * Creates the game and adds it to the gameList and to the socketServer using gameID as the key.
@@ -30,12 +29,14 @@ public class GameManager {
      * @param maxPlayers The max number of players this game needs before it can start. An int between 2-5.
      * @param gameName The name of the game.
      */
-    public void createGame(Player host, int maxPlayers, String gameName) {
+    public String createGame(Player host, int maxPlayers, String gameName) {
         Game game = new Game(host, maxPlayers, gameName);
         game.setClientProxy(new ClientProxy(game.getGameId()));
         this.gameList.put(gameName, game);
         SocketServer.getInstance().addGame(game.getGameId());
         clientProxy.updateGameList(new ArrayList<>(gameList.values()));
+
+        return game.getGameId();
     }
 
     /**
@@ -47,6 +48,8 @@ public class GameManager {
         Game game = this.gameList.get(gameId);
         game.addPlayer(player);
         clientProxy.joinGameComplete(player.getUsername(), gameId);
+        clientProxy.playerJoinedGame(player.getUsername(), player.getPlayerColor(), game.getPlayerList());
+        clientProxy.updateGameList(new ArrayList<>(gameList.values()));
     }
 
     /**
@@ -58,6 +61,8 @@ public class GameManager {
     public void startGame(String gameId) {
         Game game = this.gameList.get(gameId);
         game.startGame();
+        clientProxy.hostStartedGame(gameId);
+        clientProxy.updateGameList(new ArrayList<>(gameList.values()));
     }
 
     public Map<String, Game> getGameList() {

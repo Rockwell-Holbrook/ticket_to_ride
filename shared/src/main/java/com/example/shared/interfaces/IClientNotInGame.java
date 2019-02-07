@@ -3,7 +3,6 @@ package com.example.shared.interfaces;
 import com.example.shared.model.Game;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface IClientNotInGame {
     /**
