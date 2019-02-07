@@ -4,22 +4,29 @@ import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Player;
 import game.GameManager;
 
-public class        ServerFacade implements IServer {
+public class ServerFacade implements IServer {
     private static final ServerFacade ourInstance = new ServerFacade();
     private GameManager gameManager = GameManager.getInstance();
+
 
     public static ServerFacade getInstance() {
         return ourInstance;
     }
 
-    private ServerFacade() {}
+    private ServerFacade() {
+    }
+
+    @Override
+    public void getGameList(String username) {
+        gameManager.sendGameList(username);
+    }
 
     /**
      * Creates the game and adds it to the gameList and to the socketServer using gameID as the key.
      *
-     * @param host The Player hosting the game. This player will be set to host upon creation.
+     * @param host       The Player hosting the game. This player will be set to host upon creation.
      * @param maxPlayers The max number of players this game needs before it can start. An int between 2-5.
-     * @param gameName The name of the game.
+     * @param gameName   The name of the game.
      */
     @Override
     public void createGame(Player host, int maxPlayers, String gameName) {

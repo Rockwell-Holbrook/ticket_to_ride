@@ -52,6 +52,10 @@ public class GameManager {
         clientProxy.updateGameList(new ArrayList<>(gameList.values()));
     }
 
+    public void sendGameList(String username){
+        clientProxy.updateGameList(new ArrayList<>(gameList.values()), username);
+    }
+
     /**
      *
      * @param gameId The ID of the game that needs to be started.

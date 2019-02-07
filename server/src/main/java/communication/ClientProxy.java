@@ -42,6 +42,19 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
         ss.broadcastToManagement(new Command(methodName, typeNames, inputVals));
     }
 
+    /**
+     * Send the command for just one user to update their game list
+     * @param games List of games
+     * @param username User to send cmd to
+     */
+    public void updateGameList(List<Game> games, String username){
+        String methodName = "updateGameList";
+        String[] typeNames = {List.class.getName()};
+        Object[] inputVals = {games};
+
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
+    }
+
     @Override
     public void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList) {
         String methodName = "playerJoinedGame";
@@ -67,6 +80,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
         Object[] inputVals = {gameId};
 
         ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+    }
+
+    @Override
+    public void gameStarted() {
+
     }
 
     @Override
