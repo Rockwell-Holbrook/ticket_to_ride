@@ -5,6 +5,12 @@ import com.example.shared.model.Player;
 public interface IServer {
 
     /**
+     * Used by a user who just barely joined the management server so that they can get all open games
+     * @param username User asking for game list
+     */
+    void getGameList(String username);
+
+    /**
      * Creates the game and adds it to the gameList and to the socketServer using gameID as the key.
      *
      * @param host The Player hosting the game. This player will be set to host upon creation.
