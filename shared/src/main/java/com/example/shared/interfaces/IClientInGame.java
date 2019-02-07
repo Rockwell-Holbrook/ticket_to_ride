@@ -22,6 +22,11 @@ public interface IClientInGame {
 
     void hostStartedGame(String gameId);
 
+    /**
+     * Signals the GameLobbyFragmentModel to start the Game Activity
+     */
+    void gameStarted();
+
     void cardDrawn();
     void routeClaimed();
     void ticketsDrawn();

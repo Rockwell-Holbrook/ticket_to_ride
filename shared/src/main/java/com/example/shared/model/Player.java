@@ -5,9 +5,10 @@ public class Player {
     private boolean isHost;
     private PlayerColor playerColor;
 
-    public Player(String username, boolean isHost) {
+    public Player(String username, boolean isHost, PlayerColor color) {
         this.username = username;
         this.isHost = isHost;
+        this.color = color;
     }
 
     public Player(String username, boolean isHost, PlayerColor playerColor) {
@@ -34,6 +35,10 @@ public class Player {
 
     public PlayerColor getPlayerColor() {
         return playerColor;
+    }
+
+    public void setColor(PlayerColor color) {
+        this.playerColor = color;
     }
 
     public enum PlayerColor {

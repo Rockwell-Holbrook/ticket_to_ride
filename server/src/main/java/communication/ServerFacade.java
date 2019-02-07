@@ -4,7 +4,7 @@ import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Player;
 import game.GameManager;
 
-public class ServerFacade implements IServer {
+public class        ServerFacade implements IServer {
     private static final ServerFacade ourInstance = new ServerFacade();
     private GameManager gameManager = GameManager.getInstance();
 

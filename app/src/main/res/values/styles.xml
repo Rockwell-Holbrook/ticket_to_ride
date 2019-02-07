@@ -13,13 +13,8 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-    <style name="shadoweffect">
-        <item name="android:paddingLeft">4px</item>
-        <item name="android:paddingBottom">4px</item>
-        <item name="android:textColor">#B22222</item>
-        <item name="android:textSize">25sp</item>
-        <item name="android:strokeColor">#FFD700</item>
-        <item name="android:strokeWidth">26sp</item>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/loading_page</item>
     </style>
 
 </resources>
