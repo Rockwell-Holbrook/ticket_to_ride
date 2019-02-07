@@ -30,6 +30,8 @@
         android:hint="@string/register_username_field"
         android:inputType="text"
         android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -43,6 +45,8 @@
         android:hint="@string/register_password_field"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="@+id/register_username_field"
         app:layout_constraintTop_toBottomOf="@+id/register_username_field" />
 
@@ -55,6 +59,8 @@
         android:hint="@string/register_confirm_password_field"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/register_password_field" />
