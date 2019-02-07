@@ -2,7 +2,6 @@ package com.example.shared.model;
 
 
 import com.example.shared.interfaces.IClientInGame;
-import com.example.shared.interfaces.IClientNotInGame;
 
 import java.util.*;
 
@@ -14,8 +13,8 @@ public class Game {
     private int maxPlayers;
     private int currentPlayers;
     private String gameName;
-    private IClientInGame clientProxy;
     private List<Player.PlayerColor> availableColors;
+    private transient IClientInGame clientProxy;
 
     public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;
