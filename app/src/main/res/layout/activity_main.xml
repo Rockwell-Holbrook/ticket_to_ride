@@ -112,7 +112,7 @@
                                           android:id="@+id/game_list_guideline" app:layout_constraintGuide_begin="342dp"
                                           android:orientation="vertical"/>
     <FrameLayout
-            android:id="@+id/authentication_fragment_container"
+            android:id="@+id/lobby"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

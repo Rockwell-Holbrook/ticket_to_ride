@@ -38,7 +38,7 @@ public class PlayerListAdapter extends RecyclerView.Adapter<PlayerListAdapter.Vi
         } else {
             viewHolder.constraintLayout.setBackgroundResource(R.color.gameListEntryBackgroundOdd);
         }
-        viewHolder.playerAvatar.setImageResource(getAvatar(player.getColor()));
+        viewHolder.playerAvatar.setImageResource(getAvatar(player.getPlayerColor()));
         viewHolder.playerName.setText(player.getUsername());
     }
 

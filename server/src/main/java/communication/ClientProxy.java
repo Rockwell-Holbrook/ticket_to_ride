@@ -70,6 +70,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
+    public void gameStarted() {
+        
+    }
+
+    @Override
     public void cardDrawn() {
 
     }

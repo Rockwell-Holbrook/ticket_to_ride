@@ -5,12 +5,6 @@ public class Player {
     private boolean isHost;
     private PlayerColor playerColor;
 
-    public Player(String username, boolean isHost, PlayerColor color) {
-        this.username = username;
-        this.isHost = isHost;
-        this.color = color;
-    }
-
     public Player(String username, boolean isHost, PlayerColor playerColor) {
         this.username = username;
         this.isHost = isHost;

@@ -43,9 +43,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        Authentication authentication = Authentication.getInstance();
-        authentication.setUsername("username");
-        fragmentContainer = findViewById(R.id.authentication_fragment_container);
+        fragmentContainer = findViewById(R.id.lobby);
         createGameButton = findViewById(R.id.create_game_button);
         createGameButton.setId(MainActivityModel.CREATE_GAME_BUTTON);
         createGameButton.setOnClickListener(this);
@@ -60,10 +58,6 @@ public class MainActivity extends AppCompatActivity implements
 
         mPresenter = new MainActivityPresenter(this);
         mPresenter.init();
-
-//        Fragment firstFragment = LoginFragment.newInstance();
-//        getSupportFragmentManager().beginTransaction()
-//                .add(R.id.authentication_fragment_container, firstFragment).commit();
     }
 
     @Override

@@ -25,7 +25,6 @@ public class MainActivityContract {
         void joinedGame();
         void newGameList(List<Game> games);
         Game getSelectedGame();
-        void connectToManagementServer();
         ArrayList<CharSequence> getAvailableColors();
     }
 }

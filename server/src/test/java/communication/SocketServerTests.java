@@ -143,7 +143,7 @@ public class SocketServerTests {
 
             String methodName = "createGame";
             String[] typeNames = {Player.class.getName(), int.class.getName(), String.class.getName()};
-            Object[] inputVals = {new Player("taylor", true), 5, "Taylor's game"};
+            Object[] inputVals = {new Player("taylor", true, Player.PlayerColor.BLUE), 5, "Taylor's game"};
             cc.send(gson.toJson(new Command(methodName, typeNames, inputVals)));
 
             sleep(1000 * 5);

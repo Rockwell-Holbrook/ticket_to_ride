@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.register;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.rholbrook.tickettoride.authentication.AuthenticationActivityModel;
 import com.example.shared.model.Message;
 import com.example.rholbrook.tickettoride.R;
 
@@ -23,12 +25,12 @@ import com.example.rholbrook.tickettoride.R;
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     // TODO: Is there a way to avoid referring to RegisterPresenter at all? //
     private RegisterContract.Presenter mPresenter = new RegisterPresenter();
-
+    private static final int SUCCESSFUL_AUTHENTICATION = 1;
     private Button mRegisterButton;
     private EditText mUsernameField;
     private EditText mPasswordField;
     private EditText mConfPasswordField;
-
+    private AuthenticationActivityModel.CallBack callback;
     private boolean usernameFilled;
     private boolean passwordFilled;
     private boolean confPasswordFilled;
@@ -71,6 +73,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 } else {
                     usernameFilled = true;
                     mPresenter.updateUsername(s.toString());
+                    mUsernameField.setTextColor(Color.BLACK);
                 }
                 onFieldsChanged();
             }
@@ -95,6 +98,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 } else {
                     passwordFilled = true;
                     mPresenter.updatePassword(s.toString());
+                    mPasswordField.setTextColor(Color.BLACK);
                 }
                 onFieldsChanged();
             }
@@ -119,7 +123,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 } else {
                     confPasswordFilled = true;
                     mPresenter.updateConfPassword(s.toString());
-                }
+                    mConfPasswordField.setTextColor(Color.BLACK);                }
                 onFieldsChanged();
             }
 
@@ -134,11 +138,18 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             @Override
             public void onClick(View v) {
                 register();
-                getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
 
             }
         });
         return v;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (callback != null) {
+            callback.onCall(SUCCESSFUL_AUTHENTICATION);
+        }
     }
 
     private void onFieldsChanged() {
@@ -164,7 +175,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     private void checkStatus(Message message) {
         if (message.isSuccess()) {
-            mListener.onLogin();
+            getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
         }
         else {
             showToast(message.getMessage());
@@ -173,6 +184,14 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     public void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    public AuthenticationActivityModel.CallBack getCallback() {
+        return callback;
+    }
+
+    public void setCallback(AuthenticationActivityModel.CallBack callback) {
+        this.callback = callback;
     }
 }
 

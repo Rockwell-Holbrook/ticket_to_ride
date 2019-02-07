@@ -16,7 +16,6 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     public MainActivityPresenter(MainActivityContract.View viewCallback){
         this.viewCallback = viewCallback;
         this.mModel = MainActivityModel.getInstance();
-        connectToManagementServer();
     }
 
 
@@ -69,16 +68,6 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
 
     public Game getSelectedGame() {
         return mModel.getSelectedGame();
-    }
-
-    @Override
-    public void connectToManagementServer() {
-        try {
-            mModel.connectToManagementServer();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            viewCallback.showToast(e.getMessage());
-        }
     }
 
     @Override

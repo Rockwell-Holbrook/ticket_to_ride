@@ -26,9 +26,11 @@ public class SocketClientCommunicator extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        Command cmd = new Command(message);
-        cmd.execute(facadeCallback);
-}
+        if (!message.equals("Success")){
+            Command cmd = new Command(message);
+            cmd.execute(facadeCallback);
+        }
+    }
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
