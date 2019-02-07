@@ -16,7 +16,7 @@ public class ServerFacadeTests {
         ServerFacade sf = ServerFacade.getInstance();
         GameManager gm = GameManager.getInstance();
 
-        sf.createGame(new Player("Taylor", true), 5, "My game");
+        //sf.createGame(new Player("Taylor", true), 5, "My game");
 
         System.out.println(gm.getGameList());
 
@@ -31,7 +31,7 @@ public class ServerFacadeTests {
         String[] typeNames = {List.class.getName()};
 
         List<Game> games = new ArrayList<>();
-        games.add(new Game(new Player("Taylor", true), 5, "my game"));
+        //games.add(new Game(new Player("Taylor", true), 5, "my game"));
         Object[] inputVals = {games};
 
         String json = gson.toJson(new Command(methodName, typeNames, inputVals));
