@@ -4,16 +4,19 @@ import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 import com.example.shared.model.User;
-
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Observable;
 import java.util.UUID;
 
-public class MainActivityModel {
+public class MainActivityModel extends Observable {
     public final static int CREATE_GAME_BUTTON = 0;
     public final static int JOIN_GAME_BUTTON = 1;
     private static MainActivityContract.Presenter mPresenter;
+    private Game selectedGame;
 
     private static MainActivityModel instance;
+
 
 
     public MainActivityModel() {
@@ -35,9 +38,17 @@ public class MainActivityModel {
         return instance;
     }
 
+    public Game getSelectedGame() {
+        return selectedGame;
+    }
+
+    public void setSelectedGame(Game selectedGame) {
+        this.selectedGame = selectedGame;
+    }
+
     public void joinedGame(String gameId){
         try {
-            ServerProxy.getInstance().connectToGameSocket(gameId, "username");
+            ServerProxy.getInstance().connectToGameSocket(gameId, Authentication.getInstance().getUsername());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -47,7 +58,7 @@ public class MainActivityModel {
     public void joinGame(String selectedGameId) {
         //Call the joinGame method in ServerProxy
         try {
-           // ServerProxy.getInstance().joinGame("username", selectedGameId);
+            ServerProxy.getInstance().joinGame(selectedGameId, new Player("username", false, Player.PlayerColor.BLUE));
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
@@ -57,11 +68,21 @@ public class MainActivityModel {
         mPresenter.newGameList(games);
     }
 
-    public void createGame(String username) {
+    public void createGame(Player player, int maxPlayers, String gameName) {
+        selectedGame = new Game(player, maxPlayers, gameName);
+        mPresenter.joinedGame();
+//        try {
+//            ServerProxy.getInstance().createGame(player, maxPlayers, gameName);
+//        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+//        }
+    }
+
+    public void connectToManagementServer() throws URISyntaxException {
         try {
-           // ServerProxy.getInstance().createGame("username", 0, new Player());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            ServerProxy.getInstance().connectToManagementSocket(Authentication.getInstance().getUsername());
+        } catch (URISyntaxException e) {
+            throw e;
         }
     }
 }

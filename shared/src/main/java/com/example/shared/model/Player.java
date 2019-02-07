@@ -3,12 +3,12 @@ package com.example.shared.model;
 public class Player {
     private String username;
     private boolean isHost;
-    private PlayerColor color;
+    private PlayerColor playerColor;
 
-    public Player(String username, boolean isHost, PlayerColor color) {
+    public Player(String username, boolean isHost, PlayerColor playerColor) {
         this.username = username;
         this.isHost = isHost;
-        this.color = color;
+        this.playerColor = playerColor;
     }
 
     public String getUsername() {
@@ -27,12 +27,12 @@ public class Player {
         isHost = host;
     }
 
-    public PlayerColor getColor() {
-        return color;
+    public PlayerColor getPlayerColor() {
+        return playerColor;
     }
 
     public void setColor(PlayerColor color) {
-        this.color = color;
+        this.playerColor = color;
     }
 
     public enum PlayerColor {

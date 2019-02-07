@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.shared.model.Message;
+
 import com.example.rholbrook.tickettoride.R;
 
 /**
@@ -31,6 +33,11 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private boolean usernameFilled;
     private boolean passwordFilled;
     private boolean confPasswordFilled;
+    private Listener mListener;
+
+    public interface Listener {
+        void onLogin();
+    }
 
     public static RegisterFragment newInstance() {
         RegisterFragment fragment = new RegisterFragment();
@@ -64,6 +71,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                     usernameFilled = false;
                 } else {
                     usernameFilled = true;
+                    mPresenter.updateUsername(s.toString());
                 }
                 onFieldsChanged();
             }
@@ -87,6 +95,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                     passwordFilled = false;
                 } else {
                     passwordFilled = true;
+                    mPresenter.updatePassword(s.toString());
                 }
                 onFieldsChanged();
             }
@@ -110,6 +119,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                     confPasswordFilled = false;
                 } else {
                     confPasswordFilled = true;
+                    mPresenter.updateConfPassword(s.toString());
                 }
                 onFieldsChanged();
             }
@@ -134,6 +144,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         return v;
     }
 
+
     public void onSuccess() {
         getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
     }
@@ -154,6 +165,5 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             mRegisterButton.setEnabled(false);
         }
     }
-
 }
 

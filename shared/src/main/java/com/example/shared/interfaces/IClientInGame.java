@@ -2,6 +2,8 @@ package com.example.shared.interfaces;
 
 import com.example.shared.model.Player;
 
+import java.util.Set;
+
 public interface IClientInGame {
     /**
      * Signals the GameLobbyFragmentModel to update the chat message list
@@ -14,8 +16,16 @@ public interface IClientInGame {
      * Signals the GameLobbyFragmentModel to update the joined players list
      * @param username String value of the username of the joined player
      * @param color PlayerColor enum value of the color of the joined player
+     * @param playerList This is the updated playerList as requested.
      */
-    void playerJoinedGame(String username, Player.PlayerColor color);
+    void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList);
+
+    void hostStartedGame(String gameId);
+
+    /**
+     * Signals the GameLobbyFragmentModel to start the Game Activity
+     */
+    void gameStarted();
 
     void cardDrawn();
     void routeClaimed();

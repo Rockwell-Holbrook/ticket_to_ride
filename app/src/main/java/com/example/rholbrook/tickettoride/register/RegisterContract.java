@@ -2,6 +2,7 @@ package com.example.rholbrook.tickettoride.register;
 
 import com.example.shared.model.Message;
 
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,7 +21,18 @@ public class RegisterContract {
         void updatePassword(String password);
         void updateConfPassword(String password);
         void register();
+      
         @Override
-        void update(Observable o, Object arg);
+        void update(Observable o, Object arg){
+        }
+
     }
+
+    interface Presenter {
+        void updateUsername(String username);
+        void updatePassword(String password);
+        void updateConfPassword(String password);
+        Message register();
+    }
+
 }

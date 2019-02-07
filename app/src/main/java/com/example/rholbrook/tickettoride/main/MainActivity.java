@@ -1,7 +1,6 @@
 package com.example.rholbrook.tickettoride.main;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -14,11 +13,16 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
+import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivity;
+import com.example.rholbrook.tickettoride.login.LoginFragment;
 import com.example.rholbrook.tickettoride.register.RegisterFragment;
+import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Game;
+import com.example.shared.model.Player;
 
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements
         MainActivityContract.View,
@@ -39,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         fragmentContainer = findViewById(R.id.authentication_fragment_container);
         createGameButton = findViewById(R.id.create_game_button);
         createGameButton.setId(MainActivityModel.CREATE_GAME_BUTTON);
@@ -51,13 +54,10 @@ public class MainActivity extends AppCompatActivity implements
         gameListRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         gameListRecyclerView.setLayoutManager(mLayoutManager);
+        joinGameButton.setEnabled(false);
 
         mPresenter = new MainActivityPresenter(this);
         mPresenter.init();
-
-        Fragment firstFragment = RegisterFragment.newInstance();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.authentication_fragment_container, firstFragment).commit();
     }
 
     @Override
@@ -84,12 +84,24 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void joinGame() {
         JoinGameDialogFragment dialog = new JoinGameDialogFragment();
+        ArrayList<CharSequence> availableColors = mPresenter.getAvailableColors();
+        Bundle args = new Bundle();
+        args.putCharSequenceArrayList("availableColors", availableColors);
         dialog.show(getSupportFragmentManager(), "JoinGameDialogFragment");
     }
 
     @Override
-    public void selectGame(String gameNumber) {
-        mPresenter.setSelectedGameId(gameNumber);
+    public void selectGame(Game game) {
+        joinGameButton.setEnabled(true);
+        mPresenter.setSelectedGame(game);
+    }
+
+    @Override
+    public void startGameLobbyFragment() {
+        Intent intent = new Intent(this, GameLobbyActivity.class);
+        intent.putExtra("gameId", mPresenter.getSelectedGame().getGameId());
+        intent.putExtra("hostUsername", mPresenter.getSelectedGame().getHost().getUsername());
+        startActivity(intent);
     }
 
     @Override
@@ -102,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements
         mPresenter.onClick(view.getId());
     }
 
+
     @Override
     public void onCreatePressed(DialogFragment dialog) {
         mPresenter.createGame();
@@ -112,6 +125,11 @@ public class MainActivity extends AppCompatActivity implements
     public void onJoinPressed(DialogFragment dialog) {
         mPresenter.joinGame();
         dialog.dismiss();
+    }
+
+    @Override
+    public void onCreatePressed(DialogFragment dialog, String gameName, int maxPlayers, Player.PlayerColor selectedColor) {
+        mPresenter.createGame(new Player(Authentication.getInstance().getUsername(), true, selectedColor), maxPlayers, gameName);
     }
 
     @Override

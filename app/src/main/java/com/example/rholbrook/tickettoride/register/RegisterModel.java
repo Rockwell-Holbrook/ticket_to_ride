@@ -8,11 +8,14 @@ import com.example.shared.model.User;
 import java.util.Objects;
 import java.util.Observable;
 
+
 /**
  * Created by chocobj on 2/4/19.
  */
 
+
 public class RegisterModel extends Observable {
+
     private static final RegisterModel ourInstance = new RegisterModel();
 
     private String username;
@@ -79,5 +82,4 @@ public class RegisterModel extends Observable {
             notifyObservers(new Message(false, e.getMessage()));
         }
     }
-    
 }

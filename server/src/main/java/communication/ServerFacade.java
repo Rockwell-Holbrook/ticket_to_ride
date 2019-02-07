@@ -4,7 +4,7 @@ import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Player;
 import game.GameManager;
 
-public class ServerFacade implements IServer {
+public class        ServerFacade implements IServer {
     private static final ServerFacade ourInstance = new ServerFacade();
     private GameManager gameManager = GameManager.getInstance();
 
@@ -23,7 +23,8 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void createGame(Player host, int maxPlayers, String gameName) {
-        gameManager.createGame(host, maxPlayers, gameName);
+        String gameId = gameManager.createGame(host, maxPlayers, gameName);
+        gameManager.joinGame(gameId, host);
     }
 
     /**

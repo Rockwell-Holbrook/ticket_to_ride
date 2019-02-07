@@ -13,6 +13,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import com.example.rholbrook.tickettoride.R;
+import com.example.shared.model.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JoinGameDialogFragment extends DialogFragment {
 
@@ -37,13 +41,13 @@ public class JoinGameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
+        ArrayList<String> availableColors = getColorStrings(MainActivityModel.getInstance().getSelectedGame().getAvailableColors());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_join_game, null);
         TextView gameName = dialogView.findViewById(R.id.join_game_name_text_view);
+        gameName.setText(MainActivityModel.getInstance().getSelectedGame().getGameName());
         Spinner playerColorSpinner = dialogView.findViewById(R.id.player_color_spinner);
-        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getContext(), R.array.player_colors_array, android.R.layout.simple_spinner_item);
-        colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, availableColors);
         playerColorSpinner.setAdapter(colorAdapter);
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
@@ -61,5 +65,31 @@ public class JoinGameDialogFragment extends DialogFragment {
 
         builder.setView(dialogView);
         return builder.create();
+    }
+  
+    private ArrayList<String> getColorStrings(List<Player.PlayerColor> availableColors) {
+        ArrayList<String> colors = new ArrayList<>();
+        for (Player.PlayerColor color : availableColors) {
+            switch(color) {
+                case YELLOW:
+                    colors.add("Yellow");
+                    break;
+                case GREEN:
+                    colors.add("Green");
+                    break;
+                case BLACK:
+                    colors.add("Black");
+                    break;
+                case BLUE:
+                    colors.add("Blue");
+                    break;
+                case RED:
+                    colors.add("Red");
+                    break;
+                default:
+                    break;
+            }
+        }
+        return colors;
     }
 }

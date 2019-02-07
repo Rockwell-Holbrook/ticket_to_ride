@@ -1,7 +1,6 @@
 package com.example.rholbrook.tickettoride.register;
 
 import com.example.shared.model.Message;
-
 import java.util.Observable;
 
 /**
@@ -9,7 +8,6 @@ import java.util.Observable;
  */
 
 public class RegisterPresenter implements RegisterContract.Presenter {
-
     RegisterModel mModel;
     RegisterContract.View mView;
 
