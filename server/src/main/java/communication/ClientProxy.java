@@ -57,7 +57,7 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList) {
+    public void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList, String gameId) {
         String methodName = "playerJoinedGame";
         String[] typeNames = {String.class.getName(), Player.PlayerColor.class.getName()};
         Object[] inputVals = {username, color};
@@ -81,11 +81,6 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
         Object[] inputVals = {gameId};
 
         ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
-    }
-
-    @Override
-    public void gameStarted() {
-
     }
 
     @Override

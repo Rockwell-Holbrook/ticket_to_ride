@@ -18,11 +18,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
         this.mModel = MainActivityModel.getInstance();
     }
 
-
-
     @Override
     public void init() {
         mModel.setmPresenter(this);
+        mModel.getGameList();
     }
 
     @Override

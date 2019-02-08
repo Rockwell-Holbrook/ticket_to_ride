@@ -49,6 +49,14 @@ public class ServerProxy implements IServer {
     }
 
     @Override
+    public void getGameList(String username) {
+        String methodNane = "getGameList";
+        String[] paramTypes = {String.class.getName()};
+        Object[] paramValues = {username};
+        socketClientCommunicator.send(gson.toJson(new Command(methodNane, paramTypes, paramValues)));
+    }
+
+    @Override
     public void createGame(Player host, int maxPlayers, String gameName) {
         String methodName = "createGame";
         String[] paramTypes = {Player.class.getName(), int.class.getName(), String.class.getName()};

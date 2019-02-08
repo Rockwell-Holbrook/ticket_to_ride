@@ -42,12 +42,14 @@ public class SocketServer extends WebSocketServer {
 
         if (path.equals("/management")) {
             managementConnections.add(conn);
+            conn.send("Management Successful");
         } else if (path.contains("/game")) {
-            String gameId = getGameId(path);
+            String gameId = getGameId(path.substring(5));
             gameConnections.get(gameId).add(conn);
+            conn.send("Game:" + gameId);
         }
 
-        conn.send("Success");
+
 
     }
 

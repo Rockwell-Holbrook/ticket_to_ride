@@ -48,11 +48,6 @@ public class MainActivityModel extends Observable {
     }
 
     public void joinedGame(String gameId){
-        try {
-            ServerProxy.getInstance().connectToGameSocket(gameId, Authentication.getInstance().getUsername());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
         mPresenter.joinedGame();
     }
 
@@ -84,5 +79,13 @@ public class MainActivityModel extends Observable {
         } catch (URISyntaxException e) {
             throw e;
         }
+    }
+
+    public void connectToGameServer(String gameId) throws URISyntaxException {
+        ServerProxy.getInstance().connectToGameSocket(gameId, Authentication.getInstance().getUsername());
+    }
+
+    public void getGameList() {
+        ServerProxy.getInstance().getGameList(Authentication.getInstance().getUsername());
     }
 }

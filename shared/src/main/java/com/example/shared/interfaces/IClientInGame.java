@@ -18,7 +18,7 @@ public interface IClientInGame {
      * @param color PlayerColor enum value of the color of the joined player
      * @param playerList This is the updated playerList as requested.
      */
-    void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList);
+    void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList, String gameId);
 
     /**
      * Signals the GameLobbyFragmentModel to start the Game Activity

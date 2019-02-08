@@ -88,8 +88,6 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-
             }
 
         });
@@ -115,8 +113,6 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-
             }
 
         });
