@@ -3,8 +3,8 @@ package com.example.rholbrook.tickettoride.serverconnection;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import model.Message;
-import model.User;
+import com.example.shared.model.Message;
+import com.example.shared.model.User;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,7 +16,7 @@ import java.net.URL;
 public class AuthenticationServerProxy {
     private static AuthenticationServerProxy instance;
     private static final int SERVER_PORT_NUMBER = 8080;
-    private static final String SERVER_HOST = "localhost";
+    private static final String SERVER_HOST = "10.0.2.2";
     private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
     public static final String LOGIN_DESIGNATOR = "/authenticate/login";
     public static final String REGISTER_DESIGNATOR = "/authenticate/register";

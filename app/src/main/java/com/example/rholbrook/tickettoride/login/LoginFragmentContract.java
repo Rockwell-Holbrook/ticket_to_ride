@@ -1,6 +1,6 @@
 package com.example.rholbrook.tickettoride.login;
 
-import model.Message;
+import com.example.shared.model.Message;
 
 public class LoginFragmentContract {
 
@@ -11,8 +11,9 @@ public class LoginFragmentContract {
     }
 
     public interface Presenter {
-        public Message login(String username, String password);
-
+        Message login();
+        void updateUsername(String username);
+        void updatePassword(String password);
     }
 
 }

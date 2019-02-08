@@ -37,4 +37,12 @@
     <string name="login">Login</string>
     <string name="notRegisteredMessage">Not a User? Register Here</string>
     <string name="startGame">Start Game</string>
+    <string name="chooseAColor">Choose a Color"</string>
+    <string name="numberOfPlayers">Number of Players</string>
+    <string name="register_greeting">Register Your Account</string>
+    <string name="register_button">Register</string>
+    <string name="register_username_field">Username</string>
+    <string name="register_password_field">Password</string>
+    <string name="register_confirm_password_field">Confirm Password</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

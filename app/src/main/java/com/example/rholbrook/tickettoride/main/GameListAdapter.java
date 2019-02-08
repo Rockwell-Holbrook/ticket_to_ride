@@ -6,19 +6,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.rholbrook.tickettoride.R;
-import model.Game;
+import com.example.shared.model.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHolder> {
-    List<Game> games;
+    ArrayList<Game> games;
     MainActivity mListener;
     ViewHolder currentlySelectedViewHolder;
 
-    public GameListAdapter(List<Game> games, MainActivity mListener) {
+    public GameListAdapter(ArrayList<Game> games, MainActivity mListener) {
         this.games = games;
         this.mListener = mListener;
     }
@@ -49,7 +49,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         viewHolder.gameListItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.selectGame(game.getGameId());
+                mListener.selectGame(game);
                 if (currentlySelectedViewHolder != null) {
                     if ((currentlySelectedViewHolder.getAdapterPosition() % 2) == 0) {
                         currentlySelectedViewHolder.gameListItemLayout.setBackgroundResource(R.color.gameListEntryBackgroundEven);

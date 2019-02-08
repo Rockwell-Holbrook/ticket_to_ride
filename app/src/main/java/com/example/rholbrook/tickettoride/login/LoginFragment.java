@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.login;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,8 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
+import com.example.rholbrook.tickettoride.authentication.AuthenticationActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivity;
-import model.Message;
+import com.example.rholbrook.tickettoride.register.ListeningTask;
+import com.example.rholbrook.tickettoride.register.RegisterFragment;
+import com.example.shared.model.Message;
 
 public class LoginFragment extends Fragment implements LoginFragmentContract.View {
     private LoginFragmentContract.Presenter mPresenter;
@@ -24,6 +28,9 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
     private EditText mPasswordField;
     private Button mLoginButton;
     private TextView mRegister;
+    private Listener listener;
+    private int successStatus;
+    private AuthenticationActivityModel.CallBack callback;
 
     public interface Listener {
         void successfulLogin();
@@ -50,12 +57,14 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        mUsernameField = view.findViewById(R.id.usernameInput);
-        mPasswordField = view.findViewById(R.id.passwordInput);
-        mLoginButton = view.findViewById(R.id.loginButton);
-        mRegister = view.findViewById(R.id.registerLink);
+        mUsernameField = view.findViewById(R.id.login_username_edit_text);
+        mPasswordField = view.findViewById(R.id.login_password_edit_text);
+        mLoginButton = view.findViewById(R.id.login_button);
+        mRegister = view.findViewById(R.id.register_button);
+        mLoginButton.setEnabled(false);
 
         // onTextChanged listeners
         mUsernameField.addTextChangedListener(new TextWatcher() {
@@ -65,7 +74,10 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
                 if (mUsernameField.getText().toString().length() == 0) {
                     mLoginButton.setEnabled(false);
                 } else {
-                    mLoginButton.setEnabled(true);
+                    if (mPasswordField.getText().toString().length() == 0) {
+                        mLoginButton.setEnabled(true);
+                        mLoginButton.setTextColor(Color.BLACK);
+                    }
                 }
             }
 
@@ -76,8 +88,6 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-
             }
 
         });
@@ -89,7 +99,10 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
                 if (mPasswordField.getText().toString().length() == 0) {
                     mLoginButton.setEnabled(false);
                 } else {
-                    mLoginButton.setEnabled(true);
+                    if (mUsernameField.getText().toString().length() == 0) {
+                        mLoginButton.setEnabled(true);
+                        mLoginButton.setTextColor(Color.BLACK);
+                    }
                 }
             }
 
@@ -100,8 +113,6 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-
             }
 
         });
@@ -110,8 +121,10 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message message = mPresenter.login(mUsernameField.getText().toString(), mPasswordField.getText().toString());
-                checkStatus(message);
+                mPresenter.updateUsername(mUsernameField.getText().toString());
+                mPresenter.updatePassword(mPasswordField.getText().toString());
+                login();
+//                successfulLogin();
             }
         });
 
@@ -119,13 +132,23 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
             @Override
             public void onClick(View v) {
                 // bring up Blaine's Fragment
-                    startRegisterFragment();
-
+                startRegisterFragment();
             }
 
         });
+        return view;
+    }
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+    private void login() {
+        LoginTask loginTask = new LoginTask();
+        loginTask.setListener(new ListeningTask.Listener() {
+            @Override
+            public void onComplete(Object result) {
+                Message message = (Message) result;
+                checkStatus(message);
+            }
+        });
+        loginTask.execute();
     }
 
     private void checkStatus(Message message) {
@@ -138,6 +161,22 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
     }
 
+    public AuthenticationActivityModel.CallBack getCallback() {
+        return callback;
+    }
+
+    public void setCallback(AuthenticationActivityModel.CallBack callback) {
+        this.callback = callback;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (callback != null) {
+            callback.onCall(successStatus);
+        }
+    }
+
     @Override
     public void showToast(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
@@ -145,12 +184,14 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
     @Override
     public void startRegisterFragment() {
-        // Fragment fragment = RegisterFragment.newInstance();
-    }   // getFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, RegisterFragment.class).commit();
+        successStatus = LoginFragmentModel.SENT_TO_REGISTER;
+        getActivity().getSupportFragmentManager().beginTransaction().remove(LoginFragment.this).commit();
+    }
 
     @Override
     public void successfulLogin() {
         // Bring up main Activity
+        successStatus = LoginFragmentModel.SUCCESSFUL_LOGIN;
         getActivity().getSupportFragmentManager().beginTransaction().remove(LoginFragment.this).commit();
     }
 }
