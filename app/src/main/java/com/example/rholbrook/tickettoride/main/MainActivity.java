@@ -90,9 +90,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void joinGame() {
         JoinGameDialogFragment dialog = new JoinGameDialogFragment();
-        ArrayList<CharSequence> availableColors = mPresenter.getAvailableColors();
-        Bundle args = new Bundle();
-        args.putCharSequenceArrayList("availableColors", availableColors);
         dialog.show(getSupportFragmentManager(), "JoinGameDialogFragment");
     }
 

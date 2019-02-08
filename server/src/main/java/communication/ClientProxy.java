@@ -48,9 +48,9 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
      * @param games List of games
      * @param username User to send cmd to
      */
-    public void updateGameList(List<Game> games, String username){
+    public void updateGameList(ArrayList<Game> games, String username){
         String methodName = "updateGameList";
-        String[] typeNames = {List.class.getName()};
+        String[] typeNames = {ArrayList.class.getName()};
         Object[] inputVals = {games};
 
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
