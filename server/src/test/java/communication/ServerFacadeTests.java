@@ -2,7 +2,6 @@ package communication;
 
 import com.example.shared.commands.Command;
 import com.example.shared.model.Game;
-import com.example.shared.model.Player;
 import com.google.gson.Gson;
 import game.GameManager;
 import org.junit.Test;
@@ -18,7 +17,7 @@ public class ServerFacadeTests {
 
         sf.createGame(new Player("Taylor", true, Player.PlayerColor.BLUE), 5, "My game");
 
-        System.out.println(gm.getGameList());
+        System.out.println(gm.getNotPlayingGameList());
 
 
     }

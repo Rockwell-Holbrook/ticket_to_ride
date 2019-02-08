@@ -18,12 +18,13 @@ public class GameManager {
         return instance;
     }
 
-    private Map<String, Game> gameList = new HashMap<>();
+    private Map<String, Game> notPlayingGameList = new HashMap<>();
+    private Map<String, Game> playingGameList = new HashMap<>();
 
     private ClientProxy clientProxy = new ClientProxy();
 
     /**
-     * Creates the game and adds it to the gameList and to the socketServer using gameID as the key.
+     * Creates the game and adds it to the notPlayingGameList and to the socketServer using gameID as the key.
      *
      * @param host The Player hosting the game. This player will be set to host upon creation.
      * @param maxPlayers The max number of players this game needs before it can start. An int between 2-5.
@@ -32,9 +33,9 @@ public class GameManager {
     public String createGame(Player host, int maxPlayers, String gameName) {
         Game game = new Game(host, maxPlayers, gameName);
         game.setClientProxy(new ClientProxy(game.getGameId()));
-        this.gameList.put(gameName, game);
+        this.notPlayingGameList.put(game.getGameId(), game);
         SocketServer.getInstance().addGame(game.getGameId());
-        clientProxy.updateGameList(new ArrayList<Game>(gameList.values()));
+        clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
 
         return game.getGameId();
     }
@@ -45,11 +46,15 @@ public class GameManager {
      * @param gameId The ID of the game that needs to be started.
      */
     public void joinGame(String gameId, Player player) {
-        Game game = this.gameList.get(gameId);
+        Game game = this.notPlayingGameList.get(gameId);
         game.addPlayer(player);
         clientProxy.joinGameComplete(player.getUsername(), gameId);
         clientProxy.playerJoinedGame(player.getUsername(), player.getPlayerColor(), game.getPlayerList());
-        clientProxy.updateGameList(new ArrayList<Game>(gameList.values()));
+        clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
+    }
+
+    public void sendGameList(String username){
+        clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()), username);
     }
 
     /**
@@ -59,13 +64,15 @@ public class GameManager {
      * Starts the game specified by the gameID.
      */
     public void startGame(String gameId) {
-        Game game = this.gameList.get(gameId);
+        Game game = this.notPlayingGameList.get(gameId);
         game.startGame();
-        clientProxy.gameStarted(gameId);
-        clientProxy.updateGameList(new ArrayList<Game>(gameList.values()));
+        this.notPlayingGameList.remove(gameId);
+        this.playingGameList.put(game.getGameId(), game);
+        clientProxy.hostStartedGame(gameId);
+        clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
     }
 
-    public Map<String, Game> getGameList() {
-        return gameList;
+    public Map<String, Game> getNotPlayingGameList() {
+        return notPlayingGameList;
     }
 }
