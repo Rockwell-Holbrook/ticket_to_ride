@@ -146,7 +146,9 @@ public class SocketServerTests {
             Object[] inputVals = {new Player("taylor", true, Player.PlayerColor.BLUE), 5, "Taylor's game"};
             cc.send(gson.toJson(new Command(methodName, typeNames, inputVals)));
 
-            sleep(1000 * 5);
+            while(true) {
+                sleep(1000 * 5);
+            }
 
 
         } catch (Exception e) {

@@ -34,7 +34,7 @@ public class GameManager {
         game.setClientProxy(new ClientProxy(game.getGameId()));
         this.gameList.put(gameName, game);
         SocketServer.getInstance().addGame(game.getGameId());
-        clientProxy.updateGameList(new ArrayList<>(gameList.values()));
+        clientProxy.updateGameList(new ArrayList<Game>(gameList.values()));
 
         return game.getGameId();
     }
@@ -49,7 +49,7 @@ public class GameManager {
         game.addPlayer(player);
         clientProxy.joinGameComplete(player.getUsername(), gameId);
         clientProxy.playerJoinedGame(player.getUsername(), player.getPlayerColor(), game.getPlayerList());
-        clientProxy.updateGameList(new ArrayList<>(gameList.values()));
+        clientProxy.updateGameList(new ArrayList<Game>(gameList.values()));
     }
 
     /**
@@ -62,7 +62,7 @@ public class GameManager {
         Game game = this.gameList.get(gameId);
         game.startGame();
         clientProxy.gameStarted(gameId);
-        clientProxy.updateGameList(new ArrayList<>(gameList.values()));
+        clientProxy.updateGameList(new ArrayList<Game>(gameList.values()));
     }
 
     public Map<String, Game> getGameList() {

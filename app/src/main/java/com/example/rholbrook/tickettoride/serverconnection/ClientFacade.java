@@ -6,11 +6,15 @@ import com.example.shared.interfaces.IClientInGame;
 import com.example.shared.interfaces.IClientNotInGame;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class ClientFacade implements IClientInGame, IClientNotInGame {
     private static ClientFacade instance;
+    private static Gson gson = new Gson();
 
     public ClientFacade() {}
 
@@ -30,7 +34,10 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList) {
-        GameLobbyActivityModel.getInstance().newPlayerJoined(playerList);
+        String jsonValue = gson.toJson(playerList);
+        Type typeName = new TypeToken<Set<Player>>(){}.getType();
+        Set<Player> players = gson.fromJson(jsonValue, typeName);
+        GameLobbyActivityModel.getInstance().newPlayerJoined(players);
     }
 
     @Override
@@ -41,7 +48,10 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 //    MainActivity
     @Override
     public void updateGameList(ArrayList<Game> games) {
-        MainActivityModel.getInstance().newGameListRetrieved(games);
+        String jsonValue = gson.toJson(games);
+        Type typeName = new TypeToken<ArrayList<Game>>(){}.getType();
+        ArrayList<Game> gameList = gson.fromJson(jsonValue, typeName);
+        MainActivityModel.getInstance().newGameListRetrieved(gameList);
     }
 
     @Override
