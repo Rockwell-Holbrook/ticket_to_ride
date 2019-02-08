@@ -10,14 +10,15 @@ import android.widget.TextView;
 import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHolder> {
-    List<Game> games;
+    ArrayList<Game> games;
     MainActivity mListener;
     ViewHolder currentlySelectedViewHolder;
 
-    public GameListAdapter(List<Game> games, MainActivity mListener) {
+    public GameListAdapter(ArrayList<Game> games, MainActivity mListener) {
         this.games = games;
         this.mListener = mListener;
     }

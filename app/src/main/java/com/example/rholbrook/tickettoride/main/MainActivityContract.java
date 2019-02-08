@@ -9,7 +9,7 @@ import java.util.List;
 public class MainActivityContract {
     public interface View {
         void showToast(String message);
-        void updateGameList(List<Game> games);
+        void updateGameList(ArrayList<Game> games);
         void createGame();
         void joinGame();
         void selectGame(Game gameNumber);
@@ -23,7 +23,7 @@ public class MainActivityContract {
         void onClick(int id);
         void setSelectedGame(Game game);
         void joinedGame();
-        void newGameList(List<Game> games);
+        void newGameList(ArrayList<Game> games);
         Game getSelectedGame();
         ArrayList<CharSequence> getAvailableColors();
     }

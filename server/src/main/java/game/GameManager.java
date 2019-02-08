@@ -61,7 +61,7 @@ public class GameManager {
     public void startGame(String gameId) {
         Game game = this.gameList.get(gameId);
         game.startGame();
-        clientProxy.hostStartedGame(gameId);
+        clientProxy.gameStarted(gameId);
         clientProxy.updateGameList(new ArrayList<>(gameList.values()));
     }
 

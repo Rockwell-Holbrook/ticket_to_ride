@@ -110,36 +110,36 @@ public class SocketServerTests {
 
             };
 
-            WebSocketClient cc2 = new WebSocketClient( new URI( "ws://localhost:7777/management?user=adam" )) {
-
-                @Override
-                public void onMessage( String message ) {
-                    System.out.println( "got: " + message + "\n" );
-                }
-
-                @Override
-                public void onOpen( ServerHandshake handshake ) {
-                    System.out.println( "You are connected to ChatServer: " + getURI() + "\n" );
-                }
-
-                @Override
-                public void onClose( int code, String reason, boolean remote ) {
-                    System.out.println( "You have been disconnected from: " + getURI() + "; Code: " + code + " " + reason + "\n" );
-                }
-
-                @Override
-                public void onError( Exception ex ) {
-                    System.out.println( "Exception occured ...\n" + ex + "\n" );
-                }
-
-            };
+//            WebSocketClient cc2 = new WebSocketClient( new URI( "ws://localhost:7777/management?user=adam" )) {
+//
+//                @Override
+//                public void onMessage( String message ) {
+//                    System.out.println( "got: " + message + "\n" );
+//                }
+//
+//                @Override
+//                public void onOpen( ServerHandshake handshake ) {
+//                    System.out.println( "You are connected to ChatServer: " + getURI() + "\n" );
+//                }
+//
+//                @Override
+//                public void onClose( int code, String reason, boolean remote ) {
+//                    System.out.println( "You have been disconnected from: " + getURI() + "; Code: " + code + " " + reason + "\n" );
+//                }
+//
+//                @Override
+//                public void onError( Exception ex ) {
+//                    System.out.println( "Exception occured ...\n" + ex + "\n" );
+//                }
+//
+//            };
 
             ss.start();
             sleep(1000 * 5);
             cc.connect();
-            sleep(1000 * 5);
-            cc2.connect();
-            sleep(1000 * 5);
+            sleep(1000);
+//            cc2.connect();
+//            sleep(1000 * 5);
 
             String methodName = "createGame";
             String[] typeNames = {Player.class.getName(), int.class.getName(), String.class.getName()};

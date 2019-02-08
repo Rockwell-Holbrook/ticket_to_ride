@@ -71,8 +71,14 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void updateGameList(List<Game> games) {
-        this.gameListRecyclerView.setAdapter(new GameListAdapter(games, this));
+    public void updateGameList(ArrayList<Game> games) {
+        final ArrayList<Game> gamesList = games;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.this.gameListRecyclerView.setAdapter(new GameListAdapter(gamesList, MainActivity.this));
+            }
+        });
     }
 
     @Override

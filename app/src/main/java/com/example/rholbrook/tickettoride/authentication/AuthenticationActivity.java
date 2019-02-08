@@ -26,7 +26,7 @@ public class AuthenticationActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_authentication);
-        fragmentContainer = findViewById(R.id.lobby);
+        fragmentContainer = findViewById(R.id.authentication_fragment_container);
 
         mPresenter = new AuthenticationActivityPresenter(this);
         mPresenter.init();

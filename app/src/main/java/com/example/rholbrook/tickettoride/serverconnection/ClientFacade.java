@@ -7,10 +7,7 @@ import com.example.shared.interfaces.IClientNotInGame;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class ClientFacade implements IClientInGame, IClientNotInGame {
     private static ClientFacade instance;
@@ -33,12 +30,17 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList) {
+        GameLobbyActivityModel.getInstance().newPlayerJoined(playerList);
+    }
 
+    @Override
+    public void gameStarted(String gameId) {
+        GameLobbyActivityModel.getInstance().gameStarted();
     }
 
 //    MainActivity
     @Override
-    public void updateGameList(List<Game> games) {
+    public void updateGameList(ArrayList<Game> games) {
         MainActivityModel.getInstance().newGameListRetrieved(games);
     }
 
@@ -47,27 +49,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         MainActivityModel.getInstance().joinedGame(gameId);
     }
 
-//    Phase 2 Connections
-    @Override
-    public void hostStartedGame(String gameId) {
-    
-    }
 
-    @Override
-    public void gameStarted() {
-        GameLobbyActivityModel.getInstance().gameStarted();
-    }
-
-    //    MainActivity
-    @Override
-    public void updateGameList(List<Game> games) {
-        MainActivityModel.getInstance().newGameListRetrieved(games);
-    }
-
-    @Override
-    public void joinGameComplete(String username, String gameId) {
-        MainActivityModel.getInstance().joinedGame(gameId);
-    }
 
 //    Phase 2 Connections
     @Override

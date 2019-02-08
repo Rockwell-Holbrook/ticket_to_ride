@@ -22,8 +22,7 @@ import com.example.rholbrook.tickettoride.R;
  */
 
 public class RegisterFragment extends Fragment implements RegisterContract.View {
-    // TODO: Is there a way to avoid referring to RegisterPresenter at all? //
-    private RegisterContract.Presenter mPresenter = new RegisterPresenter();
+    private RegisterContract.Presenter mPresenter = new RegisterPresenter(this);
     private static final int SUCCESSFUL_AUTHENTICATION = 1;
     private Button mRegisterButton;
     private EditText mUsernameField;
@@ -193,10 +192,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         else {
             onFailure(message.getMessage());
         }
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     public AuthenticationActivityModel.CallBack getCallback() {

@@ -20,12 +20,10 @@ public interface IClientInGame {
      */
     void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList);
 
-    void hostStartedGame(String gameId);
-
     /**
      * Signals the GameLobbyFragmentModel to start the Game Activity
      */
-    void gameStarted();
+    void gameStarted(String gameId);
 
     void cardDrawn();
     void routeClaimed();

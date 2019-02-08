@@ -23,16 +23,8 @@ public class RegisterContract {
         void register();
       
         @Override
-        void update(Observable o, Object arg){
-        }
+        void update(Observable o, Object arg);
 
-    }
-
-    interface Presenter {
-        void updateUsername(String username);
-        void updatePassword(String password);
-        void updateConfPassword(String password);
-        Message register();
     }
 
 }

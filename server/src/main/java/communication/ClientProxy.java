@@ -6,6 +6,7 @@ import com.example.shared.interfaces.IClientNotInGame;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,9 +35,9 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void updateGameList(List<Game> games) {
+    public void updateGameList(ArrayList<Game> games) {
         String methodName = "updateGameList";
-        String[] typeNames = {List.class.getName()};
+        String[] typeNames = {ArrayList.class.getName()};
         Object[] inputVals = {games};
 
         ss.broadcastToManagement(new Command(methodName, typeNames, inputVals));
@@ -61,17 +62,12 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void hostStartedGame(String gameId) {
+    public void gameStarted(String gameId) {
         String methodName = "gameId";
         String[] typeNames = {String.class.getName()};
         Object[] inputVals = {gameId};
 
         ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
-    }
-
-    @Override
-    public void gameStarted() {
-        
     }
 
     @Override

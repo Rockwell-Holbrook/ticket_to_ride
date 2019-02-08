@@ -6,6 +6,7 @@ import com.example.shared.model.Player;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Set;
 
 public class GameLobbyActivityModel extends Observable {
     private static GameLobbyActivityModel instance;
@@ -52,17 +53,6 @@ public class GameLobbyActivityModel extends Observable {
         this.gameId = gameId;
     }
 
-    public void newPlayerJoined(String username, Player.PlayerColor color) {
-        Player player;
-        if (username.equals(hostUsername)) {
-            player = new Player(username, true, color);
-        } else {
-            player = new Player(username, false, color);
-        }
-        connectedPlayers.add(player);
-        mListener.updatePlayerList(connectedPlayers);
-    }
-
     public void newMessageReceived(String username, String message) {
         ChatModel newChat = new ChatModel(username, message);
         chatMessages.add(newChat);
@@ -79,5 +69,9 @@ public class GameLobbyActivityModel extends Observable {
 
     public void sendChat(String message) {
         ServerProxy.getInstance().sendChat(Authentication.getInstance().getUsername(), gameId, message);
+    }
+
+    public void newPlayerJoined(Set<Player> playerList) {
+        mListener.updatePlayerList(new ArrayList<Player>(playerList));
     }
 }
