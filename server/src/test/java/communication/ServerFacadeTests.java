@@ -2,6 +2,7 @@ package communication;
 
 import com.example.shared.commands.Command;
 import com.example.shared.model.Game;
+import com.example.shared.model.Player;
 import com.google.gson.Gson;
 import game.GameManager;
 import org.junit.Test;
@@ -15,7 +16,7 @@ public class ServerFacadeTests {
         ServerFacade sf = ServerFacade.getInstance();
         GameManager gm = GameManager.getInstance();
 
-        //sf.createGame(new Player("Taylor", true), 5, "My game");
+        sf.createGame(new Player("Taylor", true, Player.PlayerColor.BLUE), 5, "My game");
 
         System.out.println(gm.getNotPlayingGameList());
 
@@ -30,7 +31,7 @@ public class ServerFacadeTests {
         String[] typeNames = {List.class.getName()};
 
         List<Game> games = new ArrayList<>();
-        //games.add(new Game(new Player("Taylor", true), 5, "my game"));
+        games.add(new Game(new Player("Taylor", true, Player.PlayerColor.BLUE), 5, "my game"));
         Object[] inputVals = {games};
 
         String json = gson.toJson(new Command(methodName, typeNames, inputVals));

@@ -2,6 +2,7 @@ package com.example.shared.interfaces;
 
 import com.example.shared.model.Game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IClientNotInGame {
@@ -9,7 +10,7 @@ public interface IClientNotInGame {
      * Sends the data to the MainActivityContract in order to update the current game list
      * @param games List of Game objects including number of players, game name, host, and gameId
      */
-    void updateGameList(List<Game> games);
+    void updateGameList(ArrayList<Game> games);
 
     /**
      * Sends a response to the MainActivityContract to connect to the game websocket

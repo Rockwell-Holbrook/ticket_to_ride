@@ -18,11 +18,10 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
         this.mModel = MainActivityModel.getInstance();
     }
 
-
-
     @Override
     public void init() {
         mModel.setmPresenter(this);
+        mModel.getGameList();
     }
 
     @Override
@@ -62,22 +61,12 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     }
 
     @Override
-    public void newGameList(List<Game> games) {
+    public void newGameList(ArrayList<Game> games) {
         viewCallback.updateGameList(games);
     }
 
     public Game getSelectedGame() {
         return mModel.getSelectedGame();
-    }
-
-    @Override
-    public void connectToManagementServer() {
-        try {
-            mModel.connectToManagementServer();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-            viewCallback.showToast(e.getMessage());
-        }
     }
 
     @Override
@@ -109,15 +98,5 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
 
     @Override
     public void update(Observable observable, Object o) {
-    }
-
-    @Override
-    public void joinedGame() {
-        viewCallback.startGameLobbyFragment();
-    }
-
-    @Override
-    public void newGameList(List<Game> games) {
-        viewCallback.updateGameList(games);
     }
 }

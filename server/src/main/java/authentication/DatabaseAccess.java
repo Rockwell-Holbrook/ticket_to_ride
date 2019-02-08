@@ -34,6 +34,7 @@ public class DatabaseAccess {
         }
         catch(Exception e) {
             e.printStackTrace();
+            con.close();
             throw new SQLException("This should never be a problem");
         }
 

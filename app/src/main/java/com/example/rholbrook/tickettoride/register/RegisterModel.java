@@ -5,6 +5,7 @@ import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 
+import java.net.URISyntaxException;
 import java.util.Objects;
 import java.util.Observable;
 
@@ -17,7 +18,6 @@ import java.util.Observable;
 public class RegisterModel extends Observable {
 
     private static final RegisterModel ourInstance = new RegisterModel();
-
     private String username;
     private String password;
     private String confPassword;
@@ -47,6 +47,7 @@ public class RegisterModel extends Observable {
         if (passwordsMatch()) {
             startRegisterTask();
         } else {
+            setChanged();
             notifyObservers(new Message(false, "Passwords do not match!"));
         }
     }
@@ -71,14 +72,20 @@ public class RegisterModel extends Observable {
                 public void onComplete(Object result) {
                     Message message = (Message) result;
                     if (message.isSuccess()) {
-                        ServerProxy.getInstance().connectToManagementSocket(username);
-                        Authentication.getInstance().setUser(user);
+                        try {
+                            ServerProxy.getInstance().connectToManagementSocket(username);
+                        } catch (URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+                        Authentication.getInstance().setUsername(username);
                     }
+                    setChanged();
                     notifyObservers(message);
                 }
             });
             registerTask.execute(user);
         } catch (Throwable e) {
+            setChanged();
             notifyObservers(new Message(false, e.getMessage()));
         }
     }

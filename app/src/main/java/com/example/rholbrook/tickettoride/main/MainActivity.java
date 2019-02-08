@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        fragmentContainer = findViewById(R.id.authentication_fragment_container);
+        fragmentContainer = findViewById(R.id.lobby);
         createGameButton = findViewById(R.id.create_game_button);
         createGameButton.setId(MainActivityModel.CREATE_GAME_BUTTON);
         createGameButton.setOnClickListener(this);
@@ -71,8 +71,14 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void updateGameList(List<Game> games) {
-        this.gameListRecyclerView.setAdapter(new GameListAdapter(games, this));
+    public void updateGameList(ArrayList<Game> games) {
+        final ArrayList<Game> gamesList = games;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.this.gameListRecyclerView.setAdapter(new GameListAdapter(gamesList, MainActivity.this));
+            }
+        });
     }
 
     @Override
@@ -105,21 +111,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void startGameLobbyFragment() {
-
-    }
-
-    @Override
     public void onClick(View view) {
         mPresenter.onClick(view.getId());
     }
 
-
-    @Override
-    public void onCreatePressed(DialogFragment dialog) {
-        mPresenter.createGame();
-        dialog.dismiss();
-    }
 
     @Override
     public void onJoinPressed(DialogFragment dialog) {

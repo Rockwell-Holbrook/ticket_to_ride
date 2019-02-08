@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.rholbrook.tickettoride.authentication.AuthenticationActivityModel;
 import com.example.shared.model.Message;
-
 import com.example.rholbrook.tickettoride.R;
 
 /**
@@ -22,14 +22,13 @@ import com.example.rholbrook.tickettoride.R;
  */
 
 public class RegisterFragment extends Fragment implements RegisterContract.View {
-    // TODO: Is there a way to avoid referring to RegisterPresenter at all? //
     private RegisterContract.Presenter mPresenter = new RegisterPresenter(this);
-
+    private static final int SUCCESSFUL_AUTHENTICATION = 1;
     private Button mRegisterButton;
     private EditText mUsernameField;
     private EditText mPasswordField;
     private EditText mConfPasswordField;
-
+    private AuthenticationActivityModel.CallBack callback;
     private boolean usernameFilled;
     private boolean passwordFilled;
     private boolean confPasswordFilled;
@@ -144,6 +143,14 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         return v;
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (callback != null) {
+            callback.onCall(SUCCESSFUL_AUTHENTICATION);
+        }
+    }
+
 
     public void onSuccess() {
         getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
@@ -164,6 +171,35 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         else {
             mRegisterButton.setEnabled(false);
         }
+    }
+
+    private void register() {
+        RegisterTask registerTask = new RegisterTask();
+        registerTask.setListener(new ListeningTask.Listener() {
+            @Override
+            public void onComplete(Object result) {
+                Message message = (Message) result;
+                checkStatus(message);
+            }
+        });
+        registerTask.execute();
+    }
+
+    private void checkStatus(Message message) {
+        if (message.isSuccess()) {
+           onSuccess();
+        }
+        else {
+            onFailure(message.getMessage());
+        }
+    }
+
+    public AuthenticationActivityModel.CallBack getCallback() {
+        return callback;
+    }
+
+    public void setCallback(AuthenticationActivityModel.CallBack callback) {
+        this.callback = callback;
     }
 }
 

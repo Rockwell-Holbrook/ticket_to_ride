@@ -16,7 +16,7 @@ import java.net.URL;
 public class AuthenticationServerProxy {
     private static AuthenticationServerProxy instance;
     private static final int SERVER_PORT_NUMBER = 8080;
-    private static final String SERVER_HOST = "localhost";
+    private static final String SERVER_HOST = "10.0.2.2";
     private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
     public static final String LOGIN_DESIGNATOR = "/authenticate/login";
     public static final String REGISTER_DESIGNATOR = "/authenticate/register";

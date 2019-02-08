@@ -5,6 +5,7 @@ import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 import com.example.shared.model.User;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.UUID;
@@ -47,11 +48,6 @@ public class MainActivityModel extends Observable {
     }
 
     public void joinedGame(String gameId){
-        try {
-            ServerProxy.getInstance().connectToGameSocket(gameId, Authentication.getInstance().getUsername());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
         mPresenter.joinedGame();
     }
 
@@ -64,18 +60,17 @@ public class MainActivityModel extends Observable {
         }
     }
 
-    public void newGameListRetrieved(List<Game> games) {
+    public void newGameListRetrieved(ArrayList<Game> games) {
         mPresenter.newGameList(games);
     }
 
     public void createGame(Player player, int maxPlayers, String gameName) {
         selectedGame = new Game(player, maxPlayers, gameName);
-        mPresenter.joinedGame();
-//        try {
-//            ServerProxy.getInstance().createGame(player, maxPlayers, gameName);
-//        } catch (Throwable throwable) {
-//            throwable.printStackTrace();
-//        }
+        try {
+            ServerProxy.getInstance().createGame(player, maxPlayers, gameName);
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     public void connectToManagementServer() throws URISyntaxException {
@@ -84,5 +79,13 @@ public class MainActivityModel extends Observable {
         } catch (URISyntaxException e) {
             throw e;
         }
+    }
+
+    public void connectToGameServer(String gameId) throws URISyntaxException {
+        ServerProxy.getInstance().connectToGameSocket(gameId, Authentication.getInstance().getUsername());
+    }
+
+    public void getGameList() {
+        ServerProxy.getInstance().getGameList(Authentication.getInstance().getUsername());
     }
 }

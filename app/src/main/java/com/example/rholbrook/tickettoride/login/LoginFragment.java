@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
+import com.example.rholbrook.tickettoride.authentication.AuthenticationActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivity;
+import com.example.rholbrook.tickettoride.register.ListeningTask;
 import com.example.rholbrook.tickettoride.register.RegisterFragment;
 import com.example.shared.model.Message;
 
@@ -26,6 +28,9 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
     private EditText mPasswordField;
     private Button mLoginButton;
     private TextView mRegister;
+    private Listener listener;
+    private int successStatus;
+    private AuthenticationActivityModel.CallBack callback;
 
     public interface Listener {
         void successfulLogin();
@@ -83,8 +88,6 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-
             }
 
         });
@@ -110,8 +113,6 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
-
             }
 
         });
@@ -120,8 +121,10 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Message message = mPresenter.login(mUsernameField.getText().toString(), mPasswordField.getText().toString());
-                checkStatus(message);
+                mPresenter.updateUsername(mUsernameField.getText().toString());
+                mPresenter.updatePassword(mPasswordField.getText().toString());
+                login();
+//                successfulLogin();
             }
         });
 
@@ -130,11 +133,22 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
             public void onClick(View v) {
                 // bring up Blaine's Fragment
                 startRegisterFragment();
-
             }
 
         });
         return view;
+    }
+
+    private void login() {
+        LoginTask loginTask = new LoginTask();
+        loginTask.setListener(new ListeningTask.Listener() {
+            @Override
+            public void onComplete(Object result) {
+                Message message = (Message) result;
+                checkStatus(message);
+            }
+        });
+        loginTask.execute();
     }
 
     private void checkStatus(Message message) {
@@ -147,6 +161,22 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
     }
 
+    public AuthenticationActivityModel.CallBack getCallback() {
+        return callback;
+    }
+
+    public void setCallback(AuthenticationActivityModel.CallBack callback) {
+        this.callback = callback;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (callback != null) {
+            callback.onCall(successStatus);
+        }
+    }
+
     @Override
     public void showToast(String message) {
         Toast.makeText(this.getContext(), message, Toast.LENGTH_LONG).show();
@@ -154,13 +184,14 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
 
     @Override
     public void startRegisterFragment() {
-         Fragment fragment = RegisterFragment.newInstance();
-         getFragmentManager().beginTransaction().replace(R.id.authentication_fragment_container, fragment).commit();
+        successStatus = LoginFragmentModel.SENT_TO_REGISTER;
+        getActivity().getSupportFragmentManager().beginTransaction().remove(LoginFragment.this).commit();
     }
 
     @Override
     public void successfulLogin() {
         // Bring up main Activity
+        successStatus = LoginFragmentModel.SUCCESSFUL_LOGIN;
         getActivity().getSupportFragmentManager().beginTransaction().remove(LoginFragment.this).commit();
     }
 }

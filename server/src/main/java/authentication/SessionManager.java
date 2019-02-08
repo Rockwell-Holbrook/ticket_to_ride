@@ -18,7 +18,7 @@ public class SessionManager {
         }
         catch(Exception e) {
             e.printStackTrace();
-            return new Message(false, "duplicate"); // The only reason this would fail is if there is a duplicate.
+            return new Message(false, "This Username Already Exists"); // The only reason this would fail is if there is a duplicate.
         }
 
         return new Message(true, "Some future endpoint for the Socket Server");
@@ -37,11 +37,11 @@ public class SessionManager {
         }
         catch(Exception e) {
             e.printStackTrace();
-            return new Message(false, "incorrect username");
+            return new Message(false, "Invalid Username or Password");
         }
 
         if(!databaseUser.getPassword().equals(user.getPassword())) {
-            return new Message(false, "incorrect password");
+            return new Message(false, "Invalid Username or Password");
         }
 
         return new Message(true, "Some future endpoint for the Socket Server");

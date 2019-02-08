@@ -50,7 +50,8 @@ public class Game {
 
 
     public void updateAvailableColors(Player player) {
-        availableColors.remove(player.getPlayerColor());
+        availableColors.remove(player.getPlayerColor()
+        );
     }
 
 

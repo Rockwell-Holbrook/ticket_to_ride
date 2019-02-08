@@ -11,8 +11,9 @@ public class LoginFragmentContract {
     }
 
     public interface Presenter {
-        public Message login(String username, String password);
-
+        Message login();
+        void updateUsername(String username);
+        void updatePassword(String password);
     }
 
 }
