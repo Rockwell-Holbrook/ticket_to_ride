@@ -7,16 +7,29 @@ import java.net.InetSocketAddress;
 import handler.*;
 
 public class AuthenticationServer {
+    private static final AuthenticationServer instance = new AuthenticationServer();
+
+    //private constructor to avoid client applications to use constructor
+    private AuthenticationServer(){}
+
+    public static AuthenticationServer getInstance(){
+        return instance;
+    }
+
     private static final int MAX_WAITING_CONNECTIONS = 12;
 
-    private HttpServer server;
-
-    private void run(String portNumber) {
+    /**
+     * Starts the HTTP AuthenticationServer on port 8080. Is called in the Server class along with the SocketServer.
+     *
+     * @param portNumber Should be set to 8080.
+     */
+    public void run(String portNumber) {
 
         /* Server Initialization */
 
         System.out.println("Initializing HTTP Server" + "\n");
 
+        HttpServer server;
         try {
             server = HttpServer.create(new InetSocketAddress(Integer.parseInt(portNumber)), MAX_WAITING_CONNECTIONS);
         }
@@ -37,15 +50,6 @@ public class AuthenticationServer {
         server.createContext("/authenticate/login", new LoginHandler());
 
         server.start();
-    }
-
-    /**
-     *
-     * Main function that will use the other classes to do the entire working of the server.
-     */
-    public static void main(String[] args) {
-        String portNumber = args[0];
-        new AuthenticationServer().run(portNumber);
     }
 }
 

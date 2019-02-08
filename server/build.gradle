@@ -1,8 +1,16 @@
 apply plugin: 'java-library'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('C:/Users/rholbrook/Documents/school/ticketToRide/ticket_to_ride/gson-2.8.5.jar')
+    testImplementation 'junit:junit:4.12'
+    implementation project(':shared')
+    implementation files('libs/sqlite-jdbc-3.8.7.jar')
+    compile 'org.java-websocket:Java-WebSocket:1.3.9'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 sourceCompatibility = "7"
