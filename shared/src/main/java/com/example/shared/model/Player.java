@@ -43,4 +43,25 @@ public class Player {
     public int hashCode() {
         return username.hashCode();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (getClass() != o.getClass())
+            return false;
+
+        try {
+            Player p = (Player) o;
+            if(!p.getUsername().equals(this.username)) {
+                return false;
+            }
+            if(!p.getPlayerColor().equals(this.playerColor)) {
+                return false;
+            }
+        }
+        catch(Exception e){
+            return false;
+        }
+
+        return true;
+    }
 }
