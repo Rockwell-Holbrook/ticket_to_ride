@@ -49,7 +49,6 @@ public class GameManager {
         Game game = this.notPlayingGameList.get(gameId);
         game.addPlayer(player);
         clientProxy.joinGameComplete(player.getUsername(), gameId);
-        clientProxy.playerJoinedGame(player.getUsername(), player.getPlayerColor(), game.getPlayerList(), gameId);
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
     }
 
@@ -70,6 +69,16 @@ public class GameManager {
         this.playingGameList.put(game.getGameId(), game);
         clientProxy.gameStarted(gameId);
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
+    }
+
+    /**
+     * Returns the player list for a specific game to update when someone new joins the lobby.
+     *
+     * @param gameId The game for the playerList we need.
+     */
+    public void getPlayerList(String gameId) {
+        Game game = this.notPlayingGameList.get(gameId);
+        clientProxy.playerJoinedGame(game.getPlayerList(), gameId);
     }
 
     public Map<String, Game> getNotPlayingGameList() {
