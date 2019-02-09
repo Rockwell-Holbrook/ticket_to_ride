@@ -13,13 +13,12 @@ public class GameLobbyActivityContract {
     }
     public interface Presenter {
         void init();
-        void checkHost();
-        void setHost(String hostUsername);
         void setGameId(String gameId);
         void updatePlayerList(ArrayList<Player> connectedPlayers);
         void updateChatList(ArrayList<ChatModel> chatMessages);
         void startGame();
         void gameStarted();
         void sendChat(String message);
+        void getPlayerList();
     }
 }

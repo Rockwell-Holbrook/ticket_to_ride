@@ -34,7 +34,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList, String gamdId) {
+    public void playerJoinedGame(Set<Player> playerList, String gameId) {
         String jsonValue = gson.toJson(playerList);
         Type typeName = new TypeToken<Set<Player>>(){}.getType();
         Set<Player> players = gson.fromJson(jsonValue, typeName);
@@ -57,11 +57,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void joinGameComplete(String username, String gameId) {
-        try {
-            MainActivityModel.getInstance().connectToGameServer(gameId);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        MainActivityModel.getInstance().joinedGame(gameId);
     }
 
 
@@ -85,10 +81,5 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     @Override
     public void ticketsReturned() {
 
-    }
-
-    //Non Overriden
-    public void joinedGame(String gameId) {
-        MainActivityModel.getInstance().joinedGame(gameId);
     }
 }

@@ -56,12 +56,14 @@ public class SocketServer extends WebSocketServer {
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         String path = getPath(conn.getResourceDescriptor());
+        System.out.println("Closed conn with " + conn.getResourceDescriptor());
         if (path.equals("/management")) {
             managementConnections.remove(conn);
             System.out.println(conn.getAttachment() + " has left management!");
         } else if (path.contains("/game")) {
             String gameId = getGameId(path);
-            gameConnections.get(gameId).remove(conn);
+            System.out.println(gameConnections.toString());
+//            gameConnections.get(gameId).remove(conn);
             System.out.println(conn.getAttachment() + " has left game: " + gameId);
         }
 
@@ -69,6 +71,7 @@ public class SocketServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
+        System.out.println("Got command: " + message);
         Command cmd = new Command(message);
         cmd.execute(ServerFacade.getInstance());
     }
@@ -91,7 +94,9 @@ public class SocketServer extends WebSocketServer {
      * @param cmd CommandToClient to be run on all clients connected to management
      */
     public void broadcastToManagement(Command cmd) {
+
         String serializedCmd = gson.toJson(cmd);
+        System.out.println("Sending cmd to management: " + serializedCmd);
         broadcast(serializedCmd, managementConnections);
     }
 
@@ -103,6 +108,7 @@ public class SocketServer extends WebSocketServer {
      */
     public void broadcastToGame(Command cmd, String gameId) {
         String serializedCmd = gson.toJson(cmd);
+        System.out.println("Sending cmd to game at " + gameId + ": " + serializedCmd);
         broadcast(serializedCmd, gameConnections.get(gameId));
     }
 
@@ -122,7 +128,9 @@ public class SocketServer extends WebSocketServer {
     public void sendToUser(Command cmd, String username) {
         for(WebSocket ws : managementConnections) {
             if(ws.getAttachment().equals(username)){
-                ws.send(gson.toJson(cmd));
+                String serialized = gson.toJson(cmd);
+                System.out.println("Sending cmd to " + username + ": " + serialized);
+                ws.send(serialized);
             }
         }
     }

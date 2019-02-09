@@ -21,7 +21,7 @@ import java.util.List;
 public class JoinGameDialogFragment extends DialogFragment {
 
     public interface JoinGameDialogInterface {
-        public void onJoinPressed(DialogFragment dialog);
+        public void onJoinPressed(DialogFragment dialog, Player.PlayerColor color);
         public void onCancelPressed(DialogFragment dialog);
     }
 
@@ -41,18 +41,18 @@ public class JoinGameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        ArrayList<String> availableColors = getColorStrings(MainActivityModel.getInstance().getAvailableColors());
+        final ArrayList<String> availableColors = getColorStrings(MainActivityModel.getInstance().getAvailableColors());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_join_game, null);
         TextView gameName = dialogView.findViewById(R.id.join_game_name_text_view);
         gameName.setText(MainActivityModel.getInstance().getSelectedGame().getGameName());
-        Spinner playerColorSpinner = dialogView.findViewById(R.id.player_color_spinner);
+        final Spinner playerColorSpinner = dialogView.findViewById(R.id.player_color_spinner);
         ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, availableColors);
         playerColorSpinner.setAdapter(colorAdapter);
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onJoinPressed(JoinGameDialogFragment.this);
+                mListener.onJoinPressed(JoinGameDialogFragment.this, MainActivityModel.getInstance().getAvailableColors().get(playerColorSpinner.getSelectedItemPosition()));
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

@@ -35,7 +35,6 @@ public class SocketClientCommunicator extends WebSocketClient {
             //Unnecessary Response
         } else if (cutMessage.equals("Came:")) {
             String gameId = message.substring(5);
-            ClientFacade.getInstance().joinedGame(gameId);
         } else {
             Command cmd = new Command(message);
             cmd.execute(facadeCallback);

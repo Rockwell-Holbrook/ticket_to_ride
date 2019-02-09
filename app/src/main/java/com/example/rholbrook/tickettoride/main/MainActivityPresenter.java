@@ -34,8 +34,8 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     }
 
     @Override
-    public void joinGame() {
-        mModel.joinGame(mModel.getSelectedGame().getGameId());
+    public void joinGame(Player.PlayerColor color) {
+        mModel.joinGame(mModel.getSelectedGame().getGameId(), color);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     }
 
     @Override
-    public void joinedGame() {
-        viewCallback.startGameLobbyFragment();
+    public void joinedGame(String gameId) {
+        viewCallback.startGameLobbyFragment(gameId);
     }
 
     @Override
