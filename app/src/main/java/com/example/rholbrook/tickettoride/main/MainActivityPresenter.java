@@ -70,33 +70,6 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     }
 
     @Override
-    public ArrayList<CharSequence> getAvailableColors() {
-        ArrayList<CharSequence> availableColors = new ArrayList<>();
-        for(Player.PlayerColor color : mModel.getSelectedGame().getAvailableColors()) {
-            switch (color) {
-                case RED:
-                    availableColors.add("Red");
-                    break;
-                case BLUE:
-                    availableColors.add("Blue");
-                    break;
-                case BLACK:
-                    availableColors.add("Black");
-                    break;
-                case GREEN:
-                    availableColors.add("Green");
-                    break;
-                case YELLOW:
-                    availableColors.add("Yellow");
-                    break;
-                default:
-                    break;
-            }
-        }
-        return availableColors;
-    }
-
-    @Override
     public void update(Observable observable, Object o) {
     }
 }

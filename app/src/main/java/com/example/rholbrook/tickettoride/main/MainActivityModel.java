@@ -5,23 +5,21 @@ import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 import com.example.shared.model.User;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.UUID;
+import java.util.*;
 
 public class MainActivityModel extends Observable {
     public final static int CREATE_GAME_BUTTON = 0;
     public final static int JOIN_GAME_BUTTON = 1;
     private static MainActivityContract.Presenter mPresenter;
     private Game selectedGame;
+    private ArrayList<Player.PlayerColor> possibleColors;
 
     private static MainActivityModel instance;
 
 
 
     public MainActivityModel() {
-
+        newAvailableColorsSet();
     }
 
     public MainActivityContract.Presenter getmPresenter() {
@@ -87,5 +85,23 @@ public class MainActivityModel extends Observable {
 
     public void getGameList() {
         ServerProxy.getInstance().getGameList(Authentication.getInstance().getUsername());
+    }
+
+    public ArrayList<Player.PlayerColor> getAvailableColors() {
+        Set<Player> players = selectedGame.getPlayerList();
+        ArrayList<Player.PlayerColor> availableColors = possibleColors;
+        for (Player player : players) {
+            availableColors.remove(player.getPlayerColor());
+        }
+        return availableColors;
+    }
+
+    public void newAvailableColorsSet() {
+        possibleColors = new ArrayList<>();
+        possibleColors.add(Player.PlayerColor.BLUE);
+        possibleColors.add(Player.PlayerColor.BLACK);
+        possibleColors.add(Player.PlayerColor.GREEN);
+        possibleColors.add(Player.PlayerColor.RED);
+        possibleColors.add(Player.PlayerColor.YELLOW);
     }
 }

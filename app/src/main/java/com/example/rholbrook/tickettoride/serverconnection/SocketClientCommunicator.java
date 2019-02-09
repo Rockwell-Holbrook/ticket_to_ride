@@ -33,7 +33,7 @@ public class SocketClientCommunicator extends WebSocketClient {
         System.out.println(message);
         if (message.equals("Management Successful")){
             //Unnecessary Response
-        } else if (message.substring(0,5).equals("Game:")) {
+        } else if (cutMessage.equals("Came:")) {
             String gameId = message.substring(5);
             ClientFacade.getInstance().joinedGame(gameId);
         } else {

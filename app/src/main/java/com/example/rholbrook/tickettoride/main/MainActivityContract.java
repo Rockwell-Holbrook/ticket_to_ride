@@ -25,6 +25,5 @@ public class MainActivityContract {
         void joinedGame();
         void newGameList(ArrayList<Game> games);
         Game getSelectedGame();
-        ArrayList<CharSequence> getAvailableColors();
     }
 }

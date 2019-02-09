@@ -36,7 +36,7 @@ public class GameManager {
         this.notPlayingGameList.put(game.getGameId(), game);
         SocketServer.getInstance().addGame(game.getGameId());
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
-        joinGame(game.getGameId(), host);
+//        joinGame(game.getGameId(), host);
         return game.getGameId();
     }
 

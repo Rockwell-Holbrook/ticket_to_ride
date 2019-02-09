@@ -23,18 +23,7 @@ public class Game {
         this.maxPlayers = maxPlayers;
         this.currentPlayers = 0;
         this.gameId = UUID.randomUUID().toString();
-        newAvailableColorsSet();
         addPlayer(host);
-    }
-
-
-    public void newAvailableColorsSet() {
-        availableColors = new ArrayList<>();
-        availableColors.add(Player.PlayerColor.BLUE);
-        availableColors.add(Player.PlayerColor.BLACK);
-        availableColors.add(Player.PlayerColor.GREEN);
-        availableColors.add(Player.PlayerColor.RED);
-        availableColors.add(Player.PlayerColor.YELLOW);
     }
 
     /**

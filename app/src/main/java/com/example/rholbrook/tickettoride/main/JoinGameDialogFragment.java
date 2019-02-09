@@ -41,7 +41,7 @@ public class JoinGameDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         //Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        ArrayList<String> availableColors = getColorStrings(MainActivityModel.getInstance().getSelectedGame().getAvailableColors());
+        ArrayList<String> availableColors = getColorStrings(MainActivityModel.getInstance().getAvailableColors());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_join_game, null);
         TextView gameName = dialogView.findViewById(R.id.join_game_name_text_view);
