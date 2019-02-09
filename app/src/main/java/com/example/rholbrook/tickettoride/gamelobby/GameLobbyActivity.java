@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.main.MainActivity;
@@ -34,9 +35,11 @@ public class GameLobbyActivity extends AppCompatActivity implements
 
         setContentView(R.layout.activity_game_lobby);
         String gameId = null;
+        String hostUsername = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             gameId = extras.getString("gameId");
+            hostUsername = extras.getString("hostUsername");
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -55,11 +58,19 @@ public class GameLobbyActivity extends AppCompatActivity implements
             }
         });
 
+        adminStartGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_LONG).show();
+            }
+        });
+
         playerRecyclerView.setLayoutManager(new LinearLayoutManager(GameLobbyActivity.this));
         mPresenter = new GameLobbyActivityPresenter(this);
         mPresenter.init();
         mPresenter.setGameId(gameId);
         mPresenter.getPlayerList();
+        mPresenter.checkHost(hostUsername);
     }
 
     @Override

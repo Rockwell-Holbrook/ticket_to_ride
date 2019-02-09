@@ -19,6 +19,7 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     public void init() {
         mModel = GameLobbyActivityModel.getInstance();
         mModel.setmListener(this);
+
     }
 
     @Override
@@ -54,6 +55,11 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     @Override
     public void getPlayerList() {
         mModel.getPlayerList();
+    }
+
+    @Override
+    public void checkHost(String username) {
+        viewCallback.setHostStartButtonUsername(username.equals(Authentication.getInstance().getUsername()));
     }
 
     @Override

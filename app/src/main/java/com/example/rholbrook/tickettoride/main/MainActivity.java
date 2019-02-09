@@ -103,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements
     public void startGameLobbyFragment(String gameId) {
         Intent intent = new Intent(this, GameLobbyActivity.class);
         intent.putExtra("gameId", gameId);
+        intent.putExtra("hostUsername", mPresenter.getSelectedGame().getHost().getUsername());
         startActivity(intent);
+        this.finish();
     }
 
     @Override

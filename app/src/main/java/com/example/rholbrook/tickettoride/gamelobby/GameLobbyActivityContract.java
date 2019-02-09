@@ -20,5 +20,6 @@ public class GameLobbyActivityContract {
         void gameStarted();
         void sendChat(String message);
         void getPlayerList();
+        void checkHost(String username);
     }
 }
