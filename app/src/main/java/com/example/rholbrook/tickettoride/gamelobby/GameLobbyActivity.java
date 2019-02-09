@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.game.GameActivity;
+import com.example.rholbrook.tickettoride.main.MainActivity;
 import com.example.shared.model.Player;
 
 import java.util.ArrayList;
@@ -32,8 +34,17 @@ public class GameLobbyActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_game_lobby);
-//        String gameId = savedInstanceState.getString("gameId");
-//        String hostUsername = savedInstanceState.getString("hostUsername");
+        String gameId = null;
+        String hostUsername = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            gameId = extras.getString("gameId");
+            hostUsername = extras.getString("hostUsername");
+        } else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
         playerRecyclerView = findViewById(R.id.current_player_recycler_view);
         chatRecyclerView = findViewById(R.id.chat_recycler_view);
         chatSendButton = findViewById(R.id.message_send_button);
@@ -47,10 +58,19 @@ public class GameLobbyActivity extends AppCompatActivity implements
             }
         });
 
+        adminStartGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        playerRecyclerView.setLayoutManager(new LinearLayoutManager(GameLobbyActivity.this));
         mPresenter = new GameLobbyActivityPresenter(this);
         mPresenter.init();
-//        mPresenter.setHost(hostUsername);
-//        mPresenter.setGameId(gameId);
+        mPresenter.setGameId(gameId);
+        mPresenter.getPlayerList();
+        mPresenter.checkHost(hostUsername);
     }
 
     @Override
@@ -76,8 +96,14 @@ public class GameLobbyActivity extends AppCompatActivity implements
 
     @Override
     public void updatePlayerList(ArrayList<Player> connectedPlayers) {
-        playerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        playerRecyclerView.setAdapter(new PlayerListAdapter(connectedPlayers, this));
+        final ArrayList<Player> playerList = connectedPlayers;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                playerRecyclerView.setAdapter(new PlayerListAdapter(playerList, GameLobbyActivity.this));
+            }
+        });
+
     }
 
     @Override

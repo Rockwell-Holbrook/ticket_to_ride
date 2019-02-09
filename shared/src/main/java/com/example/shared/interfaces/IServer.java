@@ -42,4 +42,11 @@ public interface IServer {
      * @param message Message to send to all users
      */
       void sendChat(String username, String gameId, String message);
+
+    /**
+     * Returns the player list for a specific game to update when someone new joins the lobby.
+     *
+     * @param gameId The game for the playerList we need.
+     */
+      void getPlayerList(String gameId);
 }

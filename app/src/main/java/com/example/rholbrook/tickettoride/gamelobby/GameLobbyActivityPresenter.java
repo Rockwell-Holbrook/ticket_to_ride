@@ -23,21 +23,6 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     }
 
     @Override
-    public void checkHost() {
-        if (Authentication.getInstance().getUsername().equals(mModel.getHostUsername())) {
-            viewCallback.setHostStartButtonUsername(true);
-        } else {
-            viewCallback.setHostStartButtonUsername(false);
-        }
-    }
-
-    @Override
-    public void setHost(String hostUsername) {
-        mModel.setHostUsername(hostUsername);
-        checkHost();
-    }
-
-    @Override
     public void setGameId(String gameId) {
         mModel.setGameId(gameId);
     }
@@ -65,6 +50,16 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     @Override
     public void sendChat(String message) {
         mModel.sendChat(message);
+    }
+
+    @Override
+    public void getPlayerList() {
+        mModel.getPlayerList();
+    }
+
+    @Override
+    public void checkHost(String username) {
+        viewCallback.setHostStartButtonUsername(username.equals(Authentication.getInstance().getUsername()));
     }
 
     @Override

@@ -90,9 +90,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void joinGame() {
         JoinGameDialogFragment dialog = new JoinGameDialogFragment();
-        ArrayList<CharSequence> availableColors = mPresenter.getAvailableColors();
-        Bundle args = new Bundle();
-        args.putCharSequenceArrayList("availableColors", availableColors);
         dialog.show(getSupportFragmentManager(), "JoinGameDialogFragment");
     }
 
@@ -103,11 +100,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void startGameLobbyFragment() {
+    public void startGameLobbyFragment(String gameId) {
         Intent intent = new Intent(this, GameLobbyActivity.class);
-        intent.putExtra("gameId", mPresenter.getSelectedGame().getGameId());
+        intent.putExtra("gameId", gameId);
         intent.putExtra("hostUsername", mPresenter.getSelectedGame().getHost().getUsername());
         startActivity(intent);
+        this.finish();
     }
 
     @Override
@@ -117,8 +115,8 @@ public class MainActivity extends AppCompatActivity implements
 
 
     @Override
-    public void onJoinPressed(DialogFragment dialog) {
-        mPresenter.joinGame();
+    public void onJoinPressed(DialogFragment dialog, Player.PlayerColor color) {
+        mPresenter.joinGame(color);
         dialog.dismiss();
     }
 

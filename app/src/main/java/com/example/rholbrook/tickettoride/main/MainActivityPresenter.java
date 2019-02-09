@@ -34,8 +34,8 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     }
 
     @Override
-    public void joinGame() {
-        mModel.joinGame(mModel.getSelectedGame().getGameId());
+    public void joinGame(Player.PlayerColor color) {
+        mModel.joinGame(mModel.getSelectedGame().getGameId(), color);
     }
 
     @Override
@@ -56,8 +56,8 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     }
 
     @Override
-    public void joinedGame() {
-        viewCallback.startGameLobbyFragment();
+    public void joinedGame(String gameId) {
+        viewCallback.startGameLobbyFragment(gameId);
     }
 
     @Override
@@ -67,33 +67,6 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
 
     public Game getSelectedGame() {
         return mModel.getSelectedGame();
-    }
-
-    @Override
-    public ArrayList<CharSequence> getAvailableColors() {
-        ArrayList<CharSequence> availableColors = new ArrayList<>();
-        for(Player.PlayerColor color : mModel.getSelectedGame().getAvailableColors()) {
-            switch (color) {
-                case RED:
-                    availableColors.add("Red");
-                    break;
-                case BLUE:
-                    availableColors.add("Blue");
-                    break;
-                case BLACK:
-                    availableColors.add("Black");
-                    break;
-                case GREEN:
-                    availableColors.add("Green");
-                    break;
-                case YELLOW:
-                    availableColors.add("Yellow");
-                    break;
-                default:
-                    break;
-            }
-        }
-        return availableColors;
     }
 
     @Override
