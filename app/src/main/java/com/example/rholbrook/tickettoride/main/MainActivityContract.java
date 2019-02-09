@@ -13,16 +13,16 @@ public class MainActivityContract {
         void createGame();
         void joinGame();
         void selectGame(Game gameNumber);
-        void startGameLobbyFragment();
+        void startGameLobbyFragment(String gameId);
     }
 
     public interface Presenter {
         void init();
         void createGame(Player player, int maxPlayers, String gameName);
-        void joinGame();
+        void joinGame(Player.PlayerColor color);
         void onClick(int id);
         void setSelectedGame(Game game);
-        void joinedGame();
+        void joinedGame(String gameId);
         void newGameList(ArrayList<Game> games);
         Game getSelectedGame();
     }

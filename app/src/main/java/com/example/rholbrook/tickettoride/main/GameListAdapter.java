@@ -38,11 +38,11 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         } else {
             viewHolder.gameListItemLayout.setBackgroundResource(R.color.gameListEntryBackgroundOdd);
         }
-        int currentPlayerNumber = game.getCurrentPlayers();
+        int currentPlayerNumber = game.getPlayerList().size();
         int maxPlayerNumber = game.getMaxPlayers();
         String gameName = game.getGameName();
         String hostName = game.getHost().getUsername();
-        viewHolder.currentPlayerNumber.setText(String.valueOf(currentPlayerNumber));
+        viewHolder.currentPlayerNumber.setText(String.valueOf(game.getPlayerList().size()));
         viewHolder.maxPlayerNumber.setText(String.valueOf(maxPlayerNumber));
         viewHolder.gameName.setText(gameName);
         viewHolder.hostName.setText(hostName);

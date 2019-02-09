@@ -46,13 +46,18 @@ public class MainActivityModel extends Observable {
     }
 
     public void joinedGame(String gameId){
-        mPresenter.joinedGame();
+        try {
+            connectToGameServer(gameId);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        mPresenter.joinedGame(gameId);
     }
 
-    public void joinGame(String selectedGameId) {
+    public void joinGame(String selectedGameId, Player.PlayerColor color) {
         //Call the joinGame method in ServerProxy
         try {
-            ServerProxy.getInstance().joinGame(selectedGameId, new Player("username", false, Player.PlayerColor.BLUE));
+            ServerProxy.getInstance().joinGame(selectedGameId, new Player(Authentication.getInstance().getUsername(), false, color));
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }

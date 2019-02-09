@@ -87,4 +87,12 @@ public class ServerProxy implements IServer {
         Object[] paramValues = {username, gameId, message};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
+
+    @Override
+    public void getPlayerList(String gameId) {
+        String methodName = "getPlayerList";
+        String[] paramTypes = {String.class.getName()};
+        Object[] paramValues = {gameId};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    }
 }
