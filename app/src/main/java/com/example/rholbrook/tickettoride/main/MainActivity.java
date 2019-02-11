@@ -129,4 +129,9 @@ public class MainActivity extends AppCompatActivity implements
     public void onCancelPressed(DialogFragment dialog) {
         dialog.dismiss();
     }
+
+    @Override
+    public void onCreateError(CreateGameDialogFragment createGameDialogFragment, String error) {
+        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+    }
 }

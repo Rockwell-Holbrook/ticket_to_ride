@@ -42,25 +42,30 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.ViewHo
         int maxPlayerNumber = game.getMaxPlayers();
         String gameName = game.getGameName();
         String hostName = game.getHost().getUsername();
-        viewHolder.currentPlayerNumber.setText(String.valueOf(game.getPlayerList().size()));
+        viewHolder.currentPlayerNumber.setText(String.valueOf(currentPlayerNumber));
         viewHolder.maxPlayerNumber.setText(String.valueOf(maxPlayerNumber));
         viewHolder.gameName.setText(gameName);
         viewHolder.hostName.setText(hostName);
-        viewHolder.gameListItemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.selectGame(game);
-                if (currentlySelectedViewHolder != null) {
-                    if ((currentlySelectedViewHolder.getAdapterPosition() % 2) == 0) {
-                        currentlySelectedViewHolder.gameListItemLayout.setBackgroundResource(R.color.gameListEntryBackgroundEven);
-                    } else {
-                        currentlySelectedViewHolder.gameListItemLayout.setBackgroundResource(R.color.gameListEntryBackgroundOdd);
+        if (currentPlayerNumber != maxPlayerNumber) {
+            viewHolder.gameListItemLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mListener.selectGame(game);
+                    if (currentlySelectedViewHolder != null) {
+                        if ((currentlySelectedViewHolder.getAdapterPosition() % 2) == 0) {
+                            currentlySelectedViewHolder.gameListItemLayout.setBackgroundResource(R.color.gameListEntryBackgroundEven);
+                        } else {
+                            currentlySelectedViewHolder.gameListItemLayout.setBackgroundResource(R.color.gameListEntryBackgroundOdd);
+                        }
                     }
+                    viewHolder.gameListItemLayout.setBackgroundResource(R.color.selectedGameListEntry);
+                    currentlySelectedViewHolder = viewHolder;
                 }
-                viewHolder.gameListItemLayout.setBackgroundResource(R.color.selectedGameListEntry);
-                currentlySelectedViewHolder = viewHolder;
-            }
-        });
+            });
+        } else {
+            viewHolder.gameListItemLayout.setClickable(false);
+        }
+
     }
 
     @Override

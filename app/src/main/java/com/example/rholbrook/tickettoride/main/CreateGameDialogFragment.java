@@ -8,10 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.*;
 import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.Player;
 
@@ -23,6 +20,7 @@ public class CreateGameDialogFragment extends DialogFragment {
     public interface CreateGameDialogInterface {
         public void onCreatePressed(DialogFragment dialog, String gameName, int maxPlayers, Player.PlayerColor selectedColor);
         public void onCancelPressed(DialogFragment dialog);
+        public void onCreateError(CreateGameDialogFragment createGameDialogFragment, String error);
     }
 
     CreateGameDialogInterface mListener;
@@ -57,9 +55,14 @@ public class CreateGameDialogFragment extends DialogFragment {
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mListener.onCreatePressed(CreateGameDialogFragment.this,
-                        gameName.getText().toString(),
-                        Integer.valueOf(playerNumberSpinner.getSelectedItem().toString()), availableColors.get(playerColorSpinner.getSelectedItemPosition()));
+                if (gameName.getText().toString().equals("")) {
+                    mListener.onCreateError(CreateGameDialogFragment.this, "Game Name not specified");
+                } else {
+                    mListener.onCreatePressed(CreateGameDialogFragment.this,
+                            gameName.getText().toString(),
+                            Integer.valueOf(playerNumberSpinner.getSelectedItem().toString()), availableColors.get(playerColorSpinner.getSelectedItemPosition()));
+                }
+
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
