@@ -49,10 +49,6 @@ class LoginFragmentModel extends Observable {
         return new Message(success, message);
     }
 
-    public void onSuccess() {
-
-    }
-
     public String getUsername() {
         return username;
     }
