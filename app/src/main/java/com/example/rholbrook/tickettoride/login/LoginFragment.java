@@ -73,8 +73,12 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (mUsernameField.getText().toString().length() == 0) {
                     mLoginButton.setEnabled(false);
+                    mLoginButton.setTextColor(Color.GRAY);
                 } else {
                     if (mPasswordField.getText().toString().length() == 0) {
+                        mLoginButton.setEnabled(false);
+                        mLoginButton.setTextColor(Color.GRAY);
+                    } else {
                         mLoginButton.setEnabled(true);
                         mLoginButton.setTextColor(Color.BLACK);
                     }
@@ -98,8 +102,12 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (mPasswordField.getText().toString().length() == 0) {
                     mLoginButton.setEnabled(false);
+                    mLoginButton.setTextColor(Color.GRAY);
                 } else {
                     if (mUsernameField.getText().toString().length() == 0) {
+                        mLoginButton.setEnabled(false);
+                        mLoginButton.setTextColor(Color.GRAY);
+                    } else {
                         mLoginButton.setEnabled(true);
                         mLoginButton.setTextColor(Color.BLACK);
                     }
