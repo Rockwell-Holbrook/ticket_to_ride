@@ -36,7 +36,7 @@ public class Player {
     }
 
     public enum PlayerColor {
-        GREEN, BLUE, YELLOW, RED, BLACK;
+        GREEN, BLUE, YELLOW, RED, BLACK
     }
 
     @Override
@@ -49,19 +49,8 @@ public class Player {
         if (getClass() != o.getClass())
             return false;
 
-        try {
-            Player p = (Player) o;
-            if(!p.getUsername().equals(this.username)) {
-                return false;
-            }
-            if(!p.getPlayerColor().equals(this.playerColor)) {
-                return false;
-            }
-        }
-        catch(Exception e){
-            return false;
-        }
+        Player p = (Player) o;
 
-        return true;
+        return p.getUsername().equals(this.getUsername());
     }
 }

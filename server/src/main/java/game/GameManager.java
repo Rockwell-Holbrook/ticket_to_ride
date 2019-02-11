@@ -47,9 +47,12 @@ public class GameManager {
      */
     public void joinGame(String gameId, Player player) {
         Game game = this.notPlayingGameList.get(gameId);
-        game.addPlayer(player);
-        clientProxy.joinGameComplete(player.getUsername(), gameId);
-        clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
+
+        if(game.getPlayerList().size() != game.getMaxPlayers()) {
+            game.addPlayer(player);
+            clientProxy.joinGameComplete(player.getUsername(), gameId);
+            clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
+        }
     }
 
     public void sendGameList(String username){
