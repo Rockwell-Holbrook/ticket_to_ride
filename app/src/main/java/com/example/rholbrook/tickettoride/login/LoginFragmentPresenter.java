@@ -6,7 +6,7 @@ import com.example.shared.model.Message;
 import java.util.Observable;
 import java.util.Observer;
 
-public class LoginFragmentPresenter extends Observable implements LoginFragmentContract.Presenter {
+public class LoginFragmentPresenter implements LoginFragmentContract.Presenter {
 
     private LoginFragmentContract.View viewCallback;
     private LoginFragmentModel mModel;
