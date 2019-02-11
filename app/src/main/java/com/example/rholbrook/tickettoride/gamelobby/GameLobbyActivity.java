@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.gamelobby;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -58,12 +59,8 @@ public class GameLobbyActivity extends AppCompatActivity implements
             }
         });
 
-        adminStartGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_LONG).show();
-            }
-        });
+        adminStartGameButton.setEnabled(false);
+        adminStartGameButton.setTextColor(Color.GRAY);
 
         playerRecyclerView.setLayoutManager(new LinearLayoutManager(GameLobbyActivity.this));
         mPresenter = new GameLobbyActivityPresenter(this);
@@ -80,13 +77,13 @@ public class GameLobbyActivity extends AppCompatActivity implements
 
     @Override
     public void setHostStartButtonUsername(boolean isHost) {
-        adminStartGameButton.setEnabled(isHost);
         if (isHost) {
             adminStartGameButton.setVisibility(View.VISIBLE);
             adminStartGameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPresenter.startGame();
+                    //mPresenter.startGame();
+                    Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_LONG).show();
                 }
             });
         } else {
@@ -117,5 +114,13 @@ public class GameLobbyActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("gameId", gameId);
         startActivity(intent);
+    }
+
+    @Override
+    public void updateCanStart(ArrayList<Player> playerList) {
+        if (playerList.size() > 1) {
+            adminStartGameButton.setEnabled(true);
+            adminStartGameButton.setTextColor(Color.BLACK);
+        }
     }
 }

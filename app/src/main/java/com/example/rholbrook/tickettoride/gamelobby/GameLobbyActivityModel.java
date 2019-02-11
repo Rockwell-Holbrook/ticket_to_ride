@@ -13,11 +13,9 @@ public class GameLobbyActivityModel extends Observable {
     private GameLobbyActivityContract.Presenter mListener;
 
     private String gameId;
-    private ArrayList<Player> connectedPlayers;
     private ArrayList<ChatModel> chatMessages;
 
     public GameLobbyActivityModel() {
-        connectedPlayers = new ArrayList<>();
         chatMessages = new ArrayList<>();
     }
 
@@ -63,7 +61,9 @@ public class GameLobbyActivityModel extends Observable {
     }
 
     public void newPlayerJoined(Set<Player> playerList) {
-        mListener.updatePlayerList(new ArrayList<Player>(playerList));
+        ArrayList<Player> players = new ArrayList<>(playerList);
+        mListener.updatePlayerList(players);
+        mListener.updateCanStart(players);
     }
 
     public void getPlayerList() {
