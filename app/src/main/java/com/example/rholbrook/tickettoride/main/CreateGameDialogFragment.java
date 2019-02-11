@@ -49,7 +49,8 @@ public class CreateGameDialogFragment extends DialogFragment {
         final Spinner playerColorSpinner = dialogView.findViewById(R.id.player_color_spinner);
         final List<Player.PlayerColor> availableColors = new ArrayList<>();
         getAvailableColors(availableColors);
-        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getContext(), R.array.player_colors_array, android.R.layout.simple_spinner_item);
+        final ArrayList<String> colors = getColorStrings(availableColors);
+        ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, colors);
         colorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         playerColorSpinner.setAdapter(colorAdapter);
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
@@ -79,9 +80,35 @@ public class CreateGameDialogFragment extends DialogFragment {
 
     private void getAvailableColors(List<Player.PlayerColor> availableColors) {
         availableColors.add(Player.PlayerColor.BLUE);
-        availableColors.add(Player.PlayerColor.BLACK);
         availableColors.add(Player.PlayerColor.GREEN);
         availableColors.add(Player.PlayerColor.RED);
         availableColors.add(Player.PlayerColor.YELLOW);
+        availableColors.add(Player.PlayerColor.BLACK);
+    }
+
+    private ArrayList<String> getColorStrings(List<Player.PlayerColor> availableColors) {
+        ArrayList<String> colors = new ArrayList<>();
+        for (Player.PlayerColor color : availableColors) {
+            switch(color) {
+                case YELLOW:
+                    colors.add("Yellow");
+                    break;
+                case GREEN:
+                    colors.add("Green");
+                    break;
+                case BLACK:
+                    colors.add("Black");
+                    break;
+                case BLUE:
+                    colors.add("Blue");
+                    break;
+                case RED:
+                    colors.add("Red");
+                    break;
+                default:
+                    break;
+            }
+        }
+        return colors;
     }
 }

@@ -54,14 +54,7 @@ public class GameLobbyActivity extends AppCompatActivity implements
         chatSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.sendChat(chatEditText.getText().toString());
-            }
-        });
-
-        adminStartGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_LONG).show();
+//                mPresenter.sendChat(chatEditText.getText().toString());
             }
         });
 
@@ -86,7 +79,8 @@ public class GameLobbyActivity extends AppCompatActivity implements
             adminStartGameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPresenter.startGame();
+                    Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_LONG).show();
+//                    mPresenter.startGame();
                 }
             });
         } else {
