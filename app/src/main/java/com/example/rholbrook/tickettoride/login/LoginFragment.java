@@ -74,7 +74,7 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
                 if (mUsernameField.getText().toString().length() == 0) {
                     mLoginButton.setEnabled(false);
                 } else {
-                    if (mPasswordField.getText().toString().length() == 0) {
+                    if (mPasswordField.getText().toString().length() != 0) {
                         mLoginButton.setEnabled(true);
                         mLoginButton.setTextColor(Color.BLACK);
                     }
@@ -99,7 +99,7 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
                 if (mPasswordField.getText().toString().length() == 0) {
                     mLoginButton.setEnabled(false);
                 } else {
-                    if (mUsernameField.getText().toString().length() == 0) {
+                    if (mUsernameField.getText().toString().length() != 0) {
                         mLoginButton.setEnabled(true);
                         mLoginButton.setTextColor(Color.BLACK);
                     }
