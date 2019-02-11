@@ -24,6 +24,8 @@ import com.example.rholbrook.tickettoride.R;
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     private RegisterContract.Presenter mPresenter = new RegisterPresenter(this);
     private static final int SUCCESSFUL_AUTHENTICATION = 1;
+    private static final int FAILED_AUTHENTICATION = 0;
+    private int isSuccess;
     private Button mRegisterButton;
     private EditText mUsernameField;
     private EditText mPasswordField;
@@ -147,7 +149,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     public void onDetach() {
         super.onDetach();
         if (callback != null) {
-            callback.onCall(SUCCESSFUL_AUTHENTICATION);
+            callback.onCall(isSuccess);
         }
     }
 
@@ -187,9 +189,11 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
     private void checkStatus(Message message) {
         if (message.isSuccess()) {
+            isSuccess = SUCCESSFUL_AUTHENTICATION;
            onSuccess();
         }
         else {
+            isSuccess = FAILED_AUTHENTICATION;
             onFailure(message.getMessage());
         }
     }

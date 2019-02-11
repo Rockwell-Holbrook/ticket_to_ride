@@ -23,7 +23,6 @@ public class RegisterPresenterTest {
         presenter.register();
 
         // Bad registration: different password inputs
-
         username = "Erick";
         password = "PinkFloyd";
         confPassword = "Beatles";
@@ -35,7 +34,6 @@ public class RegisterPresenterTest {
         presenter.register();
 
         // Good registration
-
         username = "Genesis";
         password = "Paramore";
         confPassword = "Paramore";
@@ -47,7 +45,6 @@ public class RegisterPresenterTest {
         presenter.register();
 
         // Bad registration: username already exists
-
         username = "Genesis";
         password = "Rihanna";
         confPassword = "Rihanna";
