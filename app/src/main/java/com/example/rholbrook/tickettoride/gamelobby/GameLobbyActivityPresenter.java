@@ -63,6 +63,11 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     }
 
     @Override
+    public ArrayList<Player> getConnectedPlayers() {
+        return mModel.getConnectedPlayers();
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
 
     }

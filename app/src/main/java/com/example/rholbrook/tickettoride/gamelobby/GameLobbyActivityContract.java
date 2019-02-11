@@ -21,5 +21,6 @@ public class GameLobbyActivityContract {
         void sendChat(String message);
         void getPlayerList();
         void checkHost(String username);
+        ArrayList<Player> getConnectedPlayers();
     }
 }

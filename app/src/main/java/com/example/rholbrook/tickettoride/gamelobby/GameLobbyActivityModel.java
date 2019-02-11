@@ -44,6 +44,14 @@ public class GameLobbyActivityModel extends Observable {
         this.gameId = gameId;
     }
 
+    public ArrayList<Player> getConnectedPlayers() {
+        return connectedPlayers;
+    }
+
+    public void setConnectedPlayers(ArrayList<Player> connectedPlayers) {
+        this.connectedPlayers = connectedPlayers;
+    }
+
     public void newMessageReceived(String username, String message) {
         ChatModel newChat = new ChatModel(username, message);
         chatMessages.add(newChat);
@@ -63,6 +71,7 @@ public class GameLobbyActivityModel extends Observable {
     }
 
     public void newPlayerJoined(Set<Player> playerList) {
+        this.connectedPlayers = new ArrayList<Player>(playerList);
         mListener.updatePlayerList(new ArrayList<Player>(playerList));
     }
 
