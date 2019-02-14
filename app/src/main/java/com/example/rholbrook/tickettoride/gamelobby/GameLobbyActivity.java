@@ -1,7 +1,6 @@
 package com.example.rholbrook.tickettoride.gamelobby;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 public class GameLobbyActivity extends AppCompatActivity implements
         GameLobbyActivityContract.View {
 
+    private static final int MINIMUM_CONNECTED_PLAYERS = 2;
     private GameLobbyActivityContract.Presenter mPresenter;
 
     private RecyclerView playerRecyclerView;
@@ -55,12 +55,9 @@ public class GameLobbyActivity extends AppCompatActivity implements
         chatSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.sendChat(chatEditText.getText().toString());
+//                mPresenter.sendChat(chatEditText.getText().toString());
             }
         });
-
-        adminStartGameButton.setEnabled(false);
-        adminStartGameButton.setTextColor(Color.GRAY);
 
         playerRecyclerView.setLayoutManager(new LinearLayoutManager(GameLobbyActivity.this));
         mPresenter = new GameLobbyActivityPresenter(this);
@@ -77,13 +74,18 @@ public class GameLobbyActivity extends AppCompatActivity implements
 
     @Override
     public void setHostStartButtonUsername(boolean isHost) {
+        adminStartGameButton.setEnabled(isHost);
         if (isHost) {
             adminStartGameButton.setVisibility(View.VISIBLE);
             adminStartGameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //mPresenter.startGame();
-                    Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_LONG).show();
+                    if(mPresenter.getConnectedPlayers().size() < MINIMUM_CONNECTED_PLAYERS) {
+                        Toast.makeText(GameLobbyActivity.this, "Cannot start game with less than 2 players", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_SHORT).show();
+                    }
+//                    mPresenter.startGame();
                 }
             });
         } else {
@@ -114,13 +116,5 @@ public class GameLobbyActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("gameId", gameId);
         startActivity(intent);
-    }
-
-    @Override
-    public void updateCanStart(ArrayList<Player> playerList) {
-        if (playerList.size() > 1) {
-            adminStartGameButton.setEnabled(true);
-            adminStartGameButton.setTextColor(Color.BLACK);
-        }
     }
 }

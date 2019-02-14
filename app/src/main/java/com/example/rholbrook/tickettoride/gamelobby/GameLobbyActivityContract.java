@@ -10,7 +10,6 @@ public class GameLobbyActivityContract {
         void updatePlayerList(ArrayList<Player> connectedPlayers);
         void updateChatList(ArrayList<ChatModel> chatMessages);
         void startGameActivity(String gameId);
-        void updateCanStart(ArrayList<Player> playerList);
     }
     public interface Presenter {
         void init();
@@ -22,6 +21,6 @@ public class GameLobbyActivityContract {
         void sendChat(String message);
         void getPlayerList();
         void checkHost(String username);
-        void updateCanStart(ArrayList<Player> playerList);
+        ArrayList<Player> getConnectedPlayers();
     }
 }
