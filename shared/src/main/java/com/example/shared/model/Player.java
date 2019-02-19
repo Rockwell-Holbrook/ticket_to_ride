@@ -36,11 +36,21 @@ public class Player {
     }
 
     public enum PlayerColor {
-        GREEN, BLUE, YELLOW, RED, BLACK;
+        GREEN, BLUE, YELLOW, RED, BLACK
     }
 
     @Override
     public int hashCode() {
         return username.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (getClass() != o.getClass())
+            return false;
+
+        Player p = (Player) o;
+
+        return p.getUsername().equals(this.getUsername());
     }
 }

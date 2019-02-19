@@ -12,7 +12,6 @@ public class GameLobbyActivityModel extends Observable {
     private static GameLobbyActivityModel instance;
     private GameLobbyActivityContract.Presenter mListener;
 
-    private String hostUsername;
     private String gameId;
     private ArrayList<Player> connectedPlayers;
     private ArrayList<ChatModel> chatMessages;
@@ -37,20 +36,20 @@ public class GameLobbyActivityModel extends Observable {
         this.mListener = mListener;
     }
 
-    public String getHostUsername() {
-        return hostUsername;
-    }
-
-    public void setHostUsername(String hostUsername) {
-        this.hostUsername = hostUsername;
-    }
-
     public String getGameId() {
         return gameId;
     }
 
     public void setGameId(String gameId) {
         this.gameId = gameId;
+    }
+
+    public ArrayList<Player> getConnectedPlayers() {
+        return connectedPlayers;
+    }
+
+    public void setConnectedPlayers(ArrayList<Player> connectedPlayers) {
+        this.connectedPlayers = connectedPlayers;
     }
 
     public void newMessageReceived(String username, String message) {
@@ -72,6 +71,11 @@ public class GameLobbyActivityModel extends Observable {
     }
 
     public void newPlayerJoined(Set<Player> playerList) {
+        this.connectedPlayers = new ArrayList<Player>(playerList);
         mListener.updatePlayerList(new ArrayList<Player>(playerList));
+    }
+
+    public void getPlayerList() {
+        ServerProxy.getInstance().getPlayerList(gameId);
     }
 }

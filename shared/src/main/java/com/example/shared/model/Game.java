@@ -11,7 +11,6 @@ public class Game {
     private Player host;
     private Set<Player> playerList = new HashSet<>();
     private int maxPlayers;
-    private int currentPlayers;
     private String gameName;
     private List<Player.PlayerColor> availableColors;
     private transient IClientInGame clientProxy;
@@ -21,20 +20,8 @@ public class Game {
         this.gameName = gameName;
         this.isPlaying = false;
         this.maxPlayers = maxPlayers;
-        this.currentPlayers = 0;
         this.gameId = UUID.randomUUID().toString();
-        newAvailableColorsSet();
         addPlayer(host);
-    }
-
-
-    public void newAvailableColorsSet() {
-        availableColors = new ArrayList<>();
-        availableColors.add(Player.PlayerColor.BLUE);
-        availableColors.add(Player.PlayerColor.BLACK);
-        availableColors.add(Player.PlayerColor.GREEN);
-        availableColors.add(Player.PlayerColor.RED);
-        availableColors.add(Player.PlayerColor.YELLOW);
     }
 
     /**
@@ -45,15 +32,7 @@ public class Game {
      */
     public void addPlayer(Player player) {
         playerList.add(player);
-        currentPlayers++;
     }
-
-
-    public void updateAvailableColors(Player player) {
-        availableColors.remove(player.getPlayerColor()
-        );
-    }
-
 
     /**
      * Start the full game by setting isPlaying to true.
@@ -82,10 +61,6 @@ public class Game {
 
     public int getMaxPlayers() {
         return maxPlayers;
-    }
-
-    public int getCurrentPlayers() {
-        return currentPlayers;
     }
 
     public String getGameName() {

@@ -31,7 +31,7 @@ public class ServerFacade implements IServer {
     @Override
     public void createGame(Player host, int maxPlayers, String gameName) {
         String gameId = gameManager.createGame(host, maxPlayers, gameName);
-//        gameManager.joinGame(gameId, host);
+        gameManager.joinGame(gameId, host);
     }
 
     /**
@@ -55,8 +55,20 @@ public class ServerFacade implements IServer {
         gameManager.startGame(gameId);
     }
 
+    /**
+     * Returns the player list for a specific game to update when someone new joins the lobby.
+     *
+     * @param gameId The game for the playerList we need.
+     */
+    @Override
+    public void getPlayerList(String gameId) {
+        gameManager.getPlayerList(gameId);
+    }
+
     @Override
     public void sendChat(String username, String gameId, String message) {
         // Todo: Make this sucker work baby.
     }
+
+
 }

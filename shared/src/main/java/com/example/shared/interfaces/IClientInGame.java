@@ -14,11 +14,10 @@ public interface IClientInGame {
 
     /**
      * Signals the GameLobbyFragmentModel to update the joined players list
-     * @param username String value of the username of the joined player
-     * @param color PlayerColor enum value of the color of the joined player
+     * @param gameId Id of the game created.
      * @param playerList This is the updated playerList as requested.
      */
-    void playerJoinedGame(String username, Player.PlayerColor color, Set<Player> playerList, String gameId);
+    void playerJoinedGame(Set<Player> playerList, String gameId);
 
     /**
      * Signals the GameLobbyFragmentModel to start the Game Activity
