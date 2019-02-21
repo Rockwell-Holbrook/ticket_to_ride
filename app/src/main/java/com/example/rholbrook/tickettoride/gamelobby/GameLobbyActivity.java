@@ -80,12 +80,12 @@ public class GameLobbyActivity extends AppCompatActivity implements
             adminStartGameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mPresenter.getConnectedPlayers().size() < MINIMUM_CONNECTED_PLAYERS) {
-                        Toast.makeText(GameLobbyActivity.this, "Cannot start game with less than 2 players", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_SHORT).show();
-                    }
-//                    mPresenter.startGame();
+//                    if(mPresenter.getConnectedPlayers().size() < MINIMUM_CONNECTED_PLAYERS) {
+//                        Toast.makeText(GameLobbyActivity.this, "Cannot start game with less than 2 players", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_SHORT).show();
+//                    }
+                    mPresenter.startGame();
                 }
             });
         } else {

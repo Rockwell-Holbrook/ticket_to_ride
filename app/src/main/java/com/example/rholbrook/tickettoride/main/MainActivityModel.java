@@ -13,7 +13,6 @@ public class MainActivityModel extends Observable {
     private static MainActivityContract.Presenter mPresenter;
     private Game selectedGame;
     private ArrayList<Player.PlayerColor> possibleColors;
-
     private static MainActivityModel instance;
 
 

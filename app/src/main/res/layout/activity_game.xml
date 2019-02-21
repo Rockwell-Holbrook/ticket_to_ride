@@ -12,47 +12,16 @@
         <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/Card_back"
+                app:srcCompat="@mipmap/card_back"
                 android:id="@+id/facedown_card_deck"
                 android:layout_weight="1" android:layout_margin="8dp"/>
+        <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:id="@+id/faceup_train_card_frame_layout">
+
+        </FrameLayout>
         <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/Wild_card"
-                android:layout_weight="1"
-                android:id="@+id/faceup_card_one" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
-                android:layout_marginBottom="4dp" android:layout_marginTop="4dp"/>
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/Wild_card"
-                android:layout_weight="1"
-                android:id="@+id/faceup_card_two" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
-                android:layout_marginBottom="4dp" android:layout_marginTop="4dp"/>
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@mipmap/Wild_card"
-                android:id="@+id/faceup_card_three" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
-                android:layout_marginBottom="4dp" android:layout_marginTop="4dp"/>
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/Wild_card"
-                android:layout_weight="1"
-                android:id="@+id/faceup_card_four" android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
-                android:layout_marginBottom="4dp" android:layout_marginTop="4dp"/>
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:srcCompat="@mipmap/Wild_card"
-                android:id="@+id/faceup_card_five" android:layout_marginBottom="4dp" android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp" android:layout_marginTop="4dp"/>
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" app:srcCompat="@mipmap/Ticket_back" android:id="@+id/ticket_deck"
+                android:layout_height="wrap_content" app:srcCompat="@mipmap/ticket_back" android:id="@+id/ticket_deck"
                 android:layout_weight="1" android:layout_margin="8dp"/>
     </LinearLayout>
     <LinearLayout
@@ -69,7 +38,7 @@
 
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Ticket_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
                     android:id="@+id/imageView12"
                     app:layout_constraintTop_toBottomOf="@+id/opponent_one_username_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
@@ -82,7 +51,7 @@
                     android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Card_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
                     android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
                     android:layout_marginTop="2dp"/>
@@ -141,7 +110,7 @@
 
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Ticket_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
                     android:id="@+id/imageView12"
                     app:layout_constraintTop_toBottomOf="@+id/opponent_two_username_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
@@ -154,7 +123,7 @@
                     android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Card_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
                     android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
                     android:layout_marginTop="2dp"/>
@@ -213,7 +182,7 @@
 
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Ticket_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
                     android:id="@+id/imageView12"
                     app:layout_constraintTop_toBottomOf="@+id/opponent_three_username_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
@@ -226,7 +195,7 @@
                     android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Card_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
                     android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
                     android:layout_marginTop="2dp"/>
@@ -285,7 +254,7 @@
 
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Ticket_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
                     android:id="@+id/imageView12"
                     app:layout_constraintTop_toBottomOf="@+id/opponent_four_username_text_view"
                     app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
@@ -298,7 +267,7 @@
                     android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Card_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
                     android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
                     android:layout_marginTop="2dp"/>
@@ -355,8 +324,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" app:layout_constraintStart_toEndOf="@+id/card_section"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/constraintLayout">
-        <android.support.v7.widget.RecyclerView
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/constraintLayout"
+            android:background="@color/card_section_background">
+        <FrameLayout
+                android:id="@+id/player_train_card_hand"
                 android:layout_width="0dp"
                 android:layout_height="0dp" app:layout_constraintEnd_toStartOf="@+id/personal_ticket_deck"
                 app:layout_constraintStart_toStartOf="parent"
@@ -364,7 +335,7 @@
                 app:layout_constraintTop_toTopOf="parent" android:layout_margin="8dp"/>
         <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="0dp" app:srcCompat="@mipmap/Ticket_back" android:id="@+id/personal_ticket_deck"
+                android:layout_height="0dp" app:srcCompat="@mipmap/ticket_back" android:id="@+id/personal_ticket_deck"
                 android:layout_weight="1"
                 app:layout_constraintEnd_toStartOf="@+id/player_constraint_layout"
                 app:layout_constraintTop_toTopOf="parent"
@@ -401,7 +372,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView17"/>
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Ticket_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
                     android:id="@+id/imageView15"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/imageView16" android:layout_marginStart="8dp"
@@ -414,7 +385,7 @@
                     android:layout_marginStart="8dp" android:layout_marginTop="15dp" android:id="@+id/imageView16"/>
             <ImageView
                     android:layout_width="25dp"
-                    android:layout_height="20dp" app:srcCompat="@mipmap/Card_back"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
                     android:id="@+id/imageView17" app:layout_constraintStart_toEndOf="@id/imageView15"
                     android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/player_image_view"

@@ -76,7 +76,7 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     @Override
     public void gameStarted(String gameId) {
-        String methodName = "gameId";
+        String methodName = "gameStarted";
         String[] typeNames = {String.class.getName()};
         Object[] inputVals = {gameId};
 

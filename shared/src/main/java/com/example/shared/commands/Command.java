@@ -102,7 +102,8 @@ public class Command {
             System.err.println("Illegal accesss while trying to execute the method " + methodName);
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
-            System.out.println("ERROR: Illegal argument while trying to find the method " + methodName);
+            System.out.println("ERROR: Illegal argument w" +
+                    "hile trying to find the method " + methodName);
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             System.err.println("Illegal accesss while trying to execute the method " + methodName);
