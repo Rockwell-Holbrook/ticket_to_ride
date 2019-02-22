@@ -43,4 +43,19 @@ public class GameActivityPresenter implements
         TrainCard[] testCards = {cardOne, cardTwo, cardThree, cardFour, cardFive};
         viewCallback.setFaceUpDeck(testCards);
     }
+
+    @Override
+    public void selectFaceUpCard(int index) {
+
+    }
+
+    @Override
+    public void selectFaceDownCardDeck() {
+
+    }
+
+    @Override
+    public void clickDrawTickets() {
+
+    }
 }

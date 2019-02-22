@@ -6,17 +6,22 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.rholbrook.tickettoride.R;
+import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.model.ColorCard;
 import com.example.shared.model.LocomotiveCard;
+import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
 
 import java.util.List;
+import java.util.Set;
 
 public class GameActivity extends AppCompatActivity implements GameActivityContract.View {
     private GameActivityContract.Presenter mPresenter;
@@ -67,6 +72,8 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     private ImageView faceUpCardThree;
     private ImageView faceUpCardFour;
     private ImageView faceUpCardFive;
+    private RecyclerView viewHandRecyclerView;
+    private RecyclerView viewTicketsRecyclerView;
 
 
     @Override
@@ -80,14 +87,66 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         faceUpCardThree = findViewById(R.id.card_three);
         faceUpCardFour = findViewById(R.id.card_four);
         faceUpCardFive = findViewById(R.id.card_five);
+        viewHandRecyclerView = findViewById(R.id.view_hand_recycler_view);
+        viewTicketsRecyclerView = findViewById(R.id.view_tickets_recycler_view);
+        faceDownTicketDeck = findViewById(R.id.ticket_deck);
+        faceDownTrainCardDeck = findViewById(R.id.facedown_card_deck);
+        opponentOneConstraintLayout = findViewById(R.id.opponent_one_constraint_layout);
+        opponentOneAvatarImageView = findViewById(R.id.opponent_one_image_view);
+        opponentOneUsernameTextView = findViewById(R.id.opponent_one_username_text_view);
+        opponentOnePointTextView = findViewById(R.id.opponent_one_point_text_view);
+        opponentOneTrainCardTextView = findViewById(R.id.opponent_one_card_text_view);
+        opponentOneTicketCountTextView = findViewById(R.id.opponent_one_ticket_count_text_view);
+        opponentOneTrainCountTextView = findViewById(R.id.opponent_one_train_text_view);
+        opponentTwoConstraintLayout = findViewById(R.id.opponent_two_constraint_layout);
+        opponentTwoAvatarImageView = findViewById(R.id.opponent_two_image_view);
+        opponentTwoUsernameTextView = findViewById(R.id.opponent_two_username_text_view);
+        opponentTwoPointTextView = findViewById(R.id.opponent_two_point_text_view);
+        opponentTwoTrainCardTextView = findViewById(R.id.opponent_two_card_text_view);
+        opponentTwoTicketCountTextView = findViewById(R.id.opponent_two_ticket_count_text_view);
+        opponentTwoTrainCountTextView = findViewById(R.id.opponent_two_train_text_view);
+        opponentThreeConstraintLayout = findViewById(R.id.opponent_three_constraint_layout);
+        opponentThreeAvatarImageView = findViewById(R.id.opponent_three_image_view);
+        opponentThreeUsernameTextView = findViewById(R.id.opponent_three_username_text_view);
+        opponentThreePointTextView = findViewById(R.id.opponent_three_point_text_view);
+        opponentThreeTrainCardTextView = findViewById(R.id.opponent_three_card_text_view);
+        opponentThreeTicketCountTextView = findViewById(R.id.opponent_three_ticket_count_text_view);
+        opponentThreeTrainCountTextView = findViewById(R.id.opponent_three_train_text_view);
+        opponentFourConstraintLayout = findViewById(R.id.opponent_four_constraint_layout);
+        opponentFourAvatarImageView = findViewById(R.id.opponent_four_image_view);
+        opponentFourUsernameTextView = findViewById(R.id.opponent_four_username_text_view);
+        opponentFourPointTextView = findViewById(R.id.opponent_four_point_text_view);
+        opponentFourTrainCardTextView = findViewById(R.id.opponent_four_card_text_view);
+        opponentFourTicketCountTextView = findViewById(R.id.opponent_four_ticket_count_text_view);
+        opponentFourTrainCountTextView = findViewById(R.id.opponent_four_train_text_view);
+        playerConstraintLayout = findViewById(R.id.player_constraint_layout);
+        playerAvatarImageView = findViewById(R.id.player_image_view);
+        playerPointTextView = findViewById(R.id.player_point_text_view);
+        playerTicketCountTextView = findViewById(R.id.player_ticket_card_text_view);
+        playerTrainCardTextView = findViewById(R.id.player_card_text_view);
+        playerTrainCountTextView = findViewById(R.id.player_train_text_view);
 
         mPresenter = new GameActivityPresenter(this);
+
+        faceDownTicketDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.selectFaceDownCardDeck();
+            }
+        });
+
+        faceDownTrainCardDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.clickDrawTickets();
+            }
+        });
 
         gameMapFrameLayout = findViewById(R.id.fragment_map_container);
         Fragment gameMapFragment = GameMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_map_container, gameMapFragment).commit();
+        addFaceUpCardClickListeners();
         mPresenter.init();
-
     }
 
     @Override
@@ -146,5 +205,83 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck[2]));
         faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck[3]));
         faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck[4]));
+    }
+
+    @Override
+    public void startUserTurn() {
+        faceDownTicketDeck.setActivated(true);
+        faceDownTrainCardDeck.setActivated(true);
+        enableFaceUpCards();
+    }
+
+
+
+    @Override
+    public void endUserTurn() {
+        faceDownTicketDeck.setActivated(false);
+        faceDownTrainCardDeck.setActivated(false);
+        disableFaceUpCards();
+    }
+
+    @Override
+    public void addFaceUpCardClickListeners() {
+        faceUpCardOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.selectFaceUpCard(0);
+            }
+        });
+        faceUpCardTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.selectFaceUpCard(1);
+            }
+        });
+        faceUpCardThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.selectFaceUpCard(2);
+            }
+        });
+        faceUpCardFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.selectFaceUpCard(3);
+            }
+        });
+        faceUpCardFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.selectFaceUpCard(4);
+            }
+        });
+    }
+
+    @Override
+    public void enableFaceUpCards() {
+        faceUpCardOne.setActivated(true);
+        faceUpCardTwo.setActivated(true);
+        faceUpCardThree.setActivated(true);
+        faceUpCardFour.setActivated(true);
+        faceUpCardFive.setActivated(true);
+    }
+
+    @Override
+    public void disableFaceUpCards() {
+        faceUpCardOne.setActivated(false);
+        faceUpCardTwo.setActivated(false);
+        faceUpCardThree.setActivated(false);
+        faceUpCardFour.setActivated(false);
+        faceUpCardFive.setActivated(false);
+    }
+
+    @Override
+    public void updatePlayerData(Set<Player> players) {
+
+    }
+
+    @Override
+    public void initializeGame() {
+
     }
 }
