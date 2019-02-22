@@ -25,5 +25,8 @@ public class GameActivityContract {
         void selectFaceUpCard(int index);
         void selectFaceDownCardDeck();
         void clickDrawTickets();
+        void initializeGame();
+
+        Player getOpponentOne();
     }
 }

@@ -282,6 +282,6 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
 
     @Override
     public void initializeGame() {
-
+        Player opponentOne = mPresenter.getOpponentOne();
     }
 }

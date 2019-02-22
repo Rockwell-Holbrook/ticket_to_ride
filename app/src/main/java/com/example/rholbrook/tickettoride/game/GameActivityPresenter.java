@@ -2,6 +2,7 @@ package com.example.rholbrook.tickettoride.game;
 
 import com.example.shared.model.ColorCard;
 import com.example.shared.model.LocomotiveCard;
+import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
 
 import java.util.ArrayList;
@@ -46,16 +47,26 @@ public class GameActivityPresenter implements
 
     @Override
     public void selectFaceUpCard(int index) {
-
+        mModel.selectFaceUpCard(index);
     }
 
     @Override
     public void selectFaceDownCardDeck() {
-
+        mModel.selectFaceDownCardDeck();
     }
 
     @Override
     public void clickDrawTickets() {
+        mModel.drawTickets();
+    }
 
+    @Override
+    public void initializeGame() {
+
+    }
+
+    @Override
+    public Player getOpponentOne() {
+        return mModel.getOpponentOne();
     }
 }
