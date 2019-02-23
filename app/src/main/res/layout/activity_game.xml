@@ -382,13 +382,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" android:layout_margin="8dp"/>
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp" app:srcCompat="@mipmap/ticket_back" android:id="@+id/personal_ticket_deck"
+                android:layout_width="75dp"
+                android:layout_height="50dp" app:srcCompat="@mipmap/ticket_back" android:id="@+id/personal_ticket_deck"
                 android:layout_weight="1"
                 app:layout_constraintEnd_toStartOf="@+id/player_constraint_layout"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp" android:layout_marginEnd="8dp"/>
         <android.support.constraint.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" app:layout_constraintEnd_toEndOf="parent"

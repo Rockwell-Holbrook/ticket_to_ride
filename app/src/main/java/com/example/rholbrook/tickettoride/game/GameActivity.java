@@ -14,11 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.rholbrook.tickettoride.R;
-import com.example.rholbrook.tickettoride.main.Authentication;
-import com.example.shared.model.ColorCard;
-import com.example.shared.model.LocomotiveCard;
-import com.example.shared.model.Player;
-import com.example.shared.model.TrainCard;
+import com.example.shared.model.*;
 
 import java.util.List;
 import java.util.Set;
@@ -82,6 +78,7 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         setContentView(R.layout.activity_game);
 
         playerHandLayout = findViewById(R.id.player_train_card_hand);
+        playerTicketDeck = findViewById(R.id.personal_ticket_deck);
         faceUpCardOne = findViewById(R.id.card_one);
         faceUpCardTwo = findViewById(R.id.card_two);
         faceUpCardThree = findViewById(R.id.card_three);
@@ -276,12 +273,17 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     }
 
     @Override
-    public void updatePlayerData(Set<Player> players) {
+    public void updatePlayerData(Player[] players) {
 
     }
 
     @Override
     public void initializeGame() {
         Player opponentOne = mPresenter.getOpponentOne();
+    }
+
+    @Override
+    public void setPlayerTicketDeck(List<DestinationCard> testDestinations) {
+        playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.denver_el_paso));
     }
 }

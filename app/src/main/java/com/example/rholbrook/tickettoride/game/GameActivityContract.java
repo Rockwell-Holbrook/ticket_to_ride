@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.game;
 
+import com.example.shared.model.DestinationCard;
 import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
 
@@ -16,8 +17,10 @@ public class GameActivityContract {
         void addFaceUpCardClickListeners();
         void enableFaceUpCards();
         void disableFaceUpCards();
-        void updatePlayerData(Set<Player> players);
+        void updatePlayerData(Player[] players);
         void initializeGame();
+
+        void setPlayerTicketDeck(List<DestinationCard> testDestinations);
     }
 
     public interface Presenter {
