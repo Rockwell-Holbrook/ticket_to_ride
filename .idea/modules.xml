@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/shared.iml" filepath="$PROJECT_DIR$/shared/shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/ticket_to_ride.iml" filepath="$PROJECT_DIR$/ticket_to_ride.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/ticket_to_ride.iml" filepath="$PROJECT_DIR$/.idea/ticket_to_ride.iml" />
     </modules>
   </component>
 </project>

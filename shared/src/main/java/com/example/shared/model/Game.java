@@ -14,6 +14,9 @@ public class Game {
     private String gameName;
     private List<Player.PlayerColor> availableColors;
     private transient IClientInGame clientProxy;
+    private ArrayList<Route> claimedRoutes;
+    private ArrayList<Chat> chatHistory;
+    private ArrayList<GameHistory> gameHistory;
 
     public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;

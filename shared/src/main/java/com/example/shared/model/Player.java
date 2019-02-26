@@ -1,9 +1,16 @@
 package com.example.shared.model;
 
+import java.util.ArrayList;
+
 public class Player {
     private String username;
     private boolean isHost;
     private PlayerColor playerColor;
+    private ArrayList<TrainCard> TrainCards;
+    private ArrayList<RouteCard> RouteCards;
+    private ArrayList<Route> claimedRoutes;
+    private int pointsEarned;
+
 
     public Player(String username, boolean isHost, PlayerColor playerColor) {
         this.username = username;
