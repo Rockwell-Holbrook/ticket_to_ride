@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@mipmap/game_background">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="100dp"
+            android:layout_height="match_parent" android:id="@+id/card_section"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:background="@color/card_section_background">
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:srcCompat="@mipmap/card_back"
+                android:id="@+id/facedown_card_deck"
+                android:layout_weight="1" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:srcCompat="@mipmap/white_card"
+                android:id="@+id/card_one"
+                android:layout_weight="1" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toEndOf="@id/card_section"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:srcCompat="@mipmap/wild_card"
+                android:id="@+id/card_two"
+                android:layout_weight="1" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:srcCompat="@mipmap/red_card"
+                android:id="@+id/card_three"
+                android:layout_weight="1" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:srcCompat="@mipmap/black_card"
+                android:id="@+id/card_four"
+                android:layout_weight="1" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:srcCompat="@mipmap/blue_card"
+                android:id="@+id/card_five"
+                android:layout_weight="1" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:srcCompat="@mipmap/ticket_back" android:id="@+id/ticket_deck"
+                android:layout_weight="1" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginTop="8dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/card_section" app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/linearLayout5">
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1"
+                android:background="@drawable/section_blue_player" android:id="@+id/opponent_one_constraint_layout">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
+                    android:id="@+id/imageView12"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_one_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/train_image"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_one_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_one_image_view"
+                    android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
+                    android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" app:srcCompat="@mipmap/blue_player"
+                    android:id="@+id/opponent_one_image_view" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                    android:text="Username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_one_username_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_one_image_view"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_one_point_text_view"
+                    android:background="@drawable/point_circle" android:padding="2dp"
+                    app:layout_constraintEnd_toEndOf="@+id/opponent_one_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/opponent_one_image_view" android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            <TextView
+                    android:text="45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_one_train_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView13"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView13"
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+            <TextView
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_one_ticket_count_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                    app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+            <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_one_card_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1"
+                android:background="@drawable/section_red_player" android:id="@+id/opponent_two_constraint_layout">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
+                    android:id="@+id/imageView12"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_two_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/train_image"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_two_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_two_image_view"
+                    android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
+                    android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" app:srcCompat="@mipmap/red_player"
+                    android:id="@+id/opponent_two_image_view" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                    android:text="Username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_two_username_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_two_image_view"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_two_point_text_view"
+                    android:background="@drawable/point_circle" android:padding="2dp"
+                    app:layout_constraintEnd_toEndOf="@+id/opponent_two_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/opponent_two_image_view" android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            <TextView
+                    android:text="45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_two_train_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView13"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView13"
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+            <TextView
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_two_ticket_count_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                    app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+            <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_two_card_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_weight="1"
+                android:background="@drawable/section_yellow_player" android:id="@+id/opponent_three_constraint_layout">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
+                    android:id="@+id/imageView12"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_three_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/train_image"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_three_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_three_image_view"
+                    android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
+                    android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" app:srcCompat="@mipmap/yellow_player"
+                    android:id="@+id/opponent_three_image_view" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                    android:text="Username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_three_username_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_three_image_view"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_three_point_text_view"
+                    android:background="@drawable/point_circle" android:padding="2dp"
+                    app:layout_constraintEnd_toEndOf="@+id/opponent_three_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/opponent_three_image_view" android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            <TextView
+                    android:text="45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_three_train_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView13"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView13"
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+            <TextView
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_three_ticket_count_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                    app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+            <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_three_card_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_weight="1"
+                android:background="@drawable/section_black_player" android:id="@+id/opponent_four_constraint_layout">
+
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
+                    android:id="@+id/imageView12"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_four_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/imageView13" android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/train_image"
+                    app:layout_constraintTop_toBottomOf="@+id/opponent_four_username_text_view"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_four_image_view"
+                    android:layout_marginStart="8dp" android:layout_marginTop="2dp" android:id="@+id/imageView13"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
+                    android:id="@+id/imageView14" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="@+id/imageView12"
+                    android:layout_marginTop="2dp"/>
+            <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" app:srcCompat="@mipmap/black_player"
+                    android:id="@+id/opponent_four_image_view" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+            <TextView
+                    android:text="Username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_four_username_text_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/opponent_four_image_view"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_four_point_text_view"
+                    android:background="@drawable/point_circle" android:padding="2dp"
+                    app:layout_constraintEnd_toEndOf="@+id/opponent_four_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/opponent_four_image_view" android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+            <TextView
+                    android:text="45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_four_train_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView13"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView13"
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+            <TextView
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_four_ticket_count_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView12"
+                    app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+            <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/opponent_four_card_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" app:layout_constraintStart_toEndOf="@+id/card_section"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/constraintLayout"
+            android:background="@color/card_section_background">
+        <RelativeLayout
+                android:id="@+id/player_train_card_hand"
+                android:layout_width="0dp"
+                android:layout_height="0dp" app:layout_constraintEnd_toStartOf="@+id/personal_ticket_deck"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_margin="8dp"/>
+        <ImageView
+                android:layout_width="75dp"
+                android:layout_height="50dp" app:srcCompat="@mipmap/ticket_back" android:id="@+id/personal_ticket_deck"
+                android:layout_weight="1"
+                app:layout_constraintEnd_toStartOf="@+id/player_constraint_layout"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+                android:layout_marginBottom="4dp" android:layout_marginEnd="8dp"/>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/section_green_player" android:id="@+id/player_constraint_layout">
+
+            <TextView
+                    android:text="45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/player_train_text_view"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView16"
+                    app:layout_constraintStart_toStartOf="@+id/imageView16" android:layout_marginBottom="2dp"/>
+            <TextView
+                    android:text="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/player_ticket_card_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView15"
+                    app:layout_constraintStart_toStartOf="@+id/imageView15" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView15"/>
+            <TextView
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/player_card_text_view"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView17"
+                    app:layout_constraintStart_toStartOf="@+id/imageView17" android:layout_marginBottom="2dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView17"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"
+                    android:id="@+id/imageView15"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imageView16" android:layout_marginStart="8dp"
+                    android:layout_marginTop="15dp"/>
+            <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/train_image"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" android:layout_marginTop="15dp" android:id="@+id/imageView16"/>
+            <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="20dp" app:srcCompat="@mipmap/card_back"
+                    android:id="@+id/imageView17" app:layout_constraintStart_toEndOf="@id/imageView15"
+                    android:layout_marginEnd="8dp" app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/player_image_view"
+                    android:layout_marginTop="15dp" android:layout_marginStart="8dp"/>
+            <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" app:srcCompat="@mipmap/green_player"
+                    android:id="@+id/player_image_view" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/player_point_text_view"
+                    android:background="@drawable/point_circle" android:padding="2dp"
+                    app:layout_constraintStart_toStartOf="@+id/player_image_view"
+                    app:layout_constraintBottom_toBottomOf="@+id/player_image_view" android:paddingStart="8dp"
+                    android:paddingEnd="8dp"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+    <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/card_section" android:id="@+id/fragment_map_container"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout">
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_map_container" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/fragment_map_container" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="@+id/fragment_map_container"
+            android:id="@+id/view_hand_recycler_view">
+    </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_map_container" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="@+id/fragment_map_container" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="@+id/fragment_map_container"
+            android:id="@+id/view_tickets_recycler_view"/>
+</android.support.constraint.ConstraintLayout>
