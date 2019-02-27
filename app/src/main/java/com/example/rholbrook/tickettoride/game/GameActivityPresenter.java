@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.game;
 
 import com.example.shared.model.ColorCard;
+import com.example.shared.model.DestinationCard;
 import com.example.shared.model.LocomotiveCard;
 import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
@@ -43,6 +44,10 @@ public class GameActivityPresenter implements
         viewCallback.setHandCards(testHand);
         TrainCard[] testCards = {cardOne, cardTwo, cardThree, cardFour, cardFive};
         viewCallback.setFaceUpDeck(testCards);
+        List<DestinationCard> testDestinations = new ArrayList<>();
+        DestinationCard destinationCard = new DestinationCard();
+        testDestinations.add(destinationCard);
+        viewCallback.setPlayerTicketDeck(testDestinations);
     }
 
     @Override
@@ -67,6 +72,6 @@ public class GameActivityPresenter implements
 
     @Override
     public Player getOpponentOne() {
-        return mModel.getOpponentOne();
+        return null;
     }
 }
