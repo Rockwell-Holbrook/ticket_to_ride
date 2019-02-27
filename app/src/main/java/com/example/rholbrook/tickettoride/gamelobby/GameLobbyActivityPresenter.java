@@ -72,8 +72,8 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
 
     }
 
-    @Override
-    public void updateCanStart(ArrayList<Player> playerList) {
-        viewCallback.updateCanStart(playerList);
-    }
+    //@Override
+    //public void updateCanStart(ArrayList<Player> playerList) {
+ //       viewCallback.updateCanStart(playerList);
+   // }
 }

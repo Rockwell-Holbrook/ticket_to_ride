@@ -4,15 +4,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.*;
 
@@ -70,6 +69,9 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     private ImageView faceUpCardFive;
     private RecyclerView viewHandRecyclerView;
     private RecyclerView viewTicketsRecyclerView;
+    private Button drawerButton;
+    private DrawerLayout drawerLayout;
+    private TabLayout drawer;
 
 
     @Override
@@ -122,6 +124,9 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         playerTicketCountTextView = findViewById(R.id.player_ticket_card_text_view);
         playerTrainCardTextView = findViewById(R.id.player_card_text_view);
         playerTrainCountTextView = findViewById(R.id.player_train_text_view);
+        drawerButton = findViewById(R.id.drawer_button);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer);
 
         mPresenter = new GameActivityPresenter(this);
 
@@ -136,6 +141,13 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
             @Override
             public void onClick(View v) {
                 mPresenter.clickDrawTickets();
+            }
+        });
+
+        drawerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(drawer);
             }
         });
 
@@ -284,6 +296,6 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
 
     @Override
     public void setPlayerTicketDeck(List<DestinationCard> testDestinations) {
-        playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.denver_el_paso));
+        playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.ticket_back));
     }
 }
