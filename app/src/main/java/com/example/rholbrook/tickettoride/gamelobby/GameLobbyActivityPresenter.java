@@ -71,4 +71,9 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     public void update(Observable observable, Object o) {
 
     }
+
+    //@Override
+    //public void updateCanStart(ArrayList<Player> playerList) {
+ //       viewCallback.updateCanStart(playerList);
+   // }
 }
