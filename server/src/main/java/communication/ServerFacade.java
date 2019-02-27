@@ -1,8 +1,13 @@
 package communication;
 
 import com.example.shared.interfaces.IServer;
+import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
+import com.example.shared.model.Route;
+import com.example.shared.model.Ticket;
 import game.GameManager;
+
+import java.util.ArrayList;
 
 public class ServerFacade implements IServer {
     private static final ServerFacade ourInstance = new ServerFacade();
@@ -65,10 +70,91 @@ public class ServerFacade implements IServer {
         gameManager.getPlayerList(gameId);
     }
 
+    /**
+     * Send a message to the chat lobby in an un-started game
+     *
+     * @param gameId Id of game lobby
+     * @param chat Message to send to all users and username in one
+     */
     @Override
-    public void sendChat(String username, String gameId, String message) {
+    public void sendChat(Chat chat, String gameId) {
         // Todo: Make this sucker work baby.
     }
+
+    /**
+     * Get the entire chat history.
+     *
+     * @param gameId The ID of the game we need to work with!
+     */
+    @Override
+    public void getChatHistory(String gameId) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * Get the entire game history.
+     *
+     * @param gameId The ID of the game we need to work with!
+     */
+    @Override
+    public void getGameHistory(String gameId) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * User Telling the server that they have initialized. Need to make sure every one of the users sends this.
+     *
+     * @param gameId The ID of the game we need to work with!
+     */
+    public void initializedGame(String gameId) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * Tickets from the beginning of the game that the User wants to send back.
+     *
+     * @param returned Tickets that the user is returning to be placed in the deck.
+     */
+    public void ticketsReturned(ArrayList<Ticket> returned) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * A user may return some of the tickets that they received for their turn.
+     *
+     * @param gameID The ID of the game we need to work with!
+     */
+    public void turnEnded(String gameID) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * A User may spend their turn claiming 1 or two cards from the deck or the face up.
+     *
+     * @param index The index of the visible card's that the user can grab.
+     */
+    public void getCard(int index) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * A user may spend their turn claiming a route.
+     *
+     * @param route The route the user wants to claim.
+     */
+    public void claimRoute(Route route) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * A user may spend their turn getting tickets.
+     *
+     * @param gameID The ID of the game we need to work with!
+     */
+    public void requestTickets(String gameID) {
+        // Todo: Make this sucker work baby.
+    }
+
 
 
 }

@@ -2,10 +2,14 @@ package com.example.rholbrook.tickettoride.serverconnection;
 
 import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IServer;
+import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
+import com.example.shared.model.Route;
+import com.example.shared.model.Ticket;
 import com.google.gson.Gson;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class ServerProxy implements IServer {
     private static ServerProxy instance;
@@ -81,18 +85,52 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void sendChat(String username, String gameId, String message) {
-        String methodName = "sendChat";
-        String[] paramTypes = {String.class.getName(), String.class.getName(), String.class.getName()};
-        Object[] paramValues = {username, gameId, message};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
-    }
-
-    @Override
     public void getPlayerList(String gameId) {
         String methodName = "getPlayerList";
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    }
+
+    @Override
+    public void sendChat(Chat chat, String gameId) {
+        String methodName = "sendChat";
+        String[] paramTypes = {String.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] paramValues = {chat.getUsername(), gameId, chat.getMessage()};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    }
+
+    @Override
+    public void getChatHistory(String gameId) {
+        // Todo: Make this sucker work baby.
+    }
+
+    @Override
+    public void getGameHistory(String gameId) {
+        // Todo: Make this sucker work baby.
+    }
+
+    public void initializedGame(String gameId) {
+        // Todo: Make this sucker work baby.
+    }
+
+    public void ticketsReturned(ArrayList<Ticket> returned) {
+        // Todo: Make this sucker work baby.
+    }
+
+    public void turnEnded(String gameID) {
+        // Todo: Make this sucker work baby.
+    }
+
+    public void getCard(int index) {
+        // Todo: Make this sucker work baby.
+    }
+
+    public void claimRoute(Route route) {
+        // Todo: Make this sucker work baby.
+    }
+
+    public void requestTickets(String gameID) {
+        // Todo: Make this sucker work baby.
     }
 }
