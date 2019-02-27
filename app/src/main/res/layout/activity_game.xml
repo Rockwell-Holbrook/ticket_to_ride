@@ -7,8 +7,8 @@
         android:layout_height="match_parent"
         android:background="@mipmap/game_background">
     <Button
-            android:layout_width="19dp"
-            android:layout_height="123dp" android:id="@+id/drawer_button"
+            android:layout_width="20dp"
+            android:layout_height="120dp" android:id="@+id/open_drawer_button"
             android:background="@drawable/open_drawer_button" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_section"
             app:layout_constraintBottom_toTopOf="@+id/card_section"/>

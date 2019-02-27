@@ -12,7 +12,7 @@ public interface IClientInGame {
      * list.
      * @param chat Chat object containing username of sender and message
      */
-    void receivedChat(Chat chat);
+    void receivedChat(Chat chat, boolean gameStarted);
 
     /**
      * Signals the GameLobbyFragmentModel to update the joined players list

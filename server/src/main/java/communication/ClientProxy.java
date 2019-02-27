@@ -3,8 +3,7 @@ package communication;
 import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IClientInGame;
 import com.example.shared.interfaces.IClientNotInGame;
-import com.example.shared.model.Game;
-import com.example.shared.model.Player;
+import com.example.shared.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +22,6 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     public ClientProxy(String gameId){
         this.gameId = gameId;
         ss = SocketServer.getInstance();
-    }
-
-    @Override
-    public void chatReceived(String username, String message) {
-        String methodName = "chatRecieved";
-        String[] typeNames = {String.class.getName(), String.class.getName()};
-        Object[] inputVals = {username, message};
-
-        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 
     @Override
@@ -54,6 +44,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
         Object[] inputVals = {games};
 
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
+    }
+
+    @Override
+    public void receivedChat(Chat chat) {
+
     }
 
     @Override
@@ -84,22 +79,52 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void cardDrawn() {
+    public void receivedChatHistory(List<Chat> chatHistory) {
 
     }
 
     @Override
-    public void routeClaimed() {
+    public void receivedHistoryObject(GameHistory history) {
 
     }
 
     @Override
-    public void ticketsDrawn() {
+    public void receivedGameHistory(List<GameHistory> gameHistory) {
 
     }
 
     @Override
-    public void ticketsReturned() {
+    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
+
+    }
+
+    @Override
+    public void ticketsReceived(List<Ticket> tickets) {
+
+    }
+
+    @Override
+    public void startTurn(List<Route> availableRoutes) {
+
+    }
+
+    @Override
+    public void ticketCompleted(Ticket ticket) {
+
+    }
+
+    @Override
+    public void routeClaimed(Player player, Route route) {
+
+    }
+
+    @Override
+    public void cardDrawn(List<TrainCard> faceUpCards) {
+
+    }
+
+    @Override
+    public void turnEnded(Player player) {
 
     }
 }

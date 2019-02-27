@@ -4,8 +4,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -68,14 +68,16 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     private ImageView faceUpCardFive;
     private RecyclerView viewHandRecyclerView;
     private RecyclerView viewTicketsRecyclerView;
-    private Button drawerButton;
+    private Button openDrawerButton;
     private DrawerLayout drawerLayout;
+    private Button closeDrawerButton;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        setContentView(R.layout.drawer_layout);
 
         playerHandLayout = findViewById(R.id.player_train_card_hand);
         playerTicketDeck = findViewById(R.id.personal_ticket_deck);
@@ -122,8 +124,9 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         playerTicketCountTextView = findViewById(R.id.player_ticket_card_text_view);
         playerTrainCardTextView = findViewById(R.id.player_card_text_view);
         playerTrainCountTextView = findViewById(R.id.player_train_text_view);
-        drawerButton = findViewById(R.id.drawer_button);
-        drawerLayout = new DrawerLayout()
+        openDrawerButton = findViewById(R.id.open_drawer_button);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        closeDrawerButton = drawerLayout.findViewById(R.id.close_drawer_button);
 
         mPresenter = new GameActivityPresenter(this);
 
@@ -141,10 +144,17 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
             }
         });
 
-        drawerButton.setOnClickListener(new View.OnClickListener() {
+        openDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(drawer);
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+
+        closeDrawerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
 
