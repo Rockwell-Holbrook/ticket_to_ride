@@ -16,7 +16,6 @@ import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.*;
 
 import java.util.List;
-import java.util.Set;
 
 public class GameActivity extends AppCompatActivity implements GameActivityContract.View {
     private GameActivityContract.Presenter mPresenter;
@@ -71,7 +70,6 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     private RecyclerView viewTicketsRecyclerView;
     private Button drawerButton;
     private DrawerLayout drawerLayout;
-    private TabLayout drawer;
 
 
     @Override
@@ -125,8 +123,7 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         playerTrainCardTextView = findViewById(R.id.player_card_text_view);
         playerTrainCountTextView = findViewById(R.id.player_train_text_view);
         drawerButton = findViewById(R.id.drawer_button);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        drawer = findViewById(R.id.drawer);
+        drawerLayout = new DrawerLayout()
 
         mPresenter = new GameActivityPresenter(this);
 
@@ -295,7 +292,7 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     }
 
     @Override
-    public void setPlayerTicketDeck(List<DestinationCard> testDestinations) {
+    public void setPlayerTicketDeck(List<Ticket> testDestinations) {
         playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.ticket_back));
     }
 }

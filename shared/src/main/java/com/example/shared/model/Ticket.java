@@ -1,4 +1,4 @@
 package com.example.shared.model;
 
-public class DestinationCard {
+public class Ticket {
 }
