@@ -16,14 +16,12 @@ public class DrawerContract {
         void getChatHistory();
     }
 
-    interface GameHistoryView {
-        void receivedHistoryObject(GameHistory history);
-        void receivedGameHistory(List<GameHistory> gameHistory);
+    interface HistoryView {
+        void updateGameHistory(List<GameHistory> gameHistory);
     }
 
-    interface GameHistoryPresenter {
-        void receivedHistoryObject(GameHistory history);
-        void receivedGameHistory(List<GameHistory> gameHistory);
+    interface HistoryPresenter {
+        void updateGameHistory(List<GameHistory> gameHistory);
         void getGameHistory();
     }
 }

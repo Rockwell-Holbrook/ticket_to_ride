@@ -21,11 +21,11 @@ public class ChatFragmentPresenter implements DrawerContract.ChatPresenter {
 
     @Override
     public void sendChat(String message) {
-        model.sendChat(String message);
+        model.sendChat(message);
     }
 
     @Override
     public void getChatHistory() {
-
+        model.getChatHistory();
     }
 }

@@ -42,6 +42,7 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
             }
         });
         editText = view.findViewById(R.id.message_send_button);
+        presenter.getChatHistory();
         return view;
     }
 

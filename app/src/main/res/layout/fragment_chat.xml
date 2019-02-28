@@ -15,7 +15,7 @@
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/chatListBackground"
-            tools:listitem="@layout/list_item_lobby_chat"
+            tools:listitem="@layout/list_item_chat"
     />
 
     <android.support.constraint.ConstraintLayout

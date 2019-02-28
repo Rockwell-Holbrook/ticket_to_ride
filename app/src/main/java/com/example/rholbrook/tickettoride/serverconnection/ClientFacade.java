@@ -54,17 +54,17 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void receivedChatHistory(List<Chat> chatHistory) {
-
+        GameActivityModel.getInstance().receivedChatHistory(chatHistory);
     }
 
     @Override
     public void receivedHistoryObject(GameHistory history) {
-
+        GameActivityModel.getInstance().receivedHistoryObject(history);
     }
 
     @Override
     public void receivedGameHistory(List<GameHistory> gameHistory) {
-
+        GameActivityModel.getInstance().receivedGameHistory(gameHistory);
     }
 
     @Override

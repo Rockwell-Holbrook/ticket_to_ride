@@ -95,19 +95,25 @@ public class ServerProxy implements IServer {
     @Override
     public void sendChat(Chat chat, String gameId) {
         String methodName = "sendChat";
-        String[] paramTypes = {String.class.getName(), String.class.getName(), String.class.getName()};
-        Object[] paramValues = {chat.getUsername(), gameId, chat.getMessage()};
+        String[] paramTypes = {Chat.class.getName(), String.class.getName()};
+        Object[] paramValues = {chat, gameId};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     @Override
     public void getChatHistory(String gameId) {
-        // Todo: Make this sucker work baby.
+        String methodName = "getChatHistory";
+        String[] paramTypes = {String.class.getName()};
+        Object[] paramValues = {gameId};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     @Override
     public void getGameHistory(String gameId) {
-        // Todo: Make this sucker work baby.
+        String methodName = "getGameHistory";
+        String[] paramTypes = {String.class.getName()};
+        Object[] paramValues = {gameId};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     public void initializedGame(String gameId) {
