@@ -163,6 +163,12 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_map_container, gameMapFragment).commit();
         addFaceUpCardClickListeners();
         mPresenter.init();
+        String gameId = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            gameId = extras.getString("gameId");
+        }
+        mPresenter.setGameId(gameId);
     }
 
     @Override

@@ -28,6 +28,7 @@ public class GameActivityContract {
         void selectFaceDownCardDeck();
         void clickDrawTickets();
         void initializeGame();
+        void setGameId(String gameId);
 
         Player getOpponentOne();
     }

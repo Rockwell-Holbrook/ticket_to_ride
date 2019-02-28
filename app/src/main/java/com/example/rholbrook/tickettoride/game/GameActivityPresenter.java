@@ -71,6 +71,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void setGameId(String gameId) {
+        mModel.setGameId(gameId);
+    }
+
+    @Override
     public Player getOpponentOne() {
         return null;
     }

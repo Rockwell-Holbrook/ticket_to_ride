@@ -7,14 +7,12 @@ import java.util.List;
 
 public class DrawerContract {
     interface ChatView {
-        void receivedChat(Chat chat);
-        void receivedChatHistory(List<Chat> chatHistory);
+        void updateChatList(List<Chat> chatMessages);
     }
 
     interface ChatPresenter {
-        void receivedChat(Chat chat);
-        void receivedChatHistory(List<Chat> chatHistory);
-        void sendChat(Chat chat);
+        void updateChatList(List<Chat> chatMessages);
+        void sendChat(String message);
         void getChatHistory();
     }
 

@@ -56,7 +56,7 @@ public class GameLobbyActivity extends AppCompatActivity implements
         chatSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mPresenter.sendChat(chatEditText.getText().toString());
+                mPresenter.sendChat(chatEditText.getText().toString());
             }
         });
 
@@ -109,7 +109,7 @@ public class GameLobbyActivity extends AppCompatActivity implements
     @Override
     public void updateChatList(ArrayList<Chat> chatMessages) {
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        playerRecyclerView.setAdapter(new ChatAdapter(chatMessages, this));
+        playerRecyclerView.setAdapter(new ChatAdapter(chatMessages));
     }
 
     @Override

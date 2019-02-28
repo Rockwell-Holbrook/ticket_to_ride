@@ -12,14 +12,13 @@ import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.Chat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
-    private ArrayList<Chat> chats;
-    private GameLobbyActivity mListener;
+    private List<Chat> chats;
 
-    public ChatAdapter(ArrayList<Chat> chats, GameLobbyActivity mListener) {
+    public ChatAdapter(List<Chat> chats) {
         this.chats = chats;
-        this.mListener = mListener;
     }
 
     @NonNull

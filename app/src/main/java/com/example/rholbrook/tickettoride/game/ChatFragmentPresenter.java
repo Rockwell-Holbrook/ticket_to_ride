@@ -15,18 +15,13 @@ public class ChatFragmentPresenter implements DrawerContract.ChatPresenter {
     }
 
     @Override
-    public void receivedChat(Chat chat) {
-        viewCallback.receivedChat(chat);
+    public void updateChatList(List<Chat> chatMessages) {
+        viewCallback.updateChatList(chatMessages);
     }
 
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory) {
-
-    }
-
-    @Override
-    public void sendChat(Chat chat) {
-
+    public void sendChat(String message) {
+        model.sendChat(String message);
     }
 
     @Override
