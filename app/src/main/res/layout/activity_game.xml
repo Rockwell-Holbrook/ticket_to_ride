@@ -134,7 +134,7 @@
                     android:background="@drawable/point_circle" android:padding="2dp"
                     app:layout_constraintEnd_toEndOf="@+id/opponent_one_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_one_image_view" android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="10sp"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -206,7 +206,7 @@
                     android:background="@drawable/point_circle" android:padding="2dp"
                     app:layout_constraintEnd_toEndOf="@+id/opponent_two_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_two_image_view" android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="10sp"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -280,7 +280,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/opponent_three_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_three_image_view"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="10sp"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -354,7 +354,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/opponent_four_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_four_image_view"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="10sp"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -464,10 +464,11 @@
                     android:text="0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/player_point_text_view"
-                    android:background="@drawable/point_circle" android:padding="2dp"
+                    android:background="@drawable/point_circle"
                     app:layout_constraintStart_toStartOf="@+id/player_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/player_image_view" android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="10sp"
+                    android:padding="2dp"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
     <FrameLayout

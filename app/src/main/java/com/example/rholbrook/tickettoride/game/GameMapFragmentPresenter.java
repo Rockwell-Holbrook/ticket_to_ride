@@ -1,5 +1,7 @@
 package com.example.rholbrook.tickettoride.game;
 
+import com.example.shared.model.Player;
+
 import java.util.Observable;
 import java.util.Observer;
 
@@ -10,6 +12,8 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
     public GameMapFragmentPresenter(GameMapFragmentContract.View viewCallback) {
         this.viewCallback = viewCallback;
         mModel = GameActivityModel.getInstance();
+        mModel.setGameMapFragmentPresenter(this);
+        mModel.addObserver(this);
     }
 
     @Override

@@ -47,8 +47,12 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChat(Chat chat) {
+    public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
+        String methodName ="receivedChat";
+        String[] typeNames = {Chat.class.getName(), boolean.class.getName()};
+        Object[] inputVals = {chat, gameStarted};
 
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 
     @Override

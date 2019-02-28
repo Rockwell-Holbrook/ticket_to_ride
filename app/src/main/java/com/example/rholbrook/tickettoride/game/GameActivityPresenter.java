@@ -1,5 +1,8 @@
 package com.example.rholbrook.tickettoride.game;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.ColorCard;
 import com.example.shared.model.Ticket;
 import com.example.shared.model.LocomotiveCard;
@@ -21,33 +24,31 @@ public class GameActivityPresenter implements
     public GameActivityPresenter(GameActivityContract.View viewCallback) {
         this.viewCallback = viewCallback;
         this.mModel = GameActivityModel.getInstance();
+        mModel.setGameActivityPresenter(this);
+        mModel.addObserver(this);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (arg.getClass().getName().equals(Player.class.getName())) {
+            Player updatedPlayer = (Player) arg;
+            if (updatedPlayer.getUsername().equals(mModel.getClient().getUsername())) {
+                viewCallback.updateClient(updatedPlayer);
+            } else if (updatedPlayer.getUsername().equals(mModel.getOpponentOne().getUsername())) {
+                viewCallback.updatePlayerOne(updatedPlayer);
+            } else if (updatedPlayer.getUsername().equals(mModel.getOpponentTwo().getUsername())) {
+                viewCallback.updatePlayerTwo(updatedPlayer);
+            } else if (updatedPlayer.getUsername().equals(mModel.getOpponentThree().getUsername())) {
+                viewCallback.updatePlayerThree(updatedPlayer);
+            } else if (updatedPlayer.getUsername().equals(mModel.getOpponentFour().getUsername())) {
+                viewCallback.updatePlayerFour(updatedPlayer);
+            }
+        }
     }
 
     @Override
     public void init() {
-        List<TrainCard> testHand = new ArrayList<>();
-        LocomotiveCard cardOne = new LocomotiveCard();
-        ColorCard cardTwo = new ColorCard(ColorCard.Color.BLACK);
-        ColorCard cardThree = new ColorCard(ColorCard.Color.BLUE);
-        ColorCard cardFour = new ColorCard(ColorCard.Color.RED);
-        ColorCard cardFive = new ColorCard(ColorCard.Color.WHITE);
-        testHand.add(cardOne);
-        testHand.add(cardTwo);
-        testHand.add(cardThree);
-        testHand.add(cardFour);
-        testHand.add(cardFive);
-        viewCallback.setHandCards(testHand);
-        TrainCard[] testCards = {cardOne, cardTwo, cardThree, cardFour, cardFive};
-        viewCallback.setFaceUpDeck(testCards);
-        List<Ticket> testDestinations = new ArrayList<>();
-        Ticket destinationCard = new Ticket();
-        testDestinations.add(destinationCard);
-        viewCallback.setPlayerTicketDeck(testDestinations);
+//        TrainCard[] testCards = {cardOne, cardTwo, cardThree, cardFour, cardFive};
     }
 
     @Override
@@ -73,5 +74,51 @@ public class GameActivityPresenter implements
     @Override
     public Player getOpponentOne() {
         return null;
+    }
+
+    @Override
+    public void setupTurnOrder(List<Player> turnOrder) {
+        viewCallback.initializePlayers(turnOrder);
+    }
+
+    @Override
+    public Drawable getAvatar(Context applicationContext, Player.PlayerColor playerColor) {
+        switch (playerColor) {
+            case GREEN:
+                return applicationContext.getDrawable(R.mipmap.green_player);
+            case RED:
+                return applicationContext.getDrawable(R.mipmap.red_player);
+            case BLUE:
+                return applicationContext.getDrawable(R.mipmap.blue_player);
+            case BLACK:
+                return applicationContext.getDrawable(R.mipmap.black_player);
+            case YELLOW:
+                return applicationContext.getDrawable(R.mipmap.yellow_player);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public Drawable getColorBackground(Context applicationContext, Player.PlayerColor playerColor) {
+        switch (playerColor) {
+            case GREEN:
+                return applicationContext.getDrawable(R.drawable.section_green_player);
+            case RED:
+                return applicationContext.getDrawable(R.drawable.section_red_player);
+            case BLUE:
+                return applicationContext.getDrawable(R.drawable.section_blue_player);
+            case BLACK:
+                return applicationContext.getDrawable(R.drawable.section_black_player);
+            case YELLOW:
+                return applicationContext.getDrawable(R.drawable.section_yellow_player);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public void setFaceUpCards(List<TrainCard> faceUpCards) {
+        viewCallback.setFaceUpDeck(faceUpCards);
     }
 }

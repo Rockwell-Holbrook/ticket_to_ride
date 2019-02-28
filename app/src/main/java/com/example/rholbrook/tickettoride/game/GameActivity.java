@@ -215,12 +215,18 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     }
 
     @Override
-    public void setFaceUpDeck(TrainCard[] faceUpDeck) {
-        faceUpCardOne.setImageDrawable(getColorCardDrawable(faceUpDeck[0]));
-        faceUpCardTwo.setImageDrawable(getColorCardDrawable(faceUpDeck[1]));
-        faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck[2]));
-        faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck[3]));
-        faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck[4]));
+    public void setFaceUpDeck(List<TrainCard> cards) {
+        final List<TrainCard> faceUpDeck = cards;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                faceUpCardOne.setImageDrawable(getColorCardDrawable(faceUpDeck.get(0)));
+                faceUpCardTwo.setImageDrawable(getColorCardDrawable(faceUpDeck.get(1)));
+                faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck.get(2)));
+                faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck.get(3)));
+                faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck.get(4)));
+            }
+        });
     }
 
     @Override
@@ -292,17 +298,151 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     }
 
     @Override
-    public void updatePlayerData(Player[] players) {
-
-    }
-
-    @Override
     public void initializeGame() {
-        Player opponentOne = mPresenter.getOpponentOne();
+
     }
 
     @Override
     public void setPlayerTicketDeck(List<Ticket> testDestinations) {
-        playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.ticket_back));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.ticket_back));
+            }});
+    }
+
+    @Override
+    public void initializePlayers(List<Player> players) {
+        final List<Player> turnOrder = players;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < turnOrder.size(); i++) {
+                    Drawable avatarImage = mPresenter.getAvatar(getApplicationContext(), turnOrder.get(i).getPlayerColor());
+                    Drawable colorBackground = mPresenter.getColorBackground(getApplicationContext(), turnOrder.get(i).getPlayerColor());
+                    switch (i) {
+                        case 0:
+                            playerConstraintLayout.setBackground(colorBackground);
+                            playerAvatarImageView.setImageDrawable(avatarImage);
+                            break;
+                        case 1:
+                            opponentOneConstraintLayout.setBackground(colorBackground);
+                            opponentOneAvatarImageView.setImageDrawable(avatarImage);
+                            opponentOneUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                        case 2:
+                            opponentTwoConstraintLayout.setBackground(colorBackground);
+                            opponentTwoAvatarImageView.setImageDrawable(avatarImage);
+                            opponentTwoUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                        case 3:
+                            opponentThreeConstraintLayout.setBackground(colorBackground);
+                            opponentThreeAvatarImageView.setImageDrawable(avatarImage);
+                            opponentThreeUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                        case 4:
+                            opponentFourConstraintLayout.setBackground(colorBackground);
+                            opponentFourAvatarImageView.setImageDrawable(avatarImage);
+                            opponentFourUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                    }
+                }
+                switch (turnOrder.size()) {
+                    case 1:
+                        opponentOneConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentTwoConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentThreeConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        opponentTwoConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentThreeConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        opponentThreeConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 4:
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void updateClient(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                playerPointTextView.setText(String.valueOf(player.getPointsEarned()));
+                playerTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                playerTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                playerTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
+                setHandCards(player.getTrainCards());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerOne(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentOnePointTextView.setText(player.getPointsEarned());
+                opponentOneTicketCountTextView.setText(player.getTickets().size());
+                opponentOneTrainCardTextView.setText(player.getTrainCards().size());
+                opponentOneTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerTwo(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentTwoPointTextView.setText(player.getPointsEarned());
+                opponentTwoTicketCountTextView.setText(player.getTickets().size());
+                opponentTwoTrainCardTextView.setText(player.getTrainCards().size());
+                opponentTwoTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerThree(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentThreePointTextView.setText(player.getPointsEarned());
+                opponentThreeTicketCountTextView.setText(player.getTickets().size());
+                opponentThreeTrainCardTextView.setText(player.getTrainCards().size());
+                opponentThreeTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerFour(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentFourPointTextView.setText(player.getPointsEarned());
+                opponentFourTicketCountTextView.setText(player.getTickets().size());
+                opponentFourTrainCardTextView.setText(player.getTrainCards().size());
+                opponentFourTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
     }
 }

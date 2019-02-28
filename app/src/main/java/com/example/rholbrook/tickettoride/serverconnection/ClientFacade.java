@@ -1,5 +1,7 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
+import com.example.rholbrook.tickettoride.game.GameActivity;
+import com.example.rholbrook.tickettoride.game.GameActivityModel;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
 import com.example.shared.interfaces.IClientInGame;
@@ -32,8 +34,12 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChat(Chat chat, boolean gameStarted) {
-
+    public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
+        if (gameStarted) {
+            GameLobbyActivityModel.getInstance().newMessageReceived(chat.getUsername(), chat.getMessage());
+        } else {
+            GameActivityModel.getInstance().newMessageReceived(chat.getUsername(), chat.getMessage());
+        }
     }
 
     @Override
@@ -47,8 +53,40 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     @Override
     public void gameStarted(String gameId) {
         GameLobbyActivityModel.getInstance().gameStarted();
+        LocomotiveCard cardOne = new LocomotiveCard();
+        ColorCard cardTwo = new ColorCard(ColorCard.Color.BLACK);
+        ColorCard cardThree = new ColorCard(ColorCard.Color.BLUE);
+        ColorCard cardFour = new ColorCard(ColorCard.Color.RED);
+        List<TrainCard> trainCards = new ArrayList<>();
+        trainCards.add(cardOne);
+        trainCards.add(cardTwo);
+        trainCards.add(cardThree);
+        trainCards.add(cardFour);
+        Ticket ticketOne = new Ticket();
+        Ticket ticketTwo = new Ticket();
+        Ticket ticketThree = new Ticket();
+        List<Ticket> tickets = new ArrayList<>();
+        tickets.add(ticketOne);
+        tickets.add(ticketTwo);
+        tickets.add(ticketThree);
+        Player playerOne = new Player("Player", false, Player.PlayerColor.BLUE);
+        Player playerTwo = new Player("Hello", false, Player.PlayerColor.GREEN);
+        Player playerThree = new Player("World", true, Player.PlayerColor.BLACK);
+        List<Player> players = new ArrayList<>();
+        players.add(playerOne);
+        players.add(playerTwo);
+        players.add(playerThree);
+        initializeGame(trainCards, tickets, players);
+        List<TrainCard> faceUpCards = new ArrayList<>();
+        faceUpCards.add(cardOne);
+        faceUpCards.add(cardTwo);
+        faceUpCards.add(cardThree);
+        faceUpCards.add(cardFour);
+        faceUpCards.add(cardThree);
+        cardDrawn(faceUpCards);
     }
 
+    //History Drawer
     @Override
     public void receivedChatHistory(List<Chat> chatHistory) {
 
@@ -64,9 +102,10 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     }
 
+    //Game Initialization
     @Override
     public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
-
+        GameActivityModel.getInstance().initializeGame(trainCards, tickets, turnOrder);
     }
 
     @Override
@@ -74,6 +113,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     }
 
+    //GamePlay
     @Override
     public void startTurn(List<Route> availableRoutes) {
 
@@ -91,7 +131,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void cardDrawn(List<TrainCard> faceUpCards) {
-
+        GameActivityModel.getInstance().setFaceUpCards(faceUpCards);
     }
 
     @Override

@@ -4,7 +4,7 @@ public class Chat {
     private String username;
     private String message;
 
-    Chat(String username, String message) {
+    public Chat(String username, String message) {
         this.username = username;
         this.message = message;
     }
