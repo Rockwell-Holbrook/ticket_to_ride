@@ -9,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.rholbrook.tickettoride.R;
+import com.example.shared.model.Chat;
 
 import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
-    private ArrayList<ChatModel> chats;
+    private ArrayList<Chat> chats;
     private GameLobbyActivity mListener;
 
-    public ChatAdapter(ArrayList<ChatModel> chats, GameLobbyActivity mListener) {
+    public ChatAdapter(ArrayList<Chat> chats, GameLobbyActivity mListener) {
         this.chats = chats;
         this.mListener = mListener;
     }
@@ -30,7 +31,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        final ChatModel chat = chats.get(viewHolder.getAdapterPosition());
+        final Chat chat = chats.get(viewHolder.getAdapterPosition());
         viewHolder.username.setText(chat.getUsername());
         viewHolder.message.setText(chat.getMessage());
     }

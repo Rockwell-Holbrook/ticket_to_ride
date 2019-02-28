@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.gamelobby;
 
 import com.example.rholbrook.tickettoride.main.Authentication;
+import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     }
 
     @Override
-    public void updateChatList(ArrayList<ChatModel> chatMessages) {
+    public void updateChatList(ArrayList<Chat> chatMessages) {
         viewCallback.updateChatList(chatMessages);
     }
 

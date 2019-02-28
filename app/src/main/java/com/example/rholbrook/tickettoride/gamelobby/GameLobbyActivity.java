@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.main.MainActivity;
+import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 
 import java.util.ArrayList;
@@ -106,7 +107,7 @@ public class GameLobbyActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void updateChatList(ArrayList<ChatModel> chatMessages) {
+    public void updateChatList(ArrayList<Chat> chatMessages) {
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         playerRecyclerView.setAdapter(new ChatAdapter(chatMessages, this));
     }

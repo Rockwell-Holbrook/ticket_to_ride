@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.game;
 
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
+import com.example.shared.model.Chat;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 
@@ -9,6 +10,8 @@ import java.util.Set;
 
 public class GameActivityModel extends Observable {
     private static GameActivityModel instance;
+    private DrawerContract.ChatPresenter chatListener;
+    private DrawerContract.GameHistoryPresenter historyListener;
     private Player opponentOne;
     private Player opponentTwo;
     private Player opponentThree;
@@ -25,6 +28,10 @@ public class GameActivityModel extends Observable {
         return instance;
     }
 
+    public void receivedChat(Chat chat) {
+        chatListener.receivedChat(chat);
+    }
+
     public void selectFaceUpCard(int index) {
 
     }
@@ -39,5 +46,13 @@ public class GameActivityModel extends Observable {
 
     public void sortPlayers() {
         Set<Player> players = game.getPlayerList();
+    }
+
+    public void setChatListener(DrawerContract.ChatPresenter chatListener) {
+        this.chatListener = chatListener;
+    }
+
+    public void setHistoryListener(DrawerContract.GameHistoryPresenter historyListener) {
+        this.historyListener = historyListener;
     }
 }
