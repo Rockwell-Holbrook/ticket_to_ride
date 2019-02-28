@@ -7,7 +7,7 @@ public class Player {
     private boolean isHost;
     private PlayerColor playerColor;
     private ArrayList<TrainCard> TrainCards;
-    private ArrayList<RouteCard> RouteCards;
+    private ArrayList<Ticket> tickets;
     private ArrayList<Route> claimedRoutes;
     private int pointsEarned;
 

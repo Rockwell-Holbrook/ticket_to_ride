@@ -4,8 +4,7 @@ import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
 import com.example.shared.interfaces.IClientInGame;
 import com.example.shared.interfaces.IClientNotInGame;
-import com.example.shared.model.Game;
-import com.example.shared.model.Player;
+import com.example.shared.model.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,9 +27,13 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
 //    Phase 1 Connections
 //    GameLobby
-    @Override
     public void chatReceived(String username, String message) {
         GameLobbyActivityModel.getInstance().newMessageReceived(username, message);
+    }
+
+    @Override
+    public void receivedChat(Chat chat, boolean gameStarted) {
+
     }
 
     @Override
@@ -46,7 +49,57 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameLobbyActivityModel.getInstance().gameStarted();
     }
 
-//    MainActivity
+    @Override
+    public void receivedChatHistory(List<Chat> chatHistory) {
+
+    }
+
+    @Override
+    public void receivedHistoryObject(GameHistory history) {
+
+    }
+
+    @Override
+    public void receivedGameHistory(List<GameHistory> gameHistory) {
+
+    }
+
+    @Override
+    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
+
+    }
+
+    @Override
+    public void ticketsReceived(List<Ticket> tickets) {
+
+    }
+
+    @Override
+    public void startTurn(List<Route> availableRoutes) {
+
+    }
+
+    @Override
+    public void ticketCompleted(Ticket ticket) {
+
+    }
+
+    @Override
+    public void routeClaimed(Player player, Route route) {
+
+    }
+
+    @Override
+    public void cardDrawn(List<TrainCard> faceUpCards) {
+
+    }
+
+    @Override
+    public void turnEnded(Player player) {
+
+    }
+
+    //    MainActivity
     @Override
     public void updateGameList(ArrayList<Game> games) {
         String jsonValue = gson.toJson(games);
@@ -60,26 +113,4 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         MainActivityModel.getInstance().joinedGame(gameId);
     }
 
-
-
-//    Phase 2 Connections
-    @Override
-    public void cardDrawn() {
-
-    }
-
-    @Override
-    public void routeClaimed() {
-
-    }
-
-    @Override
-    public void ticketsDrawn() {
-
-    }
-
-    @Override
-    public void ticketsReturned() {
-
-    }
 }
