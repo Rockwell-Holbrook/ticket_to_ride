@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.gamelobby.ChatAdapter;
 import com.example.shared.model.Chat;
@@ -35,9 +36,11 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
         presenter = new ChatFragmentPresenter(this);
         chatRecyclerView = view.findViewById(R.id.chat_recycler_view);
         sendButton = view.findViewById(R.id.message_send_button);
+        sendButton.setEnabled(true);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "clicked and stuff", Toast.LENGTH_LONG);
                 presenter.sendChat(editText.getText().toString());
             }
         });

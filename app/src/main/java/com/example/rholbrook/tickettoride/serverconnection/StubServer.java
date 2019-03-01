@@ -27,7 +27,7 @@ public class StubServer implements IServer {
     @Override
     public void getChatHistory(String gameId) {
         ArrayList<Chat> chats = new ArrayList<>();
-        for (int i = 0; i < rand.nextInt(10); i++) {
+        for (int i = 0; i < rand.nextInt(50); i++) {
             String a = words[rand.nextInt(numWords)];
             String b = words[rand.nextInt(numWords)];
             String c = words[rand.nextInt(numWords)];
@@ -46,22 +46,12 @@ public class StubServer implements IServer {
         int numUsers = users.length;
         Random rand = new Random();
         ArrayList<GameHistory> history = new ArrayList<>();
-        for (int i = 0; i < rand.nextInt(10); i++) {
+        for (int i = 0; i < rand.nextInt(50); i++) {
             String action = actions[rand.nextInt(numActions)];
             String user = users[rand.nextInt(numUsers)];
             history.add(new GameHistory(user, action));
         }
         client.receivedGameHistory(history);
-        try {
-            for (int i = 0; i < 3; i++) {
-                Thread.sleep(1000);
-                String action = actions[rand.nextInt(numActions)];
-                String user = users[rand.nextInt(numUsers)];
-                client.receivedHistoryObject(new GameHistory(user, action));
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "getGameHistory: error sleeping in between history updates");
-        }
     }
 
     private static StubServer instance;
