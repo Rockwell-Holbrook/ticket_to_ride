@@ -166,10 +166,12 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
             }
         });
 
+        chatFragment = new ChatFragment();
+        final FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.drawer_fragment_container, chatFragment).commit();
         drawerTab.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                FragmentManager fm = getSupportFragmentManager();
                 Fragment fragment = fm.findFragmentById(R.id.drawer_fragment_container);
                 if (fragment != null) {
                     fm.beginTransaction().remove(fragment).commit();

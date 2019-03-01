@@ -21,14 +21,7 @@ public class StubServer implements IServer {
 
     @Override
     public void sendChat(Chat chat, String gameId) {
-        Log.d(TAG, chat.getUsername());
-        Log.d(TAG, chat.getMessage());
-        String a = words[rand.nextInt(numWords)];
-        String b = words[rand.nextInt(numWords)];
-        String c = words[rand.nextInt(numWords)];
-        String response = a + " " + b + " " + c;
-        String user = users[rand.nextInt(numUsers)];
-        client.receivedChat(new Chat(user, response), true);
+        client.receivedChat(chat, true);
     }
 
     @Override
