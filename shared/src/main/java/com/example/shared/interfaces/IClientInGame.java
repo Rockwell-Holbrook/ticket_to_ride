@@ -12,7 +12,7 @@ public interface IClientInGame {
      * list.
      * @param chat Chat object containing username of sender and message
      */
-    void receivedChat(Chat chat, boolean gameStarted);
+    void receivedChat(Chat chat, boolean gameStarted, String gameId);
 
     /**
      * Signals the GameLobbyFragmentModel to update the joined players list
@@ -30,7 +30,7 @@ public interface IClientInGame {
      * Signals the GameActivityModel to update the chat message list with all messages
      * @param chatHistory List of all previous Chat objects
      */
-    void receivedChatHistory(List<Chat> chatHistory);
+    void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username);
 
     /**
      * Signals the GameActivityModel to update the game history list
@@ -51,7 +51,7 @@ public interface IClientInGame {
      * @param tickets List of 3 Ticket objects which the player must choose from
      * @param turnOrder List of Player objects, in turn order, starting with this player
      */
-    void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder);
+    void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username);
 
     /**
      * Signals the GameActivityModel to show the player a list of tickets to choose from

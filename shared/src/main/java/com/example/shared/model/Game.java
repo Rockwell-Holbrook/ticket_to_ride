@@ -44,6 +44,10 @@ public class Game {
         isPlaying = true;
     }
 
+    public void addChatToList(Chat chat) {
+        this.chatHistory.add(chat);
+    }
+
     /* *********** GETTERS AND SETTERS *********** */
 
     public String getGameId() {
@@ -82,5 +86,9 @@ public class Game {
 
     public void setAvailableColors(List<Player.PlayerColor> availableColors) {
         this.availableColors = availableColors;
+    }
+
+    public ArrayList<Chat> getChatHistory() {
+        return chatHistory;
     }
 }

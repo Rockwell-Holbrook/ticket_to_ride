@@ -1,5 +1,6 @@
 package game;
 
+import com.example.shared.model.Chat;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
 import communication.ClientProxy;
@@ -72,6 +73,7 @@ public class GameManager {
         this.playingGameList.put(game.getGameId(), game);
         clientProxy.gameStarted(gameId);
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
+        // todo: initialze game
     }
 
     /**
@@ -86,5 +88,41 @@ public class GameManager {
 
     public Map<String, Game> getNotPlayingGameList() {
         return notPlayingGameList;
+    }
+
+    /**
+     * Send a message to the chat lobby in an un-started game
+     *
+     * @param gameId Id of game lobby
+     * @param chat Message to send to all users and username in one
+     */
+    public void sendChat(Chat chat, String gameId, boolean gameStarted) {
+        Game game;
+        if(gameStarted) {
+            game = this.playingGameList.get(gameId);
+        }
+
+        else {
+            game = this.notPlayingGameList.get(gameId);
+        }
+        game.addChatToList(chat);
+        clientProxy.receivedChat(chat, game.isPlaying(), gameId);
+    }
+
+    /**
+     * Get the entire chat history.
+     *
+     * @param gameId The ID of the game we need to work with!
+     */
+    public void getChatHistory(String gameId, String username, boolean gameStarted) {
+        Game game;
+        if(gameStarted) {
+            game = this.playingGameList.get(gameId);
+        }
+
+        else {
+            game = this.notPlayingGameList.get(gameId);
+        }
+        clientProxy.receivedChatHistory(game.getChatHistory(),gameStarted, username);
     }
 }

@@ -77,8 +77,8 @@ public class ServerFacade implements IServer {
      * @param chat Message to send to all users and username in one
      */
     @Override
-    public void sendChat(Chat chat, String gameId) {
-        // Todo: Make this sucker work baby.
+    public void sendChat(Chat chat, String gameId, boolean gameStarted) {
+        gameManager.sendChat(chat, gameId, gameStarted);
     }
 
     /**
@@ -87,8 +87,8 @@ public class ServerFacade implements IServer {
      * @param gameId The ID of the game we need to work with!
      */
     @Override
-    public void getChatHistory(String gameId) {
-        // Todo: Make this sucker work baby.
+    public void getChatHistory(String gameId, String username, boolean gameStarted) {
+        gameManager.getChatHistory(gameId, username, gameStarted);
     }
 
     /**

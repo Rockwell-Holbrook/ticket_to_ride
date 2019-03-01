@@ -32,7 +32,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChat(Chat chat, boolean gameStarted) {
+    public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
 
     }
 
@@ -50,7 +50,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory) {
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username) {
 
     }
 
@@ -65,7 +65,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
+    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
 
     }
 
