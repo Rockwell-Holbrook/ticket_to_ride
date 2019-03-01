@@ -3,13 +3,10 @@ package com.example.rholbrook.tickettoride.game;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import com.example.rholbrook.tickettoride.R;
-import com.example.shared.model.ColorCard;
 import com.example.shared.model.Ticket;
-import com.example.shared.model.LocomotiveCard;
 import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -47,11 +44,6 @@ public class GameActivityPresenter implements
     }
 
     @Override
-    public void init() {
-//        TrainCard[] testCards = {cardOne, cardTwo, cardThree, cardFour, cardFive};
-    }
-
-    @Override
     public void selectFaceUpCard(int index) {
         mModel.selectFaceUpCard(index);
     }
@@ -67,13 +59,8 @@ public class GameActivityPresenter implements
     }
 
     @Override
-    public void initializeGame() {
-
-    }
-
-    @Override
-    public Player getOpponentOne() {
-        return null;
+    public void initializeGame(List<Ticket> tickets) {
+        viewCallback.initializeGame(tickets);
     }
 
     @Override
@@ -120,5 +107,35 @@ public class GameActivityPresenter implements
     @Override
     public void setFaceUpCards(List<TrainCard> faceUpCards) {
         viewCallback.setFaceUpDeck(faceUpCards);
+    }
+
+    @Override
+    public TrainCard getFaceUpCard(int i) {
+        return mModel.getFaceUpCards().get(i);
+    }
+
+    @Override
+    public void endTurn() {
+        mModel.endUserTurn();
+    }
+
+    @Override
+    public void initializeComplete() {
+        mModel.initializeComplete();
+    }
+
+    @Override
+    public void selectTickets(List<Ticket> tickets) {
+        viewCallback.selectTickets(tickets, GameActivityModel.ADDITIONAL_TICKETS_SELECTION_TYPE);
+    }
+
+    @Override
+    public void addTicketsToPlayer(List<Ticket> keptCards) {
+        mModel.clientAddTickets(keptCards);
+    }
+
+    @Override
+    public void returnTickets(List<Ticket> returnedCards) {
+        mModel.returnTickets(returnedCards);
     }
 }

@@ -110,7 +110,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void ticketsReceived(List<Ticket> tickets) {
-
+        GameActivityModel.getInstance().ticketDataReceived(tickets);
     }
 
     //GamePlay

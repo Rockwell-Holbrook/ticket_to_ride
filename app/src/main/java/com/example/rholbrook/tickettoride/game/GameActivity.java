@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,10 +18,12 @@ import com.example.shared.model.*;
 
 import java.util.List;
 
-public class GameActivity extends AppCompatActivity implements GameActivityContract.View {
+public class GameActivity extends AppCompatActivity implements
+        GameActivityContract.View,
+        SelectTicketsDialogFragment.SelectTicketsDialogInterface{
     private GameActivityContract.Presenter mPresenter;
 
-    static final float NAME = 25.0f;
+
 
     private RelativeLayout playerHandLayout;
     private FrameLayout gameMapFrameLayout;
@@ -133,14 +136,14 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         faceDownTicketDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectFaceDownCardDeck();
+                mPresenter.clickDrawTickets();
             }
         });
 
         faceDownTrainCardDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.clickDrawTickets();
+                mPresenter.selectFaceDownCardDeck();
             }
         });
 
@@ -236,13 +239,12 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         enableFaceUpCards();
     }
 
-
-
     @Override
     public void endUserTurn() {
         faceDownTicketDeck.setActivated(false);
         faceDownTrainCardDeck.setActivated(false);
         disableFaceUpCards();
+        mPresenter.endTurn();
     }
 
     @Override
@@ -251,30 +253,50 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
             @Override
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(0);
+                TrainCard selectedCard = mPresenter.getFaceUpCard(0);
+                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(1);
+                TrainCard selectedCard = mPresenter.getFaceUpCard(1);
+                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(2);
+                TrainCard selectedCard = mPresenter.getFaceUpCard(2);
+                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(3);
+                TrainCard selectedCard = mPresenter.getFaceUpCard(3);
+                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardFive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(4);
+                TrainCard selectedCard = mPresenter.getFaceUpCard(4);
+                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                    endUserTurn();
+                }
             }
         });
     }
@@ -298,8 +320,9 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     }
 
     @Override
-    public void initializeGame() {
-
+    public void initializeGame(List<Ticket> selectableTickets) {
+        selectTickets(selectableTickets, GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE);
+        mPresenter.initializeComplete();
     }
 
     @Override
@@ -444,5 +467,23 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
                 opponentFourTrainCountTextView.setText(player.getRemainingTrainCars());
             }
         });
+    }
+
+    @Override
+    public void selectTickets(final List<Ticket> selectableTickets, final int selectionType) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                SelectTicketsDialogFragment dialog = SelectTicketsDialogFragment.newInstance(selectableTickets, selectionType);
+                dialog.show(getSupportFragmentManager(), "SelectTicketsDialogFragment");
+            }
+        });
+    }
+
+    @Override
+    public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards) {
+        dialogFragment.dismiss();
+        mPresenter.addTicketsToPlayer(keptCards);
+        mPresenter.returnTickets(returnedCards);
     }
 }

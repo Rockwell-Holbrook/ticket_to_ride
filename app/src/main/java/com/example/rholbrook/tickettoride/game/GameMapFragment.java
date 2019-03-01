@@ -36,4 +36,14 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
         View view = inflater.inflate(R.layout.fragment_game_map, container, false);
         return view;
     }
+
+    @Override
+    public void startUserTurn() {
+        //enable all click listeners
+    }
+
+    @Override
+    public void endUserTurn() {
+        //disable all click listeners
+    }
 }

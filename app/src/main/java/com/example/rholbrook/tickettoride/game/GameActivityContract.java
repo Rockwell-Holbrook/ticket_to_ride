@@ -18,7 +18,7 @@ public class GameActivityContract {
         void addFaceUpCardClickListeners();
         void enableFaceUpCards();
         void disableFaceUpCards();
-        void initializeGame();
+        void initializeGame(List<Ticket> selectableTickets);
         void setPlayerTicketDeck(List<Ticket> testDestinations);
         void initializePlayers(List<Player> turnOrder);
         void updateClient(Player updatedPlayer);
@@ -26,18 +26,23 @@ public class GameActivityContract {
         void updatePlayerTwo(Player updatedPlayer);
         void updatePlayerThree(Player updatedPlayer);
         void updatePlayerFour(Player updatedPlayer);
+        void selectTickets(List<Ticket> selectableTickets, int selectionTypeIndicator);
     }
 
     public interface Presenter {
-        void init();
         void selectFaceUpCard(int index);
         void selectFaceDownCardDeck();
         void clickDrawTickets();
-        void initializeGame();
-        Player getOpponentOne();
+        void initializeGame(List<Ticket> tickets);
         void setupTurnOrder(List<Player> turnOrder);
         Drawable getAvatar(Context applicationContext, Player.PlayerColor playerColor);
         Drawable getColorBackground(Context applicationContext, Player.PlayerColor playerColor);
         void setFaceUpCards(List<TrainCard> faceUpCards);
+        TrainCard getFaceUpCard(int i);
+        void endTurn();
+        void initializeComplete();
+        void selectTickets(List<Ticket> tickets);
+        void addTicketsToPlayer(List<Ticket> keptCards);
+        void returnTickets(List<Ticket> returnedCards);
     }
 }

@@ -6,6 +6,7 @@ import com.example.shared.model.Player;
 import com.example.shared.model.Ticket;
 import com.example.shared.model.TrainCard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Set;
@@ -16,23 +17,39 @@ public class GameActivityModel extends Observable {
     private static final int TWO_OPPONENTS = 3;
     private static final int THREE_OPPONENTS = 4;
     private static final int FOUR_OPPONENTS = 5;
+    public static final int INITIALIZE_TICKETS_SELECTION_TYPE = 0;
+    public static final int ADDITIONAL_TICKETS_SELECTION_TYPE = 1;
 
     private static GameActivityModel instance;
     private GameActivityContract.Presenter gameActivityPresenter;
     private GameMapFragmentContract.Presenter gameMapFragmentPresenter;
+    private String gameId;
     private Player opponentOne;
     private Player opponentTwo;
     private Player opponentThree;
     private Player opponentFour;
     private Player client;
     private List<Player> turnOrder;
+    private List<TrainCard> faceUpCards;
 
     public GameActivityModel() {
 
     }
 
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     public Player getOpponentOne() {
         return opponentOne;
+    }
+
+    public List<TrainCard> getFaceUpCards() {
+        return faceUpCards;
     }
 
     public void setOpponentOne(Player opponentOne) {
@@ -87,28 +104,29 @@ public class GameActivityModel extends Observable {
     }
 
     public void selectFaceUpCard(int index) {
-
+        //Todo: send request to server
     }
 
     public void selectFaceDownCardDeck() {
-
+        //Todo: send request to server
     }
 
     public void drawTickets() {
-
+        ServerProxy.getInstance().requestTickets(gameId);
     }
 
     public void newMessageReceived(String username, String message) {
+        //Todo: sendMessage
     }
 
     public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
         this.turnOrder = turnOrder;
         setPlayers(turnOrder);
         client.setTrainCards(trainCards);
-        client.setTickets(tickets);
         setChanged();
         notifyObservers(client);
         clearChanged();
+        gameActivityPresenter.initializeGame(tickets);
     }
 
     private void setPlayers(List<Player> turnOrder) {
@@ -143,6 +161,33 @@ public class GameActivityModel extends Observable {
     }
 
     public void setFaceUpCards(List<TrainCard> faceUpCards) {
+        this.faceUpCards = faceUpCards;
         gameActivityPresenter.setFaceUpCards(faceUpCards);
+    }
+
+    public void endUserTurn() {
+        //Todo: send request to server
+    }
+
+    public void initializeComplete() {
+        //Todo: send request to server
+    }
+
+    public void ticketDataReceived(List<Ticket> tickets) {
+        gameActivityPresenter.selectTickets(tickets);
+    }
+
+    public void clientAddTickets(List<Ticket> keptCards) {
+        List<Ticket> newClientTickets = getClient().getTickets();
+        newClientTickets.addAll(keptCards);
+        client.setTickets(newClientTickets);
+        setChanged();
+        notifyObservers(client);
+        clearChanged();
+    }
+
+    public void returnTickets(List<Ticket> returnedCards) {
+        ArrayList<Ticket> cards = new ArrayList<>(returnedCards);
+        ServerProxy.getInstance().ticketsReturned(cards);
     }
 }
