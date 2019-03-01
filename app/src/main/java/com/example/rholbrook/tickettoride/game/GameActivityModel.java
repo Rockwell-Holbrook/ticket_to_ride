@@ -2,6 +2,8 @@ package com.example.rholbrook.tickettoride.game;
 
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
+import com.example.rholbrook.tickettoride.serverconnection.StubServer;
+import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Chat;
 import com.example.shared.model.Game;
 import com.example.shared.model.GameHistory;
@@ -16,7 +18,7 @@ public class GameActivityModel extends Observable {
     private static GameActivityModel instance;
     private DrawerContract.ChatPresenter chatListener;
     private DrawerContract.HistoryPresenter historyListener;
-    private ServerProxy server;
+    private IServer server;
     private String gameId;
     private Player opponentOne;
     private Player opponentTwo;
@@ -27,7 +29,8 @@ public class GameActivityModel extends Observable {
     private List<GameHistory> gameHistory;
 
     public GameActivityModel() {
-        server = ServerProxy.getInstance();
+        // TODO Change back to ServerProxy
+        server = StubServer.getInstance();
         chatMessages = new ArrayList<>();
     }
 

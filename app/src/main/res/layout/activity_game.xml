@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@mipmap/game_background">
+
     <Button
             android:layout_width="20dp"
             android:layout_height="120dp" android:id="@+id/open_drawer_button"

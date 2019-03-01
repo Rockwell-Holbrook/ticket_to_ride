@@ -9,10 +9,10 @@
                                         android:fitsSystemWindows="true">
 
     <include
-        android:id="@+id/base_drawer_layout"
-        layout="@layout/activity_game"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+            android:id="@+id/base_drawer_layout"
+            layout="@layout/activity_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,20 +26,20 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="5dp" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent" android:id="@+id/tabLayout" app:tabTextColor="@color/black">
+                app:layout_constraintEnd_toEndOf="parent" android:id="@+id/tab_layout" app:tabTextColor="@color/black">
             <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/chat_tab"/>
+                    android:text="@string/chat_tab" android:id="@+id/chat_tab"/>
             <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/game_history_tab"/>
+                    android:text="@string/game_history_tab" android:id="@+id/history_tab"/>
         </android.support.design.widget.TabLayout>
 
         <FrameLayout
                 android:layout_width="630dp"
-                android:layout_height="356dp"
+                android:layout_height="331dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="4dp" android:id="@+id/drawer_fragment_container"/>
@@ -48,7 +48,7 @@
                 android:layout_height="120dp"
                 android:id="@+id/close_drawer_button"
                 android:background="@drawable/close_drawer_button" app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/tabLayout"/>
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/tab_layout"/>
 
     </android.support.constraint.ConstraintLayout>
 

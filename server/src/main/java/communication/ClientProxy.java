@@ -47,7 +47,7 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChat(Chat chat) {
+    public void receivedChat(Chat chat, boolean gameStarted) {
 
     }
 
