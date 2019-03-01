@@ -52,14 +52,14 @@ public interface IServer {
      * @param gameId Id of game lobby
      * @param chat Message to send to all users and username in one
      */
-    void sendChat(Chat chat, String gameId);
+    void sendChat(Chat chat, String gameId, boolean gameStarted);
 
     /**
      * Get the entire chat history.
      *
      * @param gameId The ID of the game we need to work with!
      */
-    void getChatHistory(String gameId);
+    void getChatHistory(String gameId, String username, boolean gameStarted);
 
     /**
      * Get the entire game history.

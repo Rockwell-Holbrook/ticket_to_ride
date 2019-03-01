@@ -35,11 +35,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
-        if (gameStarted) {
-            GameLobbyActivityModel.getInstance().newMessageReceived(chat.getUsername(), chat.getMessage());
-        } else {
-            GameActivityModel.getInstance().newMessageReceived(chat.getUsername(), chat.getMessage());
-        }
+
     }
 
     @Override
@@ -88,7 +84,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     //History Drawer
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory) {
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username) {
 
     }
 
@@ -104,8 +100,8 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     //Game Initialization
     @Override
-    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
-        GameActivityModel.getInstance().initializeGame(trainCards, tickets, turnOrder);
+    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
+
     }
 
     @Override
