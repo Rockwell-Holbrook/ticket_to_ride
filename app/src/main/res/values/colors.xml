@@ -21,4 +21,5 @@
     <color name="red">#E01313</color>
     <color name="grey">#696969</color>
     <color name="card_section_background">#BB808080</color>
+    <color name="drawer_button">#882F9DE8</color>
 </resources>

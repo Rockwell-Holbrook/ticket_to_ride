@@ -4,7 +4,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="match_parent"
-        android:layout_width="match_parent" >
+        android:layout_width="match_parent">
 
     <android.support.v7.widget.RecyclerView
 
@@ -12,7 +12,7 @@
             android:layout_height="0dp"
             android:id="@+id/chat_recycler_view"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+            app:layout_constraintBottom_toTopOf="@+id/type_layout"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/chatListBackground"
             tools:listitem="@layout/list_item_chat"
@@ -22,10 +22,11 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/linearLayout4"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496">
+            android:id="@+id/type_layout" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5">
         <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +41,7 @@
                 android:layout_marginStart="8dp"/>
         <Button
                 android:layout_width="65dp"
-                android:layout_height="0dp" android:id="@+id/message_send_button" android:layout_weight="0.5"
+                android:layout_height="0dp" android:id="@+id/drawer_chat_button" android:layout_weight="0.5"
                 android:background="@drawable/message_send_button" android:text="@string/send"
                 android:textColor="@color/white" android:textSize="12sp"
                 android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"

@@ -35,8 +35,7 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         presenter = new ChatFragmentPresenter(this);
         chatRecyclerView = view.findViewById(R.id.chat_recycler_view);
-        sendButton = view.findViewById(R.id.message_send_button);
-        sendButton.setEnabled(true);
+        sendButton = view.findViewById(R.id.drawer_chat_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

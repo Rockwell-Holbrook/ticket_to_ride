@@ -4,7 +4,7 @@
         <shape
                 android:shape="rectangle">
             <solid
-                    android:color="@color/sendButton"/>
+                    android:color="@color/drawer_button"/>
             <corners
                     android:radius="43dp"
                     android:bottomRightRadius="0dp"
