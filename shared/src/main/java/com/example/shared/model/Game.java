@@ -53,9 +53,9 @@ public class Game {
 
     public void initializeTrainCardsFaceUp() { // TODO: Deck management not randomness.
         ArrayList<TrainCard> temp = new ArrayList<>();
-        temp.add(new ColorCard(ColorCard.Color.BLACK));  temp.add(new ColorCard(ColorCard.Color.BLUE)); temp.add(new ColorCard(ColorCard.Color.GREEN)); temp.add(new ColorCard(ColorCard.Color.ORANGE));
-        temp.add(new ColorCard(ColorCard.Color.PINK)); temp.add(new ColorCard(ColorCard.Color.RED)); temp.add(new ColorCard(ColorCard.Color.WHITE)); temp.add(new ColorCard(ColorCard.Color.YELLOW));
-        temp.add(new LocomotiveCard());
+        temp.add(new TrainCard(TrainCard.Color.BLACK));  temp.add(new TrainCard(TrainCard.Color.BLUE)); temp.add(new TrainCard(TrainCard.Color.GREEN)); temp.add(new TrainCard(TrainCard.Color.ORANGE));
+        temp.add(new TrainCard(TrainCard.Color.PINK)); temp.add(new TrainCard(TrainCard.Color.RED)); temp.add(new TrainCard(TrainCard.Color.WHITE)); temp.add(new TrainCard(TrainCard.Color.YELLOW));
+        temp.add(new TrainCard(TrainCard.Color.WILD));
 
         ArrayList<TrainCard> random = new ArrayList<>();
 
@@ -69,9 +69,9 @@ public class Game {
 
     public ArrayList<TrainCard> initializeTrainCards() { // TODO: Deck management not randomness.
         ArrayList<TrainCard> temp = new ArrayList<>();
-        temp.add(new ColorCard(ColorCard.Color.BLACK));  temp.add(new ColorCard(ColorCard.Color.BLUE)); temp.add(new ColorCard(ColorCard.Color.GREEN)); temp.add(new ColorCard(ColorCard.Color.ORANGE));
-        temp.add(new ColorCard(ColorCard.Color.PINK)); temp.add(new ColorCard(ColorCard.Color.RED)); temp.add(new ColorCard(ColorCard.Color.WHITE)); temp.add(new ColorCard(ColorCard.Color.YELLOW));
-        temp.add(new LocomotiveCard());
+        temp.add(new TrainCard(TrainCard.Color.BLACK));  temp.add(new TrainCard(TrainCard.Color.BLUE)); temp.add(new TrainCard(TrainCard.Color.GREEN)); temp.add(new TrainCard(TrainCard.Color.ORANGE));
+        temp.add(new TrainCard(TrainCard.Color.PINK)); temp.add(new TrainCard(TrainCard.Color.RED)); temp.add(new TrainCard(TrainCard.Color.WHITE)); temp.add(new TrainCard(TrainCard.Color.YELLOW));
+        temp.add(new TrainCard(TrainCard.Color.WILD));
 
         ArrayList<TrainCard> random = new ArrayList<>();
 

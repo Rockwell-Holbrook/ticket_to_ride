@@ -1,8 +1,6 @@
 package com.example.rholbrook.tickettoride.game;
 
-import com.example.shared.model.ColorCard;
 import com.example.shared.model.Ticket;
-import com.example.shared.model.LocomotiveCard;
 import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
 
