@@ -84,7 +84,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     //History Drawer
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username) {
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gamId) {
 
     }
 
@@ -100,7 +100,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     //Game Initialization
     @Override
-    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
+    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {
 
     }
 
