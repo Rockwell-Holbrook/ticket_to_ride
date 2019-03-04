@@ -11,12 +11,15 @@ public class Game {
     private Player host;
     private Set<Player> playerList = new HashSet<>();
     private int maxPlayers;
+    private int readyPlayers = 0;
     private String gameName;
     private List<Player.PlayerColor> availableColors;
     private transient IClientInGame clientProxy;
+    private ArrayList<Route> availableRoutes;
     private ArrayList<Route> claimedRoutes;
     private ArrayList<Chat> chatHistory;
     private ArrayList<GameHistory> gameHistory;
+    private ArrayList<TrainCard> trainCardsFaceUp;
 
     public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;
@@ -42,6 +45,78 @@ public class Game {
      */
     public void startGame() {
         isPlaying = true;
+    }
+
+    public void addChatToList(Chat chat) {
+        this.chatHistory.add(chat);
+    }
+
+    public void initializeTrainCardsFaceUp() { // TODO: Deck management not randomness.
+        ArrayList<TrainCard> temp = new ArrayList<>();
+        temp.add(new ColorCard(ColorCard.Color.BLACK));  temp.add(new ColorCard(ColorCard.Color.BLUE)); temp.add(new ColorCard(ColorCard.Color.GREEN)); temp.add(new ColorCard(ColorCard.Color.ORANGE));
+        temp.add(new ColorCard(ColorCard.Color.PINK)); temp.add(new ColorCard(ColorCard.Color.RED)); temp.add(new ColorCard(ColorCard.Color.WHITE)); temp.add(new ColorCard(ColorCard.Color.YELLOW));
+        temp.add(new LocomotiveCard());
+
+        ArrayList<TrainCard> random = new ArrayList<>();
+
+        for (int i = 0; i < 5; i++) {
+            int randomIndex = (int) (Math.random()*9);
+            random.add(temp.get(randomIndex));
+        }
+
+        this.trainCardsFaceUp = random;
+    }
+
+    public ArrayList<TrainCard> initializeTrainCards() { // TODO: Deck management not randomness.
+        ArrayList<TrainCard> temp = new ArrayList<>();
+        temp.add(new ColorCard(ColorCard.Color.BLACK));  temp.add(new ColorCard(ColorCard.Color.BLUE)); temp.add(new ColorCard(ColorCard.Color.GREEN)); temp.add(new ColorCard(ColorCard.Color.ORANGE));
+        temp.add(new ColorCard(ColorCard.Color.PINK)); temp.add(new ColorCard(ColorCard.Color.RED)); temp.add(new ColorCard(ColorCard.Color.WHITE)); temp.add(new ColorCard(ColorCard.Color.YELLOW));
+        temp.add(new LocomotiveCard());
+
+        ArrayList<TrainCard> random = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            int randomIndex = (int) (Math.random()*9);
+            random.add(temp.get(randomIndex));
+        }
+
+        return random;
+    }
+
+    public ArrayList<Ticket> initializeTickets() { // TODO: Deck management not randomness and emptiness
+        ArrayList<Ticket> temp = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            temp.add(new Ticket());
+        }
+
+        return temp;
+    }
+
+    public ArrayList<Player> initializeTurnOrder(String username) {
+        ArrayList<Player> tempTurnOrder = new ArrayList<>(this.playerList);
+        ArrayList<Player> turnOrder = new ArrayList<>();
+
+        int index = 0;
+
+        for (int i = 0; i < tempTurnOrder.size(); i++) { // Figure out the index
+            if(tempTurnOrder.get(i).getUsername().equals(username)) {
+                index = i;
+            }
+        }
+
+        for (int i = index; i < tempTurnOrder.size(); i++) { // Add from the index to the end of the array
+            turnOrder.add(tempTurnOrder.get(i));
+        }
+
+        for (int i = 0; i < tempTurnOrder.size(); i++) { // Add from 0 to the index
+            if(i == index) {
+                break;
+            }
+            turnOrder.add(tempTurnOrder.get(i));
+        }
+
+        return turnOrder;
     }
 
     /* *********** GETTERS AND SETTERS *********** */
@@ -82,5 +157,29 @@ public class Game {
 
     public void setAvailableColors(List<Player.PlayerColor> availableColors) {
         this.availableColors = availableColors;
+    }
+
+    public ArrayList<Chat> getChatHistory() {
+        return chatHistory;
+    }
+
+    public ArrayList<TrainCard> getTrainCardsFaceUp() {
+        return trainCardsFaceUp;
+    }
+
+    public int getReadyPlayers() {
+        return readyPlayers;
+    }
+
+    public void setReadyPlayers(int readyPlayers) {
+        this.readyPlayers = readyPlayers;
+    }
+
+    public ArrayList<Route> getAvailableRoutes() {
+        return availableRoutes;
+    }
+
+    public ArrayList<Route> getClaimedRoutes() {
+        return claimedRoutes;
     }
 }

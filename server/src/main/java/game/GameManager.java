@@ -1,7 +1,6 @@
 package game;
 
-import com.example.shared.model.Game;
-import com.example.shared.model.Player;
+import com.example.shared.model.*;
 import communication.ClientProxy;
 import communication.SocketServer;
 
@@ -68,10 +67,12 @@ public class GameManager {
     public void startGame(String gameId) {
         Game game = this.notPlayingGameList.get(gameId);
         game.startGame();
+        game.initializeTrainCardsFaceUp();
         this.notPlayingGameList.remove(gameId);
         this.playingGameList.put(game.getGameId(), game);
         clientProxy.gameStarted(gameId);
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
+        // todo: initialize game
     }
 
     /**
@@ -86,5 +87,80 @@ public class GameManager {
 
     public Map<String, Game> getNotPlayingGameList() {
         return notPlayingGameList;
+    }
+
+    /**
+     * Send a message to the chat lobby in an un-started game
+     *
+     * @param gameId Id of game lobby
+     * @param chat Message to send to all users and username in one
+     */
+    public void sendChat(Chat chat, String gameId, boolean gameStarted) {
+        Game game;
+        if(gameStarted) {
+            game = this.playingGameList.get(gameId);
+        }
+
+        else {
+            game = this.notPlayingGameList.get(gameId);
+        }
+        game.addChatToList(chat);
+        clientProxy.receivedChat(chat, game.isPlaying(), gameId);
+    }
+
+    /**
+     * Get the entire chat history.
+     *
+     * @param gameId The ID of the game we need to work with!
+     */
+    public void getChatHistory(String gameId, String username, boolean gameStarted) {
+        Game game;
+        if(gameStarted) {
+            game = this.playingGameList.get(gameId);
+        }
+
+        else {
+            game = this.notPlayingGameList.get(gameId);
+        }
+        clientProxy.receivedChatHistory(game.getChatHistory(),gameStarted, username);
+    }
+
+    /**
+     * Get the entire game history.
+     *
+     * @param gameId The ID of the game we need to work with!
+     */
+    public void getGameHistory(String gameId) {
+        // Todo: Make this sucker work baby.
+    }
+
+    /**
+     * User Telling the server that they have initialized. Need to make sure every one of the users sends this.
+     *
+     * @param gameId The ID of the game we need to work with!
+     */
+    public void readyToInitialize(String gameId, String username) { // TODO: Make this function actually work. Returning dummy data atm.
+        Game game = this.playingGameList.get(gameId);
+
+        ArrayList<TrainCard> trainCards = game.initializeTrainCards();
+        ArrayList< Ticket > tickets = game.initializeTickets();
+        ArrayList<Player> turnOrder = game.initializeTurnOrder(username);
+
+        clientProxy.initializeGame(game.getTrainCardsFaceUp(), trainCards, tickets, turnOrder, username);
+    }
+
+    /**
+     *
+     * @param gameId ID of the game needed!
+     * @param username username that is ready to initialize
+     */
+    public void initializeComplete(String gameId, String username) {
+        Game game = this.playingGameList.get(gameId);
+        game.setReadyPlayers(game.getReadyPlayers() + 1);
+        clientProxy.initializeComplete(gameId, username);
+
+        if(game.getMaxPlayers() == game.getReadyPlayers()) {
+            clientProxy.startTurn(game.getAvailableRoutes(), username);
+        }
     }
 }

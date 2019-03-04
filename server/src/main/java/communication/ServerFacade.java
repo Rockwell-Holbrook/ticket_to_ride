@@ -77,8 +77,8 @@ public class ServerFacade implements IServer {
      * @param chat Message to send to all users and username in one
      */
     @Override
-    public void sendChat(Chat chat, String gameId) {
-        // Todo: Make this sucker work baby.
+    public void sendChat(Chat chat, String gameId, boolean gameStarted) {
+        gameManager.sendChat(chat, gameId, gameStarted);
     }
 
     /**
@@ -87,8 +87,8 @@ public class ServerFacade implements IServer {
      * @param gameId The ID of the game we need to work with!
      */
     @Override
-    public void getChatHistory(String gameId) {
-        // Todo: Make this sucker work baby.
+    public void getChatHistory(String gameId, String username, boolean gameStarted) {
+        gameManager.getChatHistory(gameId, username, gameStarted);
     }
 
     /**
@@ -98,7 +98,16 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void getGameHistory(String gameId) {
-        // Todo: Make this sucker work baby.
+        gameManager.getGameHistory(gameId);
+    }
+
+    /**
+     *
+     * @param gameId ID of the game needed!
+     * @param username username that is ready to initialize
+     */
+    public void readyToInitialize(String gameId, String username) {
+        gameManager.readyToInitialize(gameId, username);
     }
 
     /**
@@ -106,8 +115,9 @@ public class ServerFacade implements IServer {
      *
      * @param gameId The ID of the game we need to work with!
      */
-    public void initializedGame(String gameId) {
-        // Todo: Make this sucker work baby.
+    @Override
+    public void initializeComplete(String gameId, String username) {
+        gameManager.initializeComplete(gameId, username);
     }
 
     /**
@@ -115,6 +125,7 @@ public class ServerFacade implements IServer {
      *
      * @param returned Tickets that the user is returning to be placed in the deck.
      */
+    @Override
     public void ticketsReturned(ArrayList<Ticket> returned) {
         // Todo: Make this sucker work baby.
     }
@@ -124,6 +135,7 @@ public class ServerFacade implements IServer {
      *
      * @param gameID The ID of the game we need to work with!
      */
+    @Override
     public void turnEnded(String gameID) {
         // Todo: Make this sucker work baby.
     }
@@ -133,6 +145,7 @@ public class ServerFacade implements IServer {
      *
      * @param index The index of the visible card's that the user can grab.
      */
+    @Override
     public void getCard(int index) {
         // Todo: Make this sucker work baby.
     }
@@ -142,6 +155,7 @@ public class ServerFacade implements IServer {
      *
      * @param route The route the user wants to claim.
      */
+    @Override
     public void claimRoute(Route route) {
         // Todo: Make this sucker work baby.
     }
@@ -151,10 +165,8 @@ public class ServerFacade implements IServer {
      *
      * @param gameID The ID of the game we need to work with!
      */
+    @Override
     public void requestTickets(String gameID) {
         // Todo: Make this sucker work baby.
     }
-
-
-
 }
