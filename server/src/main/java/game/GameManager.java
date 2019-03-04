@@ -160,7 +160,8 @@ public class GameManager {
         clientProxy.initializeComplete(gameId, username);
 
         if(game.getMaxPlayers() == game.getReadyPlayers()) {
-            clientProxy.startTurn(game.getAvailableRoutes(), username);
+            ArrayList<Player> tempTurnOrder = new ArrayList<>(game.getPlayerList());
+            clientProxy.startTurn(game.getAvailableRoutes(), tempTurnOrder.get(0).getUsername());
         }
     }
 }
