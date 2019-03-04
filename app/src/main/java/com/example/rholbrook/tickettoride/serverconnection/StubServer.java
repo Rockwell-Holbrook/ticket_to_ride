@@ -21,6 +21,7 @@ public class StubServer implements IServer {
 
     @Override
     public void sendChat(Chat chat, String gameId) {
+        Log.d(TAG, "sendChat");
         client.receivedChat(chat, true);
     }
 

@@ -39,7 +39,6 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "clicked and stuff", Toast.LENGTH_LONG);
                 presenter.sendChat(editText.getText().toString());
             }
         });
@@ -52,5 +51,6 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
     public void updateChatList (List<Chat> chatMessages) {
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         chatRecyclerView.setAdapter(new ChatAdapter(chatMessages));
+        chatRecyclerView.scrollToPosition(chatMessages.size() - 1);
     }
 }

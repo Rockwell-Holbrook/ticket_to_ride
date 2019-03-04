@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.game;
 
+import android.util.Log;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.rholbrook.tickettoride.serverconnection.StubServer;
@@ -15,6 +16,8 @@ import java.util.Observable;
 import java.util.Set;
 
 public class GameActivityModel extends Observable {
+    private String TAG = "GameActivityModel";
+
     private static GameActivityModel instance;
     private DrawerContract.ChatPresenter chatListener;
     private DrawerContract.HistoryPresenter historyListener;
@@ -52,8 +55,9 @@ public class GameActivityModel extends Observable {
     }
 
     public void sendChat(String message) {
+        Log.d(TAG, "sendChat");
         Chat newChat = new Chat(Authentication.getInstance().getUsername(), message);
-        ServerProxy.getInstance().sendChat(newChat, gameId);
+        server.sendChat(newChat, gameId);
     }
 
     public void getChatHistory() {

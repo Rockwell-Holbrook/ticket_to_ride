@@ -14,7 +14,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/type_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/chatListBackground"
+            android:background="@color/gameListBackground"
             tools:listitem="@layout/list_item_chat"
     />
 
