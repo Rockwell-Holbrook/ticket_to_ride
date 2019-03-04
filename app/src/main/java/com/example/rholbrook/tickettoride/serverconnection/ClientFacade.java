@@ -65,7 +65,12 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
+    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
+
+    }
+
+    @Override
+    public void initializeComplete(String gameId, String username) {
 
     }
 
@@ -75,7 +80,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void startTurn(List<Route> availableRoutes) {
+    public void startTurn(List<Route> availableRoutes, String username) {
 
     }
 

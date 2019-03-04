@@ -69,11 +69,18 @@ public interface IServer {
     void getGameHistory(String gameId);
 
     /**
+     *
+     * @param gameId ID of the game needed!
+     * @param username username that is ready to initialize
+     */
+    void readyToInitialize(String gameId, String username);
+
+    /**
      * User Telling the server that they have initialized. Need to make sure every one of the users sends this.
      *
      * @param gameId The ID of the game we need to work with!
      */
-    void initializedGame(String gameId);
+    void initializeComplete(String gameId, String username);
 
     /**
      * Tickets from the beginning of the game that the User wants to send back.
