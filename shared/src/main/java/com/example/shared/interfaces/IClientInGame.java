@@ -51,7 +51,14 @@ public interface IClientInGame {
      * @param tickets List of 3 Ticket objects which the player must choose from
      * @param turnOrder List of Player objects, in turn order, starting with this player
      */
-    void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username);
+    void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username);
+
+    /**
+     *
+     * @param gameId the game ID that finished initializing
+     * @param username the username of the player who is finished initializing
+     */
+    void initializeComplete(String gameId, String username);
 
     /**
      * Signals the GameActivityModel to show the player a list of tickets to choose from
@@ -64,7 +71,7 @@ public interface IClientInGame {
      * routes that are available to claim
      * @param availableRoutes List of Route objects representing all unclaimed routes
      */
-    void startTurn(List<Route> availableRoutes);
+    void startTurn(List<Route> availableRoutes, String username);
 
     /**
      * Signals the GameActivityModel to update which tickets are completed

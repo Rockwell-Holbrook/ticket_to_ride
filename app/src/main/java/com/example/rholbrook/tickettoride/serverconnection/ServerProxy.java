@@ -110,26 +110,37 @@ public class ServerProxy implements IServer {
         // Todo: Make this sucker work baby.
     }
 
-    public void initializedGame(String gameId) {
+    @Override
+    public void readyToInitialize(String gameId, String username) {
+
+    }
+
+    @Override
+    public void initializeComplete(String gameId, String username) {
         // Todo: Make this sucker work baby.
     }
 
+    @Override
     public void ticketsReturned(ArrayList<Ticket> returned) {
         // Todo: Make this sucker work baby.
     }
 
+    @Override
     public void turnEnded(String gameID) {
         // Todo: Make this sucker work baby.
     }
 
+    @Override
     public void getCard(int index) {
         // Todo: Make this sucker work baby.
     }
 
+    @Override
     public void claimRoute(Route route) {
         // Todo: Make this sucker work baby.
     }
 
+    @Override
     public void requestTickets(String gameID) {
         // Todo: Make this sucker work baby.
     }
