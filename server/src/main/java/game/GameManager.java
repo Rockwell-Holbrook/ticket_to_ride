@@ -122,7 +122,7 @@ public class GameManager {
         else {
             game = this.notPlayingGameList.get(gameId);
         }
-        clientProxy.receivedChatHistory(game.getChatHistory(),gameStarted, username);
+        clientProxy.receivedChatHistory(game.getChatHistory(),gameStarted, username, game.getGameId());
     }
 
     /**
@@ -146,7 +146,7 @@ public class GameManager {
         ArrayList< Ticket > tickets = game.initializeTickets();
         ArrayList<Player> turnOrder = game.initializeTurnOrder(username);
 
-        clientProxy.initializeGame(game.getTrainCardsFaceUp(), trainCards, tickets, turnOrder, username);
+        clientProxy.initializeGame(game.getTrainCardsFaceUp(), trainCards, tickets, turnOrder, username, game.getGameId());
     }
 
     /**
@@ -157,7 +157,6 @@ public class GameManager {
     public void initializeComplete(String gameId, String username) {
         Game game = this.playingGameList.get(gameId);
         game.setReadyPlayers(game.getReadyPlayers() + 1);
-        clientProxy.initializeComplete(gameId, username);
 
         if(game.getMaxPlayers() == game.getReadyPlayers()) {
             ArrayList<Player> tempTurnOrder = new ArrayList<>(game.getPlayerList());

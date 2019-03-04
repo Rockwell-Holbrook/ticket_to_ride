@@ -83,12 +83,12 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username) {
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gamId) {
         String methodName = "receivedChatHistory";
         String[] typeNames = {List.class.getName(), boolean.class.getName(), String.class.getName()};
         Object[] inputVals = {chatHistory, gameStarted, username};
 
-        ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
     @Override
@@ -101,12 +101,12 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     }
 
-    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
+    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {
         String methodName = "initializeGame";
         String[] typeNames = {List.class.getName(), List.class.getName(), List.class.getName(), List.class.getName(), String.class.getName()};
         Object[] inputVals = {trainCardsFaceUp, trainCards, tickets, turnOrder, username};
 
-        ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
         String[] typeNames = {String.class.getName(), String.class.getName()};
         Object[] inputVals = {gameId, username};
 
-        ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
     @Override
