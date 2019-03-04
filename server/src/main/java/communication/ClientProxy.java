@@ -83,10 +83,10 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gamId) {
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gameId) {
         String methodName = "receivedChatHistory";
-        String[] typeNames = {List.class.getName(), boolean.class.getName(), String.class.getName()};
-        Object[] inputVals = {chatHistory, gameStarted, username};
+        String[] typeNames = {List.class.getName(), boolean.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {chatHistory, gameStarted, username, gameId};
 
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
@@ -103,8 +103,8 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {
         String methodName = "initializeGame";
-        String[] typeNames = {List.class.getName(), List.class.getName(), List.class.getName(), List.class.getName(), String.class.getName()};
-        Object[] inputVals = {trainCardsFaceUp, trainCards, tickets, turnOrder, username};
+        String[] typeNames = {List.class.getName(), List.class.getName(), List.class.getName(), List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {trainCardsFaceUp, trainCards, tickets, turnOrder, username, gameId};
 
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
