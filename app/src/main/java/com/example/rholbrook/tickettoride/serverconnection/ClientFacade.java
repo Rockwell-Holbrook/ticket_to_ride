@@ -31,7 +31,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 //    GameLobby
 
     @Override
-    public void receivedChat(Chat chat, boolean gameStarted) {
+    public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
         if (gameStarted) {
             GameActivityModel.getInstance().receivedChat(chat);
         } else {
@@ -53,7 +53,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory) {
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username) {
         GameActivityModel.getInstance().receivedChatHistory(chatHistory);
     }
 
@@ -68,7 +68,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
+    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
 
     }
 
@@ -78,7 +78,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void startTurn(List<Route> availableRoutes) {
+    public void startTurn(List<Route> availableRoutes, String username) {
 
     }
 
@@ -115,5 +115,8 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     public void joinGameComplete(String username, String gameId) {
         MainActivityModel.getInstance().joinedGame(gameId);
     }
+
+    // probably remove later
+    public void initializeComplete(String gameId, String username) {}
 
 }

@@ -20,13 +20,13 @@ public class StubServer implements IServer {
     private Random rand = new Random();
 
     @Override
-    public void sendChat(Chat chat, String gameId) {
+    public void sendChat(Chat chat, String gameId, boolean gameStarted) {
         Log.d(TAG, "sendChat");
-        client.receivedChat(chat, true);
+        client.receivedChat(chat, true, gameId);
     }
 
     @Override
-    public void getChatHistory(String gameId) {
+    public void getChatHistory(String gameId, String username, boolean gameStarted) {
         ArrayList<Chat> chats = new ArrayList<>();
         for (int i = 0; i < rand.nextInt(50); i++) {
             String a = words[rand.nextInt(numWords)];
@@ -36,7 +36,7 @@ public class StubServer implements IServer {
             String user = users[rand.nextInt(numUsers)];
             chats.add(new Chat(user, response));
         }
-        client.receivedChatHistory(chats);
+        client.receivedChatHistory(chats, gameStarted, username);
     }
 
     @Override
@@ -136,9 +136,10 @@ public class StubServer implements IServer {
     }
 
     @Override
-    public void initializedGame(String gameId) {
+    public void readyToInitialize(String gameId, String username) {}
 
-    }
+    @Override
+    public void initializeComplete(String gameId, String username) {}
 
     @Override
     public void ticketsReturned(ArrayList<Ticket> returned) {

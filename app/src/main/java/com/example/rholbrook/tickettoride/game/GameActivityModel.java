@@ -57,11 +57,11 @@ public class GameActivityModel extends Observable {
     public void sendChat(String message) {
         Log.d(TAG, "sendChat");
         Chat newChat = new Chat(Authentication.getInstance().getUsername(), message);
-        server.sendChat(newChat, gameId);
+        server.sendChat(newChat, gameId, true);
     }
 
     public void getChatHistory() {
-        server.getChatHistory(gameId);
+        server.getChatHistory(gameId, Authentication.getInstance().getUsername(), true);
     }
 
     public void receivedHistoryObject(GameHistory history) {

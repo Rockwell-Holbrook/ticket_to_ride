@@ -92,7 +92,7 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void sendChat(Chat chat, String gameId) {
+    public void sendChat(Chat chat, String gameId, boolean gameStarted) {
         String methodName = "sendChat";
         String[] paramTypes = {Chat.class.getName(), String.class.getName()};
         Object[] paramValues = {chat, gameId};
@@ -100,7 +100,7 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void getChatHistory(String gameId) {
+    public void getChatHistory(String gameId, String username, boolean gameStarted) {
         String methodName = "getChatHistory";
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
@@ -114,6 +114,12 @@ public class ServerProxy implements IServer {
         Object[] paramValues = {gameId};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
+
+    @Override
+    public void readyToInitialize(String gameId, String username) {}
+
+    @Override
+    public void initializeComplete(String gameId, String username) {}
 
     public void initializedGame(String gameId) {
         // Todo: Make this sucker work baby.
