@@ -7,6 +7,7 @@ import com.example.shared.model.Ticket;
 import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
