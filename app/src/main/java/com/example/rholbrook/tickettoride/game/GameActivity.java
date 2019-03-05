@@ -165,7 +165,13 @@ public class GameActivity extends AppCompatActivity implements
         Fragment gameMapFragment = GameMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_map_container, gameMapFragment).commit();
         addFaceUpCardClickListeners();
-        mPresenter.init();
+        String gameId = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            gameId = extras.getString("gameId");
+        }
+        mPresenter.setGameId(gameId);
+        mPresenter.readyToInitialize();
     }
 
     @Override
@@ -190,30 +196,27 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     private Drawable getColorCardDrawable(TrainCard trainCard) {
-        if (trainCard.getClass().equals(LocomotiveCard.class)) {
-            return getDrawable(R.mipmap.wild_card);
-        } else {
-            ColorCard card = (ColorCard) trainCard;
-            switch (card.getColor()) {
-                case BLACK:
-                    return getDrawable(R.mipmap.black_card);
-                case BLUE:
-                    return getDrawable(R.mipmap.blue_card);
-                case RED:
-                    return getDrawable(R.mipmap.red_card);
-                case YELLOW:
-                    return getDrawable(R.mipmap.yellow_card);
-                case GREEN:
-                    return getDrawable(R.mipmap.green_card);
-                case PINK:
-                    return getDrawable(R.mipmap.purple_card);
-                case WHITE:
-                    return getDrawable(R.mipmap.white_card);
-                case ORANGE:
-                    return getDrawable(R.mipmap.orange_card);
-                default:
-                    return getDrawable(R.mipmap.card_back);
-            }
+        switch (trainCard.getColor()) {
+            case BLACK:
+                return getDrawable(R.mipmap.black_card);
+            case BLUE:
+                return getDrawable(R.mipmap.blue_card);
+            case RED:
+                return getDrawable(R.mipmap.red_card);
+            case YELLOW:
+                return getDrawable(R.mipmap.yellow_card);
+            case GREEN:
+                return getDrawable(R.mipmap.green_card);
+            case PINK:
+                return getDrawable(R.mipmap.purple_card);
+            case WHITE:
+                return getDrawable(R.mipmap.white_card);
+            case ORANGE:
+                return getDrawable(R.mipmap.orange_card);
+            case WILD:
+                return getDrawable(R.mipmap.wild_card);
+            default:
+                return getDrawable(R.mipmap.wild_card);
         }
     }
 
@@ -254,7 +257,7 @@ public class GameActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(0);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(0);
-                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
             }
@@ -264,7 +267,7 @@ public class GameActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(1);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(1);
-                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
             }
@@ -274,7 +277,7 @@ public class GameActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(2);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(2);
-                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
             }
@@ -284,7 +287,7 @@ public class GameActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(3);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(3);
-                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
             }
@@ -294,7 +297,7 @@ public class GameActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 mPresenter.selectFaceUpCard(4);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(4);
-                if(selectedCard.getClass().getName().equals(LocomotiveCard.class.getName())) {
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
             }
@@ -405,8 +408,12 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 playerPointTextView.setText(String.valueOf(player.getPointsEarned()));
-                playerTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
-                playerTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                if (player.getTickets() != null) {
+                    playerTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    playerTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
                 playerTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
                 setHandCards(player.getTrainCards());
             }
@@ -420,8 +427,12 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 opponentOnePointTextView.setText(player.getPointsEarned());
-                opponentOneTicketCountTextView.setText(player.getTickets().size());
-                opponentOneTrainCardTextView.setText(player.getTrainCards().size());
+                if (player.getTickets() != null) {
+                    opponentOneTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentOneTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
                 opponentOneTrainCountTextView.setText(player.getRemainingTrainCars());
             }
         });
@@ -434,8 +445,12 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 opponentTwoPointTextView.setText(player.getPointsEarned());
-                opponentTwoTicketCountTextView.setText(player.getTickets().size());
-                opponentTwoTrainCardTextView.setText(player.getTrainCards().size());
+                if (player.getTickets() != null) {
+                    opponentTwoTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentTwoTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
                 opponentTwoTrainCountTextView.setText(player.getRemainingTrainCars());
             }
         });
@@ -448,8 +463,12 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 opponentThreePointTextView.setText(player.getPointsEarned());
-                opponentThreeTicketCountTextView.setText(player.getTickets().size());
-                opponentThreeTrainCardTextView.setText(player.getTrainCards().size());
+                if (player.getTickets() != null) {
+                    opponentThreeTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentThreeTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
                 opponentThreeTrainCountTextView.setText(player.getRemainingTrainCars());
             }
         });
@@ -462,8 +481,12 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 opponentFourPointTextView.setText(player.getPointsEarned());
-                opponentFourTicketCountTextView.setText(player.getTickets().size());
-                opponentFourTrainCardTextView.setText(player.getTrainCards().size());
+                if (player.getTickets() != null) {
+                    opponentFourTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentFourTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
                 opponentFourTrainCountTextView.setText(player.getRemainingTrainCars());
             }
         });

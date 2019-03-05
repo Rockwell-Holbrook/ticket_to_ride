@@ -39,6 +39,9 @@ public class SelectTicketsDialogFragment extends DialogFragment {
         fragment.setArguments(params);
         fragment.setPossibleCards(possibleCards);
         fragment.setTypeIndicator(selectionTypeIndicator);
+        fragment.keptCards = new ArrayList<>(possibleCards);
+        fragment.returnedCards = new ArrayList<>();
+
         return fragment;
     }
 
@@ -69,6 +72,9 @@ public class SelectTicketsDialogFragment extends DialogFragment {
         final ImageView ticketOne = dialogView.findViewById(R.id.ticket_one_image_view);
         final ImageView ticketTwo = dialogView.findViewById(R.id.ticket_two_image_view);
         final ImageView ticketThree = dialogView.findViewById(R.id.ticket_three_image_view);
+        final ImageView selectOne = dialogView.findViewById(R.id.ticket_one_selection);
+        final ImageView selectTwo = dialogView.findViewById(R.id.ticket_two_selection);
+        final ImageView selectThree = dialogView.findViewById(R.id.ticket_three_selection);
         final Button returnTicketsButton = dialogView.findViewById(R.id.return_tickets_button);
         returnTicketsButton.setActivated(true);
         returnTicketsButton.setOnClickListener(new View.OnClickListener() {
@@ -83,27 +89,30 @@ public class SelectTicketsDialogFragment extends DialogFragment {
         ticketOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (returnedCards.contains(possibleCards.get(0))) {
+                if (findCard(possibleCards.get(0))) {
                     returnedCards.remove(possibleCards.get(0));
                     keptCards.add(possibleCards.get(0));
+                    selectOne.setVisibility(View.VISIBLE);
+
                 } else {
                     returnedCards.add(possibleCards.get(0));
                     keptCards.remove(possibleCards.get(0));
+                    selectOne.setVisibility(View.INVISIBLE);
                 }
 
                 switch (selectionTypeIndicator) {
                     case INITIALIZE_GAME_INDICATOR:
                         if (returnedCards.size() > INITIALIZE_MAX_RETURN_COUNT) {
-                            returnTicketsButton.setActivated(false);
+                            returnTicketsButton.setEnabled(false);
                         } else {
-                            returnTicketsButton.setActivated(true);
+                            returnTicketsButton.setEnabled(true);
                         }
                         break;
                     case ADDITIONAL_TICKETS_INDICATOR:
                         if (returnedCards.size() > ADDITIONAL_MAX_RETURN_COUNT) {
-                            returnTicketsButton.setActivated(false);
+                            returnTicketsButton.setEnabled(false);
                         } else {
-                            returnTicketsButton.setActivated(true);
+                            returnTicketsButton.setEnabled(true);
                         }
                         break;
                 }
@@ -113,27 +122,29 @@ public class SelectTicketsDialogFragment extends DialogFragment {
         ticketTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (returnedCards.contains(possibleCards.get(1))) {
+                if (findCard(possibleCards.get(1))) {
                     returnedCards.remove(possibleCards.get(1));
                     keptCards.add(possibleCards.get(1));
+                    selectTwo.setVisibility(View.VISIBLE);
                 } else {
                     returnedCards.add(possibleCards.get(1));
                     keptCards.remove(possibleCards.get(1));
+                    selectTwo.setVisibility(View.INVISIBLE);
                 }
 
                 switch (selectionTypeIndicator) {
                     case INITIALIZE_GAME_INDICATOR:
                         if (returnedCards.size() > INITIALIZE_MAX_RETURN_COUNT) {
-                            returnTicketsButton.setActivated(false);
+                            returnTicketsButton.setEnabled(false);
                         } else {
-                            returnTicketsButton.setActivated(true);
+                            returnTicketsButton.setEnabled(true);
                         }
                         break;
                     case ADDITIONAL_TICKETS_INDICATOR:
                         if (returnedCards.size() > ADDITIONAL_MAX_RETURN_COUNT) {
-                            returnTicketsButton.setActivated(false);
+                            returnTicketsButton.setEnabled(false);
                         } else {
-                            returnTicketsButton.setActivated(true);
+                            returnTicketsButton.setEnabled(true);
                         }
                         break;
                 }
@@ -143,27 +154,29 @@ public class SelectTicketsDialogFragment extends DialogFragment {
         ticketThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (returnedCards.contains(possibleCards.get(2))) {
+                if (findCard(possibleCards.get(2))) {
                     returnedCards.remove(possibleCards.get(2));
                     keptCards.add(possibleCards.get(2));
+                    selectThree.setVisibility(View.VISIBLE);
                 } else {
                     returnedCards.add(possibleCards.get(2));
                     keptCards.remove(possibleCards.get(2));
+                    selectThree.setVisibility(View.INVISIBLE);
                 }
 
                 switch (selectionTypeIndicator) {
                     case INITIALIZE_GAME_INDICATOR:
                         if (returnedCards.size() > INITIALIZE_MAX_RETURN_COUNT) {
-                            returnTicketsButton.setActivated(false);
+                            returnTicketsButton.setEnabled(false);
                         } else {
-                            returnTicketsButton.setActivated(true);
+                            returnTicketsButton.setEnabled(true);
                         }
                         break;
                     case ADDITIONAL_TICKETS_INDICATOR:
                         if (returnedCards.size() > ADDITIONAL_MAX_RETURN_COUNT) {
-                            returnTicketsButton.setActivated(false);
+                            returnTicketsButton.setEnabled(false);
                         } else {
-                            returnTicketsButton.setActivated(true);
+                            returnTicketsButton.setEnabled(true);
                         }
                         break;
                 }
@@ -174,5 +187,16 @@ public class SelectTicketsDialogFragment extends DialogFragment {
 
         builder.setView(dialogView);
         return builder.create();
+    }
+
+    private boolean findCard(Ticket ticket) {
+        boolean isFound = false;
+        for (Ticket ticketCard : returnedCards) {
+            if (ticketCard.equals(ticket)){
+                isFound = true;
+                break;
+            }
+        }
+        return isFound;
     }
 }

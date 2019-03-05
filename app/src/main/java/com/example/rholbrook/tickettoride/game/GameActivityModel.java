@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.game;
 
+import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
@@ -119,13 +120,14 @@ public class GameActivityModel extends Observable {
         //Todo: sendMessage
     }
 
-    public void initializeGame(List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
+    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
         this.turnOrder = turnOrder;
         setPlayers(turnOrder);
         client.setTrainCards(trainCards);
         setChanged();
         notifyObservers(client);
         clearChanged();
+        gameActivityPresenter.setFaceUpCards(trainCardsFaceUp);
         gameActivityPresenter.initializeGame(tickets);
     }
 
@@ -171,6 +173,7 @@ public class GameActivityModel extends Observable {
 
     public void initializeComplete() {
         //Todo: send request to server
+        ServerProxy.getInstance().initializeComplete(gameId, Authentication.getInstance().getUsername());
     }
 
     public void ticketDataReceived(List<Ticket> tickets) {
@@ -179,6 +182,9 @@ public class GameActivityModel extends Observable {
 
     public void clientAddTickets(List<Ticket> keptCards) {
         List<Ticket> newClientTickets = getClient().getTickets();
+        if (newClientTickets == null) {
+            newClientTickets = new ArrayList<>();
+        }
         newClientTickets.addAll(keptCards);
         client.setTickets(newClientTickets);
         setChanged();
@@ -189,5 +195,9 @@ public class GameActivityModel extends Observable {
     public void returnTickets(List<Ticket> returnedCards) {
         ArrayList<Ticket> cards = new ArrayList<>(returnedCards);
         ServerProxy.getInstance().ticketsReturned(cards);
+    }
+
+    public void readyToInitialize() {
+        ServerProxy.getInstance().readyToInitialize(gameId, Authentication.getInstance().getUsername());
     }
 }

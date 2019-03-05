@@ -49,37 +49,6 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     @Override
     public void gameStarted(String gameId) {
         GameLobbyActivityModel.getInstance().gameStarted();
-        LocomotiveCard cardOne = new LocomotiveCard();
-        ColorCard cardTwo = new ColorCard(ColorCard.Color.BLACK);
-        ColorCard cardThree = new ColorCard(ColorCard.Color.BLUE);
-        ColorCard cardFour = new ColorCard(ColorCard.Color.RED);
-        List<TrainCard> trainCards = new ArrayList<>();
-        trainCards.add(cardOne);
-        trainCards.add(cardTwo);
-        trainCards.add(cardThree);
-        trainCards.add(cardFour);
-        Ticket ticketOne = new Ticket();
-        Ticket ticketTwo = new Ticket();
-        Ticket ticketThree = new Ticket();
-        List<Ticket> tickets = new ArrayList<>();
-        tickets.add(ticketOne);
-        tickets.add(ticketTwo);
-        tickets.add(ticketThree);
-        Player playerOne = new Player("Player", false, Player.PlayerColor.BLUE);
-        Player playerTwo = new Player("Hello", false, Player.PlayerColor.GREEN);
-        Player playerThree = new Player("World", true, Player.PlayerColor.BLACK);
-        List<Player> players = new ArrayList<>();
-        players.add(playerOne);
-        players.add(playerTwo);
-        players.add(playerThree);
-        initializeGame(trainCards, tickets, players);
-        List<TrainCard> faceUpCards = new ArrayList<>();
-        faceUpCards.add(cardOne);
-        faceUpCards.add(cardTwo);
-        faceUpCards.add(cardThree);
-        faceUpCards.add(cardFour);
-        faceUpCards.add(cardThree);
-        cardDrawn(faceUpCards);
     }
 
     //History Drawer
@@ -101,7 +70,27 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     //Game Initialization
     @Override
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {
+        //Fix Face Up Train Card List
+        String typeValue = gson.toJson(trainCardsFaceUp);
+        Type typeName = new TypeToken<List<TrainCard>>(){}.getType();
+        List<TrainCard> trainCardsFaceUpList = gson.fromJson(typeValue, typeName);
 
+        //Fix Train Cards List
+        typeValue = gson.toJson(trainCards);
+        typeName = new TypeToken<List<TrainCard>>(){}.getType();
+        List<TrainCard> trainCardsList = gson.fromJson(typeValue, typeName);
+
+        //Fix ticket List
+        typeValue = gson.toJson(tickets);
+        typeName = new TypeToken<List<Ticket>>(){}.getType();
+        List<Ticket> ticketList = gson.fromJson(typeValue, typeName);
+
+        //Fix Turn Order
+        typeValue = gson.toJson(turnOrder);
+        typeName = new TypeToken<List<Player>>(){}.getType();
+        List<Player> newTurnOrder = gson.fromJson(typeValue, typeName);
+
+        GameActivityModel.getInstance().initializeGame(trainCardsFaceUpList, trainCardsList, ticketList, newTurnOrder);
     }
 
     @Override

@@ -44,5 +44,7 @@ public class GameActivityContract {
         void selectTickets(List<Ticket> tickets);
         void addTicketsToPlayer(List<Ticket> keptCards);
         void returnTickets(List<Ticket> returnedCards);
+        void setGameId(String gameId);
+        void readyToInitialize();
     }
 }

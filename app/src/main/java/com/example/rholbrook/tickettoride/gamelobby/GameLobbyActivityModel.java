@@ -68,7 +68,7 @@ public class GameLobbyActivityModel extends Observable {
     }
 
     public void sendChat(String message) {
-        ServerProxy.getInstance().sendChat(new Chat(Authentication.getInstance().getUsername(), message), gameId);
+        ServerProxy.getInstance().sendChat(new Chat(Authentication.getInstance().getUsername(), message), gameId, false);
         //ServerProxy.getInstance().sendChat(Authentication.getInstance().getUsername(), gameId, message);
     }
 

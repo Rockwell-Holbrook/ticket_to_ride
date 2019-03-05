@@ -7,10 +7,7 @@ import com.example.shared.model.Ticket;
 import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class GameActivityPresenter implements
         GameActivityContract.Presenter,
@@ -138,5 +135,20 @@ public class GameActivityPresenter implements
     @Override
     public void returnTickets(List<Ticket> returnedCards) {
         mModel.returnTickets(returnedCards);
+    }
+
+    @Override
+    public void setGameId(String gameId) {
+        mModel.setGameId(gameId);
+    }
+
+    @Override
+    public void readyToInitialize() {
+        mModel.readyToInitialize();
+    }
+
+    public static final Map<Integer, Drawable> TICKET_IMAGE_MAP;
+    static {
+        TICKET_IMAGE_MAP = new HashMap<Integer, Drawable>();
     }
 }
