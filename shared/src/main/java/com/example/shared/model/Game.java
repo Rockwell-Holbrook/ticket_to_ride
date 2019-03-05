@@ -87,7 +87,8 @@ public class Game {
         ArrayList<Ticket> temp = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            temp.add(new Ticket());
+            int randomIndex = (int) (Math.random()*29);
+            temp.add(new Ticket(randomIndex + 1));
         }
 
         return temp;
