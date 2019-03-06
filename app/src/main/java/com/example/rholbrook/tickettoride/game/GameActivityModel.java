@@ -46,8 +46,7 @@ public class GameActivityModel extends Observable {
     private List<GameHistory> gameHistory;
 
     public GameActivityModel() {
-        // TODO Change back to ServerProxy
-        server = StubServer.getInstance();
+        server = ServerProxy.getInstance();
         chatMessages = new ArrayList<>();
 
     }
@@ -296,16 +295,16 @@ public class GameActivityModel extends Observable {
     }
 
     public Player.PlayerColor getPlayerColor(String username) {
-        if (opponentOne.getUsername().equals(username)) {
+        if (opponentOne != null && opponentOne.getUsername().equals(username)) {
             return opponentOne.getPlayerColor();
         }
-        if (opponentTwo.getUsername().equals(username)) {
+        if (opponentTwo != null && opponentTwo.getUsername().equals(username)) {
             return opponentTwo.getPlayerColor();
         }
-        if (opponentThree.getUsername().equals(username)) {
+        if (opponentThree != null && opponentThree.getUsername().equals(username)) {
             return opponentThree.getPlayerColor();
         }
-        if (opponentFour.getUsername().equals(username)) {
+        if (opponentFour != null && opponentFour.getUsername().equals(username)) {
             return opponentFour.getPlayerColor();
         }
         return client.getPlayerColor();

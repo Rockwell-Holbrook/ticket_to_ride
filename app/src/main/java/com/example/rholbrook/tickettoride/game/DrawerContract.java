@@ -11,7 +11,7 @@ public class DrawerContract {
         void updateChatList(List<Chat> chatMessages);
     }
 
-    interface ChatPresenter {
+    public interface ChatPresenter {
         void updateChatList(List<Chat> chatMessages);
         void sendChat(String message);
         void getChatHistory();

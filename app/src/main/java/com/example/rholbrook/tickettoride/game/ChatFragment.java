@@ -50,7 +50,7 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
     @Override
     public void updateChatList (List<Chat> chatMessages) {
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        chatRecyclerView.setAdapter(new ChatAdapter(chatMessages));
+        chatRecyclerView.setAdapter(new ChatAdapter(chatMessages, presenter));
         chatRecyclerView.scrollToPosition(chatMessages.size() - 1);
     }
 }

@@ -109,7 +109,7 @@ public class GameLobbyActivity extends AppCompatActivity implements
     @Override
     public void updateChatList(ArrayList<Chat> chatMessages) {
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        playerRecyclerView.setAdapter(new ChatAdapter(chatMessages));
+      //  playerRecyclerView.setAdapter(new ChatAdapter(chatMessages));
     }
 
     @Override
