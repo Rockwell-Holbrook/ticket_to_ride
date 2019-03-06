@@ -30,6 +30,7 @@ public class GameActivityModel extends Observable {
     private Player client;
     private List<Player> turnOrder;
     private List<TrainCard> faceUpCards;
+    private boolean isTurn;
 
     public GameActivityModel() {
 
@@ -167,6 +168,10 @@ public class GameActivityModel extends Observable {
     }
 
     public void endUserTurn() {
+        isTurn = false;
+        setChanged();
+        notifyObservers(isTurn);
+        clearChanged();
         ServerProxy.getInstance().turnEnded(gameId, Authentication.getInstance().getUsername());
     }
 
@@ -230,6 +235,10 @@ public class GameActivityModel extends Observable {
 
     public void startTurn(List<Route> availableRoutes) {
         gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+        isTurn = true;
+        setChanged();
+        notifyObservers(isTurn);
+        clearChanged();
     }
 
     public void selectRoute(int routeId) {

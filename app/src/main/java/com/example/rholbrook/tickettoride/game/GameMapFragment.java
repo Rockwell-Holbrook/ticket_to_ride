@@ -1,20 +1,15 @@
 package com.example.rholbrook.tickettoride.game;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
-import com.example.rholbrook.tickettoride.login.LoginFragment;
-import com.example.rholbrook.tickettoride.login.LoginFragmentPresenter;
 
 import java.util.List;
 
@@ -47,7 +42,7 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
     public void startUserTurn(List<Button> availableButtons) {
         for (Button button : availableButtons) {
             button.setEnabled(true);
-            button.setBackground(getActivity().getDrawable(R.drawable.selectableRouteBorder));
+            button.setBackground(getActivity().getDrawable(R.drawable.selectable_route_border));
         }
     }
 
