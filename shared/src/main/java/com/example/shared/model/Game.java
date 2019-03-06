@@ -20,6 +20,8 @@ public class Game {
     private ArrayList<Chat> chatHistory;
     private ArrayList<GameHistory> gameHistory;
     private ArrayList<TrainCard> trainCardsFaceUp;
+    private Deck<Ticket> ticketDeck;
+    private Deck<TrainCard> trainCardDeck;
 
     public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;
@@ -27,6 +29,8 @@ public class Game {
         this.isPlaying = false;
         this.maxPlayers = maxPlayers;
         this.gameId = UUID.randomUUID().toString();
+        this.ticketDeck = new Deck<>(this.initializeTickets());
+        this.trainCardDeck = new Deck<>(this.initializeTrainCards());
         addPlayer(host);
     }
 
@@ -118,6 +122,14 @@ public class Game {
         }
 
         return turnOrder;
+    }
+
+    private ArrayList<Ticket> populateTicketDeck() {
+        return null; //TODO: Get this to work.
+    }
+
+    private ArrayList<TrainCard> populateTrainCardDeck() {
+        return null; //TODO: Get this to work.
     }
 
     /* *********** GETTERS AND SETTERS *********** */
