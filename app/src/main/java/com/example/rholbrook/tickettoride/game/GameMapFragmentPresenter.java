@@ -1,17 +1,17 @@
 package com.example.rholbrook.tickettoride.game;
 
 import android.support.constraint.Group;
+import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.Player;
+import com.example.shared.model.Route;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 public class GameMapFragmentPresenter implements GameMapFragmentContract.Presenter, Observer {
     private GameMapFragmentContract.View viewCallback;
     private GameActivityModel mModel;
+    private List<Button> availableButtons;
 
     public GameMapFragmentPresenter(GameMapFragmentContract.View viewCallback) {
         this.viewCallback = viewCallback;
@@ -28,6 +28,24 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
     @Override
     public void init() {
 
+    }
+
+    @Override
+    public void updateAvailableRoutes(List<Route> availableRoutes) {
+        availableButtons.clear();
+        for (Route route : availableRoutes) {
+            viewCallback.addClickListeners(ROUTE_GROUP_MAP.get(route.getGroupId()));
+        }
+    }
+
+    @Override
+    public void selectRoute(int routeId) {
+        mModel.selectRoute(routeId);
+    }
+
+    @Override
+    public void addAvailableButton(Button button) {
+        availableButtons.add(button);
     }
 
     public static final Map<Integer, Integer> ROUTE_GROUP_MAP;

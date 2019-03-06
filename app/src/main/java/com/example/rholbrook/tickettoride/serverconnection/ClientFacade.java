@@ -2,6 +2,7 @@ package com.example.rholbrook.tickettoride.serverconnection;
 
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
+import com.example.rholbrook.tickettoride.game.GameActivityPresenter;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
 import com.example.shared.interfaces.IClientInGame;
@@ -106,7 +107,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     //GamePlay
     @Override
     public void startTurn(List<Route> availableRoutes, String username) {
-
+        GameActivityModel.getInstance().startTurn(availableRoutes);
     }
 
     @Override
@@ -116,7 +117,6 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void routeClaimed(Player player, Route route) {
-
     }
 
     @Override
@@ -126,7 +126,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void turnEnded(Player player) {
-
+        GameActivityModel.getInstance().playerTurnEnded(player);
     }
 
     //    MainActivity

@@ -2,10 +2,7 @@ package com.example.rholbrook.tickettoride.game;
 
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
-import com.example.shared.model.Game;
-import com.example.shared.model.Player;
-import com.example.shared.model.Ticket;
-import com.example.shared.model.TrainCard;
+import com.example.shared.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +15,7 @@ public class GameActivityModel extends Observable {
     private static final int TWO_OPPONENTS = 3;
     private static final int THREE_OPPONENTS = 4;
     private static final int FOUR_OPPONENTS = 5;
+    private static final int SELECT_FACE_DOWN_DECK = 5;
     public static final int INITIALIZE_TICKETS_SELECTION_TYPE = 0;
     public static final int ADDITIONAL_TICKETS_SELECTION_TYPE = 1;
 
@@ -105,15 +103,15 @@ public class GameActivityModel extends Observable {
     }
 
     public void selectFaceUpCard(int index) {
-        //Todo: send request to server
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
     }
 
     public void selectFaceDownCardDeck() {
-        //Todo: send request to server
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
     }
 
     public void drawTickets() {
-        ServerProxy.getInstance().requestTickets(gameId);
+        ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
     }
 
     public void newMessageReceived(String username, String message) {
@@ -169,11 +167,10 @@ public class GameActivityModel extends Observable {
     }
 
     public void endUserTurn() {
-        //Todo: send request to server
+        ServerProxy.getInstance().turnEnded(gameId, Authentication.getInstance().getUsername());
     }
 
     public void initializeComplete() {
-        //Todo: send request to server
         ServerProxy.getInstance().initializeComplete(gameId, Authentication.getInstance().getUsername());
     }
 
@@ -195,10 +192,47 @@ public class GameActivityModel extends Observable {
 
     public void returnTickets(List<Ticket> returnedCards) {
         ArrayList<Ticket> cards = new ArrayList<>(returnedCards);
-        ServerProxy.getInstance().ticketsReturned(cards);
+        ServerProxy.getInstance().ticketsReturned(gameId, Authentication.getInstance().getUsername(), cards);
     }
 
     public void readyToInitialize() {
         ServerProxy.getInstance().readyToInitialize(gameId, Authentication.getInstance().getUsername());
+    }
+
+    public void playerTurnEnded(Player player) {
+        if (player.getUsername().equals(client.getUsername())){
+            client = player;
+            setChanged();
+            notifyObservers(client);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentOne.getUsername())) {
+            opponentOne = player;
+            setChanged();
+            notifyObservers(opponentOne);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentTwo.getUsername())) {
+            opponentTwo = player;
+            setChanged();
+            notifyObservers(opponentTwo);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentThree.getUsername())) {
+            opponentThree = player;
+            setChanged();
+            notifyObservers(opponentThree);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentFour.getUsername())) {
+            opponentFour = player;
+            setChanged();
+            notifyObservers(opponentFour);
+            clearChanged();
+        }
+    }
+
+    public void startTurn(List<Route> availableRoutes) {
+        gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+    }
+
+    public void selectRoute(int routeId) {
+        ServerProxy.getInstance().claimRoute(gameId, Authentication.getInstance().getUsername(), routeId);
     }
 }

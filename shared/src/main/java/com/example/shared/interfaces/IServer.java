@@ -87,35 +87,35 @@ public interface IServer {
      *
      * @param returned Tickets that the user is returning to be placed in the deck.
      */
-    void ticketsReturned(ArrayList<Ticket> returned);
+    void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned);
 
     /**
      * A user may return some of the tickets that they received for their turn.
      *
      * @param gameID The ID of the game we need to work with!
      */
-    void turnEnded(String gameID);
+    void turnEnded(String gameID, String username);
 
     /**
      * A User may spend their turn claiming 1 or two cards from the deck or the face up.
      *
      * @param index The index of the visible card's that the user can grab.
      */
-    void getCard(int index);
+    void getCard(String gameId, String username, int index);
 
     /**
      * A user may spend their turn claiming a route.
      *
-     * @param route The route the user wants to claim.
+     * @param routeId The route the user wants to claim.
      */
-    void claimRoute(Route route);
+    void claimRoute(String gameId, String username, int routeId);
 
     /**
      * A user may spend their turn getting tickets.
      *
      * @param gameID The ID of the game we need to work with!
      */
-    void requestTickets(String gameID);
+    void requestTickets(String gameID, String username);
 
 
 }

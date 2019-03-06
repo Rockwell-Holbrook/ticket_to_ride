@@ -128,42 +128,44 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void ticketsReturned(ArrayList<Ticket> returned) {
-//        String methodName = "ticketsReturned";
-//        String[] paramTypes = {Chat.class.getName(), String.class.getName(), boolean.class.getName()};
-//        Object[] paramValues = {chat, gameId, gameStarted};
-//        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
-    }
-
-    @Override
-    public void turnEnded(String gameID) {
-        String methodName = "turnEnded";
-        String[] paramTypes = {String.class.getName(), String.class.getName()};
-        Object[] paramValues = {gameID, Authentication.getInstance().getUsername()};
+    public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
+        String methodName = "ticketsReturned";
+        String[] paramTypes = {String.class.getName(), String.class.getName(), ArrayList.class.getName()};
+        Object[] paramValues = {gameId, username, returned};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     @Override
-    public void getCard(int index) {
-//        String methodName = "sendChat";
-//        String[] paramTypes = {Chat.class.getName(), String.class.getName(), boolean.class.getName()};
-//        Object[] paramValues = {chat, gameId, gameStarted};
-//        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    public void turnEnded(String gameID, String username) {
+        String methodName = "turnEnded";
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameID, username};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     @Override
-    public void claimRoute(Route route) {
-//        String methodName = "sendChat";
-//        String[] paramTypes = {Chat.class.getName(), String.class.getName(), boolean.class.getName()};
-//        Object[] paramValues = {chat, gameId, gameStarted};
-//        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    public void getCard(String gameId, String username, int index) {
+        String methodName = "getCard";
+        String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName()};
+        Object[] paramValues = {gameId, username, index};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     @Override
-    public void requestTickets(String gameID) {
-//        String methodName = "sendChat";
-//        String[] paramTypes = {Chat.class.getName(), String.class.getName(), boolean.class.getName()};
-//        Object[] paramValues = {chat, gameId, gameStarted};
-//        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    public void claimRoute(String gameId, String username, int routeId) {
+        String methodName = "claimRoute";
+        String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName()};
+        Object[] paramValues = {gameId, username, routeId};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
+
+    @Override
+    public void requestTickets(String gameID, String username) {
+        String methodName = "requestTickets";
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameID, username};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    }
+
+
 }
