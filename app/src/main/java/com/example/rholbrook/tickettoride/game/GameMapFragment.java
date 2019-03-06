@@ -47,7 +47,7 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
     public void startUserTurn(List<Button> availableButtons) {
         for (Button button : availableButtons) {
             button.setEnabled(true);
-            button.setBackground(getActivity().getDrawable(R.drawable.selectableRouteBorder));
+            button.setBackground(getActivity().getDrawable(R.drawable.selectable_boute_border));
         }
     }
 
