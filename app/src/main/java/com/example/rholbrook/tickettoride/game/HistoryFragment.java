@@ -37,5 +37,6 @@ public class HistoryFragment extends Fragment implements DrawerContract.HistoryV
     public void updateGameHistory(List<GameHistory> gameHistory) {
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         historyRecyclerView.setAdapter(new HistoryAdapter(gameHistory));
+        historyRecyclerView.scrollToPosition(gameHistory.size() - 1);
     }
 }

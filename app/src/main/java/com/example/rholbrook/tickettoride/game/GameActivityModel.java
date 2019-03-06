@@ -105,4 +105,20 @@ public class GameActivityModel extends Observable {
     public void setGameId(String gameId) {
         this.gameId = gameId;
     }
+
+    public Player.PlayerColor getPlayerColor(String username) {
+        if (opponentOne.getUsername().equals(username)) {
+            return opponentOne.getPlayerColor();
+        }
+        if (opponentTwo.getUsername().equals(username)) {
+            return opponentTwo.getPlayerColor();
+        }
+        if (opponentThree.getUsername().equals(username)) {
+            return opponentThree.getPlayerColor();
+        }
+        if (opponentFour.getUsername().equals(username)) {
+            return opponentFour.getPlayerColor();
+        }
+        return
+    }
 }

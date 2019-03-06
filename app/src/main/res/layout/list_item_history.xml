@@ -2,26 +2,28 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:layout_width="match_parent"
-                                             android:layout_height="wrap_content" android:padding="8dp">
+                                             android:layout_height="wrap_content" >
 
     <TextView
             android:text="@string/username"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:id="@+id/history_username" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent" android:textSize="12sp"/>
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/history_action"
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
     <TextView
             android:text="@string/history_action"
-            android:layout_width="262dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/history_action" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/chat_sender_username"
-            android:layout_marginLeft="12dp" android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@+id/history_username"
+            android:layout_marginStart="12dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp" android:paddingLeft="12dp" android:paddingRight="12dp"
-            android:textSize="12sp"/>
+            android:paddingLeft="12dp" android:paddingRight="12dp"
+            android:textSize="12sp" android:textColor="@color/black"/>
 </android.support.constraint.ConstraintLayout>
