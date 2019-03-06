@@ -1,6 +1,7 @@
 package com.example.rholbrook.tickettoride.game;
 
 import com.example.shared.model.GameHistory;
+import com.example.shared.model.Player;
 
 import java.util.List;
 
@@ -22,5 +23,10 @@ public class HistoryFragmentPresenter implements DrawerContract.HistoryPresenter
     @Override
     public void getGameHistory() {
         model.getGameHistory();
+    }
+
+    @Override
+    public Player.PlayerColor getPlayerColor(String username) {
+        return model.getPlayerColor(username);
     }
 }

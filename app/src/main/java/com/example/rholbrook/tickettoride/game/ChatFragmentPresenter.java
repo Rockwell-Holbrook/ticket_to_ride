@@ -2,6 +2,7 @@ package com.example.rholbrook.tickettoride.game;
 
 import android.util.Log;
 import com.example.shared.model.Chat;
+import com.example.shared.model.Player;
 
 import java.util.List;
 
@@ -31,5 +32,10 @@ public class ChatFragmentPresenter implements DrawerContract.ChatPresenter {
     @Override
     public void getChatHistory() {
         model.getChatHistory();
+    }
+
+    @Override
+    public Player.PlayerColor getPlayerColor(String username) {
+        return model.getPlayerColor(username);
     }
 }

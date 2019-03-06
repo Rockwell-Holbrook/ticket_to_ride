@@ -14,7 +14,6 @@ import com.example.shared.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Set;
 
 public class GameActivityModel extends Observable {
     private String TAG = "GameActivityModel";
@@ -35,7 +34,6 @@ public class GameActivityModel extends Observable {
     private String gameId;
     private GameActivityContract.Presenter gameActivityPresenter;
     private GameMapFragmentContract.Presenter gameMapFragmentPresenter;
-    private String gameId;
     private Player opponentOne;
     private Player opponentTwo;
     private Player opponentThree;
@@ -297,10 +295,6 @@ public class GameActivityModel extends Observable {
         this.historyListener = historyListener;
     }
 
-    public void setGameId(String gameId) {
-        this.gameId = gameId;
-    }
-
     public Player.PlayerColor getPlayerColor(String username) {
         if (opponentOne.getUsername().equals(username)) {
             return opponentOne.getPlayerColor();
@@ -314,6 +308,6 @@ public class GameActivityModel extends Observable {
         if (opponentFour.getUsername().equals(username)) {
             return opponentFour.getPlayerColor();
         }
-        return
+        return client.getPlayerColor();
     }
 }

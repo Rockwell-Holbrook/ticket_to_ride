@@ -36,7 +36,7 @@ public class StubServer implements IServer {
             String user = users[rand.nextInt(numUsers)];
             chats.add(new Chat(user, response));
         }
-        client.receivedChatHistory(chats, gameStarted, username);
+        client.receivedChatHistory(chats, gameStarted, username, gameId);
     }
 
     @Override
@@ -142,27 +142,27 @@ public class StubServer implements IServer {
     public void initializeComplete(String gameId, String username) {}
 
     @Override
-    public void ticketsReturned(ArrayList<Ticket> returned) {
+    public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
 
     }
 
     @Override
-    public void turnEnded(String gameID) {
+    public void turnEnded(String gameID, String username) {
 
     }
 
     @Override
-    public void getCard(int index) {
+    public void getCard(String gameId, String username, int index) {
 
     }
 
     @Override
-    public void claimRoute(Route route) {
+    public void claimRoute(String gameId, String username, int routeId) {
 
     }
 
     @Override
-    public void requestTickets(String gameID) {
+    public void requestTickets(String gameID, String usernmae) {
 
     }
 }

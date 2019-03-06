@@ -55,7 +55,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     //History Drawer
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username) {
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gameId) {
         GameActivityModel.getInstance().receivedChatHistory(chatHistory);
     }
 
