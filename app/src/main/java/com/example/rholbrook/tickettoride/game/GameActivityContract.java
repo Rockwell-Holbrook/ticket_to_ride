@@ -46,5 +46,7 @@ public class GameActivityContract {
         void returnTickets(List<Ticket> returnedCards);
         void setGameId(String gameId);
         void readyToInitialize();
+        List<TrainCard> getPlayerHand();
+        List<Ticket> getPlayerTickets();
     }
 }

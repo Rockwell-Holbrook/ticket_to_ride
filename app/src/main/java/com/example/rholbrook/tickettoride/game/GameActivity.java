@@ -20,7 +20,10 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity implements
         GameActivityContract.View,
-        SelectTicketsDialogFragment.SelectTicketsDialogInterface{
+        SelectTicketsDialogFragment.SelectTicketsDialogInterface,
+        ViewTrainCardsDialogFragment.ViewTrainCardsDialogInterface,
+        ViewTicketsDialogFragment.ViewTicketsDialogInterface
+        {
     private GameActivityContract.Presenter mPresenter;
 
 
@@ -89,8 +92,6 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardThree = findViewById(R.id.card_three);
         faceUpCardFour = findViewById(R.id.card_four);
         faceUpCardFive = findViewById(R.id.card_five);
-        viewHandRecyclerView = findViewById(R.id.view_hand_recycler_view);
-        viewTicketsRecyclerView = findViewById(R.id.view_tickets_recycler_view);
         faceDownTicketDeck = findViewById(R.id.ticket_deck);
         faceDownTrainCardDeck = findViewById(R.id.facedown_card_deck);
         opponentOneConstraintLayout = findViewById(R.id.opponent_one_constraint_layout);
@@ -158,6 +159,22 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        playerHandLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewTrainCardsDialogFragment dialog = ViewTrainCardsDialogFragment.newInstance(mPresenter.getPlayerHand(), getApplicationContext());
+                dialog.show(getSupportFragmentManager(), "View Train Cards Dialog Fragment");
+            }
+        });
+
+        playerTicketDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewTicketsDialogFragment dialog = ViewTicketsDialogFragment.newInstance(mPresenter.getPlayerTickets());
+                dialog.show(getSupportFragmentManager(), "View Tickets Dialog Fragment");
             }
         });
 
@@ -255,8 +272,8 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectFaceUpCard(0);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(0);
+                mPresenter.selectFaceUpCard(0);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
@@ -265,8 +282,8 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectFaceUpCard(1);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(1);
+                mPresenter.selectFaceUpCard(1);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
@@ -275,8 +292,8 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectFaceUpCard(2);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(2);
+                mPresenter.selectFaceUpCard(2);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
@@ -285,8 +302,8 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectFaceUpCard(3);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(3);
+                mPresenter.selectFaceUpCard(3);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
@@ -295,8 +312,8 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardFive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectFaceUpCard(4);
                 TrainCard selectedCard = mPresenter.getFaceUpCard(4);
+                mPresenter.selectFaceUpCard(4);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
@@ -329,12 +346,15 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void setPlayerTicketDeck(List<Ticket> testDestinations) {
+    public void setPlayerTicketDeck(final List<Ticket> destinations) {
+        final List<Ticket> tickets = destinations;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.ticket_back));
-            }});
+                int id = destinations.get(destinations.size() - 1).getTicketId();
+                playerTicketDeck.setImageDrawable(getResources().getDrawable(GameActivityPresenter.TICKET_IMAGE_MAP.get(id)));
+            }
+        });
     }
 
     @Override
@@ -426,7 +446,7 @@ public class GameActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                opponentOnePointTextView.setText(player.getPointsEarned());
+                opponentOnePointTextView.setText(String.valueOf(player.getPointsEarned()));
                 if (player.getTickets() != null) {
                     opponentOneTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
                 }
@@ -444,7 +464,7 @@ public class GameActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                opponentTwoPointTextView.setText(player.getPointsEarned());
+                opponentTwoPointTextView.setText(String.valueOf(player.getPointsEarned()));
                 if (player.getTickets() != null) {
                     opponentTwoTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
                 }
@@ -462,7 +482,7 @@ public class GameActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                opponentThreePointTextView.setText(player.getPointsEarned());
+                opponentThreePointTextView.setText(String.valueOf(player.getPointsEarned()));
                 if (player.getTickets() != null) {
                     opponentThreeTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
                 }
@@ -480,7 +500,7 @@ public class GameActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                opponentFourPointTextView.setText(player.getPointsEarned());
+                opponentFourPointTextView.setText(String.valueOf(player.getPointsEarned()));
                 if (player.getTickets() != null) {
                     opponentFourTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
                 }
@@ -508,5 +528,10 @@ public class GameActivity extends AppCompatActivity implements
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);
         mPresenter.returnTickets(returnedCards);
+    }
+
+    @Override
+    public void onClosePressed(DialogFragment dialogFragment) {
+        dialogFragment.dismiss();
     }
 }

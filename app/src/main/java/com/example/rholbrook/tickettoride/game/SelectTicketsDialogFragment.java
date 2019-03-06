@@ -76,15 +76,21 @@ public class SelectTicketsDialogFragment extends DialogFragment {
         final ImageView selectTwo = dialogView.findViewById(R.id.ticket_two_selection);
         final ImageView selectThree = dialogView.findViewById(R.id.ticket_three_selection);
         final Button returnTicketsButton = dialogView.findViewById(R.id.return_tickets_button);
-        returnTicketsButton.setActivated(true);
+
         returnTicketsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onReturnPressed(SelectTicketsDialogFragment.this, keptCards, returnedCards);
             }
         });
+        returnTicketsButton.setEnabled(true);
 
-        //To-Do: Set Ticket images
+
+        //Set Ticket images
+        ticketOne.setImageResource(GameActivityPresenter.TICKET_IMAGE_MAP.get(possibleCards.get(0).getTicketId()));
+        ticketTwo.setImageResource(GameActivityPresenter.TICKET_IMAGE_MAP.get(possibleCards.get(1).getTicketId()));
+        ticketThree.setImageResource(GameActivityPresenter.TICKET_IMAGE_MAP.get(possibleCards.get(2).getTicketId()));
+
 
         ticketOne.setOnClickListener(new View.OnClickListener() {
             @Override

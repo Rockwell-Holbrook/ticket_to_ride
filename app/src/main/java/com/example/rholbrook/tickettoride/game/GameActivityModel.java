@@ -127,6 +127,7 @@ public class GameActivityModel extends Observable {
         setChanged();
         notifyObservers(client);
         clearChanged();
+        this.faceUpCards = trainCardsFaceUp;
         gameActivityPresenter.setFaceUpCards(trainCardsFaceUp);
         gameActivityPresenter.initializeGame(tickets);
     }
