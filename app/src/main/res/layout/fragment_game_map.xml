@@ -353,42 +353,42 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_raleigh_one" 
+            android:id="@+id/pittsburgh_raleigh_one"
             android:rotation="168" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="619dp" android:layout_marginTop="167dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_raleigh_two" 
+            android:id="@+id/pittsburgh_raleigh_two"
             android:rotation="168" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="625dp" android:layout_marginTop="190dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_one" 
+            android:id="@+id/charleston_miami_one"
             android:rotation="176" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="659dp" android:layout_marginTop="280dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_two" 
+            android:id="@+id/charleston_miami_two"
             android:rotation="170" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="661dp" android:layout_marginTop="304dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_three" 
+            android:id="@+id/charleston_miami_three"
             android:rotation="160" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="667dp" android:layout_marginTop="328dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_four" 
+            android:id="@+id/charleston_miami_four"
             android:rotation="148" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="679dp" android:layout_marginTop="351dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -398,21 +398,21 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/dallas_houston_one_one" 
+            android:id="@+id/dallas_houston_one_one"
             android:rotation="135" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="417dp" android:layout_marginTop="341dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/houston_new_orleans_one" 
+            android:id="@+id/houston_new_orleans_one"
             android:rotation="82" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="459dp" android:layout_marginTop="349dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/houston_new_orleans_two" 
+            android:id="@+id/houston_new_orleans_two"
             android:rotation="82" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="487dp" android:layout_marginTop="345dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -426,7 +426,7 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_raleigh_two3" 
+            android:id="@+id/pittsburgh_raleigh_two3"
             android:rotation="168" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="625dp" android:layout_marginTop="190dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -517,14 +517,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_three3" 
+            android:id="@+id/charleston_miami_three3"
             android:rotation="160" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="667dp" android:layout_marginTop="328dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_four2" 
+            android:id="@+id/charleston_miami_four2"
             android:rotation="148" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="679dp" android:layout_marginTop="351dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -544,14 +544,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_raleigh_one3" 
+            android:id="@+id/pittsburgh_raleigh_one3"
             android:rotation="168" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="619dp" android:layout_marginTop="167dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_one3" 
+            android:id="@+id/charleston_miami_one3"
             android:rotation="176" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="659dp" android:layout_marginTop="280dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -620,7 +620,7 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/charleston_miami_two3" 
+            android:id="@+id/charleston_miami_two3"
             android:rotation="170" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="661dp" android:layout_marginTop="304dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -671,28 +671,28 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_chicago_one_one" 
+            android:id="@+id/saint_louis_chicago_one_one"
             android:rotation="33" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="475dp" android:layout_marginTop="186dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_chicago_two_one" 
+            android:id="@+id/saint_louis_chicago_two_one"
             android:rotation="35" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="483dp" android:layout_marginTop="191dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_chicago_two_two" 
+            android:id="@+id/saint_louis_chicago_two_two"
             android:rotation="35" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="498dp" android:layout_marginTop="170dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_chicago_one_two" 
+            android:id="@+id/saint_louis_chicago_one_two"
             android:rotation="33" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="490dp" android:layout_marginTop="166dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -703,8 +703,10 @@
             android:layout_width="8dp"
             android:layout_height="23dp"
             android:id="@+id/oklahoma_city_little_rock_two"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:rotation="88"
-            tools:layout_editor_absoluteY="264dp" tools:layout_editor_absoluteX="440dp"/>
+            android:layout_marginTop="264dp" android:layout_marginStart="440dp"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
@@ -732,56 +734,56 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_one_four" 
+            android:id="@+id/new_orleans_atlanta_one_four"
             android:rotation="50" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="566dp" android:layout_marginTop="266dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_two_four" 
+            android:id="@+id/new_orleans_atlanta_two_four"
             android:rotation="52" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="573dp" android:layout_marginTop="272dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_one_three" 
+            android:id="@+id/new_orleans_atlanta_one_three"
             android:rotation="42" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="546dp" android:layout_marginTop="283dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_two_three" 
+            android:id="@+id/new_orleans_atlanta_two_three"
             android:rotation="42" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="554dp" android:layout_marginTop="290dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_one_two" 
+            android:id="@+id/new_orleans_atlanta_one_two"
             android:rotation="34" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="530dp" android:layout_marginTop="303dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_two_two" 
+            android:id="@+id/new_orleans_atlanta_two_two"
             android:rotation="34" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="537dp" android:layout_marginTop="310dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_two_one" 
+            android:id="@+id/new_orleans_atlanta_two_one"
             android:rotation="24" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="524dp" android:layout_marginTop="331dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_atlanta_one_one" 
+            android:id="@+id/new_orleans_atlanta_one_one"
             android:rotation="24" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="516dp" android:layout_marginTop="325dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -801,28 +803,28 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/kansas_city_saint_louis_one_one" 
+            android:id="@+id/kansas_city_saint_louis_one_one"
             android:rotation="89" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="425dp" android:layout_marginTop="200dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/kansas_city_saint_louis_two_one" 
+            android:id="@+id/kansas_city_saint_louis_two_one"
             android:rotation="89" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="426dp" android:layout_marginTop="209dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/kansas_city_saint_louis_one_two" 
+            android:id="@+id/kansas_city_saint_louis_one_two"
             android:rotation="88" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="453dp" android:layout_marginTop="200dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/kansas_city_saint_louis_two_two" 
+            android:id="@+id/kansas_city_saint_louis_two_two"
             android:rotation="88" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="453dp" android:layout_marginTop="208dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1630,49 +1632,49 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/sault_st_marie_toronto_one" 
+            android:id="@+id/sault_st_marie_toronto_one"
             android:rotation="100" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="537dp" android:layout_marginTop="66dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/sault_st_marie_toronto_two" 
+            android:id="@+id/sault_st_marie_toronto_two"
             android:rotation="100" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="564dp" android:layout_marginTop="71dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/montreal_boston_one_one" 
+            android:id="@+id/montreal_boston_one_one"
             android:rotation="127" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="680dp" android:layout_marginTop="26dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/montreal_boston_two_one" 
+            android:id="@+id/montreal_boston_two_one"
             android:rotation="127" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="674dp" android:layout_marginTop="33dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/montreal_new_york_one" 
+            android:id="@+id/montreal_new_york_one"
             android:rotation="171" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="657dp" android:layout_marginTop="40dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/montreal_new_york_two" 
+            android:id="@+id/montreal_new_york_two"
             android:rotation="171" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="662dp" android:layout_marginTop="64dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/montreal_new_york_three" 
+            android:id="@+id/montreal_new_york_three"
             android:rotation="171" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="667dp" android:layout_marginTop="89dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1682,21 +1684,21 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_washington_one" 
+            android:id="@+id/pittsburgh_washington_one"
             android:rotation="115" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="632dp" android:layout_marginTop="152dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/raleigh_charleston_one" 
+            android:id="@+id/raleigh_charleston_one"
             android:rotation="123" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="652dp" android:layout_marginTop="228dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_washington_two" 
+            android:id="@+id/pittsburgh_washington_two"
             android:rotation="115" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="656dp" android:layout_marginTop="162dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1706,28 +1708,28 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_york_washington_one_one" 
+            android:id="@+id/new_york_washington_one_one"
             android:rotation="175" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="674dp" android:layout_marginTop="128dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_york_washington_two_one" 
+            android:id="@+id/new_york_washington_two_one"
             android:rotation="176" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="683dp" android:layout_marginTop="128dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_york_washington_two_two" 
+            android:id="@+id/new_york_washington_two_two"
             android:rotation="176" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="685dp" android:layout_marginTop="152dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_york_washington_one_two" 
+            android:id="@+id/new_york_washington_one_two"
             android:rotation="175" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="676dp" android:layout_marginTop="152dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1740,7 +1742,7 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/montreal_boston_one_two" 
+            android:id="@+id/montreal_boston_one_two"
             android:rotation="127" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="701dp" android:layout_marginTop="42dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1750,7 +1752,7 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/montreal_boston_two_two" 
+            android:id="@+id/montreal_boston_two_two"
             android:rotation="127" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="694dp" android:layout_marginTop="48dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1774,14 +1776,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/omaha_chicago_one" 
+            android:id="@+id/omaha_chicago_one"
             android:rotation="55" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="409dp" android:layout_marginTop="164dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/omaha_chicago_two" 
+            android:id="@+id/omaha_chicago_two"
             android:rotation="57" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="432dp" android:layout_marginTop="151dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1791,14 +1793,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_new_york_one_one" 
+            android:id="@+id/pittsburgh_new_york_one_one"
             android:rotation="60" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="626dp" android:layout_marginTop="124dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_new_york_two_one" 
+            android:id="@+id/pittsburgh_new_york_two_one"
             android:rotation="60" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="631dp" android:layout_marginTop="132dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1808,14 +1810,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/raleigh_washington_one_one" 
+            android:id="@+id/raleigh_washington_one_one"
             android:rotation="41" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="646dp" android:layout_marginTop="201dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/raleigh_washington_two_one" 
+            android:id="@+id/raleigh_washington_two_one"
             android:rotation="41" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="654dp" android:layout_marginTop="207dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1825,28 +1827,28 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_raleigh_two_one" 
+            android:id="@+id/atlanta_raleigh_two_one"
             android:rotation="51" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="603dp" android:layout_marginTop="249dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_raleigh_one_one" 
+            android:id="@+id/atlanta_raleigh_one_one"
             android:rotation="51" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="596dp" android:layout_marginTop="242dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_raleigh_two_two" 
+            android:id="@+id/atlanta_raleigh_two_two"
             android:rotation="51" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="624dp" android:layout_marginTop="232dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_raleigh_one_two" 
+            android:id="@+id/atlanta_raleigh_one_two"
             android:rotation="51" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="617dp" android:layout_marginTop="226dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1856,14 +1858,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/raleigh_washington_two_two" 
+            android:id="@+id/raleigh_washington_two_two"
             android:rotation="41" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="672dp" android:layout_marginTop="188dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/raleigh_washington_one_two" 
+            android:id="@+id/raleigh_washington_one_two"
             android:rotation="41" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="664dp" android:layout_marginTop="183dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1873,14 +1875,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_new_york_one_two" 
+            android:id="@+id/pittsburgh_new_york_one_two"
             android:rotation="60" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="650dp" android:layout_marginTop="112dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/pittsburgh_new_york_two_two" 
+            android:id="@+id/pittsburgh_new_york_two_two"
             android:rotation="60" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="655dp" android:layout_marginTop="119dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1890,35 +1892,35 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/omaha_chicago_three" 
+            android:id="@+id/omaha_chicago_three"
             android:rotation="97" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="459dp" android:layout_marginTop="144dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_chicago_one" 
+            android:id="@+id/duluth_chicago_one"
             android:rotation="116" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="431dp" android:layout_marginTop="120dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_chicago_two" 
+            android:id="@+id/duluth_chicago_two"
             android:rotation="109" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="456dp" android:layout_marginTop="130dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_chicago_three" 
+            android:id="@+id/duluth_chicago_three"
             android:rotation="102" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="482dp" android:layout_marginTop="137dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/omaha_chicago_four" 
+            android:id="@+id/omaha_chicago_four"
             android:rotation="97" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="485dp" android:layout_marginTop="148dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -1939,63 +1941,63 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_toronto_one" 
+            android:id="@+id/duluth_toronto_one"
             android:rotation="80" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="434dp" android:layout_marginTop="104dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_toronto_two" 
+            android:id="@+id/duluth_toronto_two"
             android:rotation="80" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="460dp" android:layout_marginTop="100dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_toronto_three" 
+            android:id="@+id/duluth_toronto_three"
             android:rotation="80" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="488dp" android:layout_marginTop="96dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_toronto_four" 
+            android:id="@+id/duluth_toronto_four"
             android:rotation="80" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="516dp" android:layout_marginTop="92dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_toronto_five" 
+            android:id="@+id/duluth_toronto_five"
             android:rotation="80" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="544dp" android:layout_marginTop="88dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/duluth_toronto_six" 
+            android:id="@+id/duluth_toronto_six"
             android:rotation="80" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="572dp" android:layout_marginTop="84dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_toronto_four" 
+            android:id="@+id/chicago_toronto_four"
             android:rotation="54" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="584dp" android:layout_marginTop="92dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/toronto_pittsburgh_one" 
+            android:id="@+id/toronto_pittsburgh_one"
             android:rotation="-6" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="603dp" android:layout_marginTop="95dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/toronto_pittsburgh_two" 
+            android:id="@+id/toronto_pittsburgh_two"
             android:rotation="-6" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="604dp" android:layout_marginTop="120dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2029,7 +2031,7 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_toronto_three" 
+            android:id="@+id/chicago_toronto_three"
             android:rotation="73" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="559dp" android:layout_marginTop="104dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2039,42 +2041,42 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_pittsburgh_one_one" 
+            android:id="@+id/chicago_pittsburgh_one_one"
             android:rotation="75" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="526dp" android:layout_marginTop="137dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_pittsburgh_two_one" 
+            android:id="@+id/chicago_pittsburgh_two_one"
             android:rotation="75" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="530dp" android:layout_marginTop="145dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_pittsburgh_one" 
+            android:id="@+id/saint_louis_pittsburgh_one"
             android:rotation="62" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="492dp" android:layout_marginTop="203dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_pittsburgh_two" 
+            android:id="@+id/saint_louis_pittsburgh_two"
             android:rotation="62" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="516dp" android:layout_marginTop="191dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_pittsburgh_three" 
+            android:id="@+id/saint_louis_pittsburgh_three"
             android:rotation="62" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="540dp" android:layout_marginTop="179dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_pittsburgh_four" 
+            android:id="@+id/saint_louis_pittsburgh_four"
             android:rotation="62" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="564dp" android:layout_marginTop="166dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2084,28 +2086,28 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_pittsburgh_three" 
+            android:id="@+id/nashville_pittsburgh_three"
             android:rotation="60" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="579dp" android:layout_marginTop="180dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_raleigh_one" 
+            android:id="@+id/nashville_raleigh_one"
             android:rotation="60" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="562dp" android:layout_marginTop="221dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_raleigh_two" 
+            android:id="@+id/nashville_raleigh_two"
             android:rotation="78" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="588dp" android:layout_marginTop="212dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_raleigh_three" 
+            android:id="@+id/nashville_raleigh_three"
             android:rotation="94" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="616dp" android:layout_marginTop="209dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2115,28 +2117,28 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_pittsburgh_four" 
+            android:id="@+id/nashville_pittsburgh_four"
             android:rotation="35" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="600dp" android:layout_marginTop="163dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_pittsburgh_two" 
+            android:id="@+id/nashville_pittsburgh_two"
             android:rotation="43" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="559dp" android:layout_marginTop="196dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_pittsburgh_one" 
+            android:id="@+id/nashville_pittsburgh_one"
             android:rotation="30" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="543dp" android:layout_marginTop="217dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/raleigh_charleston_two" 
+            android:id="@+id/raleigh_charleston_two"
             android:rotation="28" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="664dp" android:layout_marginTop="245dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2146,7 +2148,7 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_pittsburgh_five" 
+            android:id="@+id/saint_louis_pittsburgh_five"
             android:rotation="62" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="588dp" android:layout_marginTop="154dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2156,28 +2158,28 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_pittsburgh_one_two" 
+            android:id="@+id/chicago_pittsburgh_one_two"
             android:rotation="83" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="554dp" android:layout_marginTop="132dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_pittsburgh_two_two" 
+            android:id="@+id/chicago_pittsburgh_two_two"
             android:rotation="83" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="557dp" android:layout_marginTop="140dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_pittsburgh_one_three" 
+            android:id="@+id/chicago_pittsburgh_one_three"
             android:rotation="95" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="582dp" android:layout_marginTop="130dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_pittsburgh_two_three" 
+            android:id="@+id/chicago_pittsburgh_two_three"
             android:rotation="93" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="585dp" android:layout_marginTop="139dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2187,21 +2189,21 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_nashville_one" 
+            android:id="@+id/saint_louis_nashville_one"
             android:rotation="106" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="492dp" android:layout_marginTop="221dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/saint_louis_nashville_two" 
+            android:id="@+id/saint_louis_nashville_two"
             android:rotation="106" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="520dp" android:layout_marginTop="228dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/nashville_atlanta_one" 
+            android:id="@+id/nashville_atlanta_one"
             android:rotation="123" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="563dp" android:layout_marginTop="244dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2211,35 +2213,35 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_miami_one" 
+            android:id="@+id/atlanta_miami_one"
             android:rotation="140" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="596dp" android:layout_marginTop="277dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_miami_two" 
+            android:id="@+id/atlanta_miami_two"
             android:rotation="140" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="613dp" android:layout_marginTop="296dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_miami_three" 
+            android:id="@+id/atlanta_miami_three"
             android:rotation="140" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="632dp" android:layout_marginTop="316dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_miami_four" 
+            android:id="@+id/atlanta_miami_four"
             android:rotation="138" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="649dp" android:layout_marginTop="336dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_miami_five" 
+            android:id="@+id/atlanta_miami_five"
             android:rotation="138" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="666dp" android:layout_marginTop="354dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2249,42 +2251,42 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_miami_six" 
+            android:id="@+id/new_orleans_miami_six"
             android:rotation="138" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="662dp" android:layout_marginTop="365dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_miami_five" 
+            android:id="@+id/new_orleans_miami_five"
             android:rotation="128" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="642dp" android:layout_marginTop="347dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_miami_four" 
+            android:id="@+id/new_orleans_miami_four"
             android:rotation="118" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="619dp" android:layout_marginTop="333dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_miami_three" 
+            android:id="@+id/new_orleans_miami_three"
             android:rotation="90" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="592dp" android:layout_marginTop="327dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_miami_two" 
+            android:id="@+id/new_orleans_miami_two"
             android:rotation="73" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="564dp" android:layout_marginTop="331dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/new_orleans_miami_one" 
+            android:id="@+id/new_orleans_miami_one"
             android:rotation="60" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="538dp" android:layout_marginTop="340dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2294,14 +2296,14 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_charleston_one" 
+            android:id="@+id/atlanta_charleston_one"
             android:rotation="93" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="609dp" android:layout_marginTop="264dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/atlanta_charleston_two" 
+            android:id="@+id/atlanta_charleston_two"
             android:rotation="91" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="636dp" android:layout_marginTop="265dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2314,35 +2316,35 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_toronto_two" 
+            android:id="@+id/chicago_toronto_two"
             android:rotation="59" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="533dp" android:layout_marginTop="114dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/chicago_toronto_one" 
+            android:id="@+id/chicago_toronto_one"
             android:rotation="45" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="512dp" android:layout_marginTop="130dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/boston_new_york_one_one" 
+            android:id="@+id/boston_new_york_one_one"
             android:rotation="32" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="701dp" android:layout_marginTop="74dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/boston_new_york_two_one" 
+            android:id="@+id/boston_new_york_two_one"
             android:rotation="34" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="708dp" android:layout_marginTop="78dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/boston_new_york_two_two" 
+            android:id="@+id/boston_new_york_two_two"
             android:rotation="34" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="694dp" android:layout_marginTop="98dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2352,7 +2354,7 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/boston_new_york_one_two" 
+            android:id="@+id/boston_new_york_one_two"
             android:rotation="32" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="686dp" android:layout_marginTop="94dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2365,21 +2367,21 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/toronto_montreal_one" 
+            android:id="@+id/toronto_montreal_one"
             android:rotation="33" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="599dp" android:layout_marginTop="59dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/toronto_montreal_two" 
+            android:id="@+id/toronto_montreal_two"
             android:rotation="50" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="616dp" android:layout_marginTop="40dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/toronto_montreal_three" 
+            android:id="@+id/toronto_montreal_three"
             android:rotation="70" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="640dp" android:layout_marginTop="26dp"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -2578,35 +2580,35 @@
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/sault_st_marie_montreal_one" 
+            android:id="@+id/sault_st_marie_montreal_one"
             android:rotation="53" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="528dp" android:layout_marginTop="49dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/sault_st_marie_montreal_two" 
+            android:id="@+id/sault_st_marie_montreal_two"
             android:rotation="64" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="552dp" android:layout_marginTop="35dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/sault_st_marie_montreal_three" 
+            android:id="@+id/sault_st_marie_montreal_three"
             android:rotation="72" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="577dp" android:layout_marginTop="25dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/sault_st_marie_montreal_four" 
+            android:id="@+id/sault_st_marie_montreal_four"
             android:rotation="78" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="604dp" android:layout_marginTop="18dp"
             app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:layout_width="8dp"
             android:layout_height="23dp"
-            android:id="@+id/sault_st_marie_montreal_five" 
+            android:id="@+id/sault_st_marie_montreal_five"
             android:rotation="90" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="632dp" android:layout_marginTop="15dp"
             app:layout_constraintTop_toTopOf="parent"/>

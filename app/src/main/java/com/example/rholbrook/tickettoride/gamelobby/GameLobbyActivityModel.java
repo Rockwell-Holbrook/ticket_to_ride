@@ -2,6 +2,7 @@ package com.example.rholbrook.tickettoride.gamelobby;
 
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
+import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class GameLobbyActivityModel extends Observable {
     }
 
     public void sendChat(String message) {
+        ServerProxy.getInstance().sendChat(new Chat(Authentication.getInstance().getUsername(), message), gameId, false);
         //ServerProxy.getInstance().sendChat(Authentication.getInstance().getUsername(), gameId, message);
     }
 

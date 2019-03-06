@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,10 +18,15 @@ import com.example.shared.model.*;
 
 import java.util.List;
 
-public class GameActivity extends AppCompatActivity implements GameActivityContract.View {
+public class GameActivity extends AppCompatActivity implements
+        GameActivityContract.View,
+        SelectTicketsDialogFragment.SelectTicketsDialogInterface,
+        ViewTrainCardsDialogFragment.ViewTrainCardsDialogInterface,
+        ViewTicketsDialogFragment.ViewTicketsDialogInterface
+        {
     private GameActivityContract.Presenter mPresenter;
 
-    static final float NAME = 25.0f;
+
 
     private RelativeLayout playerHandLayout;
     private FrameLayout gameMapFrameLayout;
@@ -86,8 +92,6 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         faceUpCardThree = findViewById(R.id.card_three);
         faceUpCardFour = findViewById(R.id.card_four);
         faceUpCardFive = findViewById(R.id.card_five);
-        viewHandRecyclerView = findViewById(R.id.view_hand_recycler_view);
-        viewTicketsRecyclerView = findViewById(R.id.view_tickets_recycler_view);
         faceDownTicketDeck = findViewById(R.id.ticket_deck);
         faceDownTrainCardDeck = findViewById(R.id.facedown_card_deck);
         opponentOneConstraintLayout = findViewById(R.id.opponent_one_constraint_layout);
@@ -133,14 +137,14 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         faceDownTicketDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectFaceDownCardDeck();
+                mPresenter.clickDrawTickets();
             }
         });
 
         faceDownTrainCardDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.clickDrawTickets();
+                mPresenter.selectFaceDownCardDeck();
             }
         });
 
@@ -158,11 +162,33 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
             }
         });
 
+        playerHandLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewTrainCardsDialogFragment dialog = ViewTrainCardsDialogFragment.newInstance(mPresenter.getPlayerHand(), getApplicationContext());
+                dialog.show(getSupportFragmentManager(), "View Train Cards Dialog Fragment");
+            }
+        });
+
+        playerTicketDeck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewTicketsDialogFragment dialog = ViewTicketsDialogFragment.newInstance(mPresenter.getPlayerTickets());
+                dialog.show(getSupportFragmentManager(), "View Tickets Dialog Fragment");
+            }
+        });
+
         gameMapFrameLayout = findViewById(R.id.fragment_map_container);
         Fragment gameMapFragment = GameMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_map_container, gameMapFragment).commit();
         addFaceUpCardClickListeners();
-        mPresenter.init();
+        String gameId = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            gameId = extras.getString("gameId");
+        }
+        mPresenter.setGameId(gameId);
+        mPresenter.readyToInitialize();
     }
 
     @Override
@@ -187,40 +213,43 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     }
 
     private Drawable getColorCardDrawable(TrainCard trainCard) {
-        if (trainCard.getClass().equals(LocomotiveCard.class)) {
-            return getDrawable(R.mipmap.wild_card);
-        } else {
-            ColorCard card = (ColorCard) trainCard;
-            switch (card.getColor()) {
-                case BLACK:
-                    return getDrawable(R.mipmap.black_card);
-                case BLUE:
-                    return getDrawable(R.mipmap.blue_card);
-                case RED:
-                    return getDrawable(R.mipmap.red_card);
-                case YELLOW:
-                    return getDrawable(R.mipmap.yellow_card);
-                case GREEN:
-                    return getDrawable(R.mipmap.green_card);
-                case PINK:
-                    return getDrawable(R.mipmap.purple_card);
-                case WHITE:
-                    return getDrawable(R.mipmap.white_card);
-                case ORANGE:
-                    return getDrawable(R.mipmap.orange_card);
-                default:
-                    return getDrawable(R.mipmap.card_back);
-            }
+        switch (trainCard.getColor()) {
+            case BLACK:
+                return getDrawable(R.mipmap.black_card);
+            case BLUE:
+                return getDrawable(R.mipmap.blue_card);
+            case RED:
+                return getDrawable(R.mipmap.red_card);
+            case YELLOW:
+                return getDrawable(R.mipmap.yellow_card);
+            case GREEN:
+                return getDrawable(R.mipmap.green_card);
+            case PINK:
+                return getDrawable(R.mipmap.purple_card);
+            case WHITE:
+                return getDrawable(R.mipmap.white_card);
+            case ORANGE:
+                return getDrawable(R.mipmap.orange_card);
+            case WILD:
+                return getDrawable(R.mipmap.wild_card);
+            default:
+                return getDrawable(R.mipmap.wild_card);
         }
     }
 
     @Override
-    public void setFaceUpDeck(TrainCard[] faceUpDeck) {
-        faceUpCardOne.setImageDrawable(getColorCardDrawable(faceUpDeck[0]));
-        faceUpCardTwo.setImageDrawable(getColorCardDrawable(faceUpDeck[1]));
-        faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck[2]));
-        faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck[3]));
-        faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck[4]));
+    public void setFaceUpDeck(List<TrainCard> cards) {
+        final List<TrainCard> faceUpDeck = cards;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                faceUpCardOne.setImageDrawable(getColorCardDrawable(faceUpDeck.get(0)));
+                faceUpCardTwo.setImageDrawable(getColorCardDrawable(faceUpDeck.get(1)));
+                faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck.get(2)));
+                faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck.get(3)));
+                faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck.get(4)));
+            }
+        });
     }
 
     @Override
@@ -230,13 +259,12 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         enableFaceUpCards();
     }
 
-
-
     @Override
     public void endUserTurn() {
         faceDownTicketDeck.setActivated(false);
         faceDownTrainCardDeck.setActivated(false);
         disableFaceUpCards();
+        mPresenter.endTurn();
     }
 
     @Override
@@ -244,31 +272,51 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
         faceUpCardOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(0);
                 mPresenter.selectFaceUpCard(0);
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(1);
                 mPresenter.selectFaceUpCard(1);
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(2);
                 mPresenter.selectFaceUpCard(2);
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(3);
                 mPresenter.selectFaceUpCard(3);
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardFive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(4);
                 mPresenter.selectFaceUpCard(4);
+                if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                    endUserTurn();
+                }
             }
         });
     }
@@ -292,17 +340,198 @@ public class GameActivity extends AppCompatActivity implements GameActivityContr
     }
 
     @Override
-    public void updatePlayerData(Player[] players) {
-
+    public void initializeGame(List<Ticket> selectableTickets) {
+        selectTickets(selectableTickets, GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE);
+        mPresenter.initializeComplete();
     }
 
     @Override
-    public void initializeGame() {
-        Player opponentOne = mPresenter.getOpponentOne();
+    public void setPlayerTicketDeck(final List<Ticket> destinations) {
+        final List<Ticket> tickets = destinations;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                int id = destinations.get(destinations.size() - 1).getTicketId();
+                playerTicketDeck.setImageDrawable(getResources().getDrawable(GameActivityPresenter.TICKET_IMAGE_MAP.get(id)));
+            }
+        });
     }
 
     @Override
-    public void setPlayerTicketDeck(List<Ticket> testDestinations) {
-        playerTicketDeck.setImageDrawable(getResources().getDrawable(R.mipmap.ticket_back));
+    public void initializePlayers(List<Player> players) {
+        final List<Player> turnOrder = players;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < turnOrder.size(); i++) {
+                    Drawable avatarImage = mPresenter.getAvatar(getApplicationContext(), turnOrder.get(i).getPlayerColor());
+                    Drawable colorBackground = mPresenter.getColorBackground(getApplicationContext(), turnOrder.get(i).getPlayerColor());
+                    switch (i) {
+                        case 0:
+                            playerConstraintLayout.setBackground(colorBackground);
+                            playerAvatarImageView.setImageDrawable(avatarImage);
+                            break;
+                        case 1:
+                            opponentOneConstraintLayout.setBackground(colorBackground);
+                            opponentOneAvatarImageView.setImageDrawable(avatarImage);
+                            opponentOneUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                        case 2:
+                            opponentTwoConstraintLayout.setBackground(colorBackground);
+                            opponentTwoAvatarImageView.setImageDrawable(avatarImage);
+                            opponentTwoUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                        case 3:
+                            opponentThreeConstraintLayout.setBackground(colorBackground);
+                            opponentThreeAvatarImageView.setImageDrawable(avatarImage);
+                            opponentThreeUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                        case 4:
+                            opponentFourConstraintLayout.setBackground(colorBackground);
+                            opponentFourAvatarImageView.setImageDrawable(avatarImage);
+                            opponentFourUsernameTextView.setText(turnOrder.get(i).getUsername());
+                            break;
+                    }
+                }
+                switch (turnOrder.size()) {
+                    case 1:
+                        opponentOneConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentTwoConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentThreeConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 2:
+                        opponentTwoConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentThreeConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 3:
+                        opponentThreeConstraintLayout.setVisibility(View.INVISIBLE);
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 4:
+                        opponentFourConstraintLayout.setVisibility(View.INVISIBLE);
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void updateClient(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                playerPointTextView.setText(String.valueOf(player.getPointsEarned()));
+                if (player.getTickets() != null) {
+                    playerTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    playerTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
+                playerTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
+                setHandCards(player.getTrainCards());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerOne(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentOnePointTextView.setText(String.valueOf(player.getPointsEarned()));
+                if (player.getTickets() != null) {
+                    opponentOneTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentOneTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
+                opponentOneTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerTwo(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentTwoPointTextView.setText(String.valueOf(player.getPointsEarned()));
+                if (player.getTickets() != null) {
+                    opponentTwoTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentTwoTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
+                opponentTwoTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerThree(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentThreePointTextView.setText(String.valueOf(player.getPointsEarned()));
+                if (player.getTickets() != null) {
+                    opponentThreeTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentThreeTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
+                opponentThreeTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
+    }
+
+    @Override
+    public void updatePlayerFour(Player updatedPlayer) {
+        final Player player = updatedPlayer;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentFourPointTextView.setText(String.valueOf(player.getPointsEarned()));
+                if (player.getTickets() != null) {
+                    opponentFourTicketCountTextView.setText(String.valueOf(player.getTickets().size()));
+                }
+                if (player.getTrainCards() != null) {
+                    opponentFourTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
+                }
+                opponentFourTrainCountTextView.setText(player.getRemainingTrainCars());
+            }
+        });
+    }
+
+    @Override
+    public void selectTickets(final List<Ticket> selectableTickets, final int selectionType) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                SelectTicketsDialogFragment dialog = SelectTicketsDialogFragment.newInstance(selectableTickets, selectionType);
+                dialog.show(getSupportFragmentManager(), "SelectTicketsDialogFragment");
+            }
+        });
+    }
+
+    @Override
+    public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards) {
+        dialogFragment.dismiss();
+        mPresenter.addTicketsToPlayer(keptCards);
+        mPresenter.returnTickets(returnedCards);
+    }
+
+    @Override
+    public void onClosePressed(DialogFragment dialogFragment) {
+        dialogFragment.dismiss();
     }
 }

@@ -132,6 +132,7 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
     }
 
+
     @Override
     public void ticketCompleted(Ticket ticket) {
 
