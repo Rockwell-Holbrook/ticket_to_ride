@@ -122,11 +122,29 @@ public class SocketServer extends WebSocketServer {
 
     /**
      * Sends a command to a specific user who is connected to /management
+     * If user doesn't exist no command will be sent to anywhere
      * @param cmd Command to run
      * @param username Name of connected user
      */
     public void sendToUser(Command cmd, String username) {
         for(WebSocket ws : managementConnections) {
+            if(ws.getAttachment().equals(username)){
+                String serialized = gson.toJson(cmd);
+                System.out.println("Sending cmd to " + username + ": " + serialized);
+                ws.send(serialized);
+            }
+        }
+    }
+
+    /**
+     * Sends command to a user who is in a game at gameId
+     * If user doesn't exist no command will be sent to anywhere
+     * @param cmd Command to send
+     * @param username Name of user to send omd to
+     * @param gameId Id of the game the user is in
+     */
+    public void sendToUser(Command cmd, String username, String gameId){
+        for(WebSocket ws : gameConnections.get(gameId)) {
             if(ws.getAttachment().equals(username)){
                 String serialized = gson.toJson(cmd);
                 System.out.println("Sending cmd to " + username + ": " + serialized);

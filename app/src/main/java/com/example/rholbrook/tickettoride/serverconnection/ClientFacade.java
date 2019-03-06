@@ -2,6 +2,7 @@ package com.example.rholbrook.tickettoride.serverconnection;
 
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
+import com.example.rholbrook.tickettoride.game.GameActivityPresenter;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
 import com.example.shared.interfaces.IClientInGame;
@@ -52,6 +53,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameLobbyActivityModel.getInstance().gameStarted();
     }
 
+    //History Drawer
     @Override
     public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username) {
         GameActivityModel.getInstance().receivedChatHistory(chatHistory);
@@ -67,19 +69,46 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameActivityModel.getInstance().receivedGameHistory(gameHistory);
     }
 
+    //Game Initialization
     @Override
-    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username) {
+    public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {
+        //Fix Face Up Train Card List
+        String typeValue = gson.toJson(trainCardsFaceUp);
+        Type typeName = new TypeToken<List<TrainCard>>(){}.getType();
+        List<TrainCard> trainCardsFaceUpList = gson.fromJson(typeValue, typeName);
+
+        //Fix Train Cards List
+        typeValue = gson.toJson(trainCards);
+        typeName = new TypeToken<List<TrainCard>>(){}.getType();
+        List<TrainCard> trainCardsList = gson.fromJson(typeValue, typeName);
+
+        //Fix ticket List
+        typeValue = gson.toJson(tickets);
+        typeName = new TypeToken<List<Ticket>>(){}.getType();
+        List<Ticket> ticketList = gson.fromJson(typeValue, typeName);
+
+        //Fix Turn Order
+        typeValue = gson.toJson(turnOrder);
+        typeName = new TypeToken<List<Player>>(){}.getType();
+        List<Player> newTurnOrder = gson.fromJson(typeValue, typeName);
+
+        GameActivityModel.getInstance().initializeGame(trainCardsFaceUpList, trainCardsList, ticketList, newTurnOrder);
+    }
+
+    @Override
+    public void initializeComplete(String gameId, String username) {
 
     }
 
     @Override
     public void ticketsReceived(List<Ticket> tickets) {
-
+        GameActivityModel.getInstance().ticketDataReceived(tickets);
     }
 
+    //GamePlay
     @Override
     public void startTurn(List<Route> availableRoutes, String username) {
-
+        GameActivityModel.getInstance().startTurn(availableRoutes);
     }
 
     @Override
@@ -89,17 +118,16 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void routeClaimed(Player player, Route route) {
-
     }
 
     @Override
     public void cardDrawn(List<TrainCard> faceUpCards) {
-
+        GameActivityModel.getInstance().setFaceUpCards(faceUpCards);
     }
 
     @Override
     public void turnEnded(Player player) {
-
+        GameActivityModel.getInstance().playerTurnEnded(player);
     }
 
     //    MainActivity
@@ -115,8 +143,5 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     public void joinGameComplete(String username, String gameId) {
         MainActivityModel.getInstance().joinedGame(gameId);
     }
-
-    // probably remove later
-    public void initializeComplete(String gameId, String username) {}
 
 }

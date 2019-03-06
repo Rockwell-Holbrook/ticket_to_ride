@@ -135,7 +135,7 @@
                     android:background="@drawable/point_circle" android:padding="2dp"
                     app:layout_constraintEnd_toEndOf="@+id/opponent_one_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_one_image_view" android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="14sp" android:textColor="@color/black"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -207,7 +207,7 @@
                     android:background="@drawable/point_circle" android:padding="2dp"
                     app:layout_constraintEnd_toEndOf="@+id/opponent_two_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_two_image_view" android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="14sp" android:textColor="@color/black"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -281,7 +281,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/opponent_three_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_three_image_view"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="14sp" android:textColor="@color/black"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -355,7 +355,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/opponent_four_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/opponent_four_image_view"
                     android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="14sp" android:textColor="@color/black"/>
             <TextView
                     android:text="45"
                     android:layout_width="wrap_content"
@@ -465,10 +465,11 @@
                     android:text="0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/player_point_text_view"
-                    android:background="@drawable/point_circle" android:padding="2dp"
+                    android:background="@drawable/point_circle"
                     app:layout_constraintStart_toStartOf="@+id/player_image_view"
                     app:layout_constraintBottom_toBottomOf="@+id/player_image_view" android:paddingStart="8dp"
-                    android:paddingEnd="8dp"/>
+                    android:paddingEnd="8dp" android:textSize="14sp"
+                    android:padding="2dp" android:textColor="@color/black"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
     <FrameLayout
@@ -478,19 +479,4 @@
             app:layout_constraintStart_toEndOf="@+id/card_section" android:id="@+id/fragment_map_container"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout">
     </FrameLayout>
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_map_container" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="@+id/fragment_map_container" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="@+id/fragment_map_container"
-            android:id="@+id/view_hand_recycler_view">
-    </android.support.v7.widget.RecyclerView>
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/fragment_map_container" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="@+id/fragment_map_container" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="@+id/fragment_map_container"
-            android:id="@+id/view_tickets_recycler_view"/>
 </android.support.constraint.ConstraintLayout>

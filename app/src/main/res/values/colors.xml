@@ -24,4 +24,5 @@
     <color name="drawer_button">#882F9DE8</color>
     <color name="drawer_chat_background">#FFC9D9</color>
     <color name="drawer_history_background">#B2F9FF</color>
+    <color name="selectable_button_border_background">#7FFF00</color>
 </resources>

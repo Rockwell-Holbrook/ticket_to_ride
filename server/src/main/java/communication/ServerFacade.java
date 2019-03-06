@@ -126,7 +126,7 @@ public class ServerFacade implements IServer {
      * @param returned Tickets that the user is returning to be placed in the deck.
      */
     @Override
-    public void ticketsReturned(ArrayList<Ticket> returned) {
+    public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
         // Todo: Make this sucker work baby.
     }
 
@@ -136,7 +136,7 @@ public class ServerFacade implements IServer {
      * @param gameID The ID of the game we need to work with!
      */
     @Override
-    public void turnEnded(String gameID) {
+    public void turnEnded(String gameID, String username) {
         // Todo: Make this sucker work baby.
     }
 
@@ -146,17 +146,17 @@ public class ServerFacade implements IServer {
      * @param index The index of the visible card's that the user can grab.
      */
     @Override
-    public void getCard(int index) {
+    public void getCard(String gameId, String username, int index) {
         // Todo: Make this sucker work baby.
     }
 
     /**
      * A user may spend their turn claiming a route.
      *
-     * @param route The route the user wants to claim.
+     *
      */
     @Override
-    public void claimRoute(Route route) {
+    public void claimRoute(String gameId, String username, int routeId) {
         // Todo: Make this sucker work baby.
     }
 
@@ -166,7 +166,7 @@ public class ServerFacade implements IServer {
      * @param gameID The ID of the game we need to work with!
      */
     @Override
-    public void requestTickets(String gameID) {
+    public void requestTickets(String gameID, String username) {
         // Todo: Make this sucker work baby.
     }
 }

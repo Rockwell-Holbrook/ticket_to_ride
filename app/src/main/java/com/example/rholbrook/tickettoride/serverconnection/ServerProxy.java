@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
+import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Chat;
@@ -94,8 +95,8 @@ public class ServerProxy implements IServer {
     @Override
     public void sendChat(Chat chat, String gameId, boolean gameStarted) {
         String methodName = "sendChat";
-        String[] paramTypes = {Chat.class.getName(), String.class.getName()};
-        Object[] paramValues = {chat, gameId};
+        String[] paramTypes = {Chat.class.getName(), String.class.getName(), boolean.class.getName()};
+        Object[] paramValues = {chat, gameId, gameStarted};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
@@ -116,32 +117,58 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void readyToInitialize(String gameId, String username) {}
+    public void readyToInitialize(String gameId, String username) {
+        String methodName = "readyToInitialize";
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameId, username};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    }
 
     @Override
-    public void initializeComplete(String gameId, String username) {}
-
-    public void initializedGame(String gameId) {
-        // Todo: Make this sucker work baby.
+    public void initializeComplete(String gameId, String username) {
+        String methodName = "initializeComplete";
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameId, username};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
-    public void ticketsReturned(ArrayList<Ticket> returned) {
-        // Todo: Make this sucker work baby.
+    @Override
+    public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
+        String methodName = "ticketsReturned";
+        String[] paramTypes = {String.class.getName(), String.class.getName(), ArrayList.class.getName()};
+        Object[] paramValues = {gameId, username, returned};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
-    public void turnEnded(String gameID) {
-        // Todo: Make this sucker work baby.
+    @Override
+    public void turnEnded(String gameID, String username) {
+        String methodName = "turnEnded";
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameID, username};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
-    public void getCard(int index) {
-        // Todo: Make this sucker work baby.
+    @Override
+    public void getCard(String gameId, String username, int index) {
+        String methodName = "getCard";
+        String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName()};
+        Object[] paramValues = {gameId, username, index};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
-    public void claimRoute(Route route) {
-        // Todo: Make this sucker work baby.
+    @Override
+    public void claimRoute(String gameId, String username, int routeId) {
+        String methodName = "claimRoute";
+        String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName()};
+        Object[] paramValues = {gameId, username, routeId};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
-    public void requestTickets(String gameID) {
-        // Todo: Make this sucker work baby.
+    @Override
+    public void requestTickets(String gameID, String username) {
+        String methodName = "requestTickets";
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameID, username};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 }
