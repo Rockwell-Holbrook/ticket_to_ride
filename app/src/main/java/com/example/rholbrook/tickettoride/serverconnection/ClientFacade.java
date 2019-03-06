@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
+import android.util.Log;
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
 import com.example.rholbrook.tickettoride.game.GameActivityPresenter;
@@ -16,6 +17,8 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 public class ClientFacade implements IClientInGame, IClientNotInGame {
+    private final String TAG = "ticket_to_ride";
+
     private static ClientFacade instance;
     private static Gson gson = new Gson();
 
@@ -33,6 +36,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
+        Log.d(TAG, "Client Facade: in receivedChat");
         if (gameStarted) {
             GameActivityModel.getInstance().receivedChat(chat);
         } else {

@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
+import android.util.Log;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IServer;
@@ -13,6 +14,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class ServerProxy implements IServer {
+    private final String TAG = "ticket_to_ride";
+
+
     private static ServerProxy instance;
     private SocketClientCommunicator socketClientCommunicator;
     private static Gson gson = new Gson();
