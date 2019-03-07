@@ -40,34 +40,53 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
 
     @Override
     public void startUserTurn(List<Button> availableButtons) {
-        for (Button button : availableButtons) {
-            button.setEnabled(true);
-            button.setBackground(getActivity().getDrawable(R.drawable.selectable_route_border));
-        }
+        final List<Button> buttons = availableButtons;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            for (Button button : buttons) {
+                button.setEnabled(true);
+                button.setBackground(getActivity().getDrawable(R.drawable.selectable_route_border));
+            }
+            }
+        });
+
     }
 
     @Override
     public void endUserTurn(List<Button> availableButtons) {
-        for (Button button : availableButtons) {
-            button.setEnabled(false);
-            button.setBackground(null);
-        }
+        final List<Button> buttons = availableButtons;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            for (Button button : buttons) {
+                button.setEnabled(false);
+                button.setBackground(null);
+            }
+            }
+        });
     }
 
     @Override
     public void addClickListeners(Integer integer) {
         final int routeId = integer;
-        Group routeGroup = getView().findViewById(integer);
-        int[] routeButtons = routeGroup.getReferencedIds();
-        for (int i = 0 ; i < routeButtons.length; i++) {
-            Button button = getView().findViewById(routeButtons[i]);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mPresenter.selectRoute(routeId);
-                }
-            });
-            mPresenter.addAvailableButton(button);
-        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            Group routeGroup = getView().findViewById(routeId);
+            int[] routeButtons = routeGroup.getReferencedIds();
+            for (int i = 0 ; i < routeButtons.length; i++) {
+                Button button = getView().findViewById(routeButtons[i]);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.selectRoute(routeId);
+                    }
+                });
+                mPresenter.addAvailableButton(button);
+            }
+            }
+        });
+
     }
 }

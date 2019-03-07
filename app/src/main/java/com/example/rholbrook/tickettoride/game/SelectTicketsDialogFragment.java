@@ -28,7 +28,7 @@ public class SelectTicketsDialogFragment extends DialogFragment {
     private int selectionTypeIndicator = 0;
 
     public interface SelectTicketsDialogInterface {
-        public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards);
+        public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards, int type);
     }
 
     SelectTicketsDialogFragment.SelectTicketsDialogInterface mListener;
@@ -80,7 +80,7 @@ public class SelectTicketsDialogFragment extends DialogFragment {
         returnTicketsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onReturnPressed(SelectTicketsDialogFragment.this, keptCards, returnedCards);
+                mListener.onReturnPressed(SelectTicketsDialogFragment.this, keptCards, returnedCards, selectionTypeIndicator);
             }
         });
         returnTicketsButton.setEnabled(true);

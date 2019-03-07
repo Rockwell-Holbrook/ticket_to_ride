@@ -23,7 +23,7 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg.getClass().getName().equals(boolean.class.getName())) {
+        if (arg.getClass().getName().equals(Boolean.class.getName())) {
             boolean isTurn = (boolean) arg;
             if (isTurn) {
                 viewCallback.startUserTurn(availableButtons);

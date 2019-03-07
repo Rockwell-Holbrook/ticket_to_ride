@@ -71,7 +71,7 @@ public interface IClientInGame {
      * routes that are available to claim
      * @param availableRoutes List of Route objects representing all unclaimed routes
      */
-    void startTurn(List<Route> availableRoutes, String username);
+    void startTurn(List<Route> availableRoutes, String username, String gameId);
 
     /**
      * Signals the GameActivityModel to update which tickets are completed

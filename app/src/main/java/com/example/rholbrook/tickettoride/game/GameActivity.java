@@ -342,7 +342,6 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void initializeGame(List<Ticket> selectableTickets) {
         selectTickets(selectableTickets, GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE);
-        mPresenter.initializeComplete();
     }
 
     @Override
@@ -524,10 +523,13 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards) {
+    public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards, int indicator) {
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);
         mPresenter.returnTickets(returnedCards);
+        if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
+            mPresenter.initializeComplete();
+        }
     }
 
     @Override
