@@ -34,8 +34,11 @@ public class Game {
         this.claimedRoutes =  new ArrayList<>();
         this.chatHistory =  new ArrayList<>();
         this.gameHistory =  new ArrayList<>();
-        this.ticketDeck = new Deck<>(this.initializeTickets());
-        this.trainCardDeck = new Deck<>(this.initializeTrainCards());
+        this.ticketDeck = new Deck<>(this.populateTicketDeck());
+        this.trainCardDeck = new Deck<>(this.populateTrainCardDeck());
+
+        this.ticketDeck.shuffle();
+        this.trainCardDeck.shuffle();
         addPlayer(host);
     }
 
@@ -60,44 +63,31 @@ public class Game {
         this.chatHistory.add(chat);
     }
 
-    public void initializeTrainCardsFaceUp() { // TODO: Deck management not randomness.
+    public void initializeTrainCardsFaceUp() {
         ArrayList<TrainCard> temp = new ArrayList<>();
-        temp.add(new TrainCard(TrainCard.Color.BLACK));  temp.add(new TrainCard(TrainCard.Color.BLUE)); temp.add(new TrainCard(TrainCard.Color.GREEN)); temp.add(new TrainCard(TrainCard.Color.ORANGE));
-        temp.add(new TrainCard(TrainCard.Color.PINK)); temp.add(new TrainCard(TrainCard.Color.RED)); temp.add(new TrainCard(TrainCard.Color.WHITE)); temp.add(new TrainCard(TrainCard.Color.YELLOW));
-        temp.add(new TrainCard(TrainCard.Color.WILD));
-
-        ArrayList<TrainCard> random = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            int randomIndex = (int) (Math.random()*9);
-            random.add(temp.get(randomIndex));
+            temp.add(this.trainCardDeck.drawFromTop());
         }
 
-        this.trainCardsFaceUp = random;
+        this.trainCardsFaceUp = temp;
     }
 
-    public ArrayList<TrainCard> initializeTrainCards() { // TODO: Deck management not randomness.
+    public ArrayList<TrainCard> initializeTrainCards() {
         ArrayList<TrainCard> temp = new ArrayList<>();
-        temp.add(new TrainCard(TrainCard.Color.BLACK));  temp.add(new TrainCard(TrainCard.Color.BLUE)); temp.add(new TrainCard(TrainCard.Color.GREEN)); temp.add(new TrainCard(TrainCard.Color.ORANGE));
-        temp.add(new TrainCard(TrainCard.Color.PINK)); temp.add(new TrainCard(TrainCard.Color.RED)); temp.add(new TrainCard(TrainCard.Color.WHITE)); temp.add(new TrainCard(TrainCard.Color.YELLOW));
-        temp.add(new TrainCard(TrainCard.Color.WILD));
-
-        ArrayList<TrainCard> random = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-            int randomIndex = (int) (Math.random()*9);
-            random.add(temp.get(randomIndex));
+            temp.add(this.trainCardDeck.drawFromTop());
         }
 
-        return random;
+        return temp;
     }
 
-    public ArrayList<Ticket> initializeTickets() { // TODO: Deck management not randomness and emptiness
+    public ArrayList<Ticket> initializeTickets() {
         ArrayList<Ticket> temp = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            int randomIndex = (int) (Math.random()*29);
-            temp.add(new Ticket(randomIndex + 1));
+            temp.add(this.ticketDeck.drawFromTop());
         }
 
         return temp;
@@ -130,11 +120,58 @@ public class Game {
     }
 
     private ArrayList<Ticket> populateTicketDeck() {
-        return null; //TODO: Get this to work.
+        ArrayList<Ticket> temp = new ArrayList<>();
+        int index = 0;
+        temp.add(new Ticket(index, "Los Angeles", "New York City", 21));     index++;
+        temp.add(new Ticket(index, "Duluth", "Houston", 8));                 index++;
+        temp.add(new Ticket(index, "Sault Ste Marie", "Nashville", 8));      index++;
+        temp.add(new Ticket(index, "New York", "Atlanta", 6));               index++;
+        temp.add(new Ticket(index, "Portland", "Nashville", 17));            index++;
+        temp.add(new Ticket(index, "Vancouver", "Montréal", 20));            index++;
+        temp.add(new Ticket(index, "Duluth", "El Paso", 10));                index++;
+        temp.add(new Ticket(index, "Toronto", "Miami", 10));                 index++;
+        temp.add(new Ticket(index, "Portland", "Phoenix", 11));              index++;
+        temp.add(new Ticket(index, "Dallas", "New York City", 11));          index++;
+        temp.add(new Ticket(index, "Calgary", "Salt Lake City", 7));         index++;
+        temp.add(new Ticket(index, "Calgary", "Phoenix", 13));               index++;
+        temp.add(new Ticket(index, "Los Angeles", "Miami", 20));             index++;
+        temp.add(new Ticket(index, "Winnipeg", "Little Rock", 11));          index++;
+        temp.add(new Ticket(index, "San Francisco", "Atlanta", 17));         index++;
+        temp.add(new Ticket(index, "Kansas City", "Houston", 5));            index++;
+        temp.add(new Ticket(index, "Los Angeles", "Chicago", 16));           index++;
+        temp.add(new Ticket(index, "Denver", "Pittsburgh", 11));             index++;
+        temp.add(new Ticket(index, "Chicago", "Santa Fe", 9));               index++;
+        temp.add(new Ticket(index, "Vancouver", "Santa Fe", 13));            index++;
+        temp.add(new Ticket(index, "Boston", "Miami", 12));                  index++;
+        temp.add(new Ticket(index, "Chicago", "New Orleans", 7));            index++;
+        temp.add(new Ticket(index, "Montreal", "Atlanta", 9));               index++;
+        temp.add(new Ticket(index, "Seattle", "New York City", 22));         index++;
+        temp.add(new Ticket(index, "Denver", "El Paso", 4));                 index++;
+        temp.add(new Ticket(index, "Helena", "Los Angeles", 8));             index++;
+        temp.add(new Ticket(index, "Winnipeg", "Houston", 12));              index++;
+        temp.add(new Ticket(index, "Montreal", "New Orleans", 13));          index++;
+        temp.add(new Ticket(index, "Sault Ste Marie", "Oklahoma City", 9));  index++;
+        temp.add(new Ticket(index, "Seattle", "Los Angeles", 9));
+        return temp;
     }
 
     private ArrayList<TrainCard> populateTrainCardDeck() {
-        return null; //TODO: Get this to work.
+        ArrayList<TrainCard> temp = new ArrayList<>();
+        for (int i = 0; i < 14; i++) {
+            if(i < 12) {
+                temp.add(new TrainCard(TrainCard.Color.BLACK));
+                temp.add(new TrainCard(TrainCard.Color.BLUE));
+                temp.add(new TrainCard(TrainCard.Color.GREEN));
+                temp.add(new TrainCard(TrainCard.Color.ORANGE));
+                temp.add(new TrainCard(TrainCard.Color.PINK));
+                temp.add(new TrainCard(TrainCard.Color.RED));
+                temp.add(new TrainCard(TrainCard.Color.WHITE));
+                temp.add(new TrainCard(TrainCard.Color.YELLOW));
+            }
+            temp.add(new TrainCard(TrainCard.Color.WILD));
+        }
+
+        return temp;
     }
 
     /* *********** GETTERS AND SETTERS *********** */
