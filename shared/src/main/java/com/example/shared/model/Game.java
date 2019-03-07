@@ -29,6 +29,11 @@ public class Game {
         this.isPlaying = false;
         this.maxPlayers = maxPlayers;
         this.gameId = UUID.randomUUID().toString();
+        this.availableColors = new ArrayList<>();
+        this.availableRoutes =  new ArrayList<>();
+        this.claimedRoutes =  new ArrayList<>();
+        this.chatHistory =  new ArrayList<>();
+        this.gameHistory =  new ArrayList<>();
         this.ticketDeck = new Deck<>(this.initializeTickets());
         this.trainCardDeck = new Deck<>(this.initializeTrainCards());
         addPlayer(host);
