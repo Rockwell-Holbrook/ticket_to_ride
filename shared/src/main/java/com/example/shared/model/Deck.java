@@ -28,7 +28,7 @@ public class Deck<T> {
         while (inUse.size() > 0) {
             // Until there are no more cards in inUse
             // Remove a random card from the inUse deck and add it to the new deck
-            newDeck.add(inUse.remove(rand.nextInt() % inUse.size()));
+            newDeck.add(inUse.remove(rand.nextInt(Integer.MAX_VALUE) % inUse.size()));
         }
         // Make the new deck the in use deck
         inUse = newDeck;
