@@ -121,10 +121,37 @@ public class Game {
 
     private ArrayList<Ticket> populateTicketDeck() {
         ArrayList<Ticket> temp = new ArrayList<>();
-
-        for (int i = 1; i < 31; i++) {
-            temp.add(new Ticket(i));
-        }
+        int index = 0;
+        temp.add(new Ticket(index, "Los Angeles", "New York City", 21));     index++;
+        temp.add(new Ticket(index, "Duluth", "Houston", 8));                 index++;
+        temp.add(new Ticket(index, "Sault Ste Marie", "Nashville", 8));      index++;
+        temp.add(new Ticket(index, "New York", "Atlanta", 6));               index++;
+        temp.add(new Ticket(index, "Portland", "Nashville", 17));            index++;
+        temp.add(new Ticket(index, "Vancouver", "Montréal", 20));            index++;
+        temp.add(new Ticket(index, "Duluth", "El Paso", 10));                index++;
+        temp.add(new Ticket(index, "Toronto", "Miami", 10));                 index++;
+        temp.add(new Ticket(index, "Portland", "Phoenix", 11));              index++;
+        temp.add(new Ticket(index, "Dallas", "New York City", 11));          index++;
+        temp.add(new Ticket(index, "Calgary", "Salt Lake City", 7));         index++;
+        temp.add(new Ticket(index, "Calgary", "Phoenix", 13));               index++;
+        temp.add(new Ticket(index, "Los Angeles", "Miami", 20));             index++;
+        temp.add(new Ticket(index, "Winnipeg", "Little Rock", 11));          index++;
+        temp.add(new Ticket(index, "San Francisco", "Atlanta", 17));         index++;
+        temp.add(new Ticket(index, "Kansas City", "Houston", 5));            index++;
+        temp.add(new Ticket(index, "Los Angeles", "Chicago", 16));           index++;
+        temp.add(new Ticket(index, "Denver", "Pittsburgh", 11));             index++;
+        temp.add(new Ticket(index, "Chicago", "Santa Fe", 9));               index++;
+        temp.add(new Ticket(index, "Vancouver", "Santa Fe", 13));            index++;
+        temp.add(new Ticket(index, "Boston", "Miami", 12));                  index++;
+        temp.add(new Ticket(index, "Chicago", "New Orleans", 7));            index++;
+        temp.add(new Ticket(index, "Montreal", "Atlanta", 9));               index++;
+        temp.add(new Ticket(index, "Seattle", "New York City", 22));         index++;
+        temp.add(new Ticket(index, "Denver", "El Paso", 4));                 index++;
+        temp.add(new Ticket(index, "Helena", "Los Angeles", 8));             index++;
+        temp.add(new Ticket(index, "Winnipeg", "Houston", 12));              index++;
+        temp.add(new Ticket(index, "Montreal", "New Orleans", 13));          index++;
+        temp.add(new Ticket(index, "Sault Ste Marie", "Oklahoma City", 9));  index++;
+        temp.add(new Ticket(index, "Seattle", "Los Angeles", 9));
         return temp;
     }
 
