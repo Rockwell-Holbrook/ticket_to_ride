@@ -121,7 +121,7 @@ public class Game {
 
     private ArrayList<Ticket> populateTicketDeck() {
         ArrayList<Ticket> temp = new ArrayList<>();
-        int index = 0;
+        int index = 1;
         temp.add(new Ticket(index, "Los Angeles", "New York City", 21));     index++;
         temp.add(new Ticket(index, "Duluth", "Houston", 8));                 index++;
         temp.add(new Ticket(index, "Sault Ste Marie", "Nashville", 8));      index++;
