@@ -11,9 +11,10 @@ import java.util.Map;
 public class GameManager {
     private static final GameManager instance = new GameManager();
 
-    private GameManager(){}
+    private GameManager() {
+    }
 
-    public static GameManager getInstance(){
+    public static GameManager getInstance() {
         return instance;
     }
 
@@ -25,9 +26,9 @@ public class GameManager {
     /**
      * Creates the game and adds it to the notPlayingGameList and to the socketServer using gameID as the key.
      *
-     * @param host The Player hosting the game. This player will be set to host upon creation.
+     * @param host       The Player hosting the game. This player will be set to host upon creation.
      * @param maxPlayers The max number of players this game needs before it can start. An int between 2-5.
-     * @param gameName The name of the game.
+     * @param gameName   The name of the game.
      */
     public String createGame(Player host, int maxPlayers, String gameName) {
         Game game = new Game(host, maxPlayers, gameName);
@@ -47,22 +48,21 @@ public class GameManager {
     public void joinGame(String gameId, Player player) {
         Game game = this.notPlayingGameList.get(gameId);
 
-        if(game.getPlayerList().size() != game.getMaxPlayers()) {
+        if (game.getPlayerList().size() != game.getMaxPlayers()) {
             game.addPlayer(player);
             clientProxy.joinGameComplete(player.getUsername(), gameId);
             clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
         }
     }
 
-    public void sendGameList(String username){
+    public void sendGameList(String username) {
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()), username);
     }
 
     /**
-     *
      * @param gameId The ID of the game that needs to be started.
-     *
-     * Starts the game specified by the gameID.
+     *               <p>
+     *               Starts the game specified by the gameID.
      */
     public void startGame(String gameId) {
         Game game = this.notPlayingGameList.get(gameId);
@@ -93,15 +93,13 @@ public class GameManager {
      * Send a message to the chat lobby in an un-started game
      *
      * @param gameId Id of game lobby
-     * @param chat Message to send to all users and username in one
+     * @param chat   Message to send to all users and username in one
      */
     public void sendChat(Chat chat, String gameId, boolean gameStarted) {
         Game game;
-        if(gameStarted) {
+        if (gameStarted) {
             game = this.playingGameList.get(gameId);
-        }
-
-        else {
+        } else {
             game = this.notPlayingGameList.get(gameId);
         }
         game.addChatToList(chat);
@@ -115,14 +113,12 @@ public class GameManager {
      */
     public void getChatHistory(String gameId, String username, boolean gameStarted) {
         Game game;
-        if(gameStarted) {
+        if (gameStarted) {
             game = this.playingGameList.get(gameId);
-        }
-
-        else {
+        } else {
             game = this.notPlayingGameList.get(gameId);
         }
-        clientProxy.receivedChatHistory(game.getChatHistory(),gameStarted, username, game.getGameId());
+        clientProxy.receivedChatHistory(game.getChatHistory(), gameStarted, username, game.getGameId());
     }
 
     /**
@@ -139,26 +135,26 @@ public class GameManager {
      *
      * @param gameId The ID of the game we need to work with!
      */
-    public void readyToInitialize(String gameId, String username) { // TODO: Make this function actually work. Returning dummy data atm.
+    public void readyToInitialize(String gameId, String username) {
         Game game = this.playingGameList.get(gameId);
 
         ArrayList<TrainCard> trainCards = game.initializeTrainCards();
-        ArrayList< Ticket > tickets = game.initializeTickets();
+        ArrayList<Ticket> tickets = game.initializeTickets();
         ArrayList<Player> turnOrder = game.initializeTurnOrder(username);
 
         clientProxy.initializeGame(game.getTrainCardsFaceUp(), trainCards, tickets, turnOrder, username, game.getGameId());
+        game.sendDeckCount();
     }
 
     /**
-     *
-     * @param gameId ID of the game needed!
+     * @param gameId   ID of the game needed!
      * @param username username that is ready to initialize
      */
     public void initializeComplete(String gameId, String username) {
         Game game = this.playingGameList.get(gameId);
         game.setReadyPlayers(game.getReadyPlayers() + 1);
 
-        if(game.getMaxPlayers() == game.getReadyPlayers()) {
+        if (game.getMaxPlayers() == game.getReadyPlayers()) {
             ArrayList<Player> tempTurnOrder = new ArrayList<>(game.getPlayerList());
             clientProxy.startTurn(game.getAvailableRoutes(), tempTurnOrder.get(0).getUsername());
         }

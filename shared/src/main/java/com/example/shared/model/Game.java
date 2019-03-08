@@ -119,6 +119,10 @@ public class Game {
         return turnOrder;
     }
 
+    public void sendDeckCount(){
+        clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+    }
+
     private ArrayList<Ticket> populateTicketDeck() {
         ArrayList<Ticket> temp = new ArrayList<>();
         int index = 1;
