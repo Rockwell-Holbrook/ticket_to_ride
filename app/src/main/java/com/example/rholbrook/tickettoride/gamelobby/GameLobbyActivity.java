@@ -66,6 +66,7 @@ public class GameLobbyActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 chatPresenter.sendChat(chatEditText.getText().toString());
+                chatEditText.getText().clear();
             }
         });
     }

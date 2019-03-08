@@ -43,6 +43,7 @@ public class ChatFragment extends Fragment implements ChatContract.ChatView {
             @Override
             public void onClick(View v) {
                 presenter.sendChat(editText.getText().toString());
+                editText.getText().clear();
             }
         });
         editText = view.findViewById(R.id.chat_edit_text);
