@@ -1,29 +1,31 @@
-package com.example.rholbrook.tickettoride.gamelobby;
+package com.example.rholbrook.tickettoride.chat;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.rholbrook.tickettoride.R;
-import com.example.rholbrook.tickettoride.game.ChatFragmentPresenter;
-import com.example.rholbrook.tickettoride.game.DrawerContract;
+import com.example.rholbrook.tickettoride.game.HistoryContract;
 import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
-    private DrawerContract.ChatPresenter presenter;
-    private List<Chat> chats;
+    private final String TAG = "ticket_to_ride: ChatAdapter";
 
-    public ChatAdapter(List<Chat> chats, DrawerContract.ChatPresenter presenter) {
+    private ChatContract.ChatPresenter presenter;
+    private List<Chat> chats;
+    private Context context;
+
+    public ChatAdapter(List<Chat> chats, ChatContract.ChatPresenter presenter, Context context) {
         this.chats = chats;
         this.presenter = presenter;
+        this.context = context;
     }
 
     @NonNull
@@ -63,17 +65,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private int getColor(Player.PlayerColor playerColor) {
         switch (playerColor) {
             case GREEN:
-                return R.color.green;
+                return ContextCompat.getColor(context, R.color.green);
             case RED:
-                return R.color.red;
+                return ContextCompat.getColor(context, R.color.red);
             case BLUE:
-                return R.color.blue;
+                return ContextCompat.getColor(context, R.color.blue);
             case BLACK:
-                return R.color.black;
+                return ContextCompat.getColor(context, R.color.black);
             case YELLOW:
-                return R.color.gold;
+                return ContextCompat.getColor(context, R.color.gold);
             default:
-                return R.color.white;
+                return ContextCompat.getColor(context, R.color.white);
         }
     }
 }

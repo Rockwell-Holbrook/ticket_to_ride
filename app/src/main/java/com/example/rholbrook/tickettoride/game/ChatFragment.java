@@ -11,15 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
-import com.example.rholbrook.tickettoride.gamelobby.ChatAdapter;
+import com.example.rholbrook.tickettoride.chat.ChatAdapter;
+import com.example.rholbrook.tickettoride.chat.ChatContract;
+import com.example.rholbrook.tickettoride.chat.ChatPresenter;
+import com.example.rholbrook.tickettoride.game.GameActivityModel;
+import com.example.rholbrook.tickettoride.game.HistoryContract;
 import com.example.shared.model.Chat;
 
 import java.util.List;
 
-public class ChatFragment extends Fragment implements DrawerContract.ChatView {
-    private DrawerContract.ChatPresenter presenter;
+public class ChatFragment extends Fragment implements ChatContract.ChatView {
+    private ChatContract.ChatPresenter presenter;
     private RecyclerView chatRecyclerView;
     private Button sendButton;
     private EditText editText;
@@ -33,7 +36,7 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-        presenter = new ChatFragmentPresenter(this);
+        presenter = new ChatPresenter(this, GameActivityModel.getInstance());
         chatRecyclerView = view.findViewById(R.id.chat_recycler_view);
         sendButton = view.findViewById(R.id.drawer_chat_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +52,14 @@ public class ChatFragment extends Fragment implements DrawerContract.ChatView {
 
     @Override
     public void updateChatList (List<Chat> chatMessages) {
-        chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        chatRecyclerView.setAdapter(new ChatAdapter(chatMessages, presenter));
-        chatRecyclerView.scrollToPosition(chatMessages.size() - 1);
+        final List<Chat> messages = chatMessages;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                chatRecyclerView.setAdapter(new ChatAdapter(messages, presenter, getContext()));
+                chatRecyclerView.scrollToPosition(messages.size() - 1);
+            }
+        });
     }
 }

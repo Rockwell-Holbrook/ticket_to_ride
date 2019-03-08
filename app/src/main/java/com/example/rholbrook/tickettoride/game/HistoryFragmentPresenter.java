@@ -5,11 +5,11 @@ import com.example.shared.model.Player;
 
 import java.util.List;
 
-public class HistoryFragmentPresenter implements DrawerContract.HistoryPresenter {
-    private DrawerContract.HistoryView viewCallback;
+public class HistoryFragmentPresenter implements HistoryContract.HistoryPresenter {
+    private HistoryContract.HistoryView viewCallback;
     private GameActivityModel model;
 
-    public HistoryFragmentPresenter(DrawerContract.HistoryView viewCallback) {
+    public HistoryFragmentPresenter(HistoryContract.HistoryView viewCallback) {
         this.viewCallback = viewCallback;
         model = GameActivityModel.getInstance();
         model.setHistoryListener(this);

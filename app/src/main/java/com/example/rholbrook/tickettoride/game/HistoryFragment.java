@@ -14,8 +14,8 @@ import com.example.shared.model.GameHistory;
 
 import java.util.List;
 
-public class HistoryFragment extends Fragment implements DrawerContract.HistoryView {
-    DrawerContract.HistoryPresenter presenter;
+public class HistoryFragment extends Fragment implements HistoryContract.HistoryView {
+    HistoryContract.HistoryPresenter presenter;
     private RecyclerView historyRecyclerView;
 
     @Override

@@ -210,7 +210,7 @@ public class GameActivity extends AppCompatActivity implements
 
             @Override
             public void onDrawerOpened(@NonNull View view) {
-
+                // Do nothing
             }
 
             @Override

@@ -1,20 +1,18 @@
-package com.example.rholbrook.tickettoride.game;
+package com.example.rholbrook.tickettoride.chat;
 
-import android.util.Log;
+import com.example.rholbrook.tickettoride.game.GameActivityModel;
 import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 
 import java.util.List;
 
-public class ChatFragmentPresenter implements DrawerContract.ChatPresenter {
-    private String TAG = "ChatFragmentPresenter";
+public class ChatPresenter implements ChatContract.ChatPresenter {
+    private ChatContract.ChatView viewCallback;
+    private ChatContract.ChatModel model;
 
-    private DrawerContract.ChatView viewCallback;
-    private GameActivityModel model;
-
-    public ChatFragmentPresenter(DrawerContract.ChatView viewCallback) {
+    public ChatPresenter(ChatContract.ChatView viewCallback, ChatContract.ChatModel model) {
         this.viewCallback = viewCallback;
-        model = GameActivityModel.getInstance();
+        this.model = model;
         model.setChatListener(this);
     }
 
@@ -25,7 +23,6 @@ public class ChatFragmentPresenter implements DrawerContract.ChatPresenter {
 
     @Override
     public void sendChat(String message) {
-        Log.d(TAG, "sendChat");
         model.sendChat(message);
     }
 

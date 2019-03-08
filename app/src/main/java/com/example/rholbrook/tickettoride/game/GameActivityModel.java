@@ -1,9 +1,9 @@
 package com.example.rholbrook.tickettoride.game;
 
 import android.util.Log;
+import com.example.rholbrook.tickettoride.chat.ChatContract;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
-import com.example.rholbrook.tickettoride.serverconnection.StubServer;
 import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Chat;
 import com.example.shared.model.Game;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class GameActivityModel extends Observable {
+public class GameActivityModel extends Observable implements ChatContract.ChatModel {
     private String TAG = "GameActivityModel";
 
     private static final int NO_OPPONENTS = 1;
@@ -28,8 +28,8 @@ public class GameActivityModel extends Observable {
     public static final int ADDITIONAL_TICKETS_SELECTION_TYPE = 1;
 
     private static GameActivityModel instance;
-    private DrawerContract.ChatPresenter chatListener;
-    private DrawerContract.HistoryPresenter historyListener;
+    private ChatContract.ChatPresenter chatListener;
+    private HistoryContract.HistoryPresenter historyListener;
     private IServer server;
     private String gameId;
     private GameActivityContract.Presenter gameActivityPresenter;
@@ -128,14 +128,17 @@ public class GameActivityModel extends Observable {
         chatListener.updateChatList(chatMessages);
     }
 
+    @Override
     public void sendChat(String message) {
         Log.d(TAG, "sendChat");
         Chat newChat = new Chat(Authentication.getInstance().getUsername(), message);
         server.sendChat(newChat, gameId, true);
     }
 
+    @Override
     public void getChatHistory() {
-        server.getChatHistory(gameId, Authentication.getInstance().getUsername(), true);
+        chatListener.updateChatList(chatMessages);
+        //server.getChatHistory(gameId, Authentication.getInstance().getUsername(), true);
     }
 
     public void receivedHistoryObject(GameHistory history) {
@@ -162,10 +165,6 @@ public class GameActivityModel extends Observable {
 
     public void drawTickets() {
         ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
-    }
-
-    public void newMessageReceived(String username, String message) {
-        //Todo: sendMessage
     }
 
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
@@ -286,14 +285,16 @@ public class GameActivityModel extends Observable {
         ServerProxy.getInstance().claimRoute(gameId, Authentication.getInstance().getUsername(), routeId);
     }
 
-    public void setChatListener(DrawerContract.ChatPresenter chatListener) {
+    @Override
+    public void setChatListener(ChatContract.ChatPresenter chatListener) {
         this.chatListener = chatListener;
     }
 
-    public void setHistoryListener(DrawerContract.HistoryPresenter historyListener) {
+    public void setHistoryListener(HistoryContract.HistoryPresenter historyListener) {
         this.historyListener = historyListener;
     }
 
+    @Override
     public Player.PlayerColor getPlayerColor(String username) {
         if (opponentOne != null && opponentOne.getUsername().equals(username)) {
             return opponentOne.getPlayerColor();

@@ -1,13 +1,12 @@
-package com.example.rholbrook.tickettoride.game;
+package com.example.rholbrook.tickettoride.chat;
 
 import com.example.shared.model.Chat;
-import com.example.shared.model.GameHistory;
 import com.example.shared.model.Player;
 
 import java.util.List;
 
-public class DrawerContract {
-    interface ChatView {
+public class ChatContract {
+    public interface ChatView {
         void updateChatList(List<Chat> chatMessages);
     }
 
@@ -18,13 +17,10 @@ public class DrawerContract {
         Player.PlayerColor getPlayerColor(String username);
     }
 
-    interface HistoryView {
-        void updateGameHistory(List<GameHistory> gameHistory);
-    }
-
-    interface HistoryPresenter {
-        void updateGameHistory(List<GameHistory> gameHistory);
-        void getGameHistory();
+    public interface ChatModel {
+        void setChatListener(ChatContract.ChatPresenter chatListener);
+        void sendChat(String message);
+        void getChatHistory();
         Player.PlayerColor getPlayerColor(String username);
     }
 }
