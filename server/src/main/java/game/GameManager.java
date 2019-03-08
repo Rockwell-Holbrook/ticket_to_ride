@@ -138,7 +138,7 @@ public class GameManager {
     public void readyToInitialize(String gameId, String username) {
         Game game = this.playingGameList.get(gameId);
 
-        ArrayList<TrainCard> trainCards = game.initializeTrainCards();
+        ArrayList<TrainCard> trainCards = game.initializeTrainCardsInHand();
         ArrayList<Ticket> tickets = game.initializeTickets();
         ArrayList<Player> turnOrder = game.initializeTurnOrder(username);
 
