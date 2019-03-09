@@ -3,7 +3,6 @@ package com.example.rholbrook.tickettoride.serverconnection;
 import android.util.Log;
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
-import com.example.rholbrook.tickettoride.game.GameActivityPresenter;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
 import com.example.shared.interfaces.IClientInGame;
@@ -13,8 +12,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class ClientFacade implements IClientInGame, IClientNotInGame {
     private final String TAG = "ticket_to_ride";
@@ -132,6 +132,11 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     @Override
     public void turnEnded(Player player) {
         GameActivityModel.getInstance().playerTurnEnded(player);
+    }
+
+    @Override
+    public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
+
     }
 
     //    MainActivity

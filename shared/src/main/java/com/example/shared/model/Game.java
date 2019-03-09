@@ -65,15 +65,82 @@ public class Game {
 
     public void initializeTrainCardsFaceUp() {
         ArrayList<TrainCard> temp = new ArrayList<>();
+        boolean valid = false;
 
-        for (int i = 0; i < 5; i++) {
-            temp.add(this.trainCardDeck.drawFromTop());
+        // Until we get a valid face up config
+        while(!valid){
+            // Fill temp
+            for (int i = 0; i < 5; i++) {
+                temp.add(this.trainCardDeck.drawFromTop());
+            }
+
+            // Check if temp is a valid face up config
+            valid = isValidFaceUp(temp);
+
+            // If it's not valid, discard all and make a new temp
+            if(!valid){
+                for (TrainCard tc: temp) {
+                    this.trainCardDeck.discard(tc);
+                }
+                temp = new ArrayList<>();
+            }
         }
 
         this.trainCardsFaceUp = temp;
     }
 
-    public ArrayList<TrainCard> initializeTrainCards() {
+    boolean isValidFaceUp(ArrayList<TrainCard> faceUp){
+        int pinkCnt = 0;
+        int whiteCnt = 0;
+        int blueCnt = 0;
+        int yellowCnt = 0;
+        int orangeCnt = 0;
+        int blackCnt = 0;
+        int redCnt = 0;
+        int greenCnt = 0;
+        int wildCnt = 0;
+
+        final int COLOR_MAX = 4;
+        final int WILD_MAX = 3;
+
+        for(TrainCard tc : faceUp){
+            switch (tc.getColor()){
+                case PINK:
+                    pinkCnt++;
+                    break;
+                case WHITE:
+                    whiteCnt++;
+                    break;
+                case BLUE:
+                    blueCnt++;
+                    break;
+                case YELLOW:
+                    yellowCnt++;
+                    break;
+                case ORANGE:
+                    orangeCnt++;
+                    break;
+                case BLACK:
+                    blackCnt++;
+                    break;
+                case RED:
+                    redCnt++;
+                    break;
+                case GREEN:
+                    greenCnt++;
+                    break;
+                case WILD:
+                    wildCnt++;
+                    break;
+            }
+        }
+
+        return pinkCnt < COLOR_MAX && whiteCnt < COLOR_MAX && blueCnt < COLOR_MAX && yellowCnt < COLOR_MAX &&
+                orangeCnt < COLOR_MAX && blackCnt < COLOR_MAX && redCnt < COLOR_MAX && greenCnt < COLOR_MAX &&
+                wildCnt < WILD_MAX;
+    }
+
+    public ArrayList<TrainCard> initializeTrainCardsInHand() {
         ArrayList<TrainCard> temp = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
@@ -117,6 +184,10 @@ public class Game {
         }
 
         return turnOrder;
+    }
+
+    public void sendDeckCount(){
+        clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
     }
 
     private ArrayList<Ticket> populateTicketDeck() {
