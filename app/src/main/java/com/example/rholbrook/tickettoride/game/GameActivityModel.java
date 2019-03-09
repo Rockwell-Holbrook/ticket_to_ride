@@ -1,15 +1,23 @@
 package com.example.rholbrook.tickettoride.game;
 
+import android.util.Log;
+import com.example.rholbrook.tickettoride.chat.ChatContract;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
+import com.example.shared.interfaces.IServer;
+import com.example.shared.model.Chat;
+import com.example.shared.model.Game;
+import com.example.shared.model.GameHistory;
+import com.example.shared.model.Player;
 import com.example.shared.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Set;
 
-public class GameActivityModel extends Observable {
+public class GameActivityModel extends Observable implements ChatContract.ChatModel {
+    private String TAG = "GameActivityModel";
+
     private static final int NO_OPPONENTS = 1;
     private static final int ONE_OPPONENT = 2;
     private static final int TWO_OPPONENTS = 3;
@@ -20,9 +28,12 @@ public class GameActivityModel extends Observable {
     public static final int ADDITIONAL_TICKETS_SELECTION_TYPE = 1;
 
     private static GameActivityModel instance;
+    private ChatContract.ChatPresenter chatListener;
+    private HistoryContract.HistoryPresenter historyListener;
+    private IServer server;
+    private String gameId;
     private GameActivityContract.Presenter gameActivityPresenter;
     private GameMapFragmentContract.Presenter gameMapFragmentPresenter;
-    private String gameId;
     private Player opponentOne;
     private Player opponentTwo;
     private Player opponentThree;
@@ -30,8 +41,13 @@ public class GameActivityModel extends Observable {
     private Player client;
     private List<Player> turnOrder;
     private List<TrainCard> faceUpCards;
+    private Game game;
+    private List<Chat> chatMessages;
+    private List<GameHistory> gameHistory;
 
     public GameActivityModel() {
+        server = ServerProxy.getInstance();
+        chatMessages = new ArrayList<>();
 
     }
 
@@ -102,6 +118,43 @@ public class GameActivityModel extends Observable {
         return instance;
     }
 
+    public void receivedChat(Chat chat) {
+        chatMessages.add(chat);
+        chatListener.updateChatList(chatMessages);
+    }
+
+    public void receivedChatHistory(List<Chat> chatHistory) {
+        chatMessages = chatHistory;
+        chatListener.updateChatList(chatMessages);
+    }
+
+    @Override
+    public void sendChat(String message) {
+        Log.d(TAG, "sendChat");
+        Chat newChat = new Chat(Authentication.getInstance().getUsername(), message);
+        server.sendChat(newChat, gameId, true);
+    }
+
+    @Override
+    public void getChatHistory() {
+        chatListener.updateChatList(chatMessages);
+        //server.getChatHistory(gameId, Authentication.getInstance().getUsername(), true);
+    }
+
+    public void receivedHistoryObject(GameHistory history) {
+        gameHistory.add(history);
+        historyListener.updateGameHistory(this.gameHistory);
+    }
+
+    public void receivedGameHistory(List<GameHistory> gameHistory) {
+        this.gameHistory = gameHistory;
+        historyListener.updateGameHistory(this.gameHistory);
+    }
+
+    public void getGameHistory() {
+        server.getGameHistory(gameId);
+    }
+
     public void selectFaceUpCard(int index) {
         ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
     }
@@ -112,10 +165,6 @@ public class GameActivityModel extends Observable {
 
     public void drawTickets() {
         ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
-    }
-
-    public void newMessageReceived(String username, String message) {
-        //Todo: sendMessage
     }
 
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
@@ -234,5 +283,31 @@ public class GameActivityModel extends Observable {
 
     public void selectRoute(int routeId) {
         ServerProxy.getInstance().claimRoute(gameId, Authentication.getInstance().getUsername(), routeId);
+    }
+
+    @Override
+    public void setChatListener(ChatContract.ChatPresenter chatListener) {
+        this.chatListener = chatListener;
+    }
+
+    public void setHistoryListener(HistoryContract.HistoryPresenter historyListener) {
+        this.historyListener = historyListener;
+    }
+
+    @Override
+    public Player.PlayerColor getPlayerColor(String username) {
+        if (opponentOne != null && opponentOne.getUsername().equals(username)) {
+            return opponentOne.getPlayerColor();
+        }
+        if (opponentTwo != null && opponentTwo.getUsername().equals(username)) {
+            return opponentTwo.getPlayerColor();
+        }
+        if (opponentThree != null && opponentThree.getUsername().equals(username)) {
+            return opponentThree.getPlayerColor();
+        }
+        if (opponentFour != null && opponentFour.getUsername().equals(username)) {
+            return opponentFour.getPlayerColor();
+        }
+        return client.getPlayerColor();
     }
 }

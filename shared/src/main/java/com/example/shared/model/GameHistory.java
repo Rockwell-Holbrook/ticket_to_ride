@@ -4,7 +4,7 @@ public class GameHistory {
     private String username;
     private String history;
 
-    GameHistory(String username, String history) {
+    public GameHistory(String username, String history) {
         this.username = username;
         this.history = history;
     }
