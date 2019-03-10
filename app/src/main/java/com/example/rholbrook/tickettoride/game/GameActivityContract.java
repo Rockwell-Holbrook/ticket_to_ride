@@ -39,6 +39,7 @@ public class GameActivityContract {
         Drawable getColorBackground(Context applicationContext, Player.PlayerColor playerColor);
         void setFaceUpCards(List<TrainCard> faceUpCards);
         TrainCard getFaceUpCard(int i);
+        void startUserTurn();
         void endTurn();
         void initializeComplete();
         void selectTickets(List<Ticket> tickets);

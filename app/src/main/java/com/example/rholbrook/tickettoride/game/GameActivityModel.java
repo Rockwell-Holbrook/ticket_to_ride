@@ -279,6 +279,8 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
 
     public void startTurn(List<Route> availableRoutes) {
         gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+        gameMapFragmentPresenter.startUserTurn();
+        gameActivityPresenter.startUserTurn();
     }
 
     public void selectRoute(int routeId) {

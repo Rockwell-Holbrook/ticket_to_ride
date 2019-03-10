@@ -31,6 +31,11 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
     }
 
     @Override
+    public void startUserTurn() {
+        viewCallback.startUserTurn(availableButtons);
+    }
+
+    @Override
     public void updateAvailableRoutes(List<Route> availableRoutes) {
         availableButtons.clear();
         for (Route route : availableRoutes) {

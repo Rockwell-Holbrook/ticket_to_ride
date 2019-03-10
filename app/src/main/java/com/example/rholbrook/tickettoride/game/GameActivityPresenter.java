@@ -113,6 +113,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void startUserTurn() {
+        viewCallback.startUserTurn();
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }
