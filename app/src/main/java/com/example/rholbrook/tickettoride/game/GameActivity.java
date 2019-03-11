@@ -600,8 +600,8 @@ public class GameActivity extends AppCompatActivity implements
         mPresenter.returnTickets(returnedCards);
         if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
             mPresenter.initializeComplete();
+            mPresenter.runDemo1();
         }
-        mPresenter.runDemo1();
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.example.shared.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Random;
 
 public class GameActivityModel extends Observable implements ChatContract.ChatModel {
     private String TAG = "GameActivityModel";
@@ -158,7 +159,15 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void selectFaceUpCard(int index) {
-        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
+        TrainCard card = gameActivityPresenter.getFaceUpCard(index);
+        List<TrainCard> cards = client.getTrainCards();
+        cards.add(card);
+        client.setTrainCards(cards);
+        faceUpCards.remove(index);
+        faceUpCards.add(index, new TrainCard(TrainCard.Color.ORANGE));
+        gameActivityPresenter.setHandCards(cards);
+        gameActivityPresenter.setFaceUpCards(faceUpCards);
+        //ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
     }
 
     public void selectFaceDownCardDeck() {
@@ -170,7 +179,21 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void drawTickets() {
-        ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
+        List<Ticket> tickets = client.getTickets();
+        int count = 0;
+        int i = 1;
+        while (count < 3) {
+            for (Ticket ticket : tickets) {
+                if (i == ticket.getTicketId()) {
+                    break;
+                }
+            }
+            //tickets.add(new Ticket(i, "AwesomeTown", "Blaineville", 1000000));
+            i++;
+            count++;
+        }
+        ticketDataReceived(tickets);
+        //ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
     }
 
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
