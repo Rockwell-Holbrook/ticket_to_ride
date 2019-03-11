@@ -6,7 +6,7 @@ public class Ticket {
     private String secondCity;
     private int point;
 
-    Ticket(int ticketId, String firstCity, String secondCity, int point) {
+    public Ticket(int ticketId, String firstCity, String secondCity, int point) {
         this.ticketId = ticketId;
         this.firstCity = firstCity;
         this.secondCity = secondCity;

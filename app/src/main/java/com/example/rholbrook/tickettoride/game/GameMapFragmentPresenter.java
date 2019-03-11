@@ -19,6 +19,7 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         mModel = GameActivityModel.getInstance();
         mModel.setGameMapFragmentPresenter(this);
         mModel.addObserver(this);
+        availableButtons = new ArrayList<>();
     }
 
     @Override
@@ -36,6 +37,11 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
     @Override
     public void init() {
 
+    }
+
+    @Override
+    public void startUserTurn() {
+        viewCallback.startUserTurn(availableButtons);
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.GameHistory;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class HistoryFragment extends Fragment implements HistoryContract.HistoryView {
     HistoryContract.HistoryPresenter presenter;
     private RecyclerView historyRecyclerView;
+    private Button demoButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

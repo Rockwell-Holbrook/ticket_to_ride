@@ -18,5 +18,6 @@ public class GameMapFragmentContract {
         void updateAvailableRoutes(List<Route> availableRoutes);
         void selectRoute(int routeId);
         void addAvailableButton(Button button);
+        void startUserTurn();
     }
 }

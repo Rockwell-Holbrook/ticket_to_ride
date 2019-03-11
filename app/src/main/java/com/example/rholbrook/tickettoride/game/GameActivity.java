@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity implements
         {
     private GameActivityContract.Presenter mPresenter;
 
-
+    private Button demoButton;
 
     private RelativeLayout playerHandLayout;
     private FrameLayout gameMapFrameLayout;
@@ -139,6 +139,14 @@ public class GameActivity extends AppCompatActivity implements
         closeDrawerButton = drawerLayout.findViewById(R.id.close_drawer_button);
         drawerTab = drawerLayout.findViewById(R.id.tab_layout);
         drawerFragmentContainer = drawerLayout.findViewById(R.id.drawer_fragment_container);
+
+        demoButton = findViewById(R.id.demo_button);
+        demoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.runDemo2();
+            }
+        });
 
         mPresenter = new GameActivityPresenter(this);
 
@@ -321,8 +329,6 @@ public class GameActivity extends AppCompatActivity implements
         enableFaceUpCards();
     }
 
-
-
     @Override
     public void endUserTurn() {
         faceDownTicketDeck.setActivated(false);
@@ -406,6 +412,7 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void initializeGame(List<Ticket> selectableTickets) {
         selectTickets(selectableTickets, GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE);
+        mPresenter.initializeComplete();
     }
 
     @Override
@@ -593,6 +600,7 @@ public class GameActivity extends AppCompatActivity implements
         mPresenter.returnTickets(returnedCards);
         if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
             mPresenter.initializeComplete();
+            mPresenter.runDemo1();
         }
     }
 
