@@ -164,19 +164,12 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         List<TrainCard> cards = client.getTrainCards();
         cards.add(card);
         client.setTrainCards(cards);
-        faceUpCards.remove(index);
-        faceUpCards.add(index, new TrainCard(TrainCard.Color.ORANGE));
         gameActivityPresenter.setHandCards(cards);
-        gameActivityPresenter.setFaceUpCards(faceUpCards);
-        //ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
     }
 
     public void selectFaceDownCardDeck() {
-        List<TrainCard> cards = client.getTrainCards();
-        cards.add(new TrainCard(TrainCard.Color.PINK));
-        client.setTrainCards(cards);
-        gameActivityPresenter.setHandCards(cards);
-        //ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
     }
 
     public void drawTickets() {
@@ -325,7 +318,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void startTurn(List<Route> availableRoutes) {
-        gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+        if (availableRoutes != null) {
+            gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+
+        }
         gameMapFragmentPresenter.startUserTurn();
         gameActivityPresenter.startUserTurn();
         isTurn = true;
@@ -382,5 +378,14 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
 
     public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
         gameActivityPresenter.setDeckCount(ticketDeckCount, trainDeckCount);
+    }
+
+    public void updateFaceUpCards(List<TrainCard> trainCards) {
+        gameActivityPresenter.setFaceUpCards(trainCards);
+    }
+
+    public void drewCard(TrainCard newCard) {
+        client.addCard(newCard);
+        gameActivityPresenter.setHandCards(client.getTrainCards());
     }
 }

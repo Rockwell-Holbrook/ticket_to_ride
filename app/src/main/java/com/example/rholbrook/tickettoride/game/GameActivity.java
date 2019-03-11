@@ -329,6 +329,7 @@ public class GameActivity extends AppCompatActivity implements
         faceDownTicketDeck.setActivated(true);
         faceDownTrainCardDeck.setActivated(true);
         enableFaceUpCards();
+        playerConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
     }
 
     @Override
@@ -606,8 +607,8 @@ public class GameActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                trainCardDeckCount.setText(trainDeckCount);
-                ticketDeckCountTextView.setText(ticketDeckCount);
+                trainCardDeckCount.setText(String.valueOf(trainDeckCount));
+                ticketDeckCountTextView.setText(String.valueOf(ticketDeckCount));
             }
         });
     }

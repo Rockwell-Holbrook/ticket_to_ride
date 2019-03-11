@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.chat.ChatAdapter;
 import com.example.rholbrook.tickettoride.chat.ChatContract;
@@ -84,12 +85,11 @@ public class GameLobbyActivity extends AppCompatActivity implements
             adminStartGameButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    if(mPresenter.getConnectedPlayers().size() < MINIMUM_CONNECTED_PLAYERS) {
-//                        Toast.makeText(GameLobbyActivity.this, "Cannot start game with less than 2 players", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        Toast.makeText(GameLobbyActivity.this, "Start Game", Toast.LENGTH_SHORT).show();
-//                    }
+                if(mPresenter.getConnectedPlayers().size() < MINIMUM_CONNECTED_PLAYERS) {
+                    Toast.makeText(GameLobbyActivity.this, "Cannot start game with less than 2 players", Toast.LENGTH_SHORT).show();
+                } else {
                     mPresenter.startGame();
+                }
                 }
             });
         } else {

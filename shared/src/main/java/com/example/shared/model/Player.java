@@ -7,7 +7,7 @@ public class Player {
     private String username;
     private boolean isHost;
     private PlayerColor playerColor;
-    private List<TrainCard> TrainCards;
+    private List<TrainCard> trainCards;
     private List<Ticket> tickets;
     private List<Route> claimedRoutes;
     private int remainingTrainCars;
@@ -55,11 +55,11 @@ public class Player {
     }
 
     public List<TrainCard> getTrainCards() {
-        return TrainCards;
+        return trainCards;
     }
 
     public void setTrainCards(List<TrainCard> trainCards) {
-        TrainCards = trainCards;
+        trainCards = trainCards;
     }
 
     public List<Ticket> getTickets() {
@@ -84,6 +84,10 @@ public class Player {
 
     public void setPointsEarned(int pointsEarned) {
         this.pointsEarned = pointsEarned;
+    }
+
+    public void addCard(TrainCard trainCard) {
+        this.trainCards.add(trainCard);
     }
 
     public enum PlayerColor {
