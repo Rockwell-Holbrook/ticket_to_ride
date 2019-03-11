@@ -1,8 +1,8 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
+import android.util.Log;
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
-import com.example.rholbrook.tickettoride.game.GameActivityPresenter;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
 import com.example.shared.interfaces.IClientInGame;
@@ -12,10 +12,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class ClientFacade implements IClientInGame, IClientNotInGame {
+    private final String TAG = "ticket_to_ride";
+
     private static ClientFacade instance;
     private static Gson gson = new Gson();
 
@@ -30,13 +33,15 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
 //    Phase 1 Connections
 //    GameLobby
-    public void chatReceived(String username, String message) {
-        GameLobbyActivityModel.getInstance().newMessageReceived(username, message);
-    }
 
     @Override
     public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
-
+        Log.d(TAG, "Client Facade: in receivedChat");
+        if (gameStarted) {
+            GameActivityModel.getInstance().receivedChat(chat);
+        } else {
+            GameLobbyActivityModel.getInstance().receivedChat(chat);
+        }
     }
 
     @Override
@@ -54,18 +59,18 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     //History Drawer
     @Override
-    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gamId) {
-
+    public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gameId) {
+        GameActivityModel.getInstance().receivedChatHistory(chatHistory);
     }
 
     @Override
     public void receivedHistoryObject(GameHistory history) {
-
+        GameActivityModel.getInstance().receivedHistoryObject(history);
     }
 
     @Override
     public void receivedGameHistory(List<GameHistory> gameHistory) {
-
+        GameActivityModel.getInstance().receivedGameHistory(gameHistory);
     }
 
     //Game Initialization
@@ -130,6 +135,11 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     @Override
     public void turnEnded(Player player) {
         GameActivityModel.getInstance().playerTurnEnded(player);
+    }
+
+    @Override
+    public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
+
     }
 
     //    MainActivity

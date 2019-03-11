@@ -47,6 +47,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chat_tab">Chat</string>
     <string name="game_history_tab">Game History</string>
+    <string name="history_action">Action</string>
     <string name="return_these_tickets">Keep Selected Tickets</string>
     <string name="close">Close</string>
 </resources>

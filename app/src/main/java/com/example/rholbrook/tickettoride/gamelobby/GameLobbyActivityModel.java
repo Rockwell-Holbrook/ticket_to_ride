@@ -1,21 +1,24 @@
 package com.example.rholbrook.tickettoride.gamelobby;
 
+import com.example.rholbrook.tickettoride.chat.ChatContract;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Set;
 
-public class GameLobbyActivityModel extends Observable {
+public class GameLobbyActivityModel extends Observable implements ChatContract.ChatModel {
     private static GameLobbyActivityModel instance;
     private GameLobbyActivityContract.Presenter mListener;
+    private ChatContract.ChatPresenter chatListener;
 
     private String gameId;
-    private ArrayList<Player> connectedPlayers;
-    private ArrayList<ChatModel> chatMessages;
+    private List<Player> connectedPlayers;
+    private List<Chat> chatMessages;
 
     public GameLobbyActivityModel() {
         connectedPlayers = new ArrayList<>();
@@ -37,6 +40,11 @@ public class GameLobbyActivityModel extends Observable {
         this.mListener = mListener;
     }
 
+    @Override
+    public void setChatListener(ChatContract.ChatPresenter chatListener) {
+        this.chatListener = chatListener;
+    }
+
     public String getGameId() {
         return gameId;
     }
@@ -45,7 +53,7 @@ public class GameLobbyActivityModel extends Observable {
         this.gameId = gameId;
     }
 
-    public ArrayList<Player> getConnectedPlayers() {
+    public List<Player> getConnectedPlayers() {
         return connectedPlayers;
     }
 
@@ -53,10 +61,9 @@ public class GameLobbyActivityModel extends Observable {
         this.connectedPlayers = connectedPlayers;
     }
 
-    public void newMessageReceived(String username, String message) {
-        ChatModel newChat = new ChatModel(username, message);
-        chatMessages.add(newChat);
-        mListener.updateChatList(chatMessages);
+    public void receivedChat(Chat chat) {
+        chatMessages.add(chat);
+        chatListener.updateChatList(chatMessages);
     }
 
     public void startGame() {
@@ -67,11 +74,6 @@ public class GameLobbyActivityModel extends Observable {
         mListener.gameStarted();
     }
 
-    public void sendChat(String message) {
-        ServerProxy.getInstance().sendChat(new Chat(Authentication.getInstance().getUsername(), message), gameId, false);
-        //ServerProxy.getInstance().sendChat(Authentication.getInstance().getUsername(), gameId, message);
-    }
-
     public void newPlayerJoined(Set<Player> playerList) {
         this.connectedPlayers = new ArrayList<Player>(playerList);
         mListener.updatePlayerList(new ArrayList<Player>(playerList));
@@ -79,5 +81,26 @@ public class GameLobbyActivityModel extends Observable {
 
     public void getPlayerList() {
         ServerProxy.getInstance().getPlayerList(gameId);
+    }
+
+    @Override
+    public void sendChat(String message) {
+        Chat newChat = new Chat(Authentication.getInstance().getUsername(), message);
+        ServerProxy.getInstance().sendChat(newChat, gameId, false);
+    }
+
+    @Override
+    public Player.PlayerColor getPlayerColor(String username) {
+        for (Player player : connectedPlayers) {
+            if (player.getUsername().equals(username)) {
+                return player.getPlayerColor();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void getChatHistory() {
+        chatListener.updateChatList(chatMessages);
     }
 }

@@ -19,8 +19,11 @@
     <color name="silver">#C0C0C0</color>
     <color name="blue">#219EFA</color>
     <color name="red">#E01313</color>
+    <color name="green">#00DD00</color>
     <color name="grey">#696969</color>
     <color name="card_section_background">#BB808080</color>
+    <color name="drawer_button">#882F9DE8</color>
+    <color name="drawer_chat_background">#FFC9D9</color>
     <color name="drawer_history_background">#B2F9FF</color>
     <color name="selectable_button_border_background">#7FFF00</color>
 </resources>

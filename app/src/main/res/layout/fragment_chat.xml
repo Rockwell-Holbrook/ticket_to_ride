@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/chat_recycler_view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/type_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/drawer_chat_background"
+            tools:listitem="@layout/list_item_chat"
+    />
+
+    <android.support.constraint.ConstraintLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/drawer_chat_background"
+            app:layout_constraintEnd_toEndOf="@id/chat_recycler_view"
+            android:id="@+id/type_layout" app:layout_constraintStart_toStartOf="@id/chat_recycler_view"
+            app:layout_constraintHorizontal_bias="0.5">
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:id="@+id/chat_edit_text" android:layout_weight="1" android:hint="@string/newMessage"
+                android:padding="4dp" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/drawer_chat_button"/>
+        <Button
+                android:layout_width="65dp"
+                android:layout_height="0dp" android:id="@+id/drawer_chat_button" android:layout_weight="0.5"
+                android:background="@drawable/message_send_button" android:text="@string/send"
+                android:textColor="@color/white" android:textSize="12sp"
+                android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/chat_edit_text"
+                android:layout_marginStart="8dp"/>
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>
+

@@ -7,19 +7,18 @@ import com.example.shared.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class ClientProxy implements IClientInGame, IClientNotInGame {
     private String gameId;
     private SocketServer ss;
 
-    public ClientProxy(){
+    public ClientProxy() {
         gameId = null;
         ss = SocketServer.getInstance();
     }
 
-    public ClientProxy(String gameId){
+    public ClientProxy(String gameId) {
         this.gameId = gameId;
         ss = SocketServer.getInstance();
     }
@@ -35,10 +34,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     /**
      * Send the command for just one user to update their game list
-     * @param games List of games
+     *
+     * @param games    List of games
      * @param username User to send cmd to
      */
-    public void updateGameList(ArrayList<Game> games, String username){
+    public void updateGameList(ArrayList<Game> games, String username) {
         String methodName = "updateGameList";
         String[] typeNames = {ArrayList.class.getName()};
         Object[] inputVals = {games};
@@ -151,5 +151,14 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     @Override
     public void turnEnded(Player player) {
 
+    }
+
+    @Override
+    public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
+        String methodName = "sendDeckCount";
+        String[] typeNames = {Integer.class.getName(), Integer.class.getName()};
+        Object[] inputVals = {ticketDeckCount, trainDeckCount};
+
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 }

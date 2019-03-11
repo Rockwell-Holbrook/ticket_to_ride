@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
+import android.util.Log;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IServer;
@@ -13,6 +14,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 public class ServerProxy implements IServer {
+    private final String TAG = "ticket_to_ride";
+
+
     private static ServerProxy instance;
     private SocketClientCommunicator socketClientCommunicator;
     private static Gson gson = new Gson();
@@ -38,7 +42,6 @@ public class ServerProxy implements IServer {
             throw e;
         }
     }
-
 
     public void connectToGameSocket(String gameId, String username) throws URISyntaxException {
         try {
@@ -103,12 +106,18 @@ public class ServerProxy implements IServer {
 
     @Override
     public void getChatHistory(String gameId, String username, boolean gameStarted) {
-        // Todo: Make this sucker work baby.
+        String methodName = "getChatHistory";
+        String[] paramTypes = {String.class.getName()};
+        Object[] paramValues = {gameId};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     @Override
     public void getGameHistory(String gameId) {
-        // Todo: Make this sucker work baby.
+        String methodName = "getGameHistory";
+        String[] paramTypes = {String.class.getName()};
+        Object[] paramValues = {gameId};
+        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
     @Override
@@ -166,6 +175,4 @@ public class ServerProxy implements IServer {
         Object[] paramValues = {gameID, username};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
-
-
 }

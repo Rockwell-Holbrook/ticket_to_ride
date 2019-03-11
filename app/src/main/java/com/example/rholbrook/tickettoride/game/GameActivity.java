@@ -2,10 +2,13 @@ package com.example.rholbrook.tickettoride.game;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -77,7 +80,10 @@ public class GameActivity extends AppCompatActivity implements
     private Button openDrawerButton;
     private DrawerLayout drawerLayout;
     private Button closeDrawerButton;
-
+    private FrameLayout drawerFragmentContainer;
+    private TabLayout drawerTab;
+    private ChatFragment chatFragment;
+    private HistoryFragment historyFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,6 +137,8 @@ public class GameActivity extends AppCompatActivity implements
         openDrawerButton = findViewById(R.id.open_drawer_button);
         drawerLayout = findViewById(R.id.drawer_layout);
         closeDrawerButton = drawerLayout.findViewById(R.id.close_drawer_button);
+        drawerTab = drawerLayout.findViewById(R.id.tab_layout);
+        drawerFragmentContainer = drawerLayout.findViewById(R.id.drawer_fragment_container);
 
         mPresenter = new GameActivityPresenter(this);
 
@@ -159,6 +167,60 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        chatFragment = new ChatFragment();
+        final FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().add(R.id.drawer_fragment_container, chatFragment).commit();
+        drawerTab.addOnTabSelectedListener(new TabLayout.BaseOnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment = fm.findFragmentById(R.id.drawer_fragment_container);
+                if (fragment != null) {
+                    fm.beginTransaction().remove(fragment).commit();
+                }
+                if (tab.getText().equals(getString(R.string.chat_tab))) {
+                    chatFragment = new ChatFragment();
+                    fm.beginTransaction().add(R.id.drawer_fragment_container, chatFragment).commit();
+                } else if (tab.getText().equals(getString(R.string.game_history_tab))) {
+                    historyFragment = new HistoryFragment();
+                    fm.beginTransaction().add(R.id.drawer_fragment_container, historyFragment).commit();
+                } else {
+                    Toast.makeText(GameActivity.this, tab.getText(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(@NonNull View view, float v) {
+                // Do nothing
+            }
+
+            @Override
+            public void onDrawerOpened(@NonNull View view) {
+                // Do nothing
+            }
+
+            @Override
+            public void onDrawerClosed(@NonNull View view) {
+                // Do nothing
+            }
+
+            @Override
+            public void onDrawerStateChanged(int i) {
+                // Do nothing
             }
         });
 
@@ -258,6 +320,8 @@ public class GameActivity extends AppCompatActivity implements
         faceDownTrainCardDeck.setActivated(true);
         enableFaceUpCards();
     }
+
+
 
     @Override
     public void endUserTurn() {
