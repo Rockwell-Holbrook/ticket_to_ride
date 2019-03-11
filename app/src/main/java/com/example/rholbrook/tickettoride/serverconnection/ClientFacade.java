@@ -125,6 +125,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void routeClaimed(Player player, Route route) {
+        GameActivityModel.getInstance().routeClaimed(player, route);
     }
 
     @Override
@@ -139,7 +140,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
-
+        GameActivityModel.getInstance().setDeckCount(ticketDeckCount, trainDeckCount);
     }
 
     //    MainActivity

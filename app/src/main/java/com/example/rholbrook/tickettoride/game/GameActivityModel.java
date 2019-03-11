@@ -288,21 +288,34 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
             setChanged();
             notifyObservers(client);
             clearChanged();
+            if (opponentOne != null) {
+                gameActivityPresenter.setOpponentOneTurn(opponentOne);
+            }
         } else if (player.getUsername().equals(opponentOne.getUsername())) {
             opponentOne = player;
             setChanged();
             notifyObservers(opponentOne);
             clearChanged();
+            if (opponentTwo != null) {
+                gameActivityPresenter.setOpponentTwoTurn(opponentTwo);
+            }
         } else if (player.getUsername().equals(opponentTwo.getUsername())) {
             opponentTwo = player;
             setChanged();
             notifyObservers(opponentTwo);
             clearChanged();
+            if (opponentThree != null) {
+                gameActivityPresenter.setOpponentThreeTurn(opponentThree);
+
+            }
         } else if (player.getUsername().equals(opponentThree.getUsername())) {
             opponentThree = player;
             setChanged();
             notifyObservers(opponentThree);
             clearChanged();
+            if (opponentFour != null) {
+                gameActivityPresenter.setOpponentFourTurn(opponentFour);
+            }
         } else if (player.getUsername().equals(opponentFour.getUsername())) {
             opponentFour = player;
             setChanged();
@@ -361,5 +374,13 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
 
     public void runDemo2() {
 
+    }
+
+    public void routeClaimed(Player player, Route route) {
+        gameMapFragmentPresenter.routeClaimed(player,route);
+    }
+
+    public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
+        gameActivityPresenter.setDeckCount(ticketDeckCount, trainDeckCount);
     }
 }

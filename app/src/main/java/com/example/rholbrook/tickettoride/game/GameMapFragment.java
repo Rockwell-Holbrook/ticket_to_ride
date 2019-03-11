@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
+import com.example.shared.model.Route;
 
 import java.util.List;
 
@@ -88,5 +89,23 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
             }
         });
 
+    }
+
+    @Override
+    public void routeClaimed(int color, int route) {
+        final int selecterColor = color;
+        final int selectedRoute = route;
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Group routeGroup = getView().findViewById(selectedRoute);
+                int[] buttons = routeGroup.getReferencedIds();
+                for (int i = 0; i < buttons.length; i++){
+                    Button button = getView().findViewById(buttons[i]);
+                    button.setBackgroundColor(getResources().getColor(selecterColor));
+                }
+            }
+        });
     }
 }

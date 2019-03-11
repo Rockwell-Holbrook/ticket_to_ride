@@ -11,6 +11,7 @@ public class GameMapFragmentContract {
         void startUserTurn(List<Button> buttons);
         void endUserTurn(List<Button> buttons);
         void addClickListeners(Integer integer);
+        void routeClaimed(int playerColor, int route);
     }
 
     public interface  Presenter {
@@ -19,5 +20,6 @@ public class GameMapFragmentContract {
         void selectRoute(int routeId);
         void addAvailableButton(Button button);
         void startUserTurn();
+        void routeClaimed(Player player, Route route);
     }
 }
