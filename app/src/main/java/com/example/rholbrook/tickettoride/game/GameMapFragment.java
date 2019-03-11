@@ -1,20 +1,16 @@
 package com.example.rholbrook.tickettoride.game;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
-import com.example.rholbrook.tickettoride.login.LoginFragment;
-import com.example.rholbrook.tickettoride.login.LoginFragmentPresenter;
+import com.example.shared.model.Route;
 
 import java.util.List;
 
@@ -45,34 +41,71 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
 
     @Override
     public void startUserTurn(List<Button> availableButtons) {
-        for (Button button : availableButtons) {
-            button.setEnabled(true);
-            button.setBackground(getActivity().getDrawable(R.drawable.selectable_boute_border));
-        }
+        final List<Button> buttons = availableButtons;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            for (Button button : buttons) {
+                button.setEnabled(true);
+                button.setBackground(getActivity().getDrawable(R.drawable.selectable_route_border));
+            }
+            }
+        });
+
     }
 
     @Override
     public void endUserTurn(List<Button> availableButtons) {
-        for (Button button : availableButtons) {
-            button.setEnabled(false);
-            button.setBackground(null);
-        }
+        final List<Button> buttons = availableButtons;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            for (Button button : buttons) {
+                button.setEnabled(false);
+                button.setBackground(null);
+            }
+            }
+        });
     }
 
     @Override
     public void addClickListeners(Integer integer) {
         final int routeId = integer;
-        Group routeGroup = getView().findViewById(integer);
-        int[] routeButtons = routeGroup.getReferencedIds();
-        for (int i = 0 ; i < routeButtons.length; i++) {
-            Button button = getView().findViewById(routeButtons[i]);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mPresenter.selectRoute(routeId);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+            Group routeGroup = getView().findViewById(routeId);
+            int[] routeButtons = routeGroup.getReferencedIds();
+            for (int i = 0 ; i < routeButtons.length; i++) {
+                Button button = getView().findViewById(routeButtons[i]);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.selectRoute(routeId);
+                    }
+                });
+                mPresenter.addAvailableButton(button);
+            }
+            }
+        });
+
+    }
+
+    @Override
+    public void routeClaimed(int color, int route) {
+        final int selecterColor = color;
+        final int selectedRoute = route;
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Group routeGroup = getView().findViewById(selectedRoute);
+                int[] buttons = routeGroup.getReferencedIds();
+                for (int i = 0; i < buttons.length; i++){
+                    Button button = getView().findViewById(buttons[i]);
+                    button.setBackgroundColor(getResources().getColor(selecterColor));
                 }
-            });
-            mPresenter.addAvailableButton(button);
-        }
+            }
+        });
     }
 }

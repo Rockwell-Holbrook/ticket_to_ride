@@ -15,19 +15,38 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
 
     public GameMapFragmentPresenter(GameMapFragmentContract.View viewCallback) {
         this.viewCallback = viewCallback;
+        availableButtons = new ArrayList<>();
         mModel = GameActivityModel.getInstance();
         mModel.setGameMapFragmentPresenter(this);
         mModel.addObserver(this);
+        availableButtons = new ArrayList<>();
     }
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (arg.getClass().getName().equals(Boolean.class.getName())) {
+            boolean isTurn = (boolean) arg;
+            if (isTurn) {
+                viewCallback.startUserTurn(availableButtons);
+            } else {
+                viewCallback.endUserTurn(availableButtons);
+            }
+        }
     }
 
     @Override
     public void init() {
 
+    }
+
+    @Override
+    public void startUserTurn() {
+        viewCallback.startUserTurn(availableButtons);
+    }
+
+    @Override
+    public void routeClaimed(Player player, Route route) {
+        viewCallback.routeClaimed(getPlayerColor(player), ROUTE_GROUP_MAP.get(route.getGroupId()));
     }
 
     @Override
@@ -151,5 +170,22 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         ROUTE_GROUP_MAP.put(98, R.id.boston_new_york_group_one);
         ROUTE_GROUP_MAP.put(99, R.id.chicago_toronto_group_one);
         ROUTE_GROUP_MAP.put(100, R.id.toronto_montreal_group_one);
+    }
+
+    public int getPlayerColor(Player player) {
+        switch (player.getPlayerColor()) {
+            case YELLOW:
+                return R.color.yellow;
+            case GREEN:
+                return R.color.green;
+            case BLACK:
+                return R.color.grey;
+            case BLUE:
+                return R.color.blue;
+            case RED:
+                return R.color.red;
+            default:
+                return 0;
+        }
     }
 }

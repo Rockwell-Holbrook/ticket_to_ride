@@ -38,6 +38,13 @@ public class GameActivityPresenter implements
             } else if (updatedPlayer.getUsername().equals(mModel.getOpponentFour().getUsername())) {
                 viewCallback.updatePlayerFour(updatedPlayer);
             }
+        } else if (arg.getClass().getName().equals(Boolean.class.getName())) {
+            boolean isTurn = (boolean)arg;
+            if (isTurn) {
+                viewCallback.startUserTurn(mModel.getClient());
+            } else {
+                viewCallback.endUserTurn();
+            }
         }
     }
 
@@ -103,13 +110,41 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public Drawable getColorTurnBackground(Context applicationContext, Player.PlayerColor playerColor) {
+        switch (playerColor) {
+            case GREEN:
+                return applicationContext.getDrawable(R.drawable.section_green_player_isturn);
+            case RED:
+                return applicationContext.getDrawable(R.drawable.section_red_player_isturn);
+            case BLUE:
+                return applicationContext.getDrawable(R.drawable.section_blue_player_isturn);
+            case BLACK:
+                return applicationContext.getDrawable(R.drawable.section_black_player_isturn);
+            case YELLOW:
+                return applicationContext.getDrawable(R.drawable.section_yellow_player_isturn);
+            default:
+                return null;
+        }
+    }
+
+    @Override
     public void setFaceUpCards(List<TrainCard> faceUpCards) {
         viewCallback.setFaceUpDeck(faceUpCards);
     }
 
     @Override
+    public void setHandCards(List<TrainCard> cards) {
+        viewCallback.setHandCards(cards);
+    }
+
+    @Override
     public TrainCard getFaceUpCard(int i) {
         return mModel.getFaceUpCards().get(i);
+    }
+
+    @Override
+    public void startUserTurn() {
+        viewCallback.startUserTurn(mModel.getClient());
     }
 
     @Override
@@ -192,4 +227,39 @@ public class GameActivityPresenter implements
         TICKET_IMAGE_MAP.put(Integer.valueOf(29), R.mipmap.winnipeg_houston);
         TICKET_IMAGE_MAP.put(Integer.valueOf(30), R.mipmap.winnipeg_little_rock);
     }
+
+    public void runDemo1() {
+        mModel.runDemo1();
+    }
+
+    public void runDemo2() {mModel.runDemo2();}
+
+    @Override
+    public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
+        viewCallback.updateDeckCounts(ticketDeckCount, trainDeckCount);
+    }
+
+    @Override
+    public void setOpponentOneTurn(Player opponentOne) {
+        viewCallback.setOpponentOneTurn(opponentOne);
+    }
+
+    @Override
+    public void setOpponentTwoTurn(Player opponentTwo) {
+        viewCallback.setOpponentTwoTurn(opponentTwo);
+
+    }
+
+    @Override
+    public void setOpponentThreeTurn(Player opponentThree) {
+        viewCallback.setOpponentThreeTurn(opponentThree);
+
+    }
+
+    @Override
+    public void setOpponentFourTurn(Player opponentFour) {
+        viewCallback.setOpponentFourTurn(opponentFour);
+
+    }
+
 }

@@ -1,7 +1,6 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
 import android.util.Log;
-import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
@@ -105,14 +104,17 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void ticketsReceived(List<Ticket> tickets) {
+    public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
         GameActivityModel.getInstance().ticketDataReceived(tickets);
     }
 
     //GamePlay
     @Override
-    public void startTurn(List<Route> availableRoutes, String username) {
-        GameActivityModel.getInstance().startTurn(availableRoutes);
+    public void startTurn(List<Route> availableRoutes, String username, String gameId) {
+        String typeValue = gson.toJson(availableRoutes);
+        Type typeName = new TypeToken<List<Route>>(){}.getType();
+        List<Route> routesList = gson.fromJson(typeValue, typeName);
+        GameActivityModel.getInstance().startTurn(routesList);
     }
 
     @Override
@@ -122,11 +124,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void routeClaimed(Player player, Route route) {
-    }
-
-    @Override
-    public void cardDrawn(List<TrainCard> faceUpCards) {
-        GameActivityModel.getInstance().setFaceUpCards(faceUpCards);
+        GameActivityModel.getInstance().routeClaimed(player, route);
     }
 
     @Override
@@ -136,7 +134,20 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
+        GameActivityModel.getInstance().setDeckCount(ticketDeckCount, trainDeckCount);
+    }
 
+    @Override
+    public void updateFaceUpCards(List<TrainCard> newTrainCards) {
+        String typeValue = gson.toJson(newTrainCards);
+        Type typeName = new TypeToken<List<TrainCard>>(){}.getType();
+        List<TrainCard> trainCards = gson.fromJson(typeValue, typeName);
+        GameActivityModel.getInstance().updateFaceUpCards(trainCards);
+    }
+
+    @Override
+    public void receiveFaceDownCard(TrainCard newCard, String username, String gameId) {
+        GameActivityModel.getInstance().drewCard(newCard);
     }
 
     //    MainActivity

@@ -19,15 +19,28 @@
             android:layout_height="match_parent" android:id="@+id/card_section"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" android:background="@color/card_section_background">
-        <ImageView
+        <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:srcCompat="@mipmap/card_back"
-                android:id="@+id/facedown_card_deck"
-                android:layout_weight="1" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                android:layout_height="0dp" android:layout_weight="1" android:layout_marginTop="8dp">
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:srcCompat="@mipmap/card_back"
+                    android:id="@+id/facedown_card_deck"
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/face_down_card_deck_count"
+                    app:layout_constraintEnd_toEndOf="@+id/facedown_card_deck"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="@drawable/point_circle" android:padding="2dp" android:paddingStart="4dp"
+                    android:paddingEnd="4dp" android:textColor="@color/black" android:textSize="10sp"/>
+        </android.support.constraint.ConstraintLayout>
         <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -73,14 +86,29 @@
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"/>
-        <ImageView
+        <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:srcCompat="@mipmap/ticket_back" android:id="@+id/ticket_deck"
-                android:layout_weight="1" android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp" android:layout_marginTop="8dp"/>
+                android:layout_height="0dp" android:layout_weight="1" android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp">
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:srcCompat="@mipmap/ticket_back" android:id="@+id/ticket_deck"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"/>
+            <TextView
+                    android:text="0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/ticket_deck_count"
+                    app:layout_constraintEnd_toEndOf="@+id/ticket_deck"
+                    app:layout_constraintBottom_toBottomOf="@+id/ticket_deck"
+                    android:background="@drawable/point_circle" android:textSize="10sp"
+                    android:paddingStart="4dp" android:paddingEnd="4dp" android:padding="2dp"
+                    android:textColor="@color/black"/>
+        </android.support.constraint.ConstraintLayout>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -92,7 +120,8 @@
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" android:layout_weight="1"
-                android:background="@drawable/section_blue_player" android:id="@+id/opponent_one_constraint_layout">
+                android:background="@drawable/section_blue_player" android:id="@+id/opponent_one_constraint_layout"
+        >
 
             <ImageView
                     android:layout_width="25dp"
@@ -475,8 +504,14 @@
     <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
             app:layout_constraintStart_toEndOf="@+id/card_section" android:id="@+id/fragment_map_container"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout">
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout" app:layout_constraintEnd_toEndOf="parent">
     </FrameLayout>
+    <Button
+            android:text="Advance Turn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/demo_button" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" android:layout_marginEnd="16dp" app:layout_constraintEnd_toEndOf="parent"/>
 </android.support.constraint.ConstraintLayout>

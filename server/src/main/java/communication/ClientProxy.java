@@ -119,17 +119,21 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void ticketsReceived(List<Ticket> tickets) {
+    public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
+        String methodName = "ticketsReceived";
+        String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {tickets, username, gameId};
 
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
     @Override
-    public void startTurn(List<Route> availableRoutes, String username) {
+    public void startTurn(List<Route> availableRoutes, String username, String gameId) {
         String methodName = "startTurn";
-        String[] typeNames = {List.class.getName(), String.class.getName()};
-        Object[] inputVals = {availableRoutes, username};
+        String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {availableRoutes, username, gameId};
 
-        ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
 
@@ -140,12 +144,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     @Override
     public void routeClaimed(Player player, Route route) {
+        String methodName = "routeClaimed";
+        String[] typeNames = {Player.class.getName(), Route.class.getName()};
+        Object[] inputVals = {player, route};
 
-    }
-
-    @Override
-    public void cardDrawn(List<TrainCard> faceUpCards) {
-
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 
     @Override
@@ -156,9 +159,27 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     @Override
     public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
         String methodName = "sendDeckCount";
-        String[] typeNames = {Integer.class.getName(), Integer.class.getName()};
+        String[] typeNames = {int.class.getName(), int.class.getName()};
         Object[] inputVals = {ticketDeckCount, trainDeckCount};
 
         ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+    }
+
+    @Override
+    public void updateFaceUpCards(List<TrainCard> newTrainCards) {
+        String methodName = "updateFaceUpCards";
+        String[] typeNames = {List.class.getName()};
+        Object[] inputVals = {newTrainCards};
+
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+    }
+
+    @Override
+    public void receiveFaceDownCard(TrainCard newCard, String username, String gameId) {
+        String methodName = "receiveFaceDownCard";
+        String[] typeNames = {TrainCard.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {newCard, username, gameId};
+
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 }

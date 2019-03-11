@@ -68,8 +68,10 @@ public interface IClientInGame {
      * Signals the GameActivityModel to show the player a list of tickets to choose from
      *
      * @param tickets List of 3 Ticket objects which which the player must choose from
+     * @param username
+     * @param gameId
      */
-    void ticketsReceived(List<Ticket> tickets);
+    void ticketsReceived(List<Ticket> tickets, String username, String gameId);
 
     /**
      * Signals the GameActivityModel to allow the player to take a turn, updating the
@@ -77,7 +79,7 @@ public interface IClientInGame {
      *
      * @param availableRoutes List of Route objects representing all unclaimed routes
      */
-    void startTurn(List<Route> availableRoutes, String username);
+    void startTurn(List<Route> availableRoutes, String username, String gameId);
 
     /**
      * Signals the GameActivityModel to update which tickets are completed
@@ -95,13 +97,6 @@ public interface IClientInGame {
     void routeClaimed(Player player, Route route);
 
     /**
-     * Signals the GameActivityModel to update the face-up train cards after a player draws one
-     *
-     * @param faceUpCards List of TrainCard objects for the face-up train cards
-     */
-    void cardDrawn(List<TrainCard> faceUpCards);
-
-    /**
      * Signals the GameActivityModel to update a player's Player Summary Box at the end of
      * another player's turn
      *
@@ -116,4 +111,21 @@ public interface IClientInGame {
      * @param trainDeckCount  Number of cards in train card deck
      */
     void sendDeckCount(int ticketDeckCount, int trainDeckCount);
+
+
+    /**
+     * Sends a new set of faceup train cards
+     *
+     * @param newTrainCards New Train Card objects to update the view with
+     */
+    void updateFaceUpCards(List<TrainCard> newTrainCards);
+
+    /**
+     * Sends the user the card that they drew when they take a top card
+     *
+     * @param newCard The card that the player drew
+     * @param username The username of the player
+     * @param gameId GameId to specify which game
+     */
+    void receiveFaceDownCard(TrainCard newCard, String username, String gameId);
 }

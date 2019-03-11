@@ -173,7 +173,7 @@ public class Route {
         ROUTE_GROUP_MAP.put(100, new Route(100, new City("Toronto"), new City("Montreal"), RouteColor.GRAY, 4, 3));
     }
 
-    private enum RouteColor {
+    public enum RouteColor {
         PINK, WHITE, BLUE, YELLOW, ORANGE, BLACK, RED, GREEN, GRAY;
     }
 }
