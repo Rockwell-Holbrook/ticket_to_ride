@@ -153,7 +153,6 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     @Override
     public void turnEnded(Player player) {
-
     }
 
     @Override

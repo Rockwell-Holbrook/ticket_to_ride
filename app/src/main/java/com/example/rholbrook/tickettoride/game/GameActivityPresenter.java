@@ -42,8 +42,6 @@ public class GameActivityPresenter implements
             boolean isTurn = (boolean)arg;
             if (isTurn) {
                 viewCallback.startUserTurn(mModel.getClient());
-            } else {
-                viewCallback.endUserTurn();
             }
         }
     }
@@ -229,7 +227,6 @@ public class GameActivityPresenter implements
     }
 
     public void runDemo1() {
-        mModel.runDemo1();
     }
 
     public void runDemo2() {mModel.runDemo2();}
@@ -241,25 +238,32 @@ public class GameActivityPresenter implements
 
     @Override
     public void setOpponentOneTurn(Player opponentOne) {
+        viewCallback.setClientNotTurn(mModel.getClient());
         viewCallback.setOpponentOneTurn(opponentOne);
     }
 
     @Override
     public void setOpponentTwoTurn(Player opponentTwo) {
+        viewCallback.setOpponentOneNotTurn(mModel.getClient());
         viewCallback.setOpponentTwoTurn(opponentTwo);
 
     }
 
     @Override
     public void setOpponentThreeTurn(Player opponentThree) {
+        viewCallback.setOpponentTwoNotTurn(mModel.getClient());
         viewCallback.setOpponentThreeTurn(opponentThree);
-
     }
 
     @Override
     public void setOpponentFourTurn(Player opponentFour) {
+        viewCallback.setOpponentThreeNotTurn(mModel.getClient());
         viewCallback.setOpponentFourTurn(opponentFour);
+    }
 
+    @Override
+    public void sendToast(String message) {
+        viewCallback.showToast(message);
     }
 
 }

@@ -32,6 +32,11 @@ public class GameActivityContract {
         void setOpponentTwoTurn(Player opponentTwo);
         void setOpponentThreeTurn(Player opponentThree);
         void setOpponentFourTurn(Player opponentFour);
+        void showToast(String message);
+        void setOpponentThreeNotTurn(Player client);
+        void setOpponentTwoNotTurn(Player client);
+        void setOpponentOneNotTurn(Player client);
+        void setClientNotTurn(Player client);
     }
 
     public interface Presenter {
@@ -63,5 +68,6 @@ public class GameActivityContract {
         void setOpponentTwoTurn(Player opponentTwo);
         void setOpponentThreeTurn(Player opponentThree);
         void setOpponentFourTurn(Player opponentFour);
+        void sendToast(String change_turn);
     }
 }
