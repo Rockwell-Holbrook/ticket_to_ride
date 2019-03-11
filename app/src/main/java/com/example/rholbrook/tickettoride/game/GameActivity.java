@@ -83,6 +83,7 @@ public class GameActivity extends AppCompatActivity implements
     private HistoryFragment historyFragment;
     private TextView trainCardDeckCount;
     private TextView ticketDeckCountTextView;
+    private int cardsDrawn = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,6 +164,10 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 mPresenter.selectFaceDownCardDeck();
+                cardsDrawn += 1;
+                if (cardsDrawn == 2) {
+                    endUserTurn();
+                }
             }
         });
 
@@ -275,12 +280,14 @@ public class GameActivity extends AppCompatActivity implements
         int width = displayMetrics.widthPixels / 7;
         float xOffset = 0f;
         playerHandLayout.removeAllViews();
-        for (TrainCard trainCard : handCards) {
-            ImageView iv = new ImageView(this);
-            iv.setImageDrawable(getColorCardDrawable(trainCard));
-            iv.setTranslationX(xOffset);
-            xOffset += 2 * width / handCards.size();
-            playerHandLayout.addView(iv);
+        if (handCards != null) {
+            for (TrainCard trainCard : handCards) {
+                ImageView iv = new ImageView(this);
+                iv.setImageDrawable(getColorCardDrawable(trainCard));
+                iv.setTranslationX(xOffset);
+                xOffset += 2 * width / handCards.size();
+                playerHandLayout.addView(iv);
+            }
         }
     }
 
@@ -326,6 +333,7 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void startUserTurn(Player player) {
+        cardsDrawn = 0;
         faceDownTicketDeck.setActivated(true);
         faceDownTrainCardDeck.setActivated(true);
         enableFaceUpCards();
@@ -350,6 +358,10 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
+                cardsDrawn += 1;
+                if (cardsDrawn == 2) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardTwo.setOnClickListener(new View.OnClickListener() {
@@ -358,6 +370,10 @@ public class GameActivity extends AppCompatActivity implements
                 TrainCard selectedCard = mPresenter.getFaceUpCard(1);
                 mPresenter.selectFaceUpCard(1);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                    endUserTurn();
+                }
+                cardsDrawn += 1;
+                if (cardsDrawn == 2) {
                     endUserTurn();
                 }
             }
@@ -370,6 +386,10 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
+                cardsDrawn += 1;
+                if (cardsDrawn == 2) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardFour.setOnClickListener(new View.OnClickListener() {
@@ -380,6 +400,10 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
                     endUserTurn();
                 }
+                cardsDrawn += 1;
+                if (cardsDrawn == 2) {
+                    endUserTurn();
+                }
             }
         });
         faceUpCardFive.setOnClickListener(new View.OnClickListener() {
@@ -388,6 +412,10 @@ public class GameActivity extends AppCompatActivity implements
                 TrainCard selectedCard = mPresenter.getFaceUpCard(4);
                 mPresenter.selectFaceUpCard(4);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                    endUserTurn();
+                }
+                cardsDrawn += 1;
+                if (cardsDrawn == 2) {
                     endUserTurn();
                 }
             }
@@ -415,7 +443,6 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void initializeGame(List<Ticket> selectableTickets) {
         selectTickets(selectableTickets, GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE);
-        mPresenter.initializeComplete();
     }
 
     @Override
@@ -660,7 +687,7 @@ public class GameActivity extends AppCompatActivity implements
         mPresenter.returnTickets(returnedCards);
         if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
             mPresenter.initializeComplete();
-            mPresenter.runDemo1();
+//            mPresenter.runDemo1();
         }
     }
 
