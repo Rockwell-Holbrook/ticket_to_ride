@@ -287,6 +287,7 @@ public class Game {
         for (Player player : playerList) {
             if (player.getUsername().equals(username)) {
                 Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
+                player.addPoints(routeToClaim.getPointValue());
                 player.addClaimedRoute(routeToClaim);
                 this.claimedRoutes.add(routeToClaim);
                 clientProxy.routeClaimed(player, routeToClaim);

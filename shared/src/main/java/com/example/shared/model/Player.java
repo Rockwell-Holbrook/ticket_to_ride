@@ -20,6 +20,9 @@ public class Player {
         this.playerColor = playerColor;
         pointsEarned = 0;
         remainingTrainCars = 45;
+        trainCards = new ArrayList<>();
+        tickets = new ArrayList<>();
+        claimedRoutes = new ArrayList<>();
     }
 
     public int getRemainingTrainCars() {
@@ -59,7 +62,7 @@ public class Player {
     }
 
     public void setTrainCards(List<TrainCard> trainCards) {
-        trainCards = trainCards;
+        this.trainCards = trainCards;
     }
 
     public List<Ticket> getTickets() {
@@ -88,6 +91,10 @@ public class Player {
 
     public void addCard(TrainCard trainCard) {
         this.trainCards.add(trainCard);
+    }
+
+    public void addPoints(int pointValue) {
+        this.pointsEarned += pointValue;
     }
 
     public enum PlayerColor {
