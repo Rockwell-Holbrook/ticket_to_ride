@@ -216,4 +216,12 @@ public class GameActivityPresenter implements
 
     public void runDemo2() {mModel.runDemo2();}
 
+    public void message(String message) {
+        viewCallback.message(message);
+    }
+
+    public void updatePlayerOne(Player player) {
+        viewCallback.updatePlayerOne(player);
+    }
+
 }

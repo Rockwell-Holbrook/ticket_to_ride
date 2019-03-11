@@ -345,7 +345,7 @@ public class GameActivity extends AppCompatActivity implements
                 TrainCard selectedCard = mPresenter.getFaceUpCard(0);
                 mPresenter.selectFaceUpCard(0);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
+                    //endUserTurn();
                 }
             }
         });
@@ -355,7 +355,7 @@ public class GameActivity extends AppCompatActivity implements
                 TrainCard selectedCard = mPresenter.getFaceUpCard(1);
                 mPresenter.selectFaceUpCard(1);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
+                    //endUserTurn();
                 }
             }
         });
@@ -365,7 +365,7 @@ public class GameActivity extends AppCompatActivity implements
                 TrainCard selectedCard = mPresenter.getFaceUpCard(2);
                 mPresenter.selectFaceUpCard(2);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
+                    //endUserTurn();
                 }
             }
         });
@@ -375,7 +375,7 @@ public class GameActivity extends AppCompatActivity implements
                 TrainCard selectedCard = mPresenter.getFaceUpCard(3);
                 mPresenter.selectFaceUpCard(3);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
+                    //endUserTurn();
                 }
             }
         });
@@ -385,7 +385,7 @@ public class GameActivity extends AppCompatActivity implements
                 TrainCard selectedCard = mPresenter.getFaceUpCard(4);
                 mPresenter.selectFaceUpCard(4);
                 if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
+                    //endUserTurn();
                 }
             }
         });
@@ -602,6 +602,11 @@ public class GameActivity extends AppCompatActivity implements
             mPresenter.initializeComplete();
             mPresenter.runDemo1();
         }
+    }
+
+    @Override
+    public void message(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -180,19 +180,23 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
 
     public void drawTickets() {
         List<Ticket> tickets = client.getTickets();
+        List<Ticket> newTickets = new ArrayList<>();
+        boolean duplicate = false;
         int count = 0;
         int i = 1;
         while (count < 3) {
             for (Ticket ticket : tickets) {
                 if (i == ticket.getTicketId()) {
-                    break;
+                    duplicate = true;
                 }
             }
-            //tickets.add(new Ticket(i, "AwesomeTown", "Blaineville", 1000000));
-            i++;
-            count++;
+            if (!duplicate) {
+                newTickets.add(new Ticket(i, "AwesomeTown", "Blaineville", 1000000));
+                i++;
+                count++;
+            }
         }
-        ticketDataReceived(tickets);
+        ticketDataReceived(newTickets);
         //ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
     }
 
@@ -359,6 +363,50 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void runDemo2() {
+        try {
+            playerTurnEnded(client);
+            Thread.sleep(2000);
+            gameActivityPresenter.message("Opponent draws a train card");
+            gameActivityPresenter.message("Player card and deck counts will update");
+            Thread.sleep(2000);
+            List<TrainCard> trainCards = opponentOne.getTrainCards();
+            if (trainCards == null) {
+                opponentOne.setTrainCards(new ArrayList<TrainCard>());
+                trainCards = opponentOne.getTrainCards();
+            }
+            trainCards.add(new TrainCard(TrainCard.Color.BLUE));
+            opponentOne.setTrainCards(trainCards);
+            gameActivityPresenter.updatePlayerOne(opponentOne);
+            // TODO update deck count
+            Thread.sleep(2000);
+            gameActivityPresenter.message("Opponent takes destination tickets");
+            gameActivityPresenter.message("Player ticket and deck counts will update");
+            Thread.sleep(2000);
+            List<Ticket> tickets = opponentOne.getTickets();
+            tickets.add(new Ticket(1, "bob", "bill,", 100));
+            tickets.add(new Ticket(2, "jill", "sam", 1));
+            opponentOne.setTickets(tickets);
+            // TODO update ticket count
+            Thread.sleep(2000);
+            gameActivityPresenter.message("Opponent claims a route");
+            gameActivityPresenter.message("Stats will update, map will update");
+            Thread.sleep(2000);
+            List<Route> routes = opponentOne.getClaimedRoutes();
+            routes.add(Route.ROUTE_GROUP_MAP.get(69));
+            opponentOne.setClaimedRoutes(routes);
+            trainCards = opponentOne.getTrainCards();
+            trainCards.remove(0);
+            trainCards.remove(0);
+            trainCards.remove(0);
+            trainCards.remove(0);
+            opponentOne.setTrainCards(trainCards);
+            int cars = opponentOne.getRemainingTrainCars();
+            opponentOne.setRemainingTrainCars(cars - 4);
+            int points = opponentOne.getPointsEarned();
+            opponentOne.setPointsEarned(points + 7);
+        } catch (Exception e) {
+            gameActivityPresenter.message(e.getMessage());
+        }
 
     }
 }

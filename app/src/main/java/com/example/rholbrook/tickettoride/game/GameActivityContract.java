@@ -27,6 +27,7 @@ public class GameActivityContract {
         void updatePlayerThree(Player updatedPlayer);
         void updatePlayerFour(Player updatedPlayer);
         void selectTickets(List<Ticket> selectableTickets, int selectionTypeIndicator);
+        void message(String message);
     }
 
     public interface Presenter {
@@ -52,5 +53,7 @@ public class GameActivityContract {
         void setHandCards(List<TrainCard> cards);
         void runDemo1();
         void runDemo2();
+        void message(String message);
+        void updatePlayerOne(Player player);
     }
 }
