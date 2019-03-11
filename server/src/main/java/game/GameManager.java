@@ -159,4 +159,14 @@ public class GameManager {
             clientProxy.startTurn(game.getAvailableRoutes(), tempTurnOrder.get(0).getUsername(), gameId);
         }
     }
+
+    public void getCard(String gameId, String username, int index) {
+        Game game = this.playingGameList.get(gameId);
+        game.cardSelected(username, index);
+    }
+
+    public void requestTickets(String gameID, String username) {
+        Game game = this.playingGameList.get(gameID);
+        game.ticketsRequested(username);
+    }
 }

@@ -147,7 +147,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void getCard(String gameId, String username, int index) {
-        // Todo: Make this sucker work baby.
+        gameManager.getCard(gameId, username, index);
     }
 
     /**
@@ -167,6 +167,6 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void requestTickets(String gameID, String username) {
-        // Todo: Make this sucker work baby.
+        gameManager.requestTickets(gameID, username);
     }
 }

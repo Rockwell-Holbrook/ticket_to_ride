@@ -15,6 +15,7 @@ import com.example.shared.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 import java.util.Random;
 
 public class GameActivityModel extends Observable implements ChatContract.ChatModel {
@@ -43,10 +44,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     private Player client;
     private List<Player> turnOrder;
     private List<TrainCard> faceUpCards;
+    private boolean isTurn;
     private Game game;
     private List<Chat> chatMessages;
     private List<GameHistory> gameHistory;
-    private boolean isTurn;
 
     public GameActivityModel() {
         server = ServerProxy.getInstance();
@@ -163,19 +164,12 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         List<TrainCard> cards = client.getTrainCards();
         cards.add(card);
         client.setTrainCards(cards);
-        faceUpCards.remove(index);
-        faceUpCards.add(index, new TrainCard(TrainCard.Color.ORANGE));
         gameActivityPresenter.setHandCards(cards);
-        gameActivityPresenter.setFaceUpCards(faceUpCards);
-        //ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
     }
 
     public void selectFaceDownCardDeck() {
-        List<TrainCard> cards = client.getTrainCards();
-        cards.add(new TrainCard(TrainCard.Color.PINK));
-        client.setTrainCards(cards);
-        gameActivityPresenter.setHandCards(cards);
-        //ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
     }
 
     public void drawTickets() {
@@ -291,21 +285,34 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
             setChanged();
             notifyObservers(client);
             clearChanged();
+            if (opponentOne != null) {
+                gameActivityPresenter.setOpponentOneTurn(opponentOne);
+            }
         } else if (player.getUsername().equals(opponentOne.getUsername())) {
             opponentOne = player;
             setChanged();
             notifyObservers(opponentOne);
             clearChanged();
+            if (opponentTwo != null) {
+                gameActivityPresenter.setOpponentTwoTurn(opponentTwo);
+            }
         } else if (player.getUsername().equals(opponentTwo.getUsername())) {
             opponentTwo = player;
             setChanged();
             notifyObservers(opponentTwo);
             clearChanged();
+            if (opponentThree != null) {
+                gameActivityPresenter.setOpponentThreeTurn(opponentThree);
+
+            }
         } else if (player.getUsername().equals(opponentThree.getUsername())) {
             opponentThree = player;
             setChanged();
             notifyObservers(opponentThree);
             clearChanged();
+            if (opponentFour != null) {
+                gameActivityPresenter.setOpponentFourTurn(opponentFour);
+            }
         } else if (player.getUsername().equals(opponentFour.getUsername())) {
             opponentFour = player;
             setChanged();
@@ -315,7 +322,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void startTurn(List<Route> availableRoutes) {
-        gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+        if (availableRoutes != null) {
+            gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+
+        }
         gameMapFragmentPresenter.startUserTurn();
         gameActivityPresenter.startUserTurn();
         isTurn = true;
@@ -408,5 +418,22 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
             gameActivityPresenter.message(e.getMessage());
         }
 
+    }
+
+    public void routeClaimed(Player player, Route route) {
+        gameMapFragmentPresenter.routeClaimed(player,route);
+    }
+
+    public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
+        gameActivityPresenter.setDeckCount(ticketDeckCount, trainDeckCount);
+    }
+
+    public void updateFaceUpCards(List<TrainCard> trainCards) {
+        gameActivityPresenter.setFaceUpCards(trainCards);
+    }
+
+    public void drewCard(TrainCard newCard) {
+        client.addCard(newCard);
+        gameActivityPresenter.setHandCards(client.getTrainCards());
     }
 }

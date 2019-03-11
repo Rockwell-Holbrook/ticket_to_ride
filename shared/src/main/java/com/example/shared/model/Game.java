@@ -247,6 +247,29 @@ public class Game {
         return temp;
     }
 
+    public void cardSelected(String username, int index) {
+        //5 is the index for the face-down-deck
+        for (Player player : playerList) {
+            if (player.getUsername().equals(username)) {
+                if (index != 5) {
+                    player.addCard(trainCardsFaceUp.get(index));
+                    trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
+                    clientProxy.updateFaceUpCards(trainCardsFaceUp);
+                    clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+                } else {
+                    TrainCard newCard = trainCardDeck.drawFromTop();
+                    player.addCard(newCard);
+                    clientProxy.receiveFaceDownCard(newCard, username, gameId);
+                    clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+                }
+            }
+        }
+    }
+
+    public void ticketsRequested(String username) {
+        clientProxy.ticketsReceived(this.initializeTickets(), username, gameId);
+    }
+
     /* *********** GETTERS AND SETTERS *********** */
 
     public String getGameId() {

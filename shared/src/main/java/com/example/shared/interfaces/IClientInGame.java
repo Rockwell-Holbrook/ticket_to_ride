@@ -68,8 +68,10 @@ public interface IClientInGame {
      * Signals the GameActivityModel to show the player a list of tickets to choose from
      *
      * @param tickets List of 3 Ticket objects which which the player must choose from
+     * @param username
+     * @param gameId
      */
-    void ticketsReceived(List<Ticket> tickets);
+    void ticketsReceived(List<Ticket> tickets, String username, String gameId);
 
     /**
      * Signals the GameActivityModel to allow the player to take a turn, updating the
@@ -116,4 +118,21 @@ public interface IClientInGame {
      * @param trainDeckCount  Number of cards in train card deck
      */
     void sendDeckCount(int ticketDeckCount, int trainDeckCount);
+
+
+    /**
+     * Sends a new set of faceup train cards
+     *
+     * @param newTrainCards New Train Card objects to update the view with
+     */
+    void updateFaceUpCards(List<TrainCard> newTrainCards);
+
+    /**
+     * Sends the user the card that they drew when they take a top card
+     *
+     * @param newCard The card that the player drew
+     * @param username The username of the player
+     * @param gameId GameId to specify which game
+     */
+    void receiveFaceDownCard(TrainCard newCard, String username, String gameId);
 }

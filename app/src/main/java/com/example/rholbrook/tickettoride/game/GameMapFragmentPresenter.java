@@ -45,6 +45,11 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
     }
 
     @Override
+    public void routeClaimed(Player player, Route route) {
+        viewCallback.routeClaimed(getPlayerColor(player), ROUTE_GROUP_MAP.get(route.getGroupId()));
+    }
+
+    @Override
     public void updateAvailableRoutes(List<Route> availableRoutes) {
         availableButtons.clear();
         for (Route route : availableRoutes) {
@@ -165,5 +170,22 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         ROUTE_GROUP_MAP.put(98, R.id.boston_new_york_group_one);
         ROUTE_GROUP_MAP.put(99, R.id.chicago_toronto_group_one);
         ROUTE_GROUP_MAP.put(100, R.id.toronto_montreal_group_one);
+    }
+
+    public int getPlayerColor(Player player) {
+        switch (player.getPlayerColor()) {
+            case YELLOW:
+                return R.color.yellow;
+            case GREEN:
+                return R.color.green;
+            case BLACK:
+                return R.color.grey;
+            case BLUE:
+                return R.color.blue;
+            case RED:
+                return R.color.red;
+            default:
+                return 0;
+        }
     }
 }

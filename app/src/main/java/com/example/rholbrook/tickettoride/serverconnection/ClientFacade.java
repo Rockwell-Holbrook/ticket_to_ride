@@ -1,7 +1,6 @@
 package com.example.rholbrook.tickettoride.serverconnection;
 
 import android.util.Log;
-import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
@@ -105,7 +104,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void ticketsReceived(List<Ticket> tickets) {
+    public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
         GameActivityModel.getInstance().ticketDataReceived(tickets);
     }
 
@@ -125,6 +124,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void routeClaimed(Player player, Route route) {
+        GameActivityModel.getInstance().routeClaimed(player, route);
     }
 
     @Override
@@ -139,7 +139,20 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
+        GameActivityModel.getInstance().setDeckCount(ticketDeckCount, trainDeckCount);
+    }
 
+    @Override
+    public void updateFaceUpCards(List<TrainCard> newTrainCards) {
+        String typeValue = gson.toJson(newTrainCards);
+        Type typeName = new TypeToken<List<TrainCard>>(){}.getType();
+        List<TrainCard> trainCards = gson.fromJson(typeValue, typeName);
+        GameActivityModel.getInstance().updateFaceUpCards(trainCards);
+    }
+
+    @Override
+    public void receiveFaceDownCard(TrainCard newCard, String username, String gameId) {
+        GameActivityModel.getInstance().drewCard(newCard);
     }
 
     //    MainActivity

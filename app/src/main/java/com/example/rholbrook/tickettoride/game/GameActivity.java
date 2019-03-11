@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.*;
@@ -75,8 +74,6 @@ public class GameActivity extends AppCompatActivity implements
     private ImageView faceUpCardThree;
     private ImageView faceUpCardFour;
     private ImageView faceUpCardFive;
-    private RecyclerView viewHandRecyclerView;
-    private RecyclerView viewTicketsRecyclerView;
     private Button openDrawerButton;
     private DrawerLayout drawerLayout;
     private Button closeDrawerButton;
@@ -84,6 +81,8 @@ public class GameActivity extends AppCompatActivity implements
     private TabLayout drawerTab;
     private ChatFragment chatFragment;
     private HistoryFragment historyFragment;
+    private TextView trainCardDeckCount;
+    private TextView ticketDeckCountTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -139,6 +138,9 @@ public class GameActivity extends AppCompatActivity implements
         closeDrawerButton = drawerLayout.findViewById(R.id.close_drawer_button);
         drawerTab = drawerLayout.findViewById(R.id.tab_layout);
         drawerFragmentContainer = drawerLayout.findViewById(R.id.drawer_fragment_container);
+        trainCardDeckCount = findViewById(R.id.face_down_card_deck_count);
+        ticketDeckCountTextView = findViewById(R.id.ticket_deck_count);
+
 
         demoButton = findViewById(R.id.demo_button);
         demoButton.setOnClickListener(new View.OnClickListener() {
@@ -323,10 +325,11 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void startUserTurn() {
+    public void startUserTurn(Player player) {
         faceDownTicketDeck.setActivated(true);
         faceDownTrainCardDeck.setActivated(true);
         enableFaceUpCards();
+        playerConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
     }
 
     @Override
@@ -506,6 +509,7 @@ public class GameActivity extends AppCompatActivity implements
                 }
                 playerTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
                 setHandCards(player.getTrainCards());
+                playerConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
     }
@@ -524,6 +528,7 @@ public class GameActivity extends AppCompatActivity implements
                     opponentOneTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
                 opponentOneTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentOneConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
     }
@@ -542,6 +547,8 @@ public class GameActivity extends AppCompatActivity implements
                     opponentTwoTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
                 opponentTwoTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentTwoConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
+
             }
         });
     }
@@ -560,6 +567,7 @@ public class GameActivity extends AppCompatActivity implements
                     opponentThreeTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
                 opponentThreeTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentThreeConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
     }
@@ -578,6 +586,7 @@ public class GameActivity extends AppCompatActivity implements
                     opponentFourTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
                 opponentFourTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentFourConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
     }
@@ -589,6 +598,57 @@ public class GameActivity extends AppCompatActivity implements
             public void run() {
                 SelectTicketsDialogFragment dialog = SelectTicketsDialogFragment.newInstance(selectableTickets, selectionType);
                 dialog.show(getSupportFragmentManager(), "SelectTicketsDialogFragment");
+            }
+        });
+    }
+
+    @Override
+    public void updateDeckCounts(final int ticketDeckCount, final int trainDeckCount) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                trainCardDeckCount.setText(String.valueOf(trainDeckCount));
+                ticketDeckCountTextView.setText(String.valueOf(ticketDeckCount));
+            }
+        });
+    }
+
+    @Override
+    public void setOpponentOneTurn(final Player opponentOne) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentOneConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentOne.getPlayerColor()));
+            }
+        });
+    }
+
+    @Override
+    public void setOpponentTwoTurn(final Player opponentTwo) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentTwoConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentTwo.getPlayerColor()));
+            }
+        });
+    }
+
+    @Override
+    public void setOpponentThreeTurn(final Player opponentThree) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentThreeConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentThree.getPlayerColor()));
+            }
+        });
+    }
+
+    @Override
+    public void setOpponentFourTurn(final Player opponentFour) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                opponentFourConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentFour.getPlayerColor()));
             }
         });
     }

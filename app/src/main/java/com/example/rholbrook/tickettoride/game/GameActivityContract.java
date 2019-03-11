@@ -13,7 +13,7 @@ public class GameActivityContract {
     public interface View {
         void setHandCards(List<TrainCard> handCards);
         void setFaceUpDeck(List<TrainCard> testHand);
-        void startUserTurn();
+        void startUserTurn(Player player);
         void endUserTurn();
         void addFaceUpCardClickListeners();
         void enableFaceUpCards();
@@ -28,6 +28,11 @@ public class GameActivityContract {
         void updatePlayerFour(Player updatedPlayer);
         void selectTickets(List<Ticket> selectableTickets, int selectionTypeIndicator);
         void message(String message);
+        void updateDeckCounts(int ticketDeckCount, int trainDeckCount);
+        void setOpponentOneTurn(Player opponentOne);
+        void setOpponentTwoTurn(Player opponentTwo);
+        void setOpponentThreeTurn(Player opponentThree);
+        void setOpponentFourTurn(Player opponentFour);
     }
 
     public interface Presenter {
@@ -38,6 +43,7 @@ public class GameActivityContract {
         void setupTurnOrder(List<Player> turnOrder);
         Drawable getAvatar(Context applicationContext, Player.PlayerColor playerColor);
         Drawable getColorBackground(Context applicationContext, Player.PlayerColor playerColor);
+        Drawable getColorTurnBackground(Context applicationContext, Player.PlayerColor playerColor);
         void setFaceUpCards(List<TrainCard> faceUpCards);
         TrainCard getFaceUpCard(int i);
         void startUserTurn();
@@ -53,6 +59,11 @@ public class GameActivityContract {
         void setHandCards(List<TrainCard> cards);
         void runDemo1();
         void runDemo2();
+        void setDeckCount(int ticketDeckCount, int trainDeckCount);
+        void setOpponentOneTurn(Player opponentOne);
+        void setOpponentTwoTurn(Player opponentTwo);
+        void setOpponentThreeTurn(Player opponentThree);
+        void setOpponentFourTurn(Player opponentFour);
         void message(String message);
         void updatePlayerOne(Player player);
     }
