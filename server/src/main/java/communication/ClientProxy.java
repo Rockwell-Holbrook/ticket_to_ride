@@ -124,12 +124,12 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void startTurn(List<Route> availableRoutes, String username) {
+    public void startTurn(List<Route> availableRoutes, String username, String gameId) {
         String methodName = "startTurn";
-        String[] typeNames = {List.class.getName(), String.class.getName()};
-        Object[] inputVals = {availableRoutes, username};
+        String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {availableRoutes, username, gameId};
 
-        ss.sendToUser(new Command(methodName, typeNames, inputVals), username);
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
 

@@ -31,6 +31,8 @@ public class Game {
         this.gameId = UUID.randomUUID().toString();
         this.availableColors = new ArrayList<>();
         this.availableRoutes =  new ArrayList<>();
+        availableRoutes.add(new Route(1, new City("Denver"), new City("Salt Lake City"), Route.RouteColor.BLACK, 7, 4));
+        availableRoutes.add(new Route(69, new City("Denver"), new City("Salt Lake City"), Route.RouteColor.BLACK, 7, 4));
         this.claimedRoutes =  new ArrayList<>();
         this.chatHistory =  new ArrayList<>();
         this.gameHistory =  new ArrayList<>();

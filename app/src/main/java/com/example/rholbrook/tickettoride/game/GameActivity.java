@@ -329,8 +329,6 @@ public class GameActivity extends AppCompatActivity implements
         enableFaceUpCards();
     }
 
-
-
     @Override
     public void endUserTurn() {
         faceDownTicketDeck.setActivated(false);
@@ -596,10 +594,13 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards) {
+    public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards, int indicator) {
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);
         mPresenter.returnTickets(returnedCards);
+        if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
+            mPresenter.initializeComplete();
+        }
         mPresenter.runDemo1();
     }
 
@@ -607,6 +608,4 @@ public class GameActivity extends AppCompatActivity implements
     public void onClosePressed(DialogFragment dialogFragment) {
         dialogFragment.dismiss();
     }
-
-
-        }
+}

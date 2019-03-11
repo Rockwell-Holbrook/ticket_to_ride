@@ -45,6 +45,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     private Game game;
     private List<Chat> chatMessages;
     private List<GameHistory> gameHistory;
+    private boolean isTurn;
 
     public GameActivityModel() {
         server = ServerProxy.getInstance();
@@ -221,6 +222,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void endUserTurn() {
+        isTurn = false;
+        setChanged();
+        notifyObservers(isTurn);
+        clearChanged();
         ServerProxy.getInstance().turnEnded(gameId, Authentication.getInstance().getUsername());
     }
 
@@ -286,6 +291,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
         gameMapFragmentPresenter.startUserTurn();
         gameActivityPresenter.startUserTurn();
+        isTurn = true;
+        setChanged();
+        notifyObservers(isTurn);
+        clearChanged();
     }
 
     public void selectRoute(int routeId) {

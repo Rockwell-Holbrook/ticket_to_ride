@@ -15,6 +15,7 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
 
     public GameMapFragmentPresenter(GameMapFragmentContract.View viewCallback) {
         this.viewCallback = viewCallback;
+        availableButtons = new ArrayList<>();
         mModel = GameActivityModel.getInstance();
         mModel.setGameMapFragmentPresenter(this);
         mModel.addObserver(this);
@@ -23,7 +24,14 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (arg.getClass().getName().equals(Boolean.class.getName())) {
+            boolean isTurn = (boolean) arg;
+            if (isTurn) {
+                viewCallback.startUserTurn(availableButtons);
+            } else {
+                viewCallback.endUserTurn(availableButtons);
+            }
+        }
     }
 
     @Override

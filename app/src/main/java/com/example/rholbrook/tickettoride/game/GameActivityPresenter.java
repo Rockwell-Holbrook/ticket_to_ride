@@ -38,6 +38,13 @@ public class GameActivityPresenter implements
             } else if (updatedPlayer.getUsername().equals(mModel.getOpponentFour().getUsername())) {
                 viewCallback.updatePlayerFour(updatedPlayer);
             }
+        } else if (arg.getClass().getName().equals(Boolean.class.getName())) {
+            boolean isTurn = (boolean)arg;
+            if (isTurn) {
+                viewCallback.startUserTurn();
+            } else {
+                viewCallback.endUserTurn();
+            }
         }
     }
 
