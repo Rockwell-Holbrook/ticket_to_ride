@@ -18,6 +18,7 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         mModel = GameActivityModel.getInstance();
         mModel.setGameMapFragmentPresenter(this);
         mModel.addObserver(this);
+        availableButtons = new ArrayList<>();
     }
 
     @Override

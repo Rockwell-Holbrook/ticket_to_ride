@@ -3,6 +3,7 @@ package com.example.rholbrook.tickettoride.game;
 import android.util.Log;
 import com.example.rholbrook.tickettoride.chat.ChatContract;
 import com.example.rholbrook.tickettoride.main.Authentication;
+import com.example.rholbrook.tickettoride.serverconnection.ClientFacade;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Chat;
@@ -160,7 +161,11 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void selectFaceDownCardDeck() {
-        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
+        List<TrainCard> cards = client.getTrainCards();
+        cards.add(new TrainCard(TrainCard.Color.PINK));
+        client.setTrainCards(cards);
+        gameActivityPresenter.setHandCards(cards);
+        //ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
     }
 
     public void drawTickets() {
@@ -311,5 +316,17 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
             return opponentFour.getPlayerColor();
         }
         return client.getPlayerColor();
+    }
+
+    public void runDemo1() {
+        List<Route> routes = new ArrayList<>();
+        for (int i = 1; i < 101; i++) {
+            routes.add(Route.ROUTE_GROUP_MAP.get(i));
+        }
+        startTurn(routes);
+    }
+
+    public void runDemo2() {
+
     }
 }

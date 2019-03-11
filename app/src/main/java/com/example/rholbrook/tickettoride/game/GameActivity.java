@@ -29,7 +29,7 @@ public class GameActivity extends AppCompatActivity implements
         {
     private GameActivityContract.Presenter mPresenter;
 
-
+    private Button demoButton;
 
     private RelativeLayout playerHandLayout;
     private FrameLayout gameMapFrameLayout;
@@ -139,6 +139,14 @@ public class GameActivity extends AppCompatActivity implements
         closeDrawerButton = drawerLayout.findViewById(R.id.close_drawer_button);
         drawerTab = drawerLayout.findViewById(R.id.tab_layout);
         drawerFragmentContainer = drawerLayout.findViewById(R.id.drawer_fragment_container);
+
+        demoButton = findViewById(R.id.demo_button);
+        demoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.runDemo2();
+            }
+        });
 
         mPresenter = new GameActivityPresenter(this);
 
@@ -592,10 +600,13 @@ public class GameActivity extends AppCompatActivity implements
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);
         mPresenter.returnTickets(returnedCards);
+        mPresenter.runDemo1();
     }
 
     @Override
     public void onClosePressed(DialogFragment dialogFragment) {
         dialogFragment.dismiss();
     }
-}
+
+
+        }

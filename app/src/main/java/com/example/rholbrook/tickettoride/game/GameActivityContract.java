@@ -49,5 +49,8 @@ public class GameActivityContract {
         void readyToInitialize();
         List<TrainCard> getPlayerHand();
         List<Ticket> getPlayerTickets();
+        void setHandCards(List<TrainCard> cards);
+        void runDemo1();
+        void runDemo2();
     }
 }

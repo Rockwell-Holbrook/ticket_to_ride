@@ -108,6 +108,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void setHandCards(List<TrainCard> cards) {
+        viewCallback.setHandCards(cards);
+    }
+
+    @Override
     public TrainCard getFaceUpCard(int i) {
         return mModel.getFaceUpCards().get(i);
     }
@@ -197,4 +202,11 @@ public class GameActivityPresenter implements
         TICKET_IMAGE_MAP.put(Integer.valueOf(29), R.mipmap.winnipeg_houston);
         TICKET_IMAGE_MAP.put(Integer.valueOf(30), R.mipmap.winnipeg_little_rock);
     }
+
+    public void runDemo1() {
+        mModel.runDemo1();
+    }
+
+    public void runDemo2() {mModel.runDemo2();}
+
 }
