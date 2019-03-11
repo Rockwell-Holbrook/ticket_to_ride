@@ -289,6 +289,7 @@ public class Game {
                 Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
                 player.addPoints(routeToClaim.getPointValue());
                 player.addClaimedRoute(routeToClaim);
+                player.subtractCarNumber(routeToClaim.getLength());
                 this.claimedRoutes.add(routeToClaim);
                 clientProxy.routeClaimed(player, routeToClaim);
             }

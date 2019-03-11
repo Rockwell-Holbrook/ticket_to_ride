@@ -681,6 +681,31 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setOpponentThreeNotTurn(Player client) {
+        opponentThreeConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), client.getPlayerColor()));
+    }
+
+    @Override
+    public void setOpponentTwoNotTurn(Player client) {
+        opponentTwoConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), client.getPlayerColor()));
+    }
+
+    @Override
+    public void setOpponentOneNotTurn(Player client) {
+        opponentOneConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), client.getPlayerColor()));
+    }
+
+    @Override
+    public void setClientNotTurn(Player client) {
+        playerConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), client.getPlayerColor()));
+    }
+
+    @Override
     public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards, int indicator) {
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);

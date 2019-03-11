@@ -153,7 +153,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     @Override
     public void turnEnded(Player player) {
+        String methodName = "routeClaimed";
+        String[] typeNames = {Player.class.getName()};
+        Object[] inputVals = {player};
 
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 
     @Override

@@ -97,6 +97,10 @@ public class Player {
         this.pointsEarned += pointValue;
     }
 
+    public void subtractCarNumber(int length) {
+        this.remainingTrainCars -= length;
+    }
+
     public enum PlayerColor {
         GREEN, BLUE, YELLOW, RED, BLACK
     }
