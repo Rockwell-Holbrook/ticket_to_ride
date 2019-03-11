@@ -127,7 +127,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
-        // Todo: Make this sucker work baby.
+        gameManager.ticketsReturned(gameId, username, returned);
     }
 
     /**
@@ -137,7 +137,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void turnEnded(String gameID, String username) {
-        // Todo: Make this sucker work baby.
+        gameManager.endPlayerTurn(gameID, username);
     }
 
     /**
@@ -157,7 +157,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void claimRoute(String gameId, String username, int routeId) {
-        // Todo: Make this sucker work baby.
+        gameManager.claimRoute(gameId, username, routeId);
     }
 
     /**

@@ -144,12 +144,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     @Override
     public void routeClaimed(Player player, Route route) {
+        String methodName = "routeClaimed";
+        String[] typeNames = {Player.class.getName(), Route.class.getName()};
+        Object[] inputVals = {player, route};
 
-    }
-
-    @Override
-    public void cardDrawn(List<TrainCard> faceUpCards) {
-
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 
     @Override

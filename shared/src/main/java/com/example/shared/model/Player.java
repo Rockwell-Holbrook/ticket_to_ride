@@ -108,4 +108,8 @@ public class Player {
 
         return p.getUsername().equals(this.getUsername());
     }
+
+    public void addClaimedRoute(Route addedRoute) {
+        this.claimedRoutes.add(addedRoute);
+    }
 }
