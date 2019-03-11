@@ -128,11 +128,6 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void cardDrawn(List<TrainCard> faceUpCards) {
-        GameActivityModel.getInstance().setFaceUpCards(faceUpCards);
-    }
-
-    @Override
     public void turnEnded(Player player) {
         GameActivityModel.getInstance().playerTurnEnded(player);
     }

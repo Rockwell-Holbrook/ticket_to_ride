@@ -270,6 +270,51 @@ public class Game {
         clientProxy.ticketsReceived(this.initializeTickets(), username, gameId);
     }
 
+    public void ticketsReturned(String username, ArrayList<Ticket> returned) {
+        for (Player player : playerList) {
+            if (player.getUsername().equals(username)) {
+                List<Ticket> tickets = player.getTickets();
+                for (Ticket ticket : returned) {
+                    if (tickets.contains(ticket)) {
+                        tickets.remove(ticket);
+                    }
+                }
+            }
+        }
+    }
+
+    public void claimRoute(String username, int routeId) {
+        for (Player player : playerList) {
+            if (player.getUsername().equals(username)) {
+                Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
+                player.addClaimedRoute(routeToClaim);
+                this.claimedRoutes.add(routeToClaim);
+                clientProxy.routeClaimed(player, routeToClaim);
+            }
+        }
+    }
+
+    public void endPlayerTurn(String username) {
+        for (Player player : playerList) {
+            if (player.getUsername().equals(username)) {
+                clientProxy.turnEnded(player);
+                startNextTurn(player);
+            }
+        }
+    }
+
+    private void startNextTurn(Player player) {
+        ArrayList<Player> turnOrder = new ArrayList<>(this.playerList);
+        int index = turnOrder.indexOf(player);
+        if (index + 1 < maxPlayers) {
+            Player newTurn = turnOrder.get(index + 1);
+            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+        } else {
+            Player newTurn = turnOrder.get(0);
+            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+        }
+    }
+
     /* *********** GETTERS AND SETTERS *********** */
 
     public String getGameId() {
@@ -333,4 +378,6 @@ public class Game {
     public ArrayList<Route> getClaimedRoutes() {
         return claimedRoutes;
     }
+
+
 }

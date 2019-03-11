@@ -169,4 +169,19 @@ public class GameManager {
         Game game = this.playingGameList.get(gameID);
         game.ticketsRequested(username);
     }
+
+    public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
+        Game game = this.playingGameList.get(gameId);
+        game.ticketsReturned(username, returned);
+    }
+
+    public void claimRoute(String gameId, String username, int routeId) {
+        Game game = this.playingGameList.get(gameId);
+        game.claimRoute(username, routeId);
+    }
+
+    public void endPlayerTurn(String gameID, String username) {
+        Game game = this.playingGameList.get(gameID);
+        game.endPlayerTurn(username);
+    }
 }

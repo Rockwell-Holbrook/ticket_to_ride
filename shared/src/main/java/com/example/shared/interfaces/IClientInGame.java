@@ -97,13 +97,6 @@ public interface IClientInGame {
     void routeClaimed(Player player, Route route);
 
     /**
-     * Signals the GameActivityModel to update the face-up train cards after a player draws one
-     *
-     * @param faceUpCards List of TrainCard objects for the face-up train cards
-     */
-    void cardDrawn(List<TrainCard> faceUpCards);
-
-    /**
      * Signals the GameActivityModel to update a player's Player Summary Box at the end of
      * another player's turn
      *
