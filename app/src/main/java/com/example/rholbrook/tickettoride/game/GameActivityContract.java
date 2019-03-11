@@ -62,8 +62,7 @@ public class GameActivityContract {
         List<TrainCard> getPlayerHand();
         List<Ticket> getPlayerTickets();
         void setHandCards(List<TrainCard> cards);
-        void runDemo1();
-        void runDemo2();
+        void demo(int timesClicked);
         void setDeckCount(int ticketDeckCount, int trainDeckCount);
         void setOpponentOneTurn(Player opponentOne);
         void setOpponentTwoTurn(Player opponentTwo);

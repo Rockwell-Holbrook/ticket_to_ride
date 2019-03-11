@@ -48,6 +48,8 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     private Game game;
     private List<Chat> chatMessages;
     private List<GameHistory> gameHistory;
+    private int trainDeckCount = 102;
+    private int ticketDeckCount = 30;
 
     public GameActivityModel() {
         server = ServerProxy.getInstance();
@@ -363,30 +365,33 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         return client.getPlayerColor();
     }
 
-    public void runDemo1() {
-        List<Route> routes = new ArrayList<>();
-        for (int i = 1; i < 101; i++) {
-            routes.add(Route.ROUTE_GROUP_MAP.get(i));
+    public void demo(int timesClicked) {
+        try {
+            if (timesClicked == 1) {
+                gameActivityPresenter.message("Opponent draws a train card - Player card and deck counts will update");
+                Thread.sleep(2000);
+                List<TrainCard> trainCards = opponentOne.getTrainCards();
+                if (trainCards == null) {
+                    opponentOne.setTrainCards(new ArrayList<TrainCard>());
+                    trainCards = opponentOne.getTrainCards();
+                }
+                trainCards.add(new TrainCard(TrainCard.Color.BLUE));
+                opponentOne.setTrainCards(trainCards);
+                gameActivityPresenter.updatePlayerOne(opponentOne);
+                trainDeckCount--;
+                setDeckCount(ticketDeckCount, trainDeckCount);
+            }
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
         }
-        startTurn(routes);
+
     }
 
-    public void runDemo2() {
+    public void demo2() {
         try {
             playerTurnEnded(client);
             Thread.sleep(2000);
-            gameActivityPresenter.message("Opponent draws a train card");
-            gameActivityPresenter.message("Player card and deck counts will update");
-            Thread.sleep(2000);
-            List<TrainCard> trainCards = opponentOne.getTrainCards();
-            if (trainCards == null) {
-                opponentOne.setTrainCards(new ArrayList<TrainCard>());
-                trainCards = opponentOne.getTrainCards();
-            }
-            trainCards.add(new TrainCard(TrainCard.Color.BLUE));
-            opponentOne.setTrainCards(trainCards);
-            gameActivityPresenter.updatePlayerOne(opponentOne);
-            // TODO update deck count
+
             Thread.sleep(2000);
             gameActivityPresenter.message("Opponent takes destination tickets");
             gameActivityPresenter.message("Player ticket and deck counts will update");
@@ -403,12 +408,12 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
             List<Route> routes = opponentOne.getClaimedRoutes();
             routes.add(Route.ROUTE_GROUP_MAP.get(69));
             opponentOne.setClaimedRoutes(routes);
-            trainCards = opponentOne.getTrainCards();
-            trainCards.remove(0);
-            trainCards.remove(0);
-            trainCards.remove(0);
-            trainCards.remove(0);
-            opponentOne.setTrainCards(trainCards);
+//            trainCards = opponentOne.getTrainCards();
+//            trainCards.remove(0);
+//            trainCards.remove(0);
+//            trainCards.remove(0);
+//            trainCards.remove(0);
+//            opponentOne.setTrainCards(trainCards);
             int cars = opponentOne.getRemainingTrainCars();
             opponentOne.setRemainingTrainCars(cars - 4);
             int points = opponentOne.getPointsEarned();

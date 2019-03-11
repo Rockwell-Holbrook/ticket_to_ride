@@ -381,5 +381,20 @@ public class Game {
         return claimedRoutes;
     }
 
+    public Deck<TrainCard> getTrainCardDeck() {
+        return trainCardDeck;
+    }
+
+    public void setTrainCardDeck(Deck<TrainCard> deck) {
+        trainCardDeck = deck;
+    }
+
+    public Deck<Ticket> getTicketDeck() {
+        return ticketDeck;
+    }
+
+    public void setTicketDeck(Deck<Ticket> deck) {
+        ticketDeck = deck;
+    }
 
 }

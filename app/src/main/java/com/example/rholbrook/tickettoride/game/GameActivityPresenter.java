@@ -226,10 +226,9 @@ public class GameActivityPresenter implements
         TICKET_IMAGE_MAP.put(Integer.valueOf(30), R.mipmap.winnipeg_little_rock);
     }
 
-    public void runDemo1() {
+    public void demo(int timesClicked) {
+        mModel.demo(timesClicked);
     }
-
-    public void runDemo2() {mModel.runDemo2();}
 
     @Override
     public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
@@ -259,11 +258,6 @@ public class GameActivityPresenter implements
     public void setOpponentFourTurn(Player opponentFour) {
         viewCallback.setOpponentThreeNotTurn(mModel.getClient());
         viewCallback.setOpponentFourTurn(opponentFour);
-    }
-
-    @Override
-    public void sendToast(String message) {
-        viewCallback.showToast(message);
     }
 
     public void message(String message) {

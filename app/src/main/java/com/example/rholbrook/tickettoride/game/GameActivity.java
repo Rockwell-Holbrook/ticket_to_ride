@@ -84,6 +84,7 @@ public class GameActivity extends AppCompatActivity implements
     private TextView trainCardDeckCount;
     private TextView ticketDeckCountTextView;
     private int cardsDrawn = 0;
+    private int timesClicked = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -147,7 +148,8 @@ public class GameActivity extends AppCompatActivity implements
         demoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.runDemo2();
+                timesClicked++;
+                mPresenter.demo(timesClicked);
             }
         });
 
@@ -712,13 +714,13 @@ public class GameActivity extends AppCompatActivity implements
         mPresenter.returnTickets(returnedCards);
         if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
             mPresenter.initializeComplete();
-//            mPresenter.runDemo1();
         }
     }
 
     @Override
     public void message(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
