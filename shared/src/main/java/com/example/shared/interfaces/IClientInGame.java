@@ -81,6 +81,8 @@ public interface IClientInGame {
      */
     void startTurn(List<Route> availableRoutes, String username, String gameId);
 
+    void turnStarted(Player player, String gameId);
+
     /**
      * Signals the GameActivityModel to update which tickets are completed
      *

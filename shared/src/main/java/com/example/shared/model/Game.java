@@ -287,9 +287,8 @@ public class Game {
         for (Player player : playerList) {
             if (player.getUsername().equals(username)) {
                 Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
-                player.addPoints(routeToClaim.getPointValue());
                 player.addClaimedRoute(routeToClaim);
-                player.subtractCarNumber(routeToClaim.getLength());
+                //todo: remove TrainCards from hand return hand.
                 this.claimedRoutes.add(routeToClaim);
                 clientProxy.routeClaimed(player, routeToClaim);
             }
@@ -311,6 +310,7 @@ public class Game {
         if (index + 1 < maxPlayers) {
             Player newTurn = turnOrder.get(index + 1);
             clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.turnStarted(newTurn, gameId);
         } else {
             Player newTurn = turnOrder.get(0);
             clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
@@ -381,20 +381,5 @@ public class Game {
         return claimedRoutes;
     }
 
-    public Deck<TrainCard> getTrainCardDeck() {
-        return trainCardDeck;
-    }
-
-    public void setTrainCardDeck(Deck<TrainCard> deck) {
-        trainCardDeck = deck;
-    }
-
-    public Deck<Ticket> getTicketDeck() {
-        return ticketDeck;
-    }
-
-    public void setTicketDeck(Deck<Ticket> deck) {
-        ticketDeck = deck;
-    }
 
 }
