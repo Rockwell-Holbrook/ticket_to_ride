@@ -321,18 +321,6 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         gameActivityPresenter.selectTickets(tickets);
     }
 
-    public void clientAddTickets(List<Ticket> keptCards) {
-        List<Ticket> newClientTickets = getClient().getTickets();
-        if (newClientTickets == null) {
-            newClientTickets = new ArrayList<>();
-        }
-        newClientTickets.addAll(keptCards);
-        client.setTickets(newClientTickets);
-        setChanged();
-        notifyObservers(client);
-        clearChanged();
-    }
-
     public void returnTickets(List<Ticket> returnedCards) {
         ArrayList<Ticket> cards = new ArrayList<>(returnedCards);
         ServerProxy.getInstance().ticketsReturned(gameId, Authentication.getInstance().getUsername(), cards);
@@ -442,7 +430,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void drewCard(TrainCard newCard) {
-        client.addCard(newCard);
+        client.addTrainCard(newCard);
         setChanged();
         notifyObservers(client);
         clearChanged();

@@ -180,7 +180,6 @@ public class GameActivityPresenter implements
 
     @Override
     public void addTicketsToPlayer(List<Ticket> keptCards) {
-        mModel.clientAddTickets(keptCards);
         viewCallback.setPlayerTicketDeck(mModel.getClient().getTickets());
     }
 

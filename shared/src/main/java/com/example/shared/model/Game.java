@@ -269,7 +269,7 @@ public class Game {
         }
 
         getPlayerWithUsername(username).returnedTickets(returned);
-        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
+//        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
         clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
     }
 

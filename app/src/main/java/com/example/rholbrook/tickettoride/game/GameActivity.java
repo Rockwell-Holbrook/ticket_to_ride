@@ -701,6 +701,9 @@ public class GameActivity extends AppCompatActivity implements
         if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
             mPresenter.initializeComplete();
 //            mPresenter.runDemo1();
+        } else {
+            endUserTurn();
+            mPresenter.endTurn();
         }
     }
 

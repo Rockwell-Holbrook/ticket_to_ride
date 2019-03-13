@@ -115,7 +115,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     @Override
     public void startTurn(List<Route> availableRoutes, String username, String gameId) {
         String typeValue = gson.toJson(availableRoutes);
-        Type typeName = new TypeToken<List<Route>>(){}.getType();
+        Type typeName = new TypeToken<ArrayList<Route>>(){}.getType();
         List<Route> routesList = gson.fromJson(typeValue, typeName);
         GameActivityModel.getInstance().startTurn(routesList);
     }
