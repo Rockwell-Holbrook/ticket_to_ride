@@ -142,24 +142,20 @@ public class Game {
                 wildCnt < WILD_MAX;
     }
 
-    public ArrayList<TrainCard> initializeTrainCardsInHand() {
-        ArrayList<TrainCard> temp = new ArrayList<>();
-
+    public ArrayList<TrainCard> initializeTrainCardsInHand(String username) {
         for (int i = 0; i < 4; i++) {
-            temp.add(this.trainCardDeck.drawFromTop());
+            getPlayerWithUsername(username).addTrainCard(this.trainCardDeck.drawFromTop());
         }
 
-        return temp;
+        return getPlayerWithUsername(username).getTrainCards();
     }
 
-    public ArrayList<Ticket> initializeTickets() {
-        ArrayList<Ticket> temp = new ArrayList<>();
-
+    public ArrayList<Ticket> initializeTickets(String username) {
         for (int i = 0; i < 3; i++) {
-            temp.add(this.ticketDeck.drawFromTop());
+            getPlayerWithUsername(username).addTicket(this.ticketDeck.drawFromTop());
         }
 
-        return temp;
+        return getPlayerWithUsername(username).getTickets();
     }
 
     public ArrayList<Player> initializeTurnOrder(String username) {
@@ -248,60 +244,54 @@ public class Game {
     }
 
     public void cardSelected(String username, int index) {
-        //5 is the index for the face-down-deck
-        for (Player player : playerList) {
-            if (player.getUsername().equals(username)) {
-                if (index != 5) {
-                    player.addCard(trainCardsFaceUp.get(index));
-                    trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
-                    clientProxy.updateFaceUpCards(trainCardsFaceUp);
-                    clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
-                } else {
-                    TrainCard newCard = trainCardDeck.drawFromTop();
-                    player.addCard(newCard);
-                    clientProxy.receiveFaceDownCard(newCard, username, gameId);
-                    clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
-                }
-            }
+        if (index != 5) {
+            getPlayerWithUsername(username).addTrainCard(trainCardsFaceUp.get(index));
+            trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
+            clientProxy.updateFaceUpCards(trainCardsFaceUp);
+            clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+        }
+
+        else { //5 is the index for the face-down-deck
+            TrainCard newCard = trainCardDeck.drawFromTop();
+            getPlayerWithUsername(username).addTrainCard(newCard);
+            clientProxy.receiveFaceDownCard(newCard, username, gameId);
+            clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
         }
     }
 
     public void ticketsRequested(String username) {
-        clientProxy.ticketsReceived(this.initializeTickets(), username, gameId);
+        clientProxy.ticketsReceived(this.initializeTickets(username), username, gameId);
     }
 
-    public void ticketsReturned(String username, ArrayList<Ticket> returned) {
-        for (Player player : playerList) {
-            if (player.getUsername().equals(username)) {
-                List<Ticket> tickets = player.getTickets();
-                for (Ticket ticket : returned) {
-                    if (tickets.contains(ticket)) {
-                        tickets.remove(ticket);
-                    }
-                }
-            }
+    public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
+        for (int i = 0; i < returned.size(); i++) {
+            this.ticketDeck.putToBottom(returned.get(i));
         }
+
+        getPlayerWithUsername(username).returnedTickets(returned);
+//        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
+        clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
     }
 
     public void claimRoute(String username, int routeId) {
-        for (Player player : playerList) {
-            if (player.getUsername().equals(username)) {
-                Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
-                player.addClaimedRoute(routeToClaim);
-                //todo: remove TrainCards from hand return hand.
-                this.claimedRoutes.add(routeToClaim);
-                clientProxy.routeClaimed(player, routeToClaim);
-            }
+        Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
+
+        getPlayerWithUsername(username).addClaimedRoute(routeToClaim);
+        getPlayerWithUsername(username).removeTrainCard(routeToClaim.getLength(), routeToClaim.getColor()); //todo: make removeTrainCard Work
+
+        for (int i = 0; i <routeToClaim.getLength() ; i++) {
+            //todo: route and trainCard colors are not equivalent.. Need to implement adding these cards to the discard deck after they were used and removed from hand above.
         }
+
+        this.availableRoutes.remove(routeToClaim);
+        this.claimedRoutes.add(routeToClaim);
+
+        clientProxy.routeClaimed(getPlayerWithUsername(username), routeToClaim);
     }
 
     public void endPlayerTurn(String username) {
-        for (Player player : playerList) {
-            if (player.getUsername().equals(username)) {
-                clientProxy.turnEnded(player);
-                startNextTurn(player);
-            }
-        }
+        clientProxy.turnEnded(getPlayerWithUsername(username));
+        startNextTurn(getPlayerWithUsername(username));
     }
 
     private void startNextTurn(Player player) {
@@ -316,6 +306,16 @@ public class Game {
             clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
         }
     }
+
+    private Player getPlayerWithUsername(String username) {
+        for (Player player : playerList) {
+            if (player.getUsername().equals(username)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
 
     /* *********** GETTERS AND SETTERS *********** */
 

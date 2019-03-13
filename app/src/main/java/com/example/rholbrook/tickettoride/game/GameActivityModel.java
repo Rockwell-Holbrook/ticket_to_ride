@@ -48,14 +48,16 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     private Game game;
     private List<Chat> chatMessages;
     private List<GameHistory> gameHistory;
-    private int trainDeckCount = 102;
-    private int ticketDeckCount = 30;
 
     public GameActivityModel() {
         server = ServerProxy.getInstance();
         chatMessages = new ArrayList<>();
 
     }
+
+    /**
+     * Getters and Setters
+     */
 
     public String getGameId() {
         return gameId;
@@ -117,12 +119,42 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         this.gameMapFragmentPresenter = gameMapFragmentPresenter;
     }
 
+    public void setHistoryListener(HistoryContract.HistoryPresenter historyListener) {
+        this.historyListener = historyListener;
+    }
+
+    @Override
+    public void setChatListener(ChatContract.ChatPresenter chatListener) {
+        this.chatListener = chatListener;
+    }
+
     public static GameActivityModel getInstance() {
         if (instance == null) {
             instance = new GameActivityModel();
         }
         return instance;
     }
+
+    @Override
+    public Player.PlayerColor getPlayerColor(String username) {
+        if (opponentOne != null && opponentOne.getUsername().equals(username)) {
+            return opponentOne.getPlayerColor();
+        }
+        if (opponentTwo != null && opponentTwo.getUsername().equals(username)) {
+            return opponentTwo.getPlayerColor();
+        }
+        if (opponentThree != null && opponentThree.getUsername().equals(username)) {
+            return opponentThree.getPlayerColor();
+        }
+        if (opponentFour != null && opponentFour.getUsername().equals(username)) {
+            return opponentFour.getPlayerColor();
+        }
+        return client.getPlayerColor();
+    }
+
+    /**
+     * Chat Methods
+     */
 
     public void receivedChat(Chat chat) {
         chatMessages.add(chat);
@@ -147,6 +179,9 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         //server.getChatHistory(gameId, Authentication.getInstance().getUsername(), true);
     }
 
+    /**
+     * History Methods
+     */
     public void receivedHistoryObject(GameHistory history) {
         gameHistory.add(history);
         historyListener.updateGameHistory(this.gameHistory);
@@ -161,41 +196,22 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         server.getGameHistory(gameId);
     }
 
-    public void selectFaceUpCard(int index) {
-        TrainCard card = gameActivityPresenter.getFaceUpCard(index);
-        List<TrainCard> cards = client.getTrainCards();
-        cards.add(card);
-        client.setTrainCards(cards);
-        gameActivityPresenter.setHandCards(cards);
-        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
+    /**
+     * Game Initialization
+     */
+
+    public void readyToInitialize() {
+        ServerProxy.getInstance().readyToInitialize(gameId, Authentication.getInstance().getUsername());
     }
 
-    public void selectFaceDownCardDeck() {
-        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
-    }
-
-    public void drawTickets() {
-        List<Ticket> tickets = client.getTickets();
-        List<Ticket> newTickets = new ArrayList<>();
-        boolean duplicate = false;
-        int count = 0;
-        int i = 1;
-        while (count < 3) {
-            for (Ticket ticket : tickets) {
-                if (i == ticket.getTicketId()) {
-                    duplicate = true;
-                }
-            }
-            if (!duplicate) {
-                newTickets.add(new Ticket(i, "AwesomeTown", "Blaineville", 1000000));
-                i++;
-                count++;
-            }
-        }
-        ticketDataReceived(newTickets);
-        //ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
-    }
-
+    /**
+     * Initializes the game
+     *
+     * @param trainCardsFaceUp list of 5 cards to set as the faceup cards
+     * @param trainCards list of 4 cards to set as the player's cards
+     * @param tickets list of 3 tickets to select from
+     * @param turnOrder order of the game
+     */
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder) {
         this.turnOrder = turnOrder;
         setPlayers(turnOrder);
@@ -239,9 +255,50 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         gameActivityPresenter.setupTurnOrder(turnOrder);
     }
 
-    public void setFaceUpCards(List<TrainCard> faceUpCards) {
-        this.faceUpCards = faceUpCards;
-        gameActivityPresenter.setFaceUpCards(faceUpCards);
+    public void initializeComplete() {
+        ServerProxy.getInstance().initializeComplete(gameId, Authentication.getInstance().getUsername());
+    }
+
+
+    /**
+     * Turn Order
+     */
+
+    public void startTurn(List<Route> availableRoutes) {
+        gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
+        isTurn = true;
+        setChanged();
+        notifyObservers(isTurn);
+        clearChanged();
+    }
+
+    public void playerTurnEnded(Player player) {
+        if (player.getUsername().equals(client.getUsername())){
+            client = player;
+            setChanged();
+            notifyObservers(client);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentOne.getUsername())) {
+            opponentOne = player;
+            setChanged();
+            notifyObservers(opponentOne);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentTwo.getUsername())) {
+            opponentTwo = player;
+            setChanged();
+            notifyObservers(opponentTwo);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentThree.getUsername())) {
+            opponentThree = player;
+            setChanged();
+            notifyObservers(opponentThree);
+            clearChanged();
+        } else if (player.getUsername().equals(opponentFour.getUsername())) {
+            opponentFour = player;
+            setChanged();
+            notifyObservers(opponentFour);
+            clearChanged();
+        }
     }
 
     public void endUserTurn() {
@@ -252,24 +309,16 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         ServerProxy.getInstance().turnEnded(gameId, Authentication.getInstance().getUsername());
     }
 
-    public void initializeComplete() {
-        ServerProxy.getInstance().initializeComplete(gameId, Authentication.getInstance().getUsername());
+    public void playerTurnStarted(Player player) {
+        gameActivityPresenter.turnStarted(player);
     }
+
+    /**
+     * Tickets
+     */
 
     public void ticketDataReceived(List<Ticket> tickets) {
         gameActivityPresenter.selectTickets(tickets);
-    }
-
-    public void clientAddTickets(List<Ticket> keptCards) {
-        List<Ticket> newClientTickets = getClient().getTickets();
-        if (newClientTickets == null) {
-            newClientTickets = new ArrayList<>();
-        }
-        newClientTickets.addAll(keptCards);
-        client.setTickets(newClientTickets);
-        setChanged();
-        notifyObservers(client);
-        clearChanged();
     }
 
     public void returnTickets(List<Ticket> returnedCards) {
@@ -277,155 +326,99 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         ServerProxy.getInstance().ticketsReturned(gameId, Authentication.getInstance().getUsername(), cards);
     }
 
-    public void readyToInitialize() {
-        ServerProxy.getInstance().readyToInitialize(gameId, Authentication.getInstance().getUsername());
+    public void drawTickets() {
+        List<Ticket> tickets = client.getTickets();
+        int count = 0;
+        int i = 1;
+        while (count < 3) {
+            for (Ticket ticket : tickets) {
+                if (i == ticket.getTicketId()) {
+                    break;
+                }
+            }
+            //tickets.add(new Ticket(i, "AwesomeTown", "Blaineville", 1000000));
+            i++;
+            count++;
+        }
+        ticketDataReceived(tickets);
+        //ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
     }
 
-    public void playerTurnEnded(Player player) {
-        if (player.getUsername().equals(client.getUsername())){
-            client = player;
+    /**
+     * Routes
+     */
+
+    public void selectRoute(int routeId) {
+        ServerProxy.getInstance().claimRoute(gameId, Authentication.getInstance().getUsername(), routeId);
+    }
+
+    public void routeClaimed(Player player, Route route) {
+        gameMapFragmentPresenter.routeClaimed(player,route);
+        if (player.getUsername().equals(client.getUsername())) {
+            int remainingTrainCars = client.getRemainingTrainCars();
+            int points = client.getPointsEarned();
+            remainingTrainCars -= route.getLength();
+            points += route.getPointValue();
             setChanged();
             notifyObservers(client);
             clearChanged();
-            if (opponentOne != null) {
-                gameActivityPresenter.setOpponentOneTurn(opponentOne);
-            }
         } else if (player.getUsername().equals(opponentOne.getUsername())) {
-            opponentOne = player;
+            int remainingTrainCars = opponentOne.getRemainingTrainCars();
+            int points = opponentOne.getPointsEarned();
+            remainingTrainCars -= route.getLength();
+            points += route.getPointValue();
             setChanged();
             notifyObservers(opponentOne);
             clearChanged();
-            if (opponentTwo != null) {
-                gameActivityPresenter.setOpponentTwoTurn(opponentTwo);
-            }
         } else if (player.getUsername().equals(opponentTwo.getUsername())) {
-            opponentTwo = player;
+            int remainingTrainCars = opponentTwo.getRemainingTrainCars();
+            int points = opponentTwo.getPointsEarned();
+            remainingTrainCars -= route.getLength();
+            points += route.getPointValue();
             setChanged();
             notifyObservers(opponentTwo);
             clearChanged();
-            if (opponentThree != null) {
-                gameActivityPresenter.setOpponentThreeTurn(opponentThree);
-
-            }
         } else if (player.getUsername().equals(opponentThree.getUsername())) {
-            opponentThree = player;
+            int remainingTrainCars = opponentThree.getRemainingTrainCars();
+            int points = opponentThree.getPointsEarned();
+            remainingTrainCars -= route.getLength();
+            points += route.getPointValue();
             setChanged();
             notifyObservers(opponentThree);
             clearChanged();
-            if (opponentFour != null) {
-                gameActivityPresenter.setOpponentFourTurn(opponentFour);
-            }
         } else if (player.getUsername().equals(opponentFour.getUsername())) {
-            opponentFour = player;
+            int remainingTrainCars = opponentFour.getRemainingTrainCars();
+            int points = opponentFour.getPointsEarned();
+            remainingTrainCars -= route.getLength();
+            points += route.getPointValue();
             setChanged();
             notifyObservers(opponentFour);
             clearChanged();
         }
     }
 
-    public void startTurn(List<Route> availableRoutes) {
-        if (availableRoutes != null) {
-            gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
-        }
-        gameMapFragmentPresenter.startUserTurn();
-        gameActivityPresenter.startUserTurn();
-        isTurn = true;
+    /**
+     * Cards
+     */
+
+    public void setFaceUpCards(List<TrainCard> faceUpCards) {
+        this.faceUpCards = faceUpCards;
+        gameActivityPresenter.setFaceUpCards(faceUpCards);
+    }
+
+    public void selectFaceUpCard(int index) {
+        TrainCard card = gameActivityPresenter.getFaceUpCard(index);
+        List<TrainCard> cards = client.getTrainCards();
+        cards.add(card);
+        client.setTrainCards(cards);
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), index);
         setChanged();
-        notifyObservers(isTurn);
+        notifyObservers(client);
         clearChanged();
     }
 
-    public void selectRoute(int routeId) {
-        ServerProxy.getInstance().claimRoute(gameId, Authentication.getInstance().getUsername(), routeId);
-    }
-
-    @Override
-    public void setChatListener(ChatContract.ChatPresenter chatListener) {
-        this.chatListener = chatListener;
-    }
-
-    public void setHistoryListener(HistoryContract.HistoryPresenter historyListener) {
-        this.historyListener = historyListener;
-    }
-
-    @Override
-    public Player.PlayerColor getPlayerColor(String username) {
-        if (opponentOne != null && opponentOne.getUsername().equals(username)) {
-            return opponentOne.getPlayerColor();
-        }
-        if (opponentTwo != null && opponentTwo.getUsername().equals(username)) {
-            return opponentTwo.getPlayerColor();
-        }
-        if (opponentThree != null && opponentThree.getUsername().equals(username)) {
-            return opponentThree.getPlayerColor();
-        }
-        if (opponentFour != null && opponentFour.getUsername().equals(username)) {
-            return opponentFour.getPlayerColor();
-        }
-        return client.getPlayerColor();
-    }
-
-    public void demo(int timesClicked) {
-        try {
-            if (timesClicked == 1) {
-                gameActivityPresenter.message("Opponent draws a train card - Player card and deck counts will update");
-                Thread.sleep(2000);
-                List<TrainCard> trainCards = opponentOne.getTrainCards();
-                if (trainCards == null) {
-                    opponentOne.setTrainCards(new ArrayList<TrainCard>());
-                    trainCards = opponentOne.getTrainCards();
-                }
-                trainCards.add(new TrainCard(TrainCard.Color.BLUE));
-                opponentOne.setTrainCards(trainCards);
-                gameActivityPresenter.updatePlayerOne(opponentOne);
-                trainDeckCount--;
-                setDeckCount(ticketDeckCount, trainDeckCount);
-            }
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-
-    }
-
-    public void demo2() {
-        try {
-            playerTurnEnded(client);
-            Thread.sleep(2000);
-
-            Thread.sleep(2000);
-            gameActivityPresenter.message("Opponent takes destination tickets");
-            gameActivityPresenter.message("Player ticket and deck counts will update");
-            Thread.sleep(2000);
-            List<Ticket> tickets = opponentOne.getTickets();
-            tickets.add(new Ticket(1, "bob", "bill,", 100));
-            tickets.add(new Ticket(2, "jill", "sam", 1));
-            opponentOne.setTickets(tickets);
-            // TODO update ticket count
-            Thread.sleep(2000);
-            gameActivityPresenter.message("Opponent claims a route");
-            gameActivityPresenter.message("Stats will update, map will update");
-            Thread.sleep(2000);
-            List<Route> routes = opponentOne.getClaimedRoutes();
-            routes.add(Route.ROUTE_GROUP_MAP.get(69));
-            opponentOne.setClaimedRoutes(routes);
-//            trainCards = opponentOne.getTrainCards();
-//            trainCards.remove(0);
-//            trainCards.remove(0);
-//            trainCards.remove(0);
-//            trainCards.remove(0);
-//            opponentOne.setTrainCards(trainCards);
-            int cars = opponentOne.getRemainingTrainCars();
-            opponentOne.setRemainingTrainCars(cars - 4);
-            int points = opponentOne.getPointsEarned();
-            opponentOne.setPointsEarned(points + 7);
-        } catch (Exception e) {
-            gameActivityPresenter.message(e.getMessage());
-        }
-
-    }
-
-    public void routeClaimed(Player player, Route route) {
-        gameMapFragmentPresenter.routeClaimed(player,route);
+    public void selectFaceDownCardDeck() {
+        ServerProxy.getInstance().getCard(gameId, Authentication.getInstance().getUsername(), SELECT_FACE_DOWN_DECK);
     }
 
     public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
@@ -437,7 +430,127 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void drewCard(TrainCard newCard) {
-        client.addCard(newCard);
-        gameActivityPresenter.setHandCards(client.getTrainCards());
+        client.addTrainCard(newCard);
+        setChanged();
+        notifyObservers(client);
+        clearChanged();
     }
+
+//    public void runDemo2() {
+//        //Update Player Data
+//        gameActivityPresenter.sendToast("Updating Player Data");
+//        client.setPointsEarned(30);
+//        setChanged();
+//        notifyObservers(client);
+//        clearChanged();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Update Train Cards
+//        gameActivityPresenter.sendToast("Removing Player Train Cards");
+//        List<TrainCard> cards = client.getTrainCards();
+//        cards.remove(0);
+//        cards.remove(1);
+//        setChanged();
+//        notifyObservers(client);
+//        clearChanged();
+//        try {
+//            Thread.sleep(15000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Update Tickets
+//        gameActivityPresenter.sendToast("Updating Player Tickets");
+//        List<Ticket> tickets = client.getTickets();
+//        tickets.remove(0);
+//        tickets.add(new Ticket(9, "Chicago", "Santa Fe", 9));
+//        tickets.add(new Ticket(15, "Chicago", "Santa Fe", 9));
+//        setChanged();
+//        notifyObservers(client);
+//        clearChanged();
+//        try {
+//            Thread.sleep(15000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Update Opponent 1 data
+//        gameActivityPresenter.sendToast("Updating Opponent Data");
+//        opponentOne.setPointsEarned(50);
+//        opponentOne.setRemainingTrainCars(5);
+//        opponentOne.setTickets(tickets);
+//        setChanged();
+//        notifyObservers(opponentOne);
+//        clearChanged();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Update the face-up cards
+//        gameActivityPresenter.sendToast("Updating Face Up Cards");
+//        List<TrainCard> faceUpCards = new ArrayList<>();
+//        TrainCard trainCard = new TrainCard(TrainCard.Color.BLACK);
+//        for (int i = 0; i < 5; i++) {
+//            faceUpCards.add(trainCard);
+//        }
+//        updateFaceUpCards(faceUpCards);
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        //Update number of face down cards and ticket cards
+//        gameActivityPresenter.sendToast("Updating Deck Counts");
+//        setDeckCount(95, 15);
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Claim route client
+//        gameActivityPresenter.sendToast("Client Claiming Route");
+//        routeClaimed(client, new Route(7, new City("Portland"), new City("Seattle"), Route.RouteColor.GRAY, 1, 1));
+//        client.setPointsEarned(1);
+//        client.setRemainingTrainCars(44);
+//        setChanged();
+//        notifyObservers(client);
+//        clearChanged();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Claim Route opponent One
+//        gameActivityPresenter.sendToast("Opponent Claiming Route");
+//        routeClaimed(opponentOne, new Route(12, new City("Las Vegas"), new City("Salt Lake City"), Route.RouteColor.ORANGE, 4, 3));
+//        opponentOne.setPointsEarned(4);
+//        opponentOne.setRemainingTrainCars(41);
+//        setChanged();
+//        notifyObservers(opponentOne);
+//        clearChanged();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Move Player Turn
+//        gameActivityPresenter.sendToast("Change Turn");
+//        playerTurnEnded(client);
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

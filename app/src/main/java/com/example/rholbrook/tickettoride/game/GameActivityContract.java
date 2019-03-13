@@ -15,9 +15,6 @@ public class GameActivityContract {
         void setFaceUpDeck(List<TrainCard> testHand);
         void startUserTurn(Player player);
         void endUserTurn();
-        void addFaceUpCardClickListeners();
-        void enableFaceUpCards();
-        void disableFaceUpCards();
         void initializeGame(List<Ticket> selectableTickets);
         void setPlayerTicketDeck(List<Ticket> testDestinations);
         void initializePlayers(List<Player> turnOrder);
@@ -27,17 +24,13 @@ public class GameActivityContract {
         void updatePlayerThree(Player updatedPlayer);
         void updatePlayerFour(Player updatedPlayer);
         void selectTickets(List<Ticket> selectableTickets, int selectionTypeIndicator);
-        void message(String message);
         void updateDeckCounts(int ticketDeckCount, int trainDeckCount);
-        void setOpponentOneTurn(Player opponentOne);
-        void setOpponentTwoTurn(Player opponentTwo);
-        void setOpponentThreeTurn(Player opponentThree);
-        void setOpponentFourTurn(Player opponentFour);
         void showToast(String message);
-        void setOpponentThreeNotTurn(Player client);
-        void setOpponentTwoNotTurn(Player client);
-        void setOpponentOneNotTurn(Player client);
-        void setClientNotTurn(Player client);
+        void setClientTurnBackground(Player player);
+        void setOpponentOneTurnBackground(Player player);
+        void setOpponentTwoTurnBackground(Player player);
+        void setOpponentThreeTurnBackground(Player player);
+        void setOpponentFourTurnBackground(Player player);
     }
 
     public interface Presenter {
@@ -62,13 +55,10 @@ public class GameActivityContract {
         List<TrainCard> getPlayerHand();
         List<Ticket> getPlayerTickets();
         void setHandCards(List<TrainCard> cards);
-        void demo(int timesClicked);
+        void runDemo1();
+        void runDemo2();
         void setDeckCount(int ticketDeckCount, int trainDeckCount);
-        void setOpponentOneTurn(Player opponentOne);
-        void setOpponentTwoTurn(Player opponentTwo);
-        void setOpponentThreeTurn(Player opponentThree);
-        void setOpponentFourTurn(Player opponentFour);
-        void message(String message);
-        void updatePlayerOne(Player player);
+        void sendToast(String change_turn);
+        void turnStarted(Player player);
     }
 }

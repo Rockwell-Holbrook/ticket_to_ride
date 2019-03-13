@@ -41,7 +41,10 @@ public class GameActivityPresenter implements
         } else if (arg.getClass().getName().equals(Boolean.class.getName())) {
             boolean isTurn = (boolean)arg;
             if (isTurn) {
+                startUserTurn();
                 viewCallback.startUserTurn(mModel.getClient());
+            } else {
+                viewCallback.endUserTurn();
             }
         }
     }
@@ -146,6 +149,21 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void turnStarted(Player player) {
+        if (player.getUsername().equals(mModel.getClient().getUsername())) {
+            viewCallback.setClientTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentOne().getUsername())) {
+            viewCallback.setOpponentOneTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentTwo().getUsername())) {
+            viewCallback.setOpponentTwoTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentThree().getUsername())) {
+            viewCallback.setOpponentThreeTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentFour().getUsername())) {
+            viewCallback.setOpponentFourTurnBackground(player);
+        }
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }
@@ -162,7 +180,6 @@ public class GameActivityPresenter implements
 
     @Override
     public void addTicketsToPlayer(List<Ticket> keptCards) {
-        mModel.clientAddTickets(keptCards);
         viewCallback.setPlayerTicketDeck(mModel.getClient().getTickets());
     }
 
@@ -226,8 +243,11 @@ public class GameActivityPresenter implements
         TICKET_IMAGE_MAP.put(Integer.valueOf(30), R.mipmap.winnipeg_little_rock);
     }
 
-    public void demo(int timesClicked) {
-        mModel.demo(timesClicked);
+    public void runDemo1() {
+    }
+
+    public void runDemo2() {
+//        mModel.runDemo2();
     }
 
     @Override
@@ -236,36 +256,7 @@ public class GameActivityPresenter implements
     }
 
     @Override
-    public void setOpponentOneTurn(Player opponentOne) {
-        viewCallback.setClientNotTurn(mModel.getClient());
-        viewCallback.setOpponentOneTurn(opponentOne);
+    public void sendToast(String message) {
+        viewCallback.showToast(message);
     }
-
-    @Override
-    public void setOpponentTwoTurn(Player opponentTwo) {
-        viewCallback.setOpponentOneNotTurn(mModel.getClient());
-        viewCallback.setOpponentTwoTurn(opponentTwo);
-
-    }
-
-    @Override
-    public void setOpponentThreeTurn(Player opponentThree) {
-        viewCallback.setOpponentTwoNotTurn(mModel.getClient());
-        viewCallback.setOpponentThreeTurn(opponentThree);
-    }
-
-    @Override
-    public void setOpponentFourTurn(Player opponentFour) {
-        viewCallback.setOpponentThreeNotTurn(mModel.getClient());
-        viewCallback.setOpponentFourTurn(opponentFour);
-    }
-
-    public void message(String message) {
-        viewCallback.message(message);
-    }
-
-    public void updatePlayerOne(Player player) {
-        viewCallback.updatePlayerOne(player);
-    }
-
 }
