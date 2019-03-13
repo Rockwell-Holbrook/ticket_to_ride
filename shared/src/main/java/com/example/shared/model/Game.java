@@ -151,11 +151,14 @@ public class Game {
     }
 
     public ArrayList<Ticket> initializeTickets(String username) {
+        ArrayList<Ticket> temp = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            getPlayerWithUsername(username).addTicket(this.ticketDeck.drawFromTop());
+            Ticket ticket = this.ticketDeck.drawFromTop();
+            getPlayerWithUsername(username).addTicket(ticket);
+            temp.add(ticket);
         }
 
-        return getPlayerWithUsername(username).getTickets();
+        return temp;
     }
 
     public ArrayList<Player> initializeTurnOrder(String username) {

@@ -133,7 +133,10 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     //  Tickets
     @Override
     public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
-        GameActivityModel.getInstance().ticketDataReceived(tickets);
+        String typeValue = gson.toJson(tickets);
+        Type typeName = new TypeToken<List<Ticket>>(){}.getType();
+        List<Ticket> ticketsList = gson.fromJson(typeValue, typeName);
+        GameActivityModel.getInstance().ticketDataReceived(ticketsList);
     }
 
     @Override

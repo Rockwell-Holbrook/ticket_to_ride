@@ -52,4 +52,5 @@
     <string name="close">Close</string>
     <string name="use_these_cards">Use These Cards</string>
     <string name="claim_route_instructions">You must choose # cards</string>
+    <string name="cannot_take_wild">You cannot take a Locomotive this time</string>
 </resources>

@@ -164,6 +164,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public Player.PlayerColor getClientColor() {
+        return mModel.getClient().getPlayerColor();
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }

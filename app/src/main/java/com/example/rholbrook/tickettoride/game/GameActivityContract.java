@@ -60,5 +60,6 @@ public class GameActivityContract {
         void setDeckCount(int ticketDeckCount, int trainDeckCount);
         void sendToast(String change_turn);
         void turnStarted(Player player);
+        Player.PlayerColor getClientColor();
     }
 }

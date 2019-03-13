@@ -327,21 +327,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void drawTickets() {
-        List<Ticket> tickets = client.getTickets();
-        int count = 0;
-        int i = 1;
-        while (count < 3) {
-            for (Ticket ticket : tickets) {
-                if (i == ticket.getTicketId()) {
-                    break;
-                }
-            }
-            //tickets.add(new Ticket(i, "AwesomeTown", "Blaineville", 1000000));
-            i++;
-            count++;
-        }
-        ticketDataReceived(tickets);
-        //ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
+        ServerProxy.getInstance().requestTickets(gameId, Authentication.getInstance().getUsername());
     }
 
     /**
@@ -426,6 +412,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void updateFaceUpCards(List<TrainCard> trainCards) {
+        this.faceUpCards = trainCards;
         gameActivityPresenter.setFaceUpCards(trainCards);
     }
 
