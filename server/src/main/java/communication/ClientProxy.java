@@ -135,6 +135,14 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
+    @Override
+    public void turnStarted(Player player, String gameId) {
+        String methodName = "startTurn";
+        String[] typeNames = {Player.class.getName(), String.class.getName()};
+        Object[] inputVals = {player, gameId};
+
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+    }
 
 
     @Override
