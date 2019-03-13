@@ -276,7 +276,7 @@ public class Game {
     public void claimRoute(String username, int routeId) {
         Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
 
-        getPlayerWithUsername(username).addClaimedRoute(routeToClaim);
+        getPlayerWithUsername(username).claimRoute(routeToClaim);
         getPlayerWithUsername(username).removeTrainCard(routeToClaim.getLength(), routeToClaim.getColor()); //todo: make removeTrainCard Work
 
         for (int i = 0; i <routeToClaim.getLength() ; i++) {
