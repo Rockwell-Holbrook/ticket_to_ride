@@ -318,10 +318,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void startTurn(List<Route> availableRoutes) {
-//        List<Route> routes = new ArrayList<>();
-//        for (int i = 1; i < 101; i++) {
-//            routes.add(Route.ROUTE_GROUP_MAP.get(i));
-//        }
+        gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
         gameMapFragmentPresenter.startUserTurn();
         gameActivityPresenter.startUserTurn();
         isTurn = true;

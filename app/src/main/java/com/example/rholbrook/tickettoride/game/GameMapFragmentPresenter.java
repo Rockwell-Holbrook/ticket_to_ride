@@ -8,20 +8,74 @@ import com.example.shared.model.Route;
 
 import java.util.*;
 
+/**
+ * The GameMapFragmentPresenter class is the presenter for the GameMapFragment view. It acts as the middle-man between the view and model classes.
+ *
+ * This class implements the GameMapFragmentContract.Presenter interface as well as Java's Observer class.
+ *
+ * @invariant availableButtons must be a non-null List of type Button
+ * @invariant viewCallback must be a non-null GameMapFragmentContract.View implementation
+ */
 public class GameMapFragmentPresenter implements GameMapFragmentContract.Presenter, Observer {
+
+    /**
+     * Callback to the GameMapFragment View class
+     */
     private GameMapFragmentContract.View viewCallback;
+
+    /**
+     * Instance of the GameActivityModel model class
+     */
     private GameActivityModel mModel;
+
+    /**
+     * List of Button widgets.
+     * This list will be assigned during every client turn.
+     * The list of buttons are used to enable and disable click listeners for the buttons
+     */
     private List<Button> availableButtons;
 
+
+    /**
+     * Constructor for the GameMapFragmentPresenter
+     *
+     * Sets the view callback
+     * Initializes the availableButtons list
+     * Defines the mModel attribute
+     * Sets the presenter callback in the model class
+     * Adds this instance of the class as an observer of the model class
+     *
+     * @param viewCallback instance of the view to be used as the callback
+     *
+     * @pre viewCallback must be a non-null GameMapFragmentContract.View object
+     *
+     * @post this instance of the GameMapFragmentPresenter must be listed in GameActivityModel's observables
+     * @post GameActiviyModel's gameMapFragmentPresenter must not be null
+     * @post availableButtons must not be null
+     * @post viewCallback must not be null
+     */
     public GameMapFragmentPresenter(GameMapFragmentContract.View viewCallback) {
         this.viewCallback = viewCallback;
         availableButtons = new ArrayList<>();
         mModel = GameActivityModel.getInstance();
         mModel.setGameMapFragmentPresenter(this);
         mModel.addObserver(this);
-        availableButtons = new ArrayList<>();
     }
 
+    /**
+     * Update Method for the Observer
+     *
+     * Receives updated information from the observable
+     *
+     * If the argument is a boolean object, that means that the isTurn attribute has changed
+     * If isTurn has changed, then enable buttons
+     * Otherwise, then disable buttons
+     *
+     * @param o Model object that acts as the observer
+     * @param arg Additional arguments that the observable sends
+     *
+     * @pre o must be a reference to an Observable that this instance is an observer of
+     */
     @Override
     public void update(Observable o, Object arg) {
         if (arg.getClass().getName().equals(Boolean.class.getName())) {
@@ -34,39 +88,83 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         }
     }
 
-    @Override
-    public void init() {
-
-    }
-
-    @Override
-    public void startUserTurn() {
-        viewCallback.startUserTurn(availableButtons);
-    }
-
+    /**
+     * Route Claimed method for the GameMapFragmentPresenter
+     *
+     * Called when the model receives a call from the server
+     * Instructs the view to change the color of the buttons for a specific route
+     *
+     * @param player Player object of the one who claimed the route
+     * @param route Route object of the route that was claimed
+     *
+     * @pre player must be a non-null Player object
+     * @pre player must have the same username as one of the Player objects stored in the GameActivityModel
+     * @pre route must be a non-null Route object
+     * @pre route must have a routeId between 1 and 100, or as found in the ROUTE_GROUP_MAP
+     */
     @Override
     public void routeClaimed(Player player, Route route) {
         viewCallback.routeClaimed(getPlayerColor(player), ROUTE_GROUP_MAP.get(route.getGroupId()));
     }
 
+    /**
+     * UpdateAvailableRoutes method for the GameMapFragmentPresenter
+     *
+     * Called when the model receives a new set of availableRoutes
+     * Clears the availableButtons list
+     * Sends the group to the view to add click listeners
+     *
+     * @param availableRoutes List of routes that the player can take
+     *
+     * @pre availableRoutes must be a non-null list of Routes
+     * @pre availableRoutes may be an empty list
+     *
+     * @post availableButtons is a non-null list of Buttons
+     * @post availableButtons is an empty list
+     * @post each button associated with the Group found from the ROUTE_GROUP_MAP in the view must have an onClickListener
+     */
     @Override
     public void updateAvailableRoutes(List<Route> availableRoutes) {
         availableButtons.clear();
         for (Route route : availableRoutes) {
-            viewCallback.addClickListeners(ROUTE_GROUP_MAP.get(route.getGroupId()));
+            viewCallback.addClickListeners(ROUTE_GROUP_MAP.get(route.getGroupId()), route.getGroupId());
         }
     }
 
+    /**
+     * SelectRoute method for the GameMapFragmentPresenter
+     *
+     * Sends the routeId of the route the user selected to the model
+     *
+     * @param routeId Id of the Route object the user selected
+     *
+     * @pre routeId must be an integer between 1 and 100, as found in the ROUTE_GROUP_MAP
+     */
     @Override
     public void selectRoute(int routeId) {
         mModel.selectRoute(routeId);
     }
 
+    /**
+     * AddAvailbleButton Method for GameMapFragmentPresenter
+     *
+     * Adds a button object to the availableButtons list
+     *
+     * @param button Button object to add to the availableButtons list
+     *
+     * @pre button must be a button object
+     *
+     * @post availableButtons must have a length one greater than before
+     * @post availableButtons must contain a Button object that corresponds with button
+     */
     @Override
     public void addAvailableButton(Button button) {
         availableButtons.add(button);
     }
 
+    /**
+     * Static map of the possible routeIds and their corresponding Group ids as found in the layout file
+     */
     public static final Map<Integer, Integer> ROUTE_GROUP_MAP;
     static {
         ROUTE_GROUP_MAP = new HashMap<Integer, Integer>();
@@ -172,6 +270,18 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         ROUTE_GROUP_MAP.put(100, R.id.toronto_montreal_group_one);
     }
 
+    /**
+     * GetPlayerColor method for the GameMapFragmentPresenter
+     *
+     * Returns the color that the Player corresponds to
+     *
+     * @param player Player object that the user needs to find the color of
+     * @return integer representation of the color value that the player's color corresponds to
+     *
+     * @pre player must be a non-null Player object
+     * @pre player must have the same username as one of the Player objects stored in the GameActivityModel
+     * @pre player msut have a non-null color attribute
+     */
     public int getPlayerColor(Player player) {
         switch (player.getPlayerColor()) {
             case YELLOW:

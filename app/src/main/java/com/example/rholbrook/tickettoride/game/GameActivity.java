@@ -265,6 +265,9 @@ public class GameActivity extends AppCompatActivity implements
             gameId = extras.getString("gameId");
         }
         mPresenter.setGameId(gameId);
+        disableFaceUpCards();
+        faceDownTrainCardDeck.setEnabled(false);
+        faceDownTicketDeck.setEnabled(false);
         mPresenter.readyToInitialize();
     }
 
