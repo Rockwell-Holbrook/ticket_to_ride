@@ -143,6 +143,8 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
     @Override
     public void selectRoute(int routeId) {
         mModel.selectRoute(routeId);
+        viewCallback.endUserTurn(availableButtons);
+        mModel.endUserTurn();
     }
 
     /**

@@ -41,7 +41,10 @@ public class GameActivityPresenter implements
         } else if (arg.getClass().getName().equals(Boolean.class.getName())) {
             boolean isTurn = (boolean)arg;
             if (isTurn) {
+                startUserTurn();
                 viewCallback.startUserTurn(mModel.getClient());
+            } else {
+                viewCallback.endUserTurn();
             }
         }
     }
@@ -146,6 +149,21 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void turnStarted(Player player) {
+        if (player.getUsername().equals(mModel.getClient().getUsername())) {
+            viewCallback.setClientTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentOne().getUsername())) {
+            viewCallback.setOpponentOneTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentTwo().getUsername())) {
+            viewCallback.setOpponentTwoTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentThree().getUsername())) {
+            viewCallback.setOpponentThreeTurnBackground(player);
+        } else if (player.getUsername().equals(mModel.getOpponentFour().getUsername())) {
+            viewCallback.setOpponentFourTurnBackground(player);
+        }
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }
@@ -229,7 +247,9 @@ public class GameActivityPresenter implements
     public void runDemo1() {
     }
 
-    public void runDemo2() {mModel.runDemo2();}
+    public void runDemo2() {
+//        mModel.runDemo2();
+    }
 
     @Override
     public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
@@ -237,33 +257,7 @@ public class GameActivityPresenter implements
     }
 
     @Override
-    public void setOpponentOneTurn(Player opponentOne) {
-        viewCallback.setClientNotTurn(mModel.getClient());
-        viewCallback.setOpponentOneTurn(opponentOne);
-    }
-
-    @Override
-    public void setOpponentTwoTurn(Player opponentTwo) {
-        viewCallback.setOpponentOneNotTurn(mModel.getClient());
-        viewCallback.setOpponentTwoTurn(opponentTwo);
-
-    }
-
-    @Override
-    public void setOpponentThreeTurn(Player opponentThree) {
-        viewCallback.setOpponentTwoNotTurn(mModel.getClient());
-        viewCallback.setOpponentThreeTurn(opponentThree);
-    }
-
-    @Override
-    public void setOpponentFourTurn(Player opponentFour) {
-        viewCallback.setOpponentThreeNotTurn(mModel.getClient());
-        viewCallback.setOpponentFourTurn(opponentFour);
-    }
-
-    @Override
     public void sendToast(String message) {
         viewCallback.showToast(message);
     }
-
 }
