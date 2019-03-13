@@ -307,6 +307,7 @@ public class Game {
         } else {
             Player newTurn = turnOrder.get(0);
             clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.turnStarted(newTurn, gameId);
         }
     }
 
