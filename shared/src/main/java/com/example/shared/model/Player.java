@@ -7,9 +7,9 @@ public class Player {
     private String username;
     private boolean isHost;
     private PlayerColor playerColor;
-    private List<TrainCard> trainCards;
-    private List<Ticket> tickets;
-    private List<Route> claimedRoutes;
+    private ArrayList<TrainCard> trainCards;
+    private ArrayList<Ticket> tickets;
+    private ArrayList<Route> claimedRoutes;
     private int remainingTrainCars;
     private int pointsEarned;
 
@@ -18,6 +18,9 @@ public class Player {
         this.username = username;
         this.isHost = isHost;
         this.playerColor = playerColor;
+        this.trainCards = new ArrayList<>();
+        this.tickets = new ArrayList<>();
+        this.claimedRoutes = new ArrayList<>();
         pointsEarned = 0;
         remainingTrainCars = 45;
     }
@@ -54,7 +57,7 @@ public class Player {
         this.playerColor = color;
     }
 
-    public List<TrainCard> getTrainCards() {
+    public ArrayList<TrainCard> getTrainCards() {
         return trainCards;
     }
 
@@ -62,19 +65,19 @@ public class Player {
         trainCards = trainCards;
     }
 
-    public List<Ticket> getTickets() {
+    public ArrayList<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(List<Ticket> tickets) {
+    public void setTickets(ArrayList<Ticket> tickets) {
         this.tickets = tickets;
     }
 
-    public List<Route> getClaimedRoutes() {
+    public ArrayList<Route> getClaimedRoutes() {
         return claimedRoutes;
     }
 
-    public void setClaimedRoutes(List<Route> claimedRoutes) {
+    public void setClaimedRoutes(ArrayList<Route> claimedRoutes) {
         this.claimedRoutes = claimedRoutes;
     }
 
@@ -86,8 +89,22 @@ public class Player {
         this.pointsEarned = pointsEarned;
     }
 
-    public void addCard(TrainCard trainCard) {
+    public void addTrainCard(TrainCard trainCard) {
         this.trainCards.add(trainCard);
+    }
+
+    public void removeTrainCard(int number, Route.RouteColor color) {
+        //Todo: MAKE THIS WORK
+    }
+
+    public void addTicket(Ticket ticket) {
+        this.tickets.add(ticket);
+    }
+
+    public void returnedTickets(ArrayList<Ticket> returnedTickets) {
+        for (int i = 0; i < returnedTickets.size(); i++) {
+            this.tickets.remove(returnedTickets.get(i));
+        }
     }
 
     public enum PlayerColor {
