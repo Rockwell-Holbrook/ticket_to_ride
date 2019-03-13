@@ -111,6 +111,11 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameActivityModel.getInstance().initializeGame(trainCardsFaceUpList, trainCardsList, ticketList, newTurnOrder);
     }
 
+    @Override
+    public void initializeComplete(Player player, String gameId) {
+        GameActivityModel.getInstance().updatePlayer(player);
+    }
+
     //  Turn
     @Override
     public void startTurn(List<Route> availableRoutes, String username, String gameId) {

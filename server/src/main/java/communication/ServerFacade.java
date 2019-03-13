@@ -5,9 +5,13 @@ import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 import com.example.shared.model.Route;
 import com.example.shared.model.Ticket;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import game.GameManager;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServerFacade implements IServer {
     private static final ServerFacade ourInstance = new ServerFacade();
@@ -127,7 +131,11 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
-        gameManager.ticketsReturned(gameId, username, returned);
+        Gson gson = new Gson();
+        String typeValue = gson.toJson(returned);
+        Type typeName = new TypeToken<ArrayList<Ticket>>(){}.getType();
+        ArrayList<Ticket> ticketList = gson.fromJson(typeValue, typeName);
+        gameManager.ticketsReturned(gameId, username, ticketList);
     }
 
     /**

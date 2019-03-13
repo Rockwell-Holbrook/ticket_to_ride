@@ -150,6 +150,7 @@ public class GameActivity extends AppCompatActivity implements
                 mPresenter.runDemo2();
             }
         });
+        demoButton.setEnabled(false);
 
         mPresenter = new GameActivityPresenter(this);
 

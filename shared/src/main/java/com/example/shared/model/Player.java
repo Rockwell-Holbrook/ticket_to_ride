@@ -102,8 +102,17 @@ public class Player {
     }
 
     public void returnedTickets(ArrayList<Ticket> returnedTickets) {
-        for (int i = 0; i < returnedTickets.size(); i++) {
-            this.tickets.remove(returnedTickets.get(i));
+        for (Ticket ticket : returnedTickets) {
+            removeTicket(ticket);
+        }
+    }
+
+    private void removeTicket(Ticket ticket) {
+        for (Ticket ownedTicket : tickets) {
+            if (ownedTicket.getTicketId() == ticket.getTicketId()) {
+                tickets.remove(ownedTicket);
+                break;
+            }
         }
     }
 

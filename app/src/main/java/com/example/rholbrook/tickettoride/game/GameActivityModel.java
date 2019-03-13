@@ -221,6 +221,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         clearChanged();
         this.faceUpCards = trainCardsFaceUp;
         gameActivityPresenter.setFaceUpCards(trainCardsFaceUp);
+        client.getTickets().clear();
         gameActivityPresenter.initializeGame(tickets);
     }
 
@@ -421,6 +422,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         setChanged();
         notifyObservers(client);
         clearChanged();
+    }
+
+    public void updatePlayer(Player player) {
+        playerTurnEnded(player);
     }
 
 //    public void runDemo2() {

@@ -310,7 +310,7 @@ public class Game {
         }
     }
 
-    private Player getPlayerWithUsername(String username) {
+    public Player getPlayerWithUsername(String username) {
         for (Player player : playerList) {
             if (player.getUsername().equals(username)) {
                 return player;
@@ -383,6 +383,4 @@ public class Game {
     public ArrayList<Route> getClaimedRoutes() {
         return claimedRoutes;
     }
-
-
 }
