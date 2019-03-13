@@ -69,19 +69,20 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
     }
 
     @Override
-    public void addClickListeners(Integer integer) {
-        final int routeId = integer;
+    public void addClickListeners(Integer routeViewId, Integer routeModelId) {
+        final int viewId = routeViewId;
+        final int modelId = routeModelId;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-            Group routeGroup = getView().findViewById(routeId);
+            Group routeGroup = getView().findViewById(viewId);
             int[] routeButtons = routeGroup.getReferencedIds();
             for (int i = 0 ; i < routeButtons.length; i++) {
                 Button button = getView().findViewById(routeButtons[i]);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.selectRoute(routeId);
+                        mPresenter.selectRoute(modelId);
                     }
                 });
                 mPresenter.addAvailableButton(button);

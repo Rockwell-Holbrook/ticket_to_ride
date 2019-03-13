@@ -10,7 +10,7 @@ public class GameMapFragmentContract {
     public interface View {
         void startUserTurn(List<Button> buttons);
         void endUserTurn(List<Button> buttons);
-        void addClickListeners(Integer integer);
+        void addClickListeners(Integer routeViewId, Integer routeModelId);
         void routeClaimed(int playerColor, int route);
     }
 

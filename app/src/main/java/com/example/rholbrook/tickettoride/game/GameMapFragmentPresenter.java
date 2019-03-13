@@ -53,7 +53,8 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
     public void updateAvailableRoutes(List<Route> availableRoutes) {
         availableButtons.clear();
         for (Route route : availableRoutes) {
-            viewCallback.addClickListeners(ROUTE_GROUP_MAP.get(route.getGroupId()));
+            int id = route.getGroupId();
+            viewCallback.addClickListeners(ROUTE_GROUP_MAP.get(id), id);
         }
     }
 
