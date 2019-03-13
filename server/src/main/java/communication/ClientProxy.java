@@ -110,6 +110,16 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
+    public void initializeComplete(Player player, String gameId) {
+        String methodName = "initializeComplete";
+        String[] typeNames = {Player.class.getName(), String.class.getName()};
+        Object[] inputVals = {player, gameId};
+
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+
+    }
+
+    @Override
     public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
         String methodName = "ticketsReceived";
         String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};

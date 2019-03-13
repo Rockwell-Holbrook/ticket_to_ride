@@ -111,6 +111,11 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameActivityModel.getInstance().initializeGame(trainCardsFaceUpList, trainCardsList, ticketList, newTurnOrder);
     }
 
+    @Override
+    public void initializeComplete(Player player, String gameId) {
+        GameActivityModel.getInstance().updatePlayer(player);
+    }
+
     //  Turn
     @Override
     public void startTurn(List<Route> availableRoutes, String username, String gameId) {
@@ -133,7 +138,10 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     //  Tickets
     @Override
     public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
-        GameActivityModel.getInstance().ticketDataReceived(tickets);
+        String typeValue = gson.toJson(tickets);
+        Type typeName = new TypeToken<List<Ticket>>(){}.getType();
+        List<Ticket> ticketsList = gson.fromJson(typeValue, typeName);
+        GameActivityModel.getInstance().ticketDataReceived(ticketsList);
     }
 
     @Override

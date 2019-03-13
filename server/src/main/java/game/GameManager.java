@@ -212,6 +212,8 @@ public class GameManager {
         Game game = this.playingGameList.get(gameId);
         game.setReadyPlayers(game.getReadyPlayers() + 1);
 
+        clientProxy.initializeComplete(game.getPlayerWithUsername(username), gameId);
+
         if (game.getMaxPlayers() == game.getReadyPlayers()) {
             ArrayList<Player> tempTurnOrder = new ArrayList<>(game.getPlayerList());
             clientProxy.startTurn(game.getAvailableRoutes(), tempTurnOrder.get(0).getUsername(), gameId);

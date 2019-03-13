@@ -151,11 +151,14 @@ public class Game {
     }
 
     public ArrayList<Ticket> initializeTickets(String username) {
+        ArrayList<Ticket> temp = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            getPlayerWithUsername(username).addTicket(this.ticketDeck.drawFromTop());
+            Ticket ticket = this.ticketDeck.drawFromTop();
+            getPlayerWithUsername(username).addTicket(ticket);
+            temp.add(ticket);
         }
 
-        return getPlayerWithUsername(username).getTickets();
+        return temp;
     }
 
     public ArrayList<Player> initializeTurnOrder(String username) {
@@ -276,7 +279,7 @@ public class Game {
     public void claimRoute(String username, int routeId) {
         Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
 
-        getPlayerWithUsername(username).addClaimedRoute(routeToClaim);
+        getPlayerWithUsername(username).claimRoute(routeToClaim);
         getPlayerWithUsername(username).removeTrainCard(routeToClaim.getLength(), routeToClaim.getColor()); //todo: make removeTrainCard Work
 
         for (int i = 0; i <routeToClaim.getLength() ; i++) {
@@ -304,10 +307,11 @@ public class Game {
         } else {
             Player newTurn = turnOrder.get(0);
             clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.turnStarted(newTurn, gameId);
         }
     }
 
-    private Player getPlayerWithUsername(String username) {
+    public Player getPlayerWithUsername(String username) {
         for (Player player : playerList) {
             if (player.getUsername().equals(username)) {
                 return player;
@@ -380,6 +384,4 @@ public class Game {
     public ArrayList<Route> getClaimedRoutes() {
         return claimedRoutes;
     }
-
-
 }

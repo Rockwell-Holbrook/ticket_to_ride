@@ -164,6 +164,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public Player.PlayerColor getClientColor() {
+        return mModel.getClient().getPlayerColor();
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }
@@ -180,6 +185,7 @@ public class GameActivityPresenter implements
 
     @Override
     public void addTicketsToPlayer(List<Ticket> keptCards) {
+        mModel.getClient().getTickets().addAll(keptCards);
         viewCallback.setPlayerTicketDeck(mModel.getClient().getTickets());
     }
 

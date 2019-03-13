@@ -59,6 +59,13 @@ public interface IClientInGame {
     void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId);
 
     /**
+     * Signals the GameActivityModel to update the player's view
+     *
+     * @param player Player object with updated data
+     */
+    void initializeComplete(Player player, String gameId);
+
+    /**
      * Signals the GameActivityModel to show the player a list of tickets to choose from
      *
      * @param tickets List of 3 Ticket objects which which the player must choose from
