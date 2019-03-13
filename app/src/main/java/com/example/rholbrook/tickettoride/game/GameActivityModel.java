@@ -3,7 +3,6 @@ package com.example.rholbrook.tickettoride.game;
 import android.util.Log;
 import com.example.rholbrook.tickettoride.chat.ChatContract;
 import com.example.rholbrook.tickettoride.main.Authentication;
-import com.example.rholbrook.tickettoride.serverconnection.ClientFacade;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.interfaces.IServer;
 import com.example.shared.model.Chat;
@@ -15,8 +14,6 @@ import com.example.shared.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Set;
-import java.util.Random;
 
 public class GameActivityModel extends Observable implements ChatContract.ChatModel {
     private String TAG = "GameActivityModel";
@@ -385,7 +382,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void drewCard(TrainCard newCard) {
-        client.addCard(newCard);
+        client.addTrainCard(newCard);
         gameActivityPresenter.setHandCards(client.getTrainCards());
     }
 }

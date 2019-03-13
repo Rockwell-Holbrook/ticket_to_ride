@@ -189,8 +189,8 @@ public class GameManager {
     public void readyToInitialize(String gameId, String username) {
         Game game = this.playingGameList.get(gameId);
 
-        ArrayList<TrainCard> trainCards = game.initializeTrainCardsInHand();
-        ArrayList<Ticket> tickets = game.initializeTickets();
+        ArrayList<TrainCard> trainCards = game.initializeTrainCardsInHand(username);
+        ArrayList<Ticket> tickets = game.initializeTickets(username);
         ArrayList<Player> turnOrder = game.initializeTurnOrder(username);
 
         clientProxy.initializeGame(game.getTrainCardsFaceUp(), trainCards, tickets, turnOrder, username, game.getGameId());
@@ -268,7 +268,7 @@ public class GameManager {
      */
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
         Game game = this.playingGameList.get(gameId);
-        game.ticketsReturned(username, returned);
+        game.ticketsReturned(gameId, username, returned);
     }
 
     /**
