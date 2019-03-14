@@ -59,10 +59,11 @@ public interface IClientInGame {
     void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId);
 
     /**
-     * @param gameId   the game ID that finished initializing
-     * @param username the username of the player who is finished initializing
+     * Signals the GameActivityModel to update the player's view
+     *
+     * @param player Player object with updated data
      */
-    void initializeComplete(String gameId, String username);
+    void initializeComplete(Player player, String gameId);
 
     /**
      * Signals the GameActivityModel to show the player a list of tickets to choose from

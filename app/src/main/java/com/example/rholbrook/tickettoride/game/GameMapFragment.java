@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
-import com.example.shared.model.Route;
 
 import java.util.List;
 
@@ -69,7 +68,7 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
     }
 
     @Override
-    public void addClickListeners(Integer integer) {
+    public void addClickListeners(Integer integer, final int groupId) {
         final int routeId = integer;
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -81,7 +80,7 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.selectRoute(routeId);
+                        mPresenter.selectRoute(groupId);
                     }
                 });
                 mPresenter.addAvailableButton(button);

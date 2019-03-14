@@ -151,11 +151,14 @@ public class Game {
     }
 
     public ArrayList<Ticket> initializeTickets(String username) {
+        ArrayList<Ticket> temp = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            getPlayerWithUsername(username).addTicket(this.ticketDeck.drawFromTop());
+            Ticket ticket = this.ticketDeck.drawFromTop();
+            getPlayerWithUsername(username).addTicket(ticket);
+            temp.add(ticket);
         }
 
-        return getPlayerWithUsername(username).getTickets();
+        return temp;
     }
 
     public ArrayList<Player> initializeTurnOrder(String username) {
@@ -269,7 +272,7 @@ public class Game {
         }
 
         getPlayerWithUsername(username).returnedTickets(returned);
-        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
+//        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
         clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
     }
 
@@ -304,10 +307,11 @@ public class Game {
         } else {
             Player newTurn = turnOrder.get(0);
             clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.turnStarted(newTurn, gameId);
         }
     }
 
-    private Player getPlayerWithUsername(String username) {
+    public Player getPlayerWithUsername(String username) {
         for (Player player : playerList) {
             if (player.getUsername().equals(username)) {
                 return player;
@@ -380,6 +384,4 @@ public class Game {
     public ArrayList<Route> getClaimedRoutes() {
         return claimedRoutes;
     }
-
-
 }
