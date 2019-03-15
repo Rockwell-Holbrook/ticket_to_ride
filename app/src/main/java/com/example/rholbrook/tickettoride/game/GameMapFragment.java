@@ -4,16 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
+import com.example.shared.model.Route;
+import com.example.shared.model.TrainCard;
 
 import java.util.List;
 
-public class GameMapFragment extends Fragment implements GameMapFragmentContract.View {
+public class GameMapFragment extends Fragment implements
+        GameMapFragmentContract.View {
     GameMapFragmentContract.Presenter mPresenter;
 
     public static GameMapFragment newInstance() {
@@ -80,7 +84,9 @@ public class GameMapFragment extends Fragment implements GameMapFragmentContract
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.selectRoute(groupId);
+                        ClaimRouteDialogFragment dialog = ClaimRouteDialogFragment.newInstance(mPresenter.getPlayerHand(), Route.ROUTE_GROUP_MAP.get(groupId));
+                        dialog.setCancelable(false);
+                        dialog.show(getActivity().getSupportFragmentManager(), "Claim Route Dialog Fragment");
                     }
                 });
                 mPresenter.addAvailableButton(button);
