@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private String username;
-    private boolean isHost;
-    private PlayerColor playerColor;
-    private ArrayList<TrainCard> trainCards;
-    private ArrayList<Ticket> tickets;
-    private ArrayList<Route> claimedRoutes;
-    private int remainingTrainCars;
-    private int pointsEarned;
+    protected String username;
+    protected boolean isHost;
+    protected PlayerColor playerColor;
+    protected ArrayList<TrainCard> trainCards;
+    protected ArrayList<Ticket> tickets;
+    protected ArrayList<Route> claimedRoutes;
+    protected int remainingTrainCars;
+    protected int pointsEarned;
 
 
     public Player(String username, boolean isHost, PlayerColor playerColor) {
@@ -137,6 +137,7 @@ public class Player {
 
     /**
      * Adds route to claimed route list AND adds points AND removes cars
+     *
      * @param addedRoute Route to add
      */
     public void claimRoute(Route addedRoute) {
