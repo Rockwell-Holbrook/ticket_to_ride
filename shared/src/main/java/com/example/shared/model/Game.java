@@ -22,6 +22,8 @@ public class Game {
     private ArrayList<TrainCard> trainCardsFaceUp;
     private Deck<Ticket> ticketDeck;
     private Deck<TrainCard> trainCardDeck;
+    private boolean gameEnding;
+    private int finalTurnTaken;
 
     public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;
@@ -38,6 +40,7 @@ public class Game {
         this.gameHistory =  new ArrayList<>();
         this.ticketDeck = new Deck<>(this.populateTicketDeck());
         this.trainCardDeck = new Deck<>(this.populateTrainCardDeck());
+        this.finalTurnTaken = 0;
 
         this.ticketDeck.shuffle();
         this.trainCardDeck.shuffle();
@@ -300,6 +303,22 @@ public class Game {
 
     public void endPlayerTurn(String username) {
         clientProxy.turnEnded(getPlayerWithUsername(username));
+
+        if(this.gameEnding) {
+            this.finalTurnTaken++;
+        }
+
+        if(this.finalTurnTaken == this.maxPlayers) {
+            clientProxy.gameEnded(this.gameId);
+            return;
+        }
+
+        if(getPlayerWithUsername(username).getRemainingTrainCars() <= 2 && !gameEnding) {
+            this.gameEnding = true;
+            this.finalTurnTaken++;
+            clientProxy.gameEnding(this.gameId);
+        }
+
         startNextTurn(getPlayerWithUsername(username));
     }
 

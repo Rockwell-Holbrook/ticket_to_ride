@@ -4,6 +4,7 @@ import android.util.Log;
 import com.example.rholbrook.tickettoride.game.GameActivityModel;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivityModel;
 import com.example.rholbrook.tickettoride.main.MainActivityModel;
+import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IClientInGame;
 import com.example.shared.interfaces.IClientNotInGame;
 import com.example.shared.model.*;
@@ -171,6 +172,16 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId) {
+        //todo: Client shall work!
+    }
+
+    @Override
+    public void gameEnding(String gameId) {
+        //todo: Client shall work!
+    }
+
+    @Override
+    public void gameEnded(String gameId) {
         //todo: Client shall work!
     }
 }

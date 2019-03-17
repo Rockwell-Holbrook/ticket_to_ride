@@ -127,4 +127,8 @@ public interface IClientInGame {
     void receiveFaceDownCard(TrainCard newCard, String username, String gameId);
 
     void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId);
+
+    void gameEnding(String gameId);
+
+    void gameEnded(String gameId);
 }
