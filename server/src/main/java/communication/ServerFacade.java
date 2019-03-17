@@ -177,4 +177,9 @@ public class ServerFacade implements IServer {
     public void requestTickets(String gameID, String username) {
         gameManager.requestTickets(gameID, username);
     }
+
+    @Override
+    public void calculateClaimableRoutes(String gameId, String username) {
+        gameManager.calculateClaimableRoutes(gameId, username);
+    }
 }

@@ -131,4 +131,6 @@ public interface IClientInGame {
      * @param gameId GameId to specify which game
      */
     void receiveFaceDownCard(TrainCard newCard, String username, String gameId);
+
+    void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId);
 }

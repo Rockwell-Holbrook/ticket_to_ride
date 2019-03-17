@@ -195,4 +195,13 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
+
+    @Override
+    public void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId) {
+        String methodName = "getClaimableRoutes";
+        String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {claimableRoutes, username, gameId};
+
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
+    }
 }

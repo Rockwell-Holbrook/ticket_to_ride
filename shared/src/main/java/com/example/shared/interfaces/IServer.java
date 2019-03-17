@@ -92,9 +92,9 @@ public interface IServer {
     /**
      * A user may return some of the tickets that they received for their turn.
      *
-     * @param gameID The ID of the game we need to work with!
+     * @param gameId The ID of the game we need to work with!
      */
-    void turnEnded(String gameID, String username);
+    void turnEnded(String gameId, String username);
 
     /**
      * A User may spend their turn claiming 1 or two cards from the deck or the face up.
@@ -113,9 +113,9 @@ public interface IServer {
     /**
      * A user may spend their turn getting tickets.
      *
-     * @param gameID The ID of the game we need to work with!
+     * @param gameId The ID of the game we need to work with!
      */
-    void requestTickets(String gameID, String username);
+    void requestTickets(String gameId, String username);
 
-
+    void calculateClaimableRoutes(String gameId, String username);
 }

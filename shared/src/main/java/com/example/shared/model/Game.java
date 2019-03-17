@@ -320,23 +320,24 @@ public class Game {
         return null;
     }
 
-    public void calculateAvailableRoutes(String username) {
+    public void calculateClaimableRoutes(String username) { //todo: need to do a check for already owning the same 2-way route.
          Map<TrainCard.Color, Integer> cardGroupings = getTrainCardGroupings(username);
-         ArrayList<Route> takeableRoutes = new ArrayList<>();
+         ArrayList<Route> claimableRoutes = new ArrayList<>();
 
          for(Route route : this.availableRoutes) {
              if(route.getColor() == Route.RouteColor.GRAY) {
                  for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
                      if(route.getLength() <= entry.getValue()) {
-                         takeableRoutes.add(route);
+                         claimableRoutes.add(route);
                          break;
                      }
                  }
              }
              else if (route.getLength() <= cardGroupings.get(getCardColorFromRouteColor(route.getColor()))) {
-                 takeableRoutes.add(route);
+                 claimableRoutes.add(route);
              }
          }
+         clientProxy.getClaimableRoutes(claimableRoutes, username, this.gameId);
     }
 
     private Map<TrainCard.Color, Integer> getTrainCardGroupings(String username) {
@@ -388,7 +389,7 @@ public class Game {
         }
     }
 
-    /* *********** GETTERS AND SETTERS *********** */
+    /* ******************************************** GETTERS AND SETTERS ******************************************** */
 
     public String getGameId() {
         return gameId;

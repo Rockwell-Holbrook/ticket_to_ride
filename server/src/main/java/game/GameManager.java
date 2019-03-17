@@ -307,8 +307,8 @@ public class GameManager {
         game.endPlayerTurn(username);
     }
 
-    public void calculateAvailableRoutes(String gameId, String username) {
+    public void calculateClaimableRoutes(String gameId, String username) {
         Game game = this.playingGameList.get(gameId);
-        game.calculateAvailableRoutes(username);
+        game.calculateClaimableRoutes(username);
     }
 }
