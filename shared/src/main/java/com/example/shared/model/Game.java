@@ -316,6 +316,73 @@ public class Game {
         return null;
     }
 
+    public void calculateAvailableRoutes(String username) {
+         Map<TrainCard.Color, Integer> cardGroupings = getTrainCardGroupings(username);
+         ArrayList<Route> takeableRoutes = new ArrayList<>();
+
+         for(Route route : this.availableRoutes) {
+             if(route.getColor() == Route.RouteColor.GRAY) {
+                 for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
+                     if(route.getLength() <= entry.getValue()) {
+                         takeableRoutes.add(route);
+                         break;
+                     }
+                 }
+             }
+             else if (route.getLength() <= cardGroupings.get(getCardColorFromRouteColor(route.getColor()))) {
+                 takeableRoutes.add(route);
+             }
+         }
+    }
+
+    private Map<TrainCard.Color, Integer> getTrainCardGroupings(String username) {
+        Map<TrainCard.Color, Integer> cardGroupings = new HashMap<>();
+
+        cardGroupings.put(TrainCard.Color.BLACK, 0);
+        cardGroupings.put(TrainCard.Color.PINK, 0);
+        cardGroupings.put(TrainCard.Color.BLUE, 0);
+        cardGroupings.put(TrainCard.Color.GREEN, 0);
+        cardGroupings.put(TrainCard.Color.ORANGE, 0);
+        cardGroupings.put(TrainCard.Color.RED, 0);
+        cardGroupings.put(TrainCard.Color.WHITE, 0);
+        cardGroupings.put(TrainCard.Color.YELLOW, 0);
+        cardGroupings.put(TrainCard.Color.WILD, 0);
+
+        for(TrainCard card : getPlayerWithUsername(username).getTrainCards()) {
+            if(card.getColor() == TrainCard.Color.WILD) {
+                for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
+                    cardGroupings.put(entry.getKey(), entry.getValue() + 1);
+                }
+            }
+            else {
+                cardGroupings.put(card.getColor(), cardGroupings.get(card.getColor()) + 1);
+            }
+        }
+        return cardGroupings;
+    }
+
+    private TrainCard.Color getCardColorFromRouteColor(Route.RouteColor routeColor) {
+        switch(routeColor) {
+            case YELLOW:
+                return TrainCard.Color.YELLOW;
+            case ORANGE:
+                return TrainCard.Color.ORANGE;
+            case PINK:
+                return TrainCard.Color.PINK;
+            case BLUE:
+                return TrainCard.Color.BLUE;
+            case RED:
+                return TrainCard.Color.RED;
+            case BLACK:
+                return TrainCard.Color.BLACK;
+            case GREEN:
+                return TrainCard.Color.GREEN;
+            case WHITE:
+                return TrainCard.Color.WHITE;
+            default:
+                return null;
+        }
+    }
 
     /* *********** GETTERS AND SETTERS *********** */
 
