@@ -30,9 +30,21 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         return instance;
     }
 
-//    Phase 1 Connections
-//    GameLobby
+    //    MainActivity
+    @Override
+    public void updateGameList(ArrayList<Game> games) {
+        String jsonValue = gson.toJson(games);
+        Type typeName = new TypeToken<ArrayList<Game>>(){}.getType();
+        ArrayList<Game> gameList = gson.fromJson(jsonValue, typeName);
+        MainActivityModel.getInstance().newGameListRetrieved(gameList);
+    }
 
+    @Override
+    public void joinGameComplete(String username, String gameId) {
+        MainActivityModel.getInstance().joinedGame(gameId);
+    }
+
+    //    GameLobby
     @Override
     public void receivedChat(Chat chat, boolean gameStarted, String gameId) {
         Log.d(TAG, "Client Facade: in receivedChat");
@@ -56,7 +68,8 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameLobbyActivityModel.getInstance().gameStarted();
     }
 
-    //History Drawer
+
+    //  History Drawer
     @Override
     public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gameId) {
         GameActivityModel.getInstance().receivedChatHistory(chatHistory);
@@ -72,7 +85,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameActivityModel.getInstance().receivedGameHistory(gameHistory);
     }
 
-    //Game Initialization
+    //  Game Initialization
     @Override
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {
         //Fix Face Up Train Card List
@@ -99,37 +112,21 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void initializeComplete(String gameId, String username) {
-
+    public void initializeComplete(Player player, String gameId) {
+        GameActivityModel.getInstance().updatePlayer(player);
     }
 
-    @Override
-    public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
-        GameActivityModel.getInstance().ticketDataReceived(tickets);
-    }
-
-    //GamePlay
+    //  Turn
     @Override
     public void startTurn(List<Route> availableRoutes, String username, String gameId) {
         String typeValue = gson.toJson(availableRoutes);
-        Type typeName = new TypeToken<List<Route>>(){}.getType();
+        Type typeName = new TypeToken<ArrayList<Route>>(){}.getType();
         List<Route> routesList = gson.fromJson(typeValue, typeName);
         GameActivityModel.getInstance().startTurn(routesList);
     }
     @Override
     public void turnStarted(Player player, String gameId) {
-
-    }
-    
-
-    @Override
-    public void ticketCompleted(Ticket ticket) {
-
-    }
-
-    @Override
-    public void routeClaimed(Player player, Route route) {
-        GameActivityModel.getInstance().routeClaimed(player, route);
+        GameActivityModel.getInstance().playerTurnStarted(player);
     }
 
     @Override
@@ -137,6 +134,28 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
         GameActivityModel.getInstance().playerTurnEnded(player);
     }
 
+
+    //  Tickets
+    @Override
+    public void ticketsReceived(List<Ticket> tickets, String username, String gameId) {
+        String typeValue = gson.toJson(tickets);
+        Type typeName = new TypeToken<List<Ticket>>(){}.getType();
+        List<Ticket> ticketsList = gson.fromJson(typeValue, typeName);
+        GameActivityModel.getInstance().ticketDataReceived(ticketsList);
+    }
+
+    @Override
+    public void ticketCompleted(Ticket ticket) {
+
+    }
+
+    //  Routes
+    @Override
+    public void routeClaimed(Player player, Route route) {
+        GameActivityModel.getInstance().routeClaimed(player, route);
+    }
+
+    //  Cards
     @Override
     public void sendDeckCount(int ticketDeckCount, int trainDeckCount) {
         GameActivityModel.getInstance().setDeckCount(ticketDeckCount, trainDeckCount);
@@ -154,19 +173,4 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     public void receiveFaceDownCard(TrainCard newCard, String username, String gameId) {
         GameActivityModel.getInstance().drewCard(newCard);
     }
-
-    //    MainActivity
-    @Override
-    public void updateGameList(ArrayList<Game> games) {
-        String jsonValue = gson.toJson(games);
-        Type typeName = new TypeToken<ArrayList<Game>>(){}.getType();
-        ArrayList<Game> gameList = gson.fromJson(jsonValue, typeName);
-        MainActivityModel.getInstance().newGameListRetrieved(gameList);
-    }
-
-    @Override
-    public void joinGameComplete(String username, String gameId) {
-        MainActivityModel.getInstance().joinedGame(gameId);
-    }
-
 }

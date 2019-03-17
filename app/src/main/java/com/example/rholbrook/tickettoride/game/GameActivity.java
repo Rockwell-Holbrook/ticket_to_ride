@@ -83,6 +83,7 @@ public class GameActivity extends AppCompatActivity implements
     private HistoryFragment historyFragment;
     private TextView trainCardDeckCount;
     private TextView ticketDeckCountTextView;
+    private int cardsDrawn = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -149,6 +150,7 @@ public class GameActivity extends AppCompatActivity implements
                 mPresenter.runDemo2();
             }
         });
+        demoButton.setEnabled(false);
 
         mPresenter = new GameActivityPresenter(this);
 
@@ -163,6 +165,118 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 mPresenter.selectFaceDownCardDeck();
+                cardsDrawn += 1;
+                if (cardsDrawn == 2) {
+                    endUserTurn();
+                    mPresenter.endTurn();
+                }
+            }
+        });
+
+        faceUpCardOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(0);
+                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
+                } else {
+                    mPresenter.selectFaceUpCard(0);
+
+                    if(selectedCard.getColor() == TrainCard.Color.WILD) {
+                        endUserTurn();
+                        mPresenter.endTurn();
+                    } else {
+                        cardsDrawn += 1;
+                        if (cardsDrawn == 2) {
+                            endUserTurn();
+                            mPresenter.endTurn();
+                        }
+                    }
+                }
+            }
+        });
+        faceUpCardTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(1);
+                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
+                } else {
+                    mPresenter.selectFaceUpCard(1);
+                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
+                        endUserTurn();
+                        mPresenter.endTurn();
+                    } else {
+                        cardsDrawn += 1;
+                        if (cardsDrawn == 2) {
+                            endUserTurn();
+                            mPresenter.endTurn();
+                        }
+                    }
+                }
+            }
+        });
+        faceUpCardThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(2);
+                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
+                } else {
+                    mPresenter.selectFaceUpCard(2);
+                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
+                        endUserTurn();
+                        mPresenter.endTurn();
+                    } else {
+                        cardsDrawn += 1;
+                        if (cardsDrawn == 2) {
+                            endUserTurn();
+                            mPresenter.endTurn();
+                        }
+                    }
+                }
+            }
+        });
+        faceUpCardFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(3);
+                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
+                } else {
+                    mPresenter.selectFaceUpCard(3);
+                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
+                        endUserTurn();
+                        mPresenter.endTurn();
+                    } else {
+                        cardsDrawn += 1;
+                        if (cardsDrawn == 2) {
+                            endUserTurn();
+                            mPresenter.endTurn();
+                        }
+                    }
+                }
+            }
+        });
+        faceUpCardFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrainCard selectedCard = mPresenter.getFaceUpCard(4);
+                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
+                } else {
+                    mPresenter.selectFaceUpCard(4);
+                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
+                        endUserTurn();
+                        mPresenter.endTurn();
+                    } else {
+                        cardsDrawn += 1;
+                        if (cardsDrawn == 2) {
+                            endUserTurn();
+                            mPresenter.endTurn();
+                        }
+                    }
+                }
             }
         });
 
@@ -238,6 +352,7 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 ViewTrainCardsDialogFragment dialog = ViewTrainCardsDialogFragment.newInstance(mPresenter.getPlayerHand(), getApplicationContext());
+                dialog.setCancelable(false);
                 dialog.show(getSupportFragmentManager(), "View Train Cards Dialog Fragment");
             }
         });
@@ -246,6 +361,7 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 ViewTicketsDialogFragment dialog = ViewTicketsDialogFragment.newInstance(mPresenter.getPlayerTickets());
+                dialog.setCancelable(false);
                 dialog.show(getSupportFragmentManager(), "View Tickets Dialog Fragment");
             }
         });
@@ -253,13 +369,19 @@ public class GameActivity extends AppCompatActivity implements
         gameMapFrameLayout = findViewById(R.id.fragment_map_container);
         Fragment gameMapFragment = GameMapFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_map_container, gameMapFragment).commit();
-        addFaceUpCardClickListeners();
         String gameId = null;
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             gameId = extras.getString("gameId");
         }
         mPresenter.setGameId(gameId);
+        faceDownTrainCardDeck.setEnabled(false);
+        faceDownTicketDeck.setEnabled(false);
+        faceUpCardOne.setEnabled(false);
+        faceUpCardTwo.setEnabled(false);
+        faceUpCardThree.setEnabled(false);
+        faceUpCardFour.setEnabled(false);
+        faceUpCardFive.setEnabled(false);
         mPresenter.readyToInitialize();
     }
 
@@ -269,19 +391,27 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void setHandCards(List<TrainCard> handCards) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels / 7;
-        float xOffset = 0f;
-        playerHandLayout.removeAllViews();
-        for (TrainCard trainCard : handCards) {
-            ImageView iv = new ImageView(this);
-            iv.setImageDrawable(getColorCardDrawable(trainCard));
-            iv.setTranslationX(xOffset);
-            xOffset += 2 * width / handCards.size();
-            playerHandLayout.addView(iv);
-        }
+    public void setHandCards(final List<TrainCard> handCards) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int width = displayMetrics.widthPixels / 7;
+                float xOffset = 0f;
+                playerHandLayout.removeAllViews();
+                if (handCards != null) {
+                    for (TrainCard trainCard : handCards) {
+                        ImageView iv = new ImageView(GameActivity.this);
+                        iv.setImageDrawable(getColorCardDrawable(trainCard));
+                        iv.setTranslationX(xOffset);
+                        xOffset += 2 * width / handCards.size();
+                        playerHandLayout.addView(iv);
+                    }
+                }
+            }
+        });
+
     }
 
     private Drawable getColorCardDrawable(TrainCard trainCard) {
@@ -325,97 +455,44 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void startUserTurn(Player player) {
-        faceDownTicketDeck.setActivated(true);
-        faceDownTrainCardDeck.setActivated(true);
-        enableFaceUpCards();
-        playerConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
+    public void startUserTurn(final Player player) {
+        this.cardsDrawn = 0;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                faceDownTicketDeck.setEnabled(true);
+                faceDownTrainCardDeck.setEnabled(true);
+                faceUpCardOne.setEnabled(true);
+                faceUpCardTwo.setEnabled(true);
+                faceUpCardThree.setEnabled(true);
+                faceUpCardFour.setEnabled(true);
+                faceUpCardFive.setEnabled(true);
+                playerConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
+            }
+        });
     }
 
     @Override
     public void endUserTurn() {
-        faceDownTicketDeck.setActivated(false);
-        faceDownTrainCardDeck.setActivated(false);
-        disableFaceUpCards();
-        mPresenter.endTurn();
-    }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                faceDownTicketDeck.setEnabled(false);
+                faceDownTrainCardDeck.setEnabled(false);
+                faceUpCardOne.setEnabled(false);
+                faceUpCardTwo.setEnabled(false);
+                faceUpCardThree.setEnabled(false);
+                faceUpCardFour.setEnabled(false);
+                faceUpCardFive.setEnabled(false);
+                playerConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), mPresenter.getClientColor()));
+            }
+        });
 
-    @Override
-    public void addFaceUpCardClickListeners() {
-        faceUpCardOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrainCard selectedCard = mPresenter.getFaceUpCard(0);
-                mPresenter.selectFaceUpCard(0);
-                if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
-                }
-            }
-        });
-        faceUpCardTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrainCard selectedCard = mPresenter.getFaceUpCard(1);
-                mPresenter.selectFaceUpCard(1);
-                if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
-                }
-            }
-        });
-        faceUpCardThree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrainCard selectedCard = mPresenter.getFaceUpCard(2);
-                mPresenter.selectFaceUpCard(2);
-                if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
-                }
-            }
-        });
-        faceUpCardFour.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrainCard selectedCard = mPresenter.getFaceUpCard(3);
-                mPresenter.selectFaceUpCard(3);
-                if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
-                }
-            }
-        });
-        faceUpCardFive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrainCard selectedCard = mPresenter.getFaceUpCard(4);
-                mPresenter.selectFaceUpCard(4);
-                if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                    endUserTurn();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void enableFaceUpCards() {
-        faceUpCardOne.setActivated(true);
-        faceUpCardTwo.setActivated(true);
-        faceUpCardThree.setActivated(true);
-        faceUpCardFour.setActivated(true);
-        faceUpCardFive.setActivated(true);
-    }
-
-    @Override
-    public void disableFaceUpCards() {
-        faceUpCardOne.setActivated(false);
-        faceUpCardTwo.setActivated(false);
-        faceUpCardThree.setActivated(false);
-        faceUpCardFour.setActivated(false);
-        faceUpCardFive.setActivated(false);
     }
 
     @Override
     public void initializeGame(List<Ticket> selectableTickets) {
         selectTickets(selectableTickets, GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE);
-        mPresenter.initializeComplete();
     }
 
     @Override
@@ -509,7 +586,6 @@ public class GameActivity extends AppCompatActivity implements
                 }
                 playerTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
                 setHandCards(player.getTrainCards());
-                playerConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
     }
@@ -527,7 +603,7 @@ public class GameActivity extends AppCompatActivity implements
                 if (player.getTrainCards() != null) {
                     opponentOneTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
-                opponentOneTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentOneTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
                 opponentOneConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
@@ -546,7 +622,7 @@ public class GameActivity extends AppCompatActivity implements
                 if (player.getTrainCards() != null) {
                     opponentTwoTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
-                opponentTwoTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentTwoTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
                 opponentTwoConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
 
             }
@@ -566,7 +642,7 @@ public class GameActivity extends AppCompatActivity implements
                 if (player.getTrainCards() != null) {
                     opponentThreeTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
-                opponentThreeTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentThreeTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
                 opponentThreeConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
@@ -585,7 +661,7 @@ public class GameActivity extends AppCompatActivity implements
                 if (player.getTrainCards() != null) {
                     opponentFourTrainCardTextView.setText(String.valueOf(player.getTrainCards().size()));
                 }
-                opponentFourTrainCountTextView.setText(player.getRemainingTrainCars());
+                opponentFourTrainCountTextView.setText(String.valueOf(player.getRemainingTrainCars()));
                 opponentFourConstraintLayout.setBackground(mPresenter.getColorBackground(getApplicationContext(), player.getPlayerColor()));
             }
         });
@@ -597,6 +673,7 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 SelectTicketsDialogFragment dialog = SelectTicketsDialogFragment.newInstance(selectableTickets, selectionType);
+                dialog.setCancelable(false);
                 dialog.show(getSupportFragmentManager(), "SelectTicketsDialogFragment");
             }
         });
@@ -614,43 +691,33 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void setOpponentOneTurn(final Player opponentOne) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                opponentOneConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentOne.getPlayerColor()));
-            }
-        });
+    public void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void setOpponentTwoTurn(final Player opponentTwo) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                opponentTwoConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentTwo.getPlayerColor()));
-            }
-        });
+    public void setClientTurnBackground(Player player) {
+        playerConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
     }
 
     @Override
-    public void setOpponentThreeTurn(final Player opponentThree) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                opponentThreeConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentThree.getPlayerColor()));
-            }
-        });
+    public void setOpponentOneTurnBackground(Player player) {
+        opponentOneConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
     }
 
     @Override
-    public void setOpponentFourTurn(final Player opponentFour) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                opponentFourConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), opponentFour.getPlayerColor()));
-            }
-        });
+    public void setOpponentTwoTurnBackground(Player player) {
+        opponentTwoConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
+    }
+
+    @Override
+    public void setOpponentThreeTurnBackground(Player player) {
+        opponentThreeConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
+    }
+
+    @Override
+    public void setOpponentFourTurnBackground(Player player) {
+        opponentFourConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
     }
 
     @Override
@@ -660,7 +727,10 @@ public class GameActivity extends AppCompatActivity implements
         mPresenter.returnTickets(returnedCards);
         if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
             mPresenter.initializeComplete();
-            mPresenter.runDemo1();
+//            mPresenter.runDemo1();
+        } else {
+            endUserTurn();
+            mPresenter.endTurn();
         }
     }
 

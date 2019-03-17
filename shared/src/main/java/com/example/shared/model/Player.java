@@ -102,8 +102,17 @@ public class Player {
     }
 
     public void returnedTickets(ArrayList<Ticket> returnedTickets) {
-        for (int i = 0; i < returnedTickets.size(); i++) {
-            this.tickets.remove(returnedTickets.get(i));
+        for (Ticket ticket : returnedTickets) {
+            removeTicket(ticket);
+        }
+    }
+
+    private void removeTicket(Ticket ticket) {
+        for (Ticket ownedTicket : tickets) {
+            if (ownedTicket.getTicketId() == ticket.getTicketId()) {
+                tickets.remove(ownedTicket);
+                break;
+            }
         }
     }
 
@@ -126,7 +135,13 @@ public class Player {
         return p.getUsername().equals(this.getUsername());
     }
 
-    public void addClaimedRoute(Route addedRoute) {
+    /**
+     * Adds route to claimed route list AND adds points AND removes cars
+     * @param addedRoute Route to add
+     */
+    public void claimRoute(Route addedRoute) {
         this.claimedRoutes.add(addedRoute);
+        this.pointsEarned += addedRoute.getPointValue();
+        this.remainingTrainCars -= addedRoute.getLength();
     }
 }

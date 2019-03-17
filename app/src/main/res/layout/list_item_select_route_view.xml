@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="wrap_content"
+                                             android:layout_height="wrap_content"
+                                             android:background="@color/gameListBackground">
+
+    <ImageView
+            android:layout_width="150dp"
+            android:layout_height="100dp" app:srcCompat="@mipmap/card_back"
+            android:id="@+id/player_card_image_view" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+    />
+    <ImageView
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/select_check_green"
+            android:id="@+id/select_card_check"
+            app:layout_constraintEnd_toEndOf="@id/player_card_image_view"
+            app:layout_constraintTop_toTopOf="@id/player_card_image_view"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/player_card_image_view"
+            app:layout_constraintStart_toStartOf="@id/player_card_image_view"
+            android:layout_marginStart="8dp"
+            android:visibility="invisible"
+    />
+</android.support.constraint.ConstraintLayout>

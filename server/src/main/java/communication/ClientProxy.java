@@ -110,12 +110,13 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void initializeComplete(String gameId, String username) {
+    public void initializeComplete(Player player, String gameId) {
         String methodName = "initializeComplete";
-        String[] typeNames = {String.class.getName(), String.class.getName()};
-        Object[] inputVals = {gameId, username};
+        String[] typeNames = {Player.class.getName(), String.class.getName()};
+        Object[] inputVals = {player, gameId};
 
-        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+
     }
 
     @Override
@@ -137,7 +138,7 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
     @Override
     public void turnStarted(Player player, String gameId) {
-        String methodName = "startTurn";
+        String methodName = "turnStarted";
         String[] typeNames = {Player.class.getName(), String.class.getName()};
         Object[] inputVals = {player, gameId};
 
@@ -161,7 +162,11 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
     @Override
     public void turnEnded(Player player) {
+        String methodName = "turnEnded";
+        String[] typeNames = {Player.class.getName()};
+        Object[] inputVals = {player};
 
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 
     @Override
