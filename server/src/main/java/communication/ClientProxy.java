@@ -92,13 +92,12 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedHistoryObject(GameHistory history) {
+    public void receivedGameHistory(List<GameHistory> gameHistory, String username, String gameId) {
+        String methodName = "receivedGameHistory";
+        String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {gameHistory, username, gameId};
 
-    }
-
-    @Override
-    public void receivedGameHistory(List<GameHistory> gameHistory) {
-
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {

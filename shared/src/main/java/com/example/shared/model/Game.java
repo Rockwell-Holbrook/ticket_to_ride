@@ -433,6 +433,10 @@ public class Game {
         return chatHistory;
     }
 
+    public ArrayList<GameHistory> getGameHistory() {
+        return gameHistory;
+    }
+
     public ArrayList<TrainCard> getTrainCardsFaceUp() {
         return trainCardsFaceUp;
     }

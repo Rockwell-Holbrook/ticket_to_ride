@@ -172,8 +172,9 @@ public class GameManager {
      *
      * @param gameId The ID of the game we need to work with!
      */
-    public void getGameHistory(String gameId) { //todo: Have this take a username and broadcast to user.
-        // Todo: Make this sucker work baby.
+    public void getGameHistory(String gameId, String username) {
+        Game game = this.playingGameList.get(gameId);
+        clientProxy.receivedGameHistory(game.getGameHistory(), username, gameId);
     }
 
     /**

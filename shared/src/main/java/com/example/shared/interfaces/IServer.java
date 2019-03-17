@@ -66,7 +66,7 @@ public interface IServer {
      *
      * @param gameId The ID of the game we need to work with!
      */
-    void getGameHistory(String gameId);
+    void getGameHistory(String gameId, String username);
 
     /**
      *

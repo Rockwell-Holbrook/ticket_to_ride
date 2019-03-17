@@ -76,12 +76,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedHistoryObject(GameHistory history) {
-        GameActivityModel.getInstance().receivedHistoryObject(history);
-    }
-
-    @Override
-    public void receivedGameHistory(List<GameHistory> gameHistory) {
+    public void receivedGameHistory(List<GameHistory> gameHistory, String username, String gameId) {
         GameActivityModel.getInstance().receivedGameHistory(gameHistory);
     }
 

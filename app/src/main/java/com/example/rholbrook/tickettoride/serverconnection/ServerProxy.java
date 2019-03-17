@@ -113,10 +113,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void getGameHistory(String gameId) {
+    public void getGameHistory(String gameId, String username) {
         String methodName = "getGameHistory";
-        String[] paramTypes = {String.class.getName()};
-        Object[] paramValues = {gameId};
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameId, username};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
