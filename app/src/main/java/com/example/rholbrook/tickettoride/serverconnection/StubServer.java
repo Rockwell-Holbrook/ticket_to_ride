@@ -165,4 +165,9 @@ public class StubServer implements IServer {
     public void requestTickets(String gameID, String usernmae) {
 
     }
+
+    @Override
+    public void calculateClaimableRoutes(String gameId, String username) {
+
+    }
 }

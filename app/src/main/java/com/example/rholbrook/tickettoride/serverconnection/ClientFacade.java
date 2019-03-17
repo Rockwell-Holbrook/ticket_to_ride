@@ -173,4 +173,9 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     public void receiveFaceDownCard(TrainCard newCard, String username, String gameId) {
         GameActivityModel.getInstance().drewCard(newCard);
     }
+
+    @Override
+    public void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId) {
+        //todo: Client shall work!
+    }
 }

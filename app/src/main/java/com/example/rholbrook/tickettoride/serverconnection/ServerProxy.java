@@ -175,4 +175,9 @@ public class ServerProxy implements IServer {
         Object[] paramValues = {gameID, username};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
+
+    @Override
+    public void calculateClaimableRoutes(String gameId, String username) {
+        //todo make it work!
+    }
 }
