@@ -252,6 +252,7 @@ public class Game {
             trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
             clientProxy.updateFaceUpCards(trainCardsFaceUp);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+            this.gameHistory.add(new GameHistory(username, "Drew a Face-Up Train Card!"));
         }
 
         else { //5 is the index for the face-down-deck
@@ -259,11 +260,13 @@ public class Game {
             getPlayerWithUsername(username).addTrainCard(newCard);
             clientProxy.receiveFaceDownCard(newCard, username, gameId);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+            this.gameHistory.add(new GameHistory(username, "Drew a Train Card from the deck!"));
         }
     }
 
     public void ticketsRequested(String username) {
         clientProxy.ticketsReceived(this.initializeTickets(username), username, gameId);
+        this.gameHistory.add(new GameHistory(username, "Received Tickets!"));
     }
 
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
@@ -274,6 +277,7 @@ public class Game {
         getPlayerWithUsername(username).returnedTickets(returned);
 //        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
         clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+        this.gameHistory.add(new GameHistory(username, "Returned " + returned.size() + " Tickets!!"));
     }
 
     public void claimRoute(String username, int routeId) {
@@ -290,6 +294,8 @@ public class Game {
         this.claimedRoutes.add(routeToClaim);
 
         clientProxy.routeClaimed(getPlayerWithUsername(username), routeToClaim);
+        this.gameHistory.add(new GameHistory(username, "Claimed a Route from " + routeToClaim.getCityOne() + " to "
+                + routeToClaim.getCityTwo() + "!"));
     }
 
     public void endPlayerTurn(String username) {
