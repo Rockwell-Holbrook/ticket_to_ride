@@ -54,4 +54,7 @@
     <string name="claim_route_instructions">You must choose # cards</string>
     <string name="cannot_take_wild">You cannot take a Locomotive this time</string>
     <string name="cannot_use_this_card">You cannot use this card</string>
+    <string name="passwords_dont_match">Passwords do not match!</string>
+    <string name="invalid_login">Invalid Username or Password</string>
+    <string name="repeat_register">This Username Already Exists</string>
 </resources>

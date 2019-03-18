@@ -164,6 +164,7 @@ public class GameActivity extends AppCompatActivity implements
         faceDownTrainCardDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mPresenter.selectingCards();
                 mPresenter.selectFaceDownCardDeck();
                 cardsDrawn += 1;
                 if (cardsDrawn == 2) {
@@ -180,8 +181,8 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(0);
-
                     if(selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
                         mPresenter.endTurn();
@@ -202,6 +203,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(1);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -223,6 +225,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(2);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -244,6 +247,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(3);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -265,6 +269,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(4);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -718,6 +723,11 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void setOpponentFourTurnBackground(Player player) {
         opponentFourConstraintLayout.setBackground(mPresenter.getColorTurnBackground(getApplicationContext(), player.getPlayerColor()));
+    }
+
+    @Override
+    public void selectingCards() {
+        faceDownTicketDeck.setEnabled(false);
     }
 
     @Override

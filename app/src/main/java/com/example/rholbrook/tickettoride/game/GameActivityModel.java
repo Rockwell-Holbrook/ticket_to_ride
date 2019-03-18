@@ -426,6 +426,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         playerTurnEnded(player);
     }
 
+    public void selectingCards() {
+        gameMapFragmentPresenter.selectingCards();
+    }
+
 //    public void runDemo2() {
 //        //Update Player Data
 //        gameActivityPresenter.sendToast("Updating Player Data");
