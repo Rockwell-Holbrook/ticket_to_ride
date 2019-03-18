@@ -287,11 +287,7 @@ public class Game {
         Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
 
         getPlayerWithUsername(username).claimRoute(routeToClaim);
-        getPlayerWithUsername(username).removeTrainCard(routeToClaim.getLength(), routeToClaim.getColor()); //todo: make removeTrainCard Work
-
-        for (int i = 0; i <routeToClaim.getLength() ; i++) {
-            //todo: route and trainCard colors are not equivalent.. Need to implement adding these cards to the discard deck after they were used and removed from hand above.
-        }
+        getPlayerWithUsername(username).removeTrainCards(selectedCards);
 
         this.availableRoutes.remove(routeToClaim);
         this.claimedRoutes.add(routeToClaim);
