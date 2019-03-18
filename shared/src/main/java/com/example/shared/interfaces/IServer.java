@@ -1,11 +1,9 @@
 package com.example.shared.interfaces;
 
-import com.example.shared.model.Chat;
-import com.example.shared.model.Player;
-import com.example.shared.model.Route;
-import com.example.shared.model.Ticket;
+import com.example.shared.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IServer {
 
@@ -66,7 +64,7 @@ public interface IServer {
      *
      * @param gameId The ID of the game we need to work with!
      */
-    void getGameHistory(String gameId);
+    void getGameHistory(String gameId, String username);
 
     /**
      *
@@ -92,9 +90,9 @@ public interface IServer {
     /**
      * A user may return some of the tickets that they received for their turn.
      *
-     * @param gameID The ID of the game we need to work with!
+     * @param gameId The ID of the game we need to work with!
      */
-    void turnEnded(String gameID, String username);
+    void turnEnded(String gameId, String username);
 
     /**
      * A User may spend their turn claiming 1 or two cards from the deck or the face up.
@@ -108,14 +106,14 @@ public interface IServer {
      *
      * @param routeId The route the user wants to claim.
      */
-    void claimRoute(String gameId, String username, int routeId);
+    void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards);
 
     /**
      * A user may spend their turn getting tickets.
      *
-     * @param gameID The ID of the game we need to work with!
+     * @param gameId The ID of the game we need to work with!
      */
-    void requestTickets(String gameID, String username);
+    void requestTickets(String gameId, String username);
 
-
+    void calculateClaimableRoutes(String gameId, String username);
 }

@@ -40,7 +40,7 @@ public class StubServer implements IServer {
     }
 
     @Override
-    public void getGameHistory(String gameId) {
+    public void getGameHistory(String gameId, String Username) {
         String[] users = {"bob", "jill", "sam", "bob", "rachel"};
         String[] actions = {"punched your mom", "ate a planet", "Decimated civilization", "hugged a panda", "pet a unicorn"};
         int numActions = actions.length;
@@ -52,7 +52,7 @@ public class StubServer implements IServer {
             String user = users[rand.nextInt(numUsers)];
             history.add(new GameHistory(user, action));
         }
-        client.receivedGameHistory(history);
+        client.receivedGameHistory(history, Username, gameId);
     }
 
     private static StubServer instance;
@@ -163,6 +163,11 @@ public class StubServer implements IServer {
 
     @Override
     public void requestTickets(String gameID, String usernmae) {
+
+    }
+
+    @Override
+    public void calculateClaimableRoutes(String gameId, String username) {
 
     }
 }

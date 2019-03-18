@@ -61,5 +61,7 @@ public class GameActivityContract {
         void sendToast(String change_turn);
         void turnStarted(Player player);
         Player.PlayerColor getClientColor();
+        void selectRoute(int groupId);
+        void claimRoute(int routeId, List<TrainCard> selectedCards);
     }
 }

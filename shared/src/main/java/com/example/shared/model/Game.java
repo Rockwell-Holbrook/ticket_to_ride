@@ -22,6 +22,8 @@ public class Game {
     private ArrayList<TrainCard> trainCardsFaceUp;
     private Deck<Ticket> ticketDeck;
     private Deck<TrainCard> trainCardDeck;
+    private boolean gameEnding;
+    private int finalTurnTaken;
 
     public Game(Player host, int maxPlayers, String gameName) {
         this.host = host;
@@ -38,6 +40,7 @@ public class Game {
         this.gameHistory =  new ArrayList<>();
         this.ticketDeck = new Deck<>(this.populateTicketDeck());
         this.trainCardDeck = new Deck<>(this.populateTrainCardDeck());
+        this.finalTurnTaken = 0;
 
         this.ticketDeck.shuffle();
         this.trainCardDeck.shuffle();
@@ -252,6 +255,7 @@ public class Game {
             trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
             clientProxy.updateFaceUpCards(trainCardsFaceUp);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+            this.gameHistory.add(new GameHistory(username, "Drew a Face-Up Train Card!"));
         }
 
         else { //5 is the index for the face-down-deck
@@ -259,11 +263,13 @@ public class Game {
             getPlayerWithUsername(username).addTrainCard(newCard);
             clientProxy.receiveFaceDownCard(newCard, username, gameId);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+            this.gameHistory.add(new GameHistory(username, "Drew a Train Card from the deck!"));
         }
     }
 
     public void ticketsRequested(String username) {
         clientProxy.ticketsReceived(this.initializeTickets(username), username, gameId);
+        this.gameHistory.add(new GameHistory(username, "Received Tickets!"));
     }
 
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
@@ -274,26 +280,40 @@ public class Game {
         getPlayerWithUsername(username).returnedTickets(returned);
 //        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
         clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
+        this.gameHistory.add(new GameHistory(username, "Returned " + returned.size() + " Tickets!!"));
     }
 
-    public void claimRoute(String username, int routeId) {
+    public void claimRoute(String username, int routeId, List<TrainCard> selectedCards) {
         Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
 
         getPlayerWithUsername(username).claimRoute(routeToClaim);
-        getPlayerWithUsername(username).removeTrainCard(routeToClaim.getLength(), routeToClaim.getColor()); //todo: make removeTrainCard Work
-
-        for (int i = 0; i <routeToClaim.getLength() ; i++) {
-            //todo: route and trainCard colors are not equivalent.. Need to implement adding these cards to the discard deck after they were used and removed from hand above.
-        }
+        getPlayerWithUsername(username).removeTrainCards(selectedCards);
 
         this.availableRoutes.remove(routeToClaim);
         this.claimedRoutes.add(routeToClaim);
 
         clientProxy.routeClaimed(getPlayerWithUsername(username), routeToClaim);
+        this.gameHistory.add(new GameHistory(username, "Claimed a Route from " + routeToClaim.getCityOne() + " to "
+                + routeToClaim.getCityTwo() + "!"));
     }
 
     public void endPlayerTurn(String username) {
         clientProxy.turnEnded(getPlayerWithUsername(username));
+
+        if(this.gameEnding) {
+            this.finalTurnTaken++;
+        }
+
+        if(this.finalTurnTaken == this.maxPlayers) {
+            clientProxy.gameEnded(this.gameId);
+            return;
+        }
+
+        if(getPlayerWithUsername(username).getRemainingTrainCars() <= 2 && !gameEnding) {
+            this.gameEnding = true;
+            clientProxy.gameEnding(this.gameId);
+        }
+
         startNextTurn(getPlayerWithUsername(username));
     }
 
@@ -302,11 +322,11 @@ public class Game {
         int index = turnOrder.indexOf(player);
         if (index + 1 < maxPlayers) {
             Player newTurn = turnOrder.get(index + 1);
-            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         } else {
             Player newTurn = turnOrder.get(0);
-            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         }
     }
@@ -320,8 +340,77 @@ public class Game {
         return null;
     }
 
+    public ArrayList<Route> calculateClaimableRoutes(String username) { //todo: need to do a check for already owning the same 2-way route.
+         Map<TrainCard.Color, Integer> cardGroupings = getTrainCardGroupings(username);
+         ArrayList<Route> claimableRoutes = new ArrayList<>();
 
-    /* *********** GETTERS AND SETTERS *********** */
+         for(Route route : this.availableRoutes) {
+             if(route.getColor() == Route.RouteColor.GRAY) {
+                 for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
+                     if(route.getLength() <= entry.getValue()) {
+                         claimableRoutes.add(route);
+                         break;
+                     }
+                 }
+             }
+             else if (route.getLength() <= cardGroupings.get(getCardColorFromRouteColor(route.getColor()))) {
+                 claimableRoutes.add(route);
+             }
+         }
+         return claimableRoutes;
+         //clientProxy.getClaimableRoutes(claimableRoutes, username, this.gameId);
+    }
+
+    private Map<TrainCard.Color, Integer> getTrainCardGroupings(String username) {
+        Map<TrainCard.Color, Integer> cardGroupings = new HashMap<>();
+
+        cardGroupings.put(TrainCard.Color.BLACK, 0);
+        cardGroupings.put(TrainCard.Color.PINK, 0);
+        cardGroupings.put(TrainCard.Color.BLUE, 0);
+        cardGroupings.put(TrainCard.Color.GREEN, 0);
+        cardGroupings.put(TrainCard.Color.ORANGE, 0);
+        cardGroupings.put(TrainCard.Color.RED, 0);
+        cardGroupings.put(TrainCard.Color.WHITE, 0);
+        cardGroupings.put(TrainCard.Color.YELLOW, 0);
+        cardGroupings.put(TrainCard.Color.WILD, 0);
+
+        for(TrainCard card : getPlayerWithUsername(username).getTrainCards()) {
+            if(card.getColor() == TrainCard.Color.WILD) {
+                for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
+                    cardGroupings.put(entry.getKey(), entry.getValue() + 1);
+                }
+            }
+            else {
+                cardGroupings.put(card.getColor(), cardGroupings.get(card.getColor()) + 1);
+            }
+        }
+        return cardGroupings;
+    }
+
+    private TrainCard.Color getCardColorFromRouteColor(Route.RouteColor routeColor) {
+        switch(routeColor) {
+            case YELLOW:
+                return TrainCard.Color.YELLOW;
+            case ORANGE:
+                return TrainCard.Color.ORANGE;
+            case PINK:
+                return TrainCard.Color.PINK;
+            case BLUE:
+                return TrainCard.Color.BLUE;
+            case RED:
+                return TrainCard.Color.RED;
+            case BLACK:
+                return TrainCard.Color.BLACK;
+            case GREEN:
+                return TrainCard.Color.GREEN;
+            case WHITE:
+                return TrainCard.Color.WHITE;
+            default:
+                return null;
+        }
+    }
+
+    /* ******************************************** GETTERS AND SETTERS ******************************************** */
 
     public String getGameId() {
         return gameId;
@@ -363,6 +452,10 @@ public class Game {
 
     public ArrayList<Chat> getChatHistory() {
         return chatHistory;
+    }
+
+    public ArrayList<GameHistory> getGameHistory() {
+        return gameHistory;
     }
 
     public ArrayList<TrainCard> getTrainCardsFaceUp() {

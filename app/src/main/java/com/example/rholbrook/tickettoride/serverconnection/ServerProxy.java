@@ -4,14 +4,12 @@ import android.util.Log;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IServer;
-import com.example.shared.model.Chat;
-import com.example.shared.model.Player;
-import com.example.shared.model.Route;
-import com.example.shared.model.Ticket;
+import com.example.shared.model.*;
 import com.google.gson.Gson;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ServerProxy implements IServer {
     private final String TAG = "ticket_to_ride";
@@ -113,10 +111,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void getGameHistory(String gameId) {
+    public void getGameHistory(String gameId, String username) {
         String methodName = "getGameHistory";
-        String[] paramTypes = {String.class.getName()};
-        Object[] paramValues = {gameId};
+        String[] paramTypes = {String.class.getName(), String.class.getName()};
+        Object[] paramValues = {gameId, username};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
@@ -161,10 +159,10 @@ public class ServerProxy implements IServer {
     }
 
     @Override
-    public void claimRoute(String gameId, String username, int routeId) {
+    public void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards) {
         String methodName = "claimRoute";
-        String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName()};
-        Object[] paramValues = {gameId, username, routeId};
+        String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName(), List.class.getName()};
+        Object[] paramValues = {gameId, username, routeId, selectedCards};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
     }
 
@@ -174,5 +172,10 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameID, username};
         socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+    }
+
+    @Override
+    public void calculateClaimableRoutes(String gameId, String username) {
+        //todo make it work!
     }
 }

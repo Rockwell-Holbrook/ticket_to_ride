@@ -1,10 +1,7 @@
 package communication;
 
 import com.example.shared.interfaces.IServer;
-import com.example.shared.model.Chat;
-import com.example.shared.model.Player;
-import com.example.shared.model.Route;
-import com.example.shared.model.Ticket;
+import com.example.shared.model.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import game.GameManager;
@@ -101,8 +98,8 @@ public class ServerFacade implements IServer {
      * @param gameId The ID of the game we need to work with!
      */
     @Override
-    public void getGameHistory(String gameId) {
-        gameManager.getGameHistory(gameId);
+    public void getGameHistory(String gameId, String username) {
+        gameManager.getGameHistory(gameId, username);
     }
 
     /**
@@ -164,8 +161,8 @@ public class ServerFacade implements IServer {
      *
      */
     @Override
-    public void claimRoute(String gameId, String username, int routeId) {
-        gameManager.claimRoute(gameId, username, routeId);
+    public void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards) {
+        gameManager.claimRoute(gameId, username, routeId, selectedCards);
     }
 
     /**
@@ -176,5 +173,10 @@ public class ServerFacade implements IServer {
     @Override
     public void requestTickets(String gameID, String username) {
         gameManager.requestTickets(gameID, username);
+    }
+
+    @Override
+    public void calculateClaimableRoutes(String gameId, String username) {
+        gameManager.calculateClaimableRoutes(gameId, username);
     }
 }

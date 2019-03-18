@@ -24,8 +24,8 @@ public class GameActivity extends AppCompatActivity implements
         GameActivityContract.View,
         SelectTicketsDialogFragment.SelectTicketsDialogInterface,
         ViewTrainCardsDialogFragment.ViewTrainCardsDialogInterface,
-        ViewTicketsDialogFragment.ViewTicketsDialogInterface
-        {
+        ViewTicketsDialogFragment.ViewTicketsDialogInterface,
+        ClaimRouteDialogFragment.ClaimRouteDialogFragmentInterface {
     private GameActivityContract.Presenter mPresenter;
 
     private Button demoButton;
@@ -737,5 +737,16 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void onClosePressed(DialogFragment dialogFragment) {
         dialogFragment.dismiss();
+    }
+
+    @Override
+    public void onCancelPressed(DialogFragment dialog) {
+        dialog.dismiss();
+    }
+
+    @Override
+    public void onClaimRoutePressed(DialogFragment dialog, List<TrainCard> selectedCards, Route route) {
+        dialog.dismiss();
+        mPresenter.claimRoute(route.getGroupId(), selectedCards);
     }
 }

@@ -97,6 +97,13 @@ public class Player {
         //Todo: MAKE THIS WORK
     }
 
+    public void removeTrainCards(List<TrainCard> selectedCards) {
+        for (TrainCard trainCard : selectedCards) {
+            this.trainCards.remove(trainCard);
+        }
+    }
+
+
     public void addTicket(Ticket ticket) {
         this.tickets.add(ticket);
     }
