@@ -293,8 +293,8 @@ public class Game {
         this.claimedRoutes.add(routeToClaim);
 
         clientProxy.routeClaimed(getPlayerWithUsername(username), routeToClaim);
-        this.gameHistory.add(new GameHistory(username, "Claimed a Route from " + routeToClaim.getCityOne() + " to "
-                + routeToClaim.getCityTwo() + "!"));
+        this.gameHistory.add(new GameHistory(username, "Claimed a Route from " + routeToClaim.getCityOne().getName() + " to "
+                + routeToClaim.getCityTwo().getName() + "!"));
     }
 
     public void endPlayerTurn(String username) {
