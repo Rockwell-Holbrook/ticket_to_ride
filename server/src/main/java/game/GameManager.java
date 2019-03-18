@@ -172,8 +172,9 @@ public class GameManager {
      *
      * @param gameId The ID of the game we need to work with!
      */
-    public void getGameHistory(String gameId) { //todo: Have this take a username and broadcast to user.
-        // Todo: Make this sucker work baby.
+    public void getGameHistory(String gameId, String username) {
+        Game game = this.playingGameList.get(gameId);
+        clientProxy.receivedGameHistory(game.getGameHistory(), username, gameId);
     }
 
     /**
@@ -247,11 +248,11 @@ public class GameManager {
      * @pre username corresponds with a user in the game
      * @post user is given 3 tickets
      *
-     * @param gameID ID of the game needed!
+     * @param gameId ID of the game needed!
      * @param username The username of the User that has requested a ticket.
      */
-    public void requestTickets(String gameID, String username) {
-        Game game = this.playingGameList.get(gameID);
+    public void requestTickets(String gameId, String username) {
+        Game game = this.playingGameList.get(gameId);
         game.ticketsRequested(username);
     }
 
@@ -299,11 +300,16 @@ public class GameManager {
      * @pre username corresponds with a user in the game
      * @post the turn for the user is ended and passed to the next user
      *
-     * @param gameID ID of the game needed!
+     * @param gameId ID of the game needed!
      * @param username The username of the User that has ended his turn.
      */
-    public void endPlayerTurn(String gameID, String username) {
-        Game game = this.playingGameList.get(gameID);
+    public void endPlayerTurn(String gameId, String username) {
+        Game game = this.playingGameList.get(gameId);
         game.endPlayerTurn(username);
+    }
+
+    public void calculateClaimableRoutes(String gameId, String username) {
+        Game game = this.playingGameList.get(gameId);
+        game.calculateClaimableRoutes(username);
     }
 }
