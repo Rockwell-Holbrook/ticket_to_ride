@@ -327,11 +327,11 @@ public class Game {
         int index = turnOrder.indexOf(player);
         if (index + 1 < maxPlayers) {
             Player newTurn = turnOrder.get(index + 1);
-            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         } else {
             Player newTurn = turnOrder.get(0);
-            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         }
     }
@@ -345,7 +345,7 @@ public class Game {
         return null;
     }
 
-    public void calculateClaimableRoutes(String username) { //todo: need to do a check for already owning the same 2-way route.
+    public ArrayList<Route> calculateClaimableRoutes(String username) { //todo: need to do a check for already owning the same 2-way route.
          Map<TrainCard.Color, Integer> cardGroupings = getTrainCardGroupings(username);
          ArrayList<Route> claimableRoutes = new ArrayList<>();
 
@@ -362,7 +362,8 @@ public class Game {
                  claimableRoutes.add(route);
              }
          }
-         clientProxy.getClaimableRoutes(claimableRoutes, username, this.gameId);
+         return claimableRoutes;
+         //clientProxy.getClaimableRoutes(claimableRoutes, username, this.gameId);
     }
 
     private Map<TrainCard.Color, Integer> getTrainCardGroupings(String username) {
