@@ -1,4 +1,4 @@
-package cpu_player;
+package com.example.shared.cpu_player;
 
 import com.example.shared.model.Player;
 

@@ -1,4 +1,4 @@
-package cpu_player;
+package com.example.shared.cpu_player;
 
 public abstract class CPUState {
     public void takeTurn(CPUPlayer player) {
