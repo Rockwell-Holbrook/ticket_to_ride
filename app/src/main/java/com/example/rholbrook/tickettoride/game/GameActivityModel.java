@@ -190,7 +190,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void getGameHistory() {
-        server.getGameHistory(gameId);
+        server.getGameHistory(gameId, Authentication.getInstance().getUsername());
     }
 
     /**

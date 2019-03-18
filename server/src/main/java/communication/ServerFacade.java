@@ -98,8 +98,8 @@ public class ServerFacade implements IServer {
      * @param gameId The ID of the game we need to work with!
      */
     @Override
-    public void getGameHistory(String gameId) {
-        gameManager.getGameHistory(gameId);
+    public void getGameHistory(String gameId, String username) {
+        gameManager.getGameHistory(gameId, username);
     }
 
     /**
@@ -173,5 +173,10 @@ public class ServerFacade implements IServer {
     @Override
     public void requestTickets(String gameID, String username) {
         gameManager.requestTickets(gameID, username);
+    }
+
+    @Override
+    public void calculateClaimableRoutes(String gameId, String username) {
+        gameManager.calculateClaimableRoutes(gameId, username);
     }
 }

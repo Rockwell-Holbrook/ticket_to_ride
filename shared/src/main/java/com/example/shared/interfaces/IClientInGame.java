@@ -32,21 +32,15 @@ public interface IClientInGame {
      *
      * @param chatHistory List of all previous Chat objects
      */
-    void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gamId);
+    void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gameId);
 
-    /**
-     * Signals the GameActivityModel to update the game history list
-     *
-     * @param history GameHistory object containing new history info
-     */
-    void receivedHistoryObject(GameHistory history);
 
     /**
      * Signals the GameActivityModel to update the game history list with all history items
      *
      * @param gameHistory List of all previous GameHistory objects
      */
-    void receivedGameHistory(List<GameHistory> gameHistory);
+    void receivedGameHistory(List<GameHistory> gameHistory, String username, String gameId);
 
     /**
      * Signals the GameActivityModel to initialize the game with the player's hand, tickets
@@ -131,4 +125,10 @@ public interface IClientInGame {
      * @param gameId GameId to specify which game
      */
     void receiveFaceDownCard(TrainCard newCard, String username, String gameId);
+
+    void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId);
+
+    void gameEnding(String gameId);
+
+    void gameEnded(String gameId);
 }
