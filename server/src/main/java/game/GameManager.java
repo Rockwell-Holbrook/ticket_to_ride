@@ -6,6 +6,7 @@ import communication.SocketServer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameManager {
@@ -287,9 +288,9 @@ public class GameManager {
      * @param username The username of the User that has asked to claim a route.
      * @param routeId The ID of the route that the user is asking to claim.
      */
-    public void claimRoute(String gameId, String username, int routeId) {
+    public void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards) {
         Game game = this.playingGameList.get(gameId);
-        game.claimRoute(username, routeId);
+        game.claimRoute(username, routeId, selectedCards);
     }
 
     /**

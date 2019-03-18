@@ -283,7 +283,7 @@ public class Game {
         this.gameHistory.add(new GameHistory(username, "Returned " + returned.size() + " Tickets!!"));
     }
 
-    public void claimRoute(String username, int routeId) {
+    public void claimRoute(String username, int routeId, List<TrainCard> selectedCards) {
         Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
 
         getPlayerWithUsername(username).claimRoute(routeToClaim);

@@ -1,10 +1,7 @@
 package communication;
 
 import com.example.shared.interfaces.IServer;
-import com.example.shared.model.Chat;
-import com.example.shared.model.Player;
-import com.example.shared.model.Route;
-import com.example.shared.model.Ticket;
+import com.example.shared.model.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import game.GameManager;
@@ -164,8 +161,8 @@ public class ServerFacade implements IServer {
      *
      */
     @Override
-    public void claimRoute(String gameId, String username, int routeId) {
-        gameManager.claimRoute(gameId, username, routeId);
+    public void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards) {
+        gameManager.claimRoute(gameId, username, routeId, selectedCards);
     }
 
     /**
