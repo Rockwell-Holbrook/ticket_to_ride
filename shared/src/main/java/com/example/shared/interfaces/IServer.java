@@ -1,11 +1,9 @@
 package com.example.shared.interfaces;
 
-import com.example.shared.model.Chat;
-import com.example.shared.model.Player;
-import com.example.shared.model.Route;
-import com.example.shared.model.Ticket;
+import com.example.shared.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IServer {
 
@@ -108,7 +106,7 @@ public interface IServer {
      *
      * @param routeId The route the user wants to claim.
      */
-    void claimRoute(String gameId, String username, int routeId);
+    void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards);
 
     /**
      * A user may spend their turn getting tickets.

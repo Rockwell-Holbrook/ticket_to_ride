@@ -1,10 +1,10 @@
 package com.example.rholbrook.tickettoride.game;
 
-import android.support.constraint.Group;
 import android.widget.Button;
 import com.example.rholbrook.tickettoride.R;
 import com.example.shared.model.Player;
 import com.example.shared.model.Route;
+import com.example.shared.model.TrainCard;
 
 import java.util.*;
 
@@ -107,6 +107,11 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         viewCallback.routeClaimed(getPlayerColor(player), ROUTE_GROUP_MAP.get(route.getGroupId()));
     }
 
+    @Override
+    public List<TrainCard> getPlayerHand() {
+        return mModel.getClient().getTrainCards();
+    }
+
     /**
      * UpdateAvailableRoutes method for the GameMapFragmentPresenter
      *
@@ -142,7 +147,7 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
      */
     @Override
     public void selectRoute(int routeId) {
-        mModel.selectRoute(routeId);
+        mModel.selectRoute(routeId, selectedCards);
         viewCallback.endUserTurn(availableButtons);
         mModel.endUserTurn();
     }
