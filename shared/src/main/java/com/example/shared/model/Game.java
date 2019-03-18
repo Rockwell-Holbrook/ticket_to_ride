@@ -315,7 +315,6 @@ public class Game {
 
         if(getPlayerWithUsername(username).getRemainingTrainCars() <= 2 && !gameEnding) {
             this.gameEnding = true;
-            this.finalTurnTaken++;
             clientProxy.gameEnding(this.gameId);
         }
 
