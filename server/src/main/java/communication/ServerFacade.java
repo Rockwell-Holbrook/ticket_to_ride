@@ -162,7 +162,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards) {
-        gameManager.claimRoute(gameId, username, routeId);
+        gameManager.claimRoute(gameId, username, routeId, selectedCards);
     }
 
     /**

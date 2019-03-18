@@ -283,15 +283,11 @@ public class Game {
         this.gameHistory.add(new GameHistory(username, "Returned " + returned.size() + " Tickets!!"));
     }
 
-    public void claimRoute(String username, int routeId) {
+    public void claimRoute(String username, int routeId, List<TrainCard> selectedCards) {
         Route routeToClaim = Route.ROUTE_GROUP_MAP.get(routeId);
 
         getPlayerWithUsername(username).claimRoute(routeToClaim);
-        getPlayerWithUsername(username).removeTrainCard(routeToClaim.getLength(), routeToClaim.getColor()); //todo: make removeTrainCard Work
-
-        for (int i = 0; i <routeToClaim.getLength() ; i++) {
-            //todo: route and trainCard colors are not equivalent.. Need to implement adding these cards to the discard deck after they were used and removed from hand above.
-        }
+        getPlayerWithUsername(username).removeTrainCards(selectedCards);
 
         this.availableRoutes.remove(routeToClaim);
         this.claimedRoutes.add(routeToClaim);
@@ -315,7 +311,6 @@ public class Game {
 
         if(getPlayerWithUsername(username).getRemainingTrainCars() <= 2 && !gameEnding) {
             this.gameEnding = true;
-            this.finalTurnTaken++;
             clientProxy.gameEnding(this.gameId);
         }
 
@@ -327,11 +322,11 @@ public class Game {
         int index = turnOrder.indexOf(player);
         if (index + 1 < maxPlayers) {
             Player newTurn = turnOrder.get(index + 1);
-            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         } else {
             Player newTurn = turnOrder.get(0);
-            clientProxy.startTurn(getAvailableRoutes(), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         }
     }
@@ -345,7 +340,7 @@ public class Game {
         return null;
     }
 
-    public void calculateClaimableRoutes(String username) { //todo: need to do a check for already owning the same 2-way route.
+    public ArrayList<Route> calculateClaimableRoutes(String username) { //todo: need to do a check for already owning the same 2-way route.
          Map<TrainCard.Color, Integer> cardGroupings = getTrainCardGroupings(username);
          ArrayList<Route> claimableRoutes = new ArrayList<>();
 
@@ -362,7 +357,8 @@ public class Game {
                  claimableRoutes.add(route);
              }
          }
-         clientProxy.getClaimableRoutes(claimableRoutes, username, this.gameId);
+         return claimableRoutes;
+         //clientProxy.getClaimableRoutes(claimableRoutes, username, this.gameId);
     }
 
     private Map<TrainCard.Color, Integer> getTrainCardGroupings(String username) {
