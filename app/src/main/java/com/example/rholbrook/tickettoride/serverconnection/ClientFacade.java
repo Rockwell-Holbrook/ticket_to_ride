@@ -73,12 +73,18 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     //  History Drawer
     @Override
     public void receivedChatHistory(List<Chat> chatHistory, boolean gameStarted, String username, String gameId) {
-        GameActivityModel.getInstance().receivedChatHistory(chatHistory);
+        String jsonValue = gson.toJson(chatHistory);
+        Type typeName = new TypeToken<List<Chat>>(){}.getType();
+        List<Chat> chats = gson.fromJson(jsonValue, typeName);
+        GameActivityModel.getInstance().receivedChatHistory(chats);
     }
 
     @Override
     public void receivedGameHistory(List<GameHistory> gameHistory, String username, String gameId) {
-        GameActivityModel.getInstance().receivedGameHistory(gameHistory);
+        String jsonValue = gson.toJson(gameHistory);
+        Type typeName = new TypeToken<List<GameHistory>>(){}.getType();
+        List<GameHistory> history = gson.fromJson(jsonValue, typeName);
+        GameActivityModel.getInstance().receivedGameHistory(history);
     }
 
     //  Game Initialization
@@ -172,16 +178,15 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
 
     @Override
     public void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId) {
-        //todo: Client shall work!
     }
 
     @Override
     public void gameEnding(String gameId) {
-        //todo: Client shall work!
+        GameActivityModel.getInstance().notifyLastTurn();
     }
 
     @Override
     public void gameEnded(String gameId) {
-        //todo: Client shall work!
+        GameActivityModel.getInstance().endGame();
     }
 }

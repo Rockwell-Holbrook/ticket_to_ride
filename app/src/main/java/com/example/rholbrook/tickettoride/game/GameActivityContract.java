@@ -32,6 +32,8 @@ public class GameActivityContract {
         void setOpponentThreeTurnBackground(Player player);
         void setOpponentFourTurnBackground(Player player);
         void selectingCards();
+        void notifyLastTurn();
+        void endGame();
     }
 
     public interface Presenter {
@@ -65,5 +67,7 @@ public class GameActivityContract {
         void selectRoute(int groupId);
         void claimRoute(int routeId, List<TrainCard> selectedCards);
         void selectingCards();
+        void notifyLastTurn();
+        void endGame();
     }
 }

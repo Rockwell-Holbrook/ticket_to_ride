@@ -162,7 +162,11 @@ public class ServerFacade implements IServer {
      */
     @Override
     public void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards) {
-        gameManager.claimRoute(gameId, username, routeId, selectedCards);
+        Gson gson = new Gson();
+        String typeValue = gson.toJson(selectedCards);
+        Type typeName = new TypeToken<ArrayList<TrainCard>>(){}.getType();
+        ArrayList<TrainCard> cards = gson.fromJson(typeValue, typeName);
+        gameManager.claimRoute(gameId, username, routeId, cards);
     }
 
     /**

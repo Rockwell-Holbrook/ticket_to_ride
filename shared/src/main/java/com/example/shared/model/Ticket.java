@@ -5,12 +5,14 @@ public class Ticket {
     private String firstCity;
     private String secondCity;
     private int point;
+    private boolean isCompleted;
 
     public Ticket(int ticketId, String firstCity, String secondCity, int point) {
         this.ticketId = ticketId;
         this.firstCity = firstCity;
         this.secondCity = secondCity;
         this.point = point;
+        this.isCompleted = false;
     }
 
     public int getTicketId() {
@@ -43,5 +45,13 @@ public class Ticket {
 
     public void setPoint(int point) {
         this.point = point;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
     }
 }
