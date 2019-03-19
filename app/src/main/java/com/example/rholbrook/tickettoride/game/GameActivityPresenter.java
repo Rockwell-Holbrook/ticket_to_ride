@@ -169,6 +169,16 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void selectRoute(int groupId) {
+        mModel.getClient().getTrainCards();
+    }
+
+    @Override
+    public void claimRoute(int routeId, List<TrainCard> selectedCards) {
+        mModel.selectRoute(routeId, selectedCards);
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }

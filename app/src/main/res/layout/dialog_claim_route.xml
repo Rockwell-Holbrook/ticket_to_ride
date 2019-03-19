@@ -2,9 +2,9 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@color/gameListBackground">
+                                             android:layout_width="wrap_content"
+                                             android:layout_height="wrap_content"
+                                             android:background="@color/gameListBackground" android:padding="8dp">
 
     <TextView
             android:id="@+id/create_instructions_text_view"
@@ -17,10 +17,8 @@
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="150dp"
             tools:listitem="@layout/list_item_select_route_view"
-            app:layout_constraintBottom_toTopOf="@+id/view_cards_close_button"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/create_instructions_text_view"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,10 +31,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/view_cards_close_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toEndOf="@+id/cancel_button"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/view_cards_recycler_view"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/cancel_button"
+            android:text="@string/cancel" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/view_cards_close_button" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/view_cards_recycler_view"/>
 </android.support.constraint.ConstraintLayout>
