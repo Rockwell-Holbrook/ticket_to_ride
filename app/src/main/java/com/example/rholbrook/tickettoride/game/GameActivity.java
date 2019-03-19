@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -164,6 +165,7 @@ public class GameActivity extends AppCompatActivity implements
         faceDownTrainCardDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mPresenter.selectingCards();
                 mPresenter.selectFaceDownCardDeck();
                 cardsDrawn += 1;
                 if (cardsDrawn == 2) {
@@ -180,8 +182,8 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(0);
-
                     if(selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
                         mPresenter.endTurn();
@@ -202,6 +204,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(1);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -223,6 +226,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(2);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -244,6 +248,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(3);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -265,6 +270,7 @@ public class GameActivity extends AppCompatActivity implements
                 if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
                     Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                 } else {
+                    mPresenter.selectingCards();
                     mPresenter.selectFaceUpCard(4);
                     if (selectedCard.getColor() == TrainCard.Color.WILD) {
                         endUserTurn();
@@ -721,6 +727,21 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void selectingCards() {
+        faceDownTicketDeck.setEnabled(false);
+    }
+
+    @Override
+    public void notifyLastTurn() {
+        new AlertDialog.Builder(getApplicationContext()).setTitle(R.string.last_round).setNegativeButton(R.string.close, null).show();
+    }
+
+    @Override
+    public void endGame() {
+
+    }
+
+    @Override
     public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards, int indicator) {
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);
@@ -748,5 +769,7 @@ public class GameActivity extends AppCompatActivity implements
     public void onClaimRoutePressed(DialogFragment dialog, List<TrainCard> selectedCards, Route route) {
         dialog.dismiss();
         mPresenter.claimRoute(route.getGroupId(), selectedCards);
+        endUserTurn();
+        mPresenter.endTurn();
     }
 }

@@ -21,5 +21,6 @@ public class GameMapFragmentContract {
         void addAvailableButton(Button button);
         void routeClaimed(Player player, Route route);
         List<TrainCard> getPlayerHand();
+        void selectingCards();
     }
 }

@@ -33,8 +33,7 @@ public class Game {
         this.gameId = UUID.randomUUID().toString();
         this.availableColors = new ArrayList<>();
         this.availableRoutes =  new ArrayList<>();
-        availableRoutes.add(new Route(1, new City("Denver"), new City("Salt Lake City"), Route.RouteColor.BLACK, 7, 4));
-        availableRoutes.add(new Route(69, new City("Denver"), new City("Salt Lake City"), Route.RouteColor.BLACK, 7, 4));
+        this.availableRoutes = initializeAvailableRoutes();
         this.claimedRoutes =  new ArrayList<>();
         this.chatHistory =  new ArrayList<>();
         this.gameHistory =  new ArrayList<>();
@@ -45,6 +44,14 @@ public class Game {
         this.ticketDeck.shuffle();
         this.trainCardDeck.shuffle();
         addPlayer(host);
+    }
+
+    private ArrayList<Route> initializeAvailableRoutes() {
+        ArrayList<Route> routes = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            routes.add(Route.ROUTE_GROUP_MAP.get(i));
+        }
+        return routes;
     }
 
     /**
@@ -322,11 +329,11 @@ public class Game {
         int index = turnOrder.indexOf(player);
         if (index + 1 < maxPlayers) {
             Player newTurn = turnOrder.get(index + 1);
-            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(newTurn.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         } else {
             Player newTurn = turnOrder.get(0);
-            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(newTurn.getUsername()), newTurn.getUsername(), gameId);
             clientProxy.turnStarted(newTurn, gameId);
         }
     }

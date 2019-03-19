@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.register;
 
+import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Message;
