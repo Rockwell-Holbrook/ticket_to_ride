@@ -92,13 +92,12 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
     }
 
     @Override
-    public void receivedHistoryObject(GameHistory history) {
+    public void receivedGameHistory(List<GameHistory> gameHistory, String username, String gameId) {
+        String methodName = "receivedGameHistory";
+        String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {gameHistory, username, gameId};
 
-    }
-
-    @Override
-    public void receivedGameHistory(List<GameHistory> gameHistory) {
-
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
     }
 
     public void initializeGame(List<TrainCard> trainCardsFaceUp, List<TrainCard> trainCards, List<Ticket> tickets, List<Player> turnOrder, String username, String gameId) {
@@ -194,5 +193,32 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
         Object[] inputVals = {newCard, username, gameId};
 
         ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
+    }
+
+    @Override
+    public void getClaimableRoutes(List<Route> claimableRoutes, String username, String gameId) {
+        String methodName = "getClaimableRoutes";
+        String[] typeNames = {List.class.getName(), String.class.getName(), String.class.getName()};
+        Object[] inputVals = {claimableRoutes, username, gameId};
+
+        ss.sendToUser(new Command(methodName, typeNames, inputVals), username, gameId);
+    }
+
+    @Override
+    public void gameEnding(String gameId) {
+        String methodName = "gameEnding";
+        String[] typeNames = {String.class.getName()};
+        Object[] inputVals = {gameId};
+
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+    }
+
+    @Override
+    public void gameEnded(String gameId) {
+        String methodName = "gameEnded";
+        String[] typeNames = {String.class.getName()};
+        Object[] inputVals = {gameId};
+
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
 }
