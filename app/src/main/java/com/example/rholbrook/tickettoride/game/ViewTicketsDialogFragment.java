@@ -66,7 +66,7 @@ public class ViewTicketsDialogFragment extends DialogFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         ticketsRecyclerView.setLayoutManager(layoutManager);
-        ticketsRecyclerView.setAdapter(new TicketsAdapter(playerTickets));
+        ticketsRecyclerView.setAdapter(new ViewTicketsAdapter(playerTickets, getContext()));
 
         builder.setView(dialogView);
         return builder.create();
