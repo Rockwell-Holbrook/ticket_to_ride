@@ -63,7 +63,9 @@ public class Graph<T> {
         visited.put(start, true);
         Node node = nodes.get(start);
         for (T neighbor : node.neighbors) {
-            explore(neighbor);
+            if (!visited.get(neighbor)) {
+                explore(neighbor);
+            }
         }
     }
 
