@@ -112,6 +112,11 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
         return mModel.getClient().getTrainCards();
     }
 
+    @Override
+    public void selectingCards() {
+        viewCallback.endUserTurn(availableButtons);
+    }
+
     /**
      * UpdateAvailableRoutes method for the GameMapFragmentPresenter
      *
@@ -147,7 +152,6 @@ public class GameMapFragmentPresenter implements GameMapFragmentContract.Present
      */
     @Override
     public void selectRoute(int routeId) {
-        mModel.selectRoute(routeId, selectedCards);
         viewCallback.endUserTurn(availableButtons);
         mModel.endUserTurn();
     }

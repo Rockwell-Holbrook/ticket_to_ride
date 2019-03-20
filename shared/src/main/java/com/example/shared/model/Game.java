@@ -34,8 +34,7 @@ public class Game {
         this.gameId = UUID.randomUUID().toString();
         this.availableColors = new ArrayList<>();
         this.availableRoutes =  new ArrayList<>();
-        availableRoutes.add(new Route(1, new City("Denver"), new City("Salt Lake City"), Route.RouteColor.BLACK, 7, 4));
-        availableRoutes.add(new Route(69, new City("Denver"), new City("Salt Lake City"), Route.RouteColor.BLACK, 7, 4));
+        this.availableRoutes = initializeAvailableRoutes();
         this.claimedRoutes =  new ArrayList<>();
         this.chatHistory =  new ArrayList<>();
         this.gameHistory =  new ArrayList<>();
@@ -46,6 +45,14 @@ public class Game {
         this.ticketDeck.shuffle();
         this.trainCardDeck.shuffle();
         addPlayer(host);
+    }
+
+    private ArrayList<Route> initializeAvailableRoutes() {
+        ArrayList<Route> routes = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            routes.add(Route.ROUTE_GROUP_MAP.get(i));
+        }
+        return routes;
     }
 
     /**
@@ -198,36 +205,36 @@ public class Game {
     private ArrayList<Ticket> populateTicketDeck() {
         ArrayList<Ticket> temp = new ArrayList<>();
         int index = 1;
-        temp.add(new Ticket(index, "Los Angeles", "New York City", 21));     index++;
-        temp.add(new Ticket(index, "Duluth", "Houston", 8));                 index++;
-        temp.add(new Ticket(index, "Sault Ste Marie", "Nashville", 8));      index++;
-        temp.add(new Ticket(index, "New York", "Atlanta", 6));               index++;
-        temp.add(new Ticket(index, "Portland", "Nashville", 17));            index++;
-        temp.add(new Ticket(index, "Vancouver", "Montréal", 20));            index++;
-        temp.add(new Ticket(index, "Duluth", "El Paso", 10));                index++;
-        temp.add(new Ticket(index, "Toronto", "Miami", 10));                 index++;
-        temp.add(new Ticket(index, "Portland", "Phoenix", 11));              index++;
-        temp.add(new Ticket(index, "Dallas", "New York City", 11));          index++;
-        temp.add(new Ticket(index, "Calgary", "Salt Lake City", 7));         index++;
-        temp.add(new Ticket(index, "Calgary", "Phoenix", 13));               index++;
-        temp.add(new Ticket(index, "Los Angeles", "Miami", 20));             index++;
-        temp.add(new Ticket(index, "Winnipeg", "Little Rock", 11));          index++;
-        temp.add(new Ticket(index, "San Francisco", "Atlanta", 17));         index++;
-        temp.add(new Ticket(index, "Kansas City", "Houston", 5));            index++;
-        temp.add(new Ticket(index, "Los Angeles", "Chicago", 16));           index++;
-        temp.add(new Ticket(index, "Denver", "Pittsburgh", 11));             index++;
-        temp.add(new Ticket(index, "Chicago", "Santa Fe", 9));               index++;
-        temp.add(new Ticket(index, "Vancouver", "Santa Fe", 13));            index++;
-        temp.add(new Ticket(index, "Boston", "Miami", 12));                  index++;
-        temp.add(new Ticket(index, "Chicago", "New Orleans", 7));            index++;
-        temp.add(new Ticket(index, "Montreal", "Atlanta", 9));               index++;
-        temp.add(new Ticket(index, "Seattle", "New York City", 22));         index++;
-        temp.add(new Ticket(index, "Denver", "El Paso", 4));                 index++;
-        temp.add(new Ticket(index, "Helena", "Los Angeles", 8));             index++;
-        temp.add(new Ticket(index, "Winnipeg", "Houston", 12));              index++;
-        temp.add(new Ticket(index, "Montreal", "New Orleans", 13));          index++;
-        temp.add(new Ticket(index, "Sault Ste Marie", "Oklahoma City", 9));  index++;
-        temp.add(new Ticket(index, "Seattle", "Los Angeles", 9));
+        temp.add(new Ticket(index, new City("Los Angeles"), new City("New York City"), 21));     index++;
+        temp.add(new Ticket(index, new City("Duluth"), new City("Houston"), 8));                 index++;
+        temp.add(new Ticket(index, new City("Sault Ste Marie"), new City("Nashville"), 8));      index++;
+        temp.add(new Ticket(index, new City("New York"), new City("Atlanta"), 6));               index++;
+        temp.add(new Ticket(index, new City("Portland"), new City("Nashville"), 17));            index++;
+        temp.add(new Ticket(index, new City("Vancouver"), new City("Montréal"), 20));            index++;
+        temp.add(new Ticket(index, new City("Duluth"), new City("El Paso"), 10));                index++;
+        temp.add(new Ticket(index, new City("Toronto"), new City("Miami"), 10));                 index++;
+        temp.add(new Ticket(index, new City("Portland"), new City("Phoenix"), 11));              index++;
+        temp.add(new Ticket(index, new City("Dallas"), new City("New York City"), 11));          index++;
+        temp.add(new Ticket(index, new City("Calgary"), new City("Salt Lake City"), 7));         index++;
+        temp.add(new Ticket(index, new City("Calgary"), new City("Phoenix"), 13));               index++;
+        temp.add(new Ticket(index, new City("Los Angeles"), new City("Miami"), 20));             index++;
+        temp.add(new Ticket(index, new City("Winnipeg"), new City("Little Rock"), 11));          index++;
+        temp.add(new Ticket(index, new City("San Francisco"), new City("Atlanta"), 17));         index++;
+        temp.add(new Ticket(index, new City("Kansas City"), new City("Houston"), 5));            index++;
+        temp.add(new Ticket(index, new City("Los Angeles"), new City("Chicago"), 16));           index++;
+        temp.add(new Ticket(index, new City("Denver"), new City("Pittsburgh"), 11));             index++;
+        temp.add(new Ticket(index, new City("Chicago"), new City("Santa Fe"), 9));               index++;
+        temp.add(new Ticket(index, new City("Vancouver"), new City("Santa Fe"), 13));            index++;
+        temp.add(new Ticket(index, new City("Boston"), new City("Miami"), 12));                  index++;
+        temp.add(new Ticket(index, new City("Chicago"), new City("New Orleans"), 7));            index++;
+        temp.add(new Ticket(index, new City("Montreal"), new City("Atlanta"), 9));               index++;
+        temp.add(new Ticket(index, new City("Seattle"), new City("New York City"), 22));         index++;
+        temp.add(new Ticket(index, new City("Denver"), new City("El Paso"), 4));                 index++;
+        temp.add(new Ticket(index, new City("Helena"), new City("Los Angeles"), 8));             index++;
+        temp.add(new Ticket(index, new City("Winnipeg"), new City("Houston"), 12));              index++;
+        temp.add(new Ticket(index, new City("Montreal"), new City("New Orleans"), 13));          index++;
+        temp.add(new Ticket(index, new City("Sault Ste Marie"), new City("Oklahoma City"), 9));  index++;
+        temp.add(new Ticket(index, new City("Seattle"), new City("Los Angeles"), 9));
         return temp;
     }
 

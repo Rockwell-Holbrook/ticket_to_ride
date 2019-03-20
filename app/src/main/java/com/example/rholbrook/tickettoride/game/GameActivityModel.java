@@ -52,6 +52,10 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
 
     }
 
+    public void notifyLastTurn() {
+        gameActivityPresenter.notifyLastTurn();
+    }
+
     /**
      * Getters and Setters
      */
@@ -334,6 +338,9 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
 
     public void selectRoute(int routeId, List<TrainCard> selectedCards) {
         client.removeTrainCards(selectedCards);
+        setChanged();
+        notifyObservers(client);
+        clearChanged();
         ServerProxy.getInstance().claimRoute(gameId, Authentication.getInstance().getUsername(), routeId, selectedCards);
     }
 
@@ -426,121 +433,11 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         playerTurnEnded(player);
     }
 
-//    public void runDemo2() {
-//        //Update Player Data
-//        gameActivityPresenter.sendToast("Updating Player Data");
-//        client.setPointsEarned(30);
-//        setChanged();
-//        notifyObservers(client);
-//        clearChanged();
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //Update Train Cards
-//        gameActivityPresenter.sendToast("Removing Player Train Cards");
-//        List<TrainCard> cards = client.getTrainCards();
-//        cards.remove(0);
-//        cards.remove(1);
-//        setChanged();
-//        notifyObservers(client);
-//        clearChanged();
-//        try {
-//            Thread.sleep(15000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //Update Tickets
-//        gameActivityPresenter.sendToast("Updating Player Tickets");
-//        List<Ticket> tickets = client.getTickets();
-//        tickets.remove(0);
-//        tickets.add(new Ticket(9, "Chicago", "Santa Fe", 9));
-//        tickets.add(new Ticket(15, "Chicago", "Santa Fe", 9));
-//        setChanged();
-//        notifyObservers(client);
-//        clearChanged();
-//        try {
-//            Thread.sleep(15000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //Update Opponent 1 data
-//        gameActivityPresenter.sendToast("Updating Opponent Data");
-//        opponentOne.setPointsEarned(50);
-//        opponentOne.setRemainingTrainCars(5);
-//        opponentOne.setTickets(tickets);
-//        setChanged();
-//        notifyObservers(opponentOne);
-//        clearChanged();
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //Update the face-up cards
-//        gameActivityPresenter.sendToast("Updating Face Up Cards");
-//        List<TrainCard> faceUpCards = new ArrayList<>();
-//        TrainCard trainCard = new TrainCard(TrainCard.Color.BLACK);
-//        for (int i = 0; i < 5; i++) {
-//            faceUpCards.add(trainCard);
-//        }
-//        updateFaceUpCards(faceUpCards);
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        //Update number of face down cards and ticket cards
-//        gameActivityPresenter.sendToast("Updating Deck Counts");
-//        setDeckCount(95, 15);
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //Claim route client
-//        gameActivityPresenter.sendToast("Client Claiming Route");
-//        routeClaimed(client, new Route(7, new City("Portland"), new City("Seattle"), Route.RouteColor.GRAY, 1, 1));
-//        client.setPointsEarned(1);
-//        client.setRemainingTrainCars(44);
-//        setChanged();
-//        notifyObservers(client);
-//        clearChanged();
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //Claim Route opponent One
-//        gameActivityPresenter.sendToast("Opponent Claiming Route");
-//        routeClaimed(opponentOne, new Route(12, new City("Las Vegas"), new City("Salt Lake City"), Route.RouteColor.ORANGE, 4, 3));
-//        opponentOne.setPointsEarned(4);
-//        opponentOne.setRemainingTrainCars(41);
-//        setChanged();
-//        notifyObservers(opponentOne);
-//        clearChanged();
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        //Move Player Turn
-//        gameActivityPresenter.sendToast("Change Turn");
-//        playerTurnEnded(client);
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void selectingCards() {
+        gameMapFragmentPresenter.selectingCards();
+    }
+
+    public void endGame() {
+        gameActivityPresenter.endGame();
+    }
 }

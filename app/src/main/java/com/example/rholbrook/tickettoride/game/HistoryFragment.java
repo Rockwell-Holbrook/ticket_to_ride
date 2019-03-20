@@ -36,9 +36,14 @@ public class HistoryFragment extends Fragment implements HistoryContract.History
     }
 
     @Override
-    public void updateGameHistory(List<GameHistory> gameHistory) {
-        historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        historyRecyclerView.setAdapter(new HistoryAdapter(gameHistory));
-        historyRecyclerView.scrollToPosition(gameHistory.size() - 1);
+    public void updateGameHistory(final List<GameHistory> gameHistory) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                historyRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                historyRecyclerView.setAdapter(new HistoryAdapter(gameHistory));
+                historyRecyclerView.scrollToPosition(gameHistory.size() - 1);
+            }
+        });
     }
 }

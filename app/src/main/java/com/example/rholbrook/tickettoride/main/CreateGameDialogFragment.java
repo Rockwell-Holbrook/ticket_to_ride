@@ -57,11 +57,12 @@ public class CreateGameDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (gameName.getText().toString().equals("")) {
-                    mListener.onCreateError(CreateGameDialogFragment.this, "Game Name not specified");
+                    mListener.onCreateError(CreateGameDialogFragment.this, getActivity().getResources().getString(R.string.name_not_specified));
                 } else {
                     mListener.onCreatePressed(CreateGameDialogFragment.this,
                             gameName.getText().toString(),
-                            Integer.valueOf(playerNumberSpinner.getSelectedItem().toString()), availableColors.get(playerColorSpinner.getSelectedItemPosition()));
+                            Integer.valueOf(playerNumberSpinner.getSelectedItem().toString()),
+                            availableColors.get(playerColorSpinner.getSelectedItemPosition()));
                 }
 
             }

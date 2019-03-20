@@ -4,14 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+    final int LONGEST_ROUTE_POINT_VALUE = 10;
+    final int GLOBETROTTER_POINT_VALUE = 15;
     protected String username;
     protected boolean isHost;
     protected PlayerColor playerColor;
     protected ArrayList<TrainCard> trainCards;
     protected ArrayList<Ticket> tickets;
     protected ArrayList<Route> claimedRoutes;
+    protected Graph<City> connectedCities;
     protected int remainingTrainCars;
     protected int pointsEarned;
+    protected int ticketPoints = 0;
+    protected int completedTicketCount = 0;
+    protected int incompletedTicketCount = 0;
+    protected int completedTicketPoints = 0;
+    protected int incompleteTicketPoints = 0;
+    protected int longestRouteCount = 0;
+    protected int bonusPoints = 0;
+    protected int totalPoints = 0;
+    protected boolean hasGlobeTrotter = false;
+    protected boolean hasLongestRoute = false;
+    protected boolean isWinner = false;
 
 
     public Player(String username, boolean isHost, PlayerColor playerColor) {
@@ -21,12 +35,81 @@ public class Player {
         this.trainCards = new ArrayList<>();
         this.tickets = new ArrayList<>();
         this.claimedRoutes = new ArrayList<>();
+        this.connectedCities = new Graph<>();
         pointsEarned = 0;
         remainingTrainCars = 45;
     }
 
+    public boolean isHasGlobeTrotter() {
+        return hasGlobeTrotter;
+    }
+
+    public void setHasGlobeTrotter(boolean hasGlobeTrotter) {
+        this.hasGlobeTrotter = hasGlobeTrotter;
+    }
+
+    public boolean isHasLongestRoute() {
+        return hasLongestRoute;
+    }
+
+    public void setHasLongestRoute(boolean hasLongestRoute) {
+        this.hasLongestRoute = hasLongestRoute;
+    }
+
+    public int getTicketPoints() {
+        return ticketPoints;
+    }
+
+    public void setTicketPoints(int ticketPoints) {
+        this.ticketPoints = ticketPoints;
+    }
+
+    public void setCompletedTicketCount(int completedTicketCount) {
+        this.completedTicketCount = completedTicketCount;
+    }
+
+    public int getCompletedCount() {
+        return completedTicketCount;
+    }
+
+    public int getIncompletedTicketCount() {
+        return incompletedTicketCount;
+    }
+
+    public void setIncompletedTicketCount(int incompletedTicketCount) {
+        this.incompletedTicketCount = incompletedTicketCount;
+    }
+
+    public int getCompletedTicketPoints() {
+        return completedTicketPoints;
+    }
+
+    public void setCompletedTicketPoints(int completedTicketPoints) {
+        this.completedTicketPoints = completedTicketPoints;
+    }
+
+    public int getIncompleteTicketPoints() {
+        return incompleteTicketPoints;
+    }
+
+    public void setIncompleteTicketPoints(int incompleteTicketPoints) {
+        this.incompleteTicketPoints = incompleteTicketPoints;
+    }
+
+    public int getLongestRouteCount() {
+        return longestRouteCount;
+    }
+
+    public void setLongestRouteCount(int longestRouteCount) {
+        this.longestRouteCount = longestRouteCount;
+    }
+
     public int getRemainingTrainCars() {
         return remainingTrainCars;
+    }
+
+    public int getBonusPoints() {
+        return bonusPoints;
     }
 
     public void setRemainingTrainCars(int remainingTrainCars) {
@@ -85,6 +168,10 @@ public class Player {
         return pointsEarned;
     }
 
+    public int getTotalPoints() {
+        return totalPoints;
+    }
+
     public void setPointsEarned(int pointsEarned) {
         this.pointsEarned = pointsEarned;
     }
@@ -93,16 +180,34 @@ public class Player {
         this.trainCards.add(trainCard);
     }
 
-    public void removeTrainCard(int number, Route.RouteColor color) {
-        //Todo: MAKE THIS WORK
-    }
-
     public void removeTrainCards(List<TrainCard> selectedCards) {
         for (TrainCard trainCard : selectedCards) {
-            this.trainCards.remove(trainCard);
+            for (TrainCard card : trainCards) {
+                if (card.getColor() == trainCard.getColor()) {
+                    trainCards.remove(card);
+                    break;
+                }
+            }
         }
     }
 
+    public void calculateEndGame(ArrayList<Player> players) {
+        incompletedTicketCount = getIncompleteTicketCount();
+        completedTicketCount = getCompletedTicketCount();
+        completedTicketPoints = calculateCompletedTicketPoints();
+        incompleteTicketPoints = calculateIncompleteTicketPoints();
+        ticketPoints = completedTicketPoints + incompleteTicketPoints;
+
+        if (hasGlobetrotter(players)) {
+            hasGlobeTrotter = true;
+            bonusPoints += GLOBETROTTER_POINT_VALUE;
+        }
+        if (hasLongestRoute(players)) {
+            hasLongestRoute = true;
+            bonusPoints += LONGEST_ROUTE_POINT_VALUE;
+        }
+        totalPoints += ticketPoints + pointsEarned + bonusPoints;
+    }
 
     public void addTicket(Ticket ticket) {
         this.tickets.add(ticket);
@@ -121,6 +226,64 @@ public class Player {
                 break;
             }
         }
+    }
+
+    private int getCompletedTicketCount() {
+        int completedTicketCount = 0;
+        for (Ticket ticket : tickets) {
+            if (ticket.isCompleted()) {
+                completedTicketCount++;
+            }
+        }
+        return completedTicketCount;
+    }
+
+    private int getIncompleteTicketCount() {
+        int incompleteTicketCount = 0;
+        for (Ticket ticket : tickets) {
+            if (!ticket.isCompleted()) {
+                incompleteTicketCount++;
+            }
+        }
+        return incompleteTicketCount;
+    }
+
+    private int calculateCompletedTicketPoints() {
+        int completedTicketPoints = 0;
+        for (Ticket ticket : tickets) {
+            if (ticket.isCompleted()) {
+                completedTicketPoints += ticket.getPoint();
+            }
+        }
+        return completedTicketPoints;
+    }
+
+    private int calculateIncompleteTicketPoints() {
+        int incompleteTicketPoints = 0;
+        for (Ticket ticket : tickets) {
+            if (!ticket.isCompleted()) {
+                incompleteTicketPoints += ticket.getPoint();
+            }
+        }
+        return incompleteTicketPoints;
+    }
+
+    private boolean hasGlobetrotter(ArrayList<Player> players) {
+        for (Player player : players) {
+            if (player.getCompletedCount() > this.completedTicketCount) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean hasLongestRoute(ArrayList<Player> players) {
+        for (Player player : players) {
+            if (player.getLongestRouteCount() > this.longestRouteCount) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public enum PlayerColor {
@@ -143,13 +306,18 @@ public class Player {
     }
 
     /**
-     * Adds route to claimed route list AND adds points AND removes cars
-     *
+     * Adds route to claimed route list AND adds points AND removes cars AND checks for completed ticket
      * @param addedRoute Route to add
      */
     public void claimRoute(Route addedRoute) {
         this.claimedRoutes.add(addedRoute);
+        this.connectedCities.addEdge(addedRoute.getCityOne(), addedRoute.getCityTwo());
         this.pointsEarned += addedRoute.getPointValue();
         this.remainingTrainCars -= addedRoute.getLength();
+        for (Ticket ticket : this.tickets) {
+            if (!ticket.isCompleted()) {
+                ticket.setCompleted(connectedCities.hasPath(ticket.getFirstCity(), ticket.getSecondCity()));
+            }
+        }
     }
 }
