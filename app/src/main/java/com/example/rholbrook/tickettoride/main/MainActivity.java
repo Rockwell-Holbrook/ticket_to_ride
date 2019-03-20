@@ -3,6 +3,7 @@ package com.example.rholbrook.tickettoride.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView gameListRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private FrameLayout fragmentContainer;
+    private static CountingIdlingResource mainActivityIdlingResource;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements
         mLayoutManager = new LinearLayoutManager(this);
         gameListRecyclerView.setLayoutManager(mLayoutManager);
         joinGameButton.setEnabled(false);
+        mainActivityIdlingResource = new CountingIdlingResource("Main Activity Idling Resource");
 
         mPresenter = new MainActivityPresenter(this);
         mPresenter.init();
@@ -100,12 +104,21 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void startGameLobbyFragment(String gameId) {
-        Intent intent = new Intent(this, GameLobbyActivity.class);
-        intent.putExtra("gameId", gameId);
-        intent.putExtra("hostUsername", mPresenter.getSelectedGame().getHost().getUsername());
-        startActivity(intent);
-        this.finish();
+    public void startGameLobbyFragment(final String gameId) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(!mainActivityIdlingResource.isIdleNow()) {
+                    mainActivityIdlingResource.decrement();
+                }
+                Intent intent = new Intent(MainActivity.this, GameLobbyActivity.class);
+                intent.putExtra("gameId", gameId);
+                intent.putExtra("hostUsername", mPresenter.getSelectedGame().getHost().getUsername());
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+        });
+
     }
 
     @Override
@@ -123,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onCreatePressed(DialogFragment dialog, String gameName, int maxPlayers, Player.PlayerColor selectedColor) {
         mPresenter.createGame(new Player(Authentication.getInstance().getUsername(), true, selectedColor), maxPlayers, gameName);
+        dialog.dismiss();
     }
 
     @Override
@@ -133,5 +147,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onCreateError(CreateGameDialogFragment createGameDialogFragment, String error) {
         Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    public static CountingIdlingResource getIdlingResourceInTest() {
+        return mainActivityIdlingResource;
     }
 }

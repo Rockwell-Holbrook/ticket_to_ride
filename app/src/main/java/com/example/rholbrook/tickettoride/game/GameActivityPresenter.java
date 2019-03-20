@@ -179,6 +179,22 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void selectingCards() {
+        viewCallback.selectingCards();
+        mModel.selectingCards();
+    }
+
+    @Override
+    public void notifyLastTurn() {
+        viewCallback.notifyLastTurn();
+    }
+
+    @Override
+    public void endGame() {
+        viewCallback.endGame();
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }

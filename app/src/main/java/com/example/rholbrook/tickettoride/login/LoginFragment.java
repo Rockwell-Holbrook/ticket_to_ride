@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,16 +32,18 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
     private Listener listener;
     private int successStatus;
     private AuthenticationActivityModel.CallBack callback;
+    private CountingIdlingResource idlingResource;
 
     public interface Listener {
         void successfulLogin();
     }
 
-    public static LoginFragment newInstance() {
+    public static LoginFragment newInstance(CountingIdlingResource idlingResource) {
         LoginFragment fragment = new LoginFragment();
         Bundle params = new Bundle();
 
         fragment.setArguments(params);
+        fragment.idlingResource = idlingResource;
 
         return fragment;
     }
@@ -148,6 +151,7 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
     }
 
     private void login() {
+        idlingResource.increment();
         LoginTask loginTask = new LoginTask();
         loginTask.setListener(new ListeningTask.Listener() {
             @Override
@@ -166,7 +170,7 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
         else {
             showToast(message.getMessage());
         }
-
+        idlingResource.decrement();
     }
 
     public AuthenticationActivityModel.CallBack getCallback() {
@@ -193,7 +197,7 @@ public class LoginFragment extends Fragment implements LoginFragmentContract.Vie
     @Override
     public void startRegisterFragment() {
         successStatus = LoginFragmentModel.SENT_TO_REGISTER;
-        getActivity().getSupportFragmentManager().beginTransaction().remove(LoginFragment.this).commit();
+        callback.onCall(successStatus);
     }
 
     @Override

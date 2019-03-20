@@ -88,7 +88,9 @@ public class MainActivityModel extends Observable {
     }
 
     public void getGameList() {
-        ServerProxy.getInstance().getGameList(Authentication.getInstance().getUsername());
+        if (Authentication.getInstance().getUsername() != null) {
+            ServerProxy.getInstance().getGameList(Authentication.getInstance().getUsername());
+        }
     }
 
     public ArrayList<Player.PlayerColor> getAvailableColors() {

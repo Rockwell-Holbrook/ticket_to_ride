@@ -3,9 +3,12 @@ package com.example.rholbrook.tickettoride.register;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.test.espresso.idling.CountingIdlingResource;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,16 +36,19 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private boolean passwordFilled;
     private boolean confPasswordFilled;
     private Listener mListener;
+    private CountingIdlingResource idlingResource;
 
     public interface Listener {
         void onLogin();
     }
 
-    public static RegisterFragment newInstance() {
+    public static RegisterFragment newInstance(CountingIdlingResource authenticationIdlingResource) {
         RegisterFragment fragment = new RegisterFragment();
         Bundle paramas = new Bundle();
 
         fragment.setArguments(paramas);
+
+        fragment.idlingResource = authenticationIdlingResource;
 
         return fragment;
     }
@@ -134,6 +140,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                idlingResource.increment();
                 mPresenter.updateUsername(mUsernameField.getText().toString());
                 mPresenter.updatePassword(mPasswordField.getText().toString());
                 mPresenter.updateConfPassword(mConfPasswordField.getText().toString());
@@ -153,11 +160,23 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
 
 
     public void onSuccess() {
-        getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
+                idlingResource.decrement();
+            }
+        });
     }
 
-    public void onFailure(String message) {
-        showToast(message);
+    public void onFailure(final String message) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showToast(message);
+                idlingResource.decrement();
+            }
+        });
     }
 
     private void showToast(String message) {
@@ -185,13 +204,19 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         registerTask.execute();
     }
 
-    private void checkStatus(Message message) {
-        if (message.isSuccess()) {
-           onSuccess();
-        }
-        else {
-            onFailure(message.getMessage());
-        }
+    private void checkStatus(final Message message) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (message.isSuccess()) {
+                    onSuccess();
+                }
+                else {
+                    onFailure(message.getMessage());
+                }
+            }
+        });
+
     }
 
     public AuthenticationActivityModel.CallBack getCallback() {
