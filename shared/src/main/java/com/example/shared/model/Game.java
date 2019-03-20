@@ -1,6 +1,7 @@
 package com.example.shared.model;
 
 
+import com.example.shared.cpu_player.CPUPlayer;
 import com.example.shared.interfaces.IClientInGame;
 
 import java.util.*;
@@ -320,15 +321,25 @@ public class Game {
     private void startNextTurn(Player player) {
         ArrayList<Player> turnOrder = new ArrayList<>(this.playerList);
         int index = turnOrder.indexOf(player);
+        Player newTurn;
+        // Get the player who's turn it is
         if (index + 1 < maxPlayers) {
-            Player newTurn = turnOrder.get(index + 1);
-            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
-            clientProxy.turnStarted(newTurn, gameId);
+            newTurn = turnOrder.get(index + 1);
+
         } else {
-            Player newTurn = turnOrder.get(0);
-            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
-            clientProxy.turnStarted(newTurn, gameId);
+            newTurn = turnOrder.get(0);
         }
+
+        // Check if they are a cpu or human and let them know in their respective fashion
+        if (newTurn.getClass().equals(CPUPlayer.class)){
+            CPUPlayer cpuTurn = (CPUPlayer)newTurn;
+            cpuTurn.takeTurn();
+        }
+        else{
+            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
+        }
+        // Let everyone know in any case
+        clientProxy.turnStarted(newTurn, gameId);
     }
 
     public Player getPlayerWithUsername(String username) {
@@ -387,7 +398,7 @@ public class Game {
         return cardGroupings;
     }
 
-    private TrainCard.Color getCardColorFromRouteColor(Route.RouteColor routeColor) {
+    public TrainCard.Color getCardColorFromRouteColor(Route.RouteColor routeColor) {
         switch(routeColor) {
             case YELLOW:
                 return TrainCard.Color.YELLOW;
