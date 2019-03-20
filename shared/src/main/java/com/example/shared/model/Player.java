@@ -12,6 +12,7 @@ public class Player {
     private ArrayList<TrainCard> trainCards;
     private ArrayList<Ticket> tickets;
     private ArrayList<Route> claimedRoutes;
+    private Graph<City> connectedCities;
     private int remainingTrainCars;
     private int pointsEarned;
     private int ticketPoints = 0;
@@ -33,6 +34,7 @@ public class Player {
         this.trainCards = new ArrayList<>();
         this.tickets = new ArrayList<>();
         this.claimedRoutes = new ArrayList<>();
+        this.connectedCities = new Graph<>();
         pointsEarned = 0;
         remainingTrainCars = 45;
     }
@@ -303,12 +305,18 @@ public class Player {
     }
 
     /**
-     * Adds route to claimed route list AND adds points AND removes cars
+     * Adds route to claimed route list AND adds points AND removes cars AND checks for completed ticket
      * @param addedRoute Route to add
      */
     public void claimRoute(Route addedRoute) {
         this.claimedRoutes.add(addedRoute);
+        this.connectedCities.addEdge(addedRoute.getCityOne(), addedRoute.getCityTwo());
         this.pointsEarned += addedRoute.getPointValue();
         this.remainingTrainCars -= addedRoute.getLength();
+        for (Ticket ticket : this.tickets) {
+            if (!ticket.isCompleted()) {
+                ticket.setCompleted(connectedCities.hasPath(ticket.getFirstCity(), ticket.getSecondCity()));
+            }
+        }
     }
 }
