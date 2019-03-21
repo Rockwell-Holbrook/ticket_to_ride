@@ -6,25 +6,27 @@ import java.util.List;
 public class Player {
     final int LONGEST_ROUTE_POINT_VALUE = 10;
     final int GLOBETROTTER_POINT_VALUE = 15;
-    private String username;
-    private boolean isHost;
-    private PlayerColor playerColor;
-    private ArrayList<TrainCard> trainCards;
-    private ArrayList<Ticket> tickets;
-    private ArrayList<Route> claimedRoutes;
-    private int remainingTrainCars;
-    private int pointsEarned;
-    private int ticketPoints = 0;
-    private int completedTicketCount = 0;
-    private int incompletedTicketCount = 0;
-    private int completedTicketPoints = 0;
-    private int incompleteTicketPoints = 0;
-    private int longestRouteCount = 0;
-    private int bonusPoints = 0;
-    private int totalPoints = 0;
-    private boolean hasGlobeTrotter = false;
-    private boolean hasLongestRoute = false;
-    private boolean isWinner = false;
+    protected String username;
+    protected boolean isHost;
+    protected PlayerColor playerColor;
+    protected ArrayList<TrainCard> trainCards;
+    protected ArrayList<Ticket> tickets;
+    protected ArrayList<Route> claimedRoutes;
+    protected Graph<City> connectedCities;
+    protected int remainingTrainCars;
+    protected int pointsEarned;
+    protected int ticketPoints = 0;
+    protected int completedTicketCount = 0;
+    protected int incompletedTicketCount = 0;
+    protected int completedTicketPoints = 0;
+    protected int incompleteTicketPoints = 0;
+    protected int longestRouteCount = 0;
+    protected int bonusPoints = 0;
+    protected int totalPoints = 0;
+    protected boolean hasGlobeTrotter = false;
+    protected boolean hasLongestRoute = false;
+    protected boolean isWinner = false;
+
 
     public Player(String username, boolean isHost, PlayerColor playerColor) {
         this.username = username;
@@ -33,6 +35,7 @@ public class Player {
         this.trainCards = new ArrayList<>();
         this.tickets = new ArrayList<>();
         this.claimedRoutes = new ArrayList<>();
+        this.connectedCities = new Graph<>();
         pointsEarned = 0;
         remainingTrainCars = 45;
     }
@@ -303,12 +306,18 @@ public class Player {
     }
 
     /**
-     * Adds route to claimed route list AND adds points AND removes cars
+     * Adds route to claimed route list AND adds points AND removes cars AND checks for completed ticket
      * @param addedRoute Route to add
      */
     public void claimRoute(Route addedRoute) {
         this.claimedRoutes.add(addedRoute);
+        this.connectedCities.addEdge(addedRoute.getCityOne(), addedRoute.getCityTwo());
         this.pointsEarned += addedRoute.getPointValue();
         this.remainingTrainCars -= addedRoute.getLength();
+        for (Ticket ticket : this.tickets) {
+            if (!ticket.isCompleted()) {
+                ticket.setCompleted(connectedCities.hasPath(ticket.getFirstCity(), ticket.getSecondCity()));
+            }
+        }
     }
 }

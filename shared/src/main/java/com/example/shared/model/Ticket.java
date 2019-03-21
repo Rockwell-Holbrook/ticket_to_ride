@@ -2,12 +2,12 @@ package com.example.shared.model;
 
 public class Ticket {
     private int ticketId;
-    private String firstCity;
-    private String secondCity;
+    private City firstCity;
+    private City secondCity;
     private int point;
     private boolean isCompleted;
 
-    public Ticket(int ticketId, String firstCity, String secondCity, int point) {
+    public Ticket(int ticketId, City firstCity, City secondCity, int point) {
         this.ticketId = ticketId;
         this.firstCity = firstCity;
         this.secondCity = secondCity;
@@ -23,19 +23,19 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
-    public String getFirstCity() {
+    public City getFirstCity() {
         return firstCity;
     }
 
-    public void setFirstCity(String firstCity) {
+    public void setFirstCity(City firstCity) {
         this.firstCity = firstCity;
     }
 
-    public String getSecondCity() {
+    public City getSecondCity() {
         return secondCity;
     }
 
-    public void setSecondCity(String secondCity) {
+    public void setSecondCity(City secondCity) {
         this.secondCity = secondCity;
     }
 
