@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements
         mainActivityIdlingResource = new CountingIdlingResource("Main Activity Idling Resource");
 
         mPresenter = new MainActivityPresenter(this);
+
         mPresenter.init();
     }
 

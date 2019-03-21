@@ -15,31 +15,25 @@ import com.example.shared.model.Ticket;
 
 import java.util.List;
 
-public class ViewTicketsDialogFragment extends DialogFragment {
-    private List<Ticket> playerTickets;
+public class LastRoundDialogFragment extends DialogFragment {
 
-    public interface ViewTicketsDialogInterface {
+    public interface LastRoundDialogFragmentInterface {
         public void onClosePressed(DialogFragment dialogFragment);
     }
 
-    ViewTicketsDialogFragment.ViewTicketsDialogInterface mListener;
+    LastRoundDialogFragment.LastRoundDialogFragmentInterface mListener;
 
-    public static ViewTicketsDialogFragment newInstance(List<Ticket> tickets) {
-        ViewTicketsDialogFragment fragment = new ViewTicketsDialogFragment();
-        fragment.setPlayerTickets(tickets);
+    public static LastRoundDialogFragment newInstance() {
+        LastRoundDialogFragment fragment = new LastRoundDialogFragment();
 
         return fragment;
-    }
-
-    private void setPlayerTickets(List<Ticket> tickets) {
-        this.playerTickets = tickets;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (ViewTicketsDialogInterface) context;
+            mListener = (LastRoundDialogFragmentInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString() + " must implement Dialog Interface");
         }
@@ -50,23 +44,15 @@ public class ViewTicketsDialogFragment extends DialogFragment {
         //Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_view_tickets, null);
+        View dialogView = inflater.inflate(R.layout.dialog_last_round, null);
 
-        final Button closeButton = dialogView.findViewById(R.id.view_tickets_close_button);
-        RecyclerView ticketsRecyclerView = dialogView.findViewById(R.id.view_tickets_recycler_view);
-
+        final Button closeButton = dialogView.findViewById(R.id.close_button);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClosePressed(ViewTicketsDialogFragment.this);
+                mListener.onClosePressed(LastRoundDialogFragment.this);
             }
         });
-
-        //Set Recycler View
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        ticketsRecyclerView.setLayoutManager(layoutManager);
-        ticketsRecyclerView.setAdapter(new ViewTicketsAdapter(playerTickets, getContext()));
 
         builder.setView(dialogView);
         return builder.create();
