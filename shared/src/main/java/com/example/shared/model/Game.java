@@ -363,6 +363,10 @@ public class Game {
          ArrayList<Route> claimableRoutes = new ArrayList<>();
 
          for(Route route : this.availableRoutes) {
+             if(route.getLength() > getPlayerWithUsername(username).getRemainingTrainCars()) {
+                 continue;
+             }
+             
              if(route.getColor() == Route.RouteColor.GRAY) {
                  for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
                      if(route.getLength() <= entry.getValue()) {
