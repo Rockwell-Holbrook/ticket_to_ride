@@ -193,7 +193,7 @@ public class Player {
         completedTicketCount = getCompletedTicketCount();
         completedTicketPoints = calculateCompletedTicketPoints();
         incompleteTicketPoints = calculateIncompleteTicketPoints();
-        ticketPoints = completedTicketPoints + incompleteTicketPoints;
+        ticketPoints = completedTicketPoints - incompleteTicketPoints;
 
         if (hasGlobetrotter(players)) {
             hasGlobeTrotter = true;
