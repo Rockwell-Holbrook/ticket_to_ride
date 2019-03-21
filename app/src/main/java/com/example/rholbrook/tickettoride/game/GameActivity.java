@@ -1,5 +1,6 @@
 package com.example.rholbrook.tickettoride.game;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.*;
 import com.example.rholbrook.tickettoride.R;
+import com.example.rholbrook.tickettoride.finishgame.FinishGameActivity;
 import com.example.shared.model.*;
 
 import java.util.List;
@@ -26,7 +28,8 @@ public class GameActivity extends AppCompatActivity implements
         SelectTicketsDialogFragment.SelectTicketsDialogInterface,
         ViewTrainCardsDialogFragment.ViewTrainCardsDialogInterface,
         ViewTicketsDialogFragment.ViewTicketsDialogInterface,
-        ClaimRouteDialogFragment.ClaimRouteDialogFragmentInterface {
+        ClaimRouteDialogFragment.ClaimRouteDialogFragmentInterface,
+        LastRoundDialogFragment.LastRoundDialogFragmentInterface {
     private GameActivityContract.Presenter mPresenter;
 
     private Button demoButton;
@@ -733,12 +736,25 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void notifyLastTurn() {
-        new AlertDialog.Builder(getApplicationContext()).setTitle(R.string.last_round).setNegativeButton(R.string.close, null).show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LastRoundDialogFragment dialog = LastRoundDialogFragment.newInstance();
+                dialog.setCancelable(false);
+                dialog.show(getSupportFragmentManager(), "Last Round Dialog Fragment");
+            }
+        });
     }
 
     @Override
     public void endGame() {
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), FinishGameActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

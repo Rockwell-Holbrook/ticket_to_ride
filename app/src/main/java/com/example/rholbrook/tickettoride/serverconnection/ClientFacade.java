@@ -154,6 +154,7 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     //  Routes
     @Override
     public void routeClaimed(Player player, Route route) {
+        System.out.println("Route claimed");
         GameActivityModel.getInstance().routeClaimed(player, route);
     }
 

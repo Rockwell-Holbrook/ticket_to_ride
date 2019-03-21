@@ -343,7 +343,7 @@ public class Game {
             cpuTurn.takeTurn();
         }
         else{
-            clientProxy.startTurn(calculateClaimableRoutes(player.getUsername()), newTurn.getUsername(), gameId);
+            clientProxy.startTurn(calculateClaimableRoutes(newTurn.getUsername()), newTurn.getUsername(), gameId);
         }
         // Let everyone know in any case
         clientProxy.turnStarted(newTurn, gameId);

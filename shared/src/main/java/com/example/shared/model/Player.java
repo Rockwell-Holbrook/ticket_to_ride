@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    final int LONGEST_ROUTE_POINT_VALUE = 10;
-    final int GLOBETROTTER_POINT_VALUE = 15;
+    final transient int LONGEST_ROUTE_POINT_VALUE = 10;
+    final transient int GLOBETROTTER_POINT_VALUE = 15;
     protected String username;
     protected boolean isHost;
     protected PlayerColor playerColor;
     protected ArrayList<TrainCard> trainCards;
     protected ArrayList<Ticket> tickets;
     protected ArrayList<Route> claimedRoutes;
-    protected Graph<City> connectedCities;
+    protected transient Graph<City> connectedCities;
     protected int remainingTrainCars;
     protected int pointsEarned;
-    protected int ticketPoints = 0;
-    protected int completedTicketCount = 0;
-    protected int incompletedTicketCount = 0;
-    protected int completedTicketPoints = 0;
-    protected int incompleteTicketPoints = 0;
-    protected int longestRouteCount = 0;
-    protected int bonusPoints = 0;
-    protected int totalPoints = 0;
-    protected boolean hasGlobeTrotter = false;
+    protected transient int ticketPoints = 0;
+    protected transient int completedTicketCount = 0;
+    protected transient int incompletedTicketCount = 0;
+    protected transient int completedTicketPoints = 0;
+    protected transient int incompleteTicketPoints = 0;
+    protected transient int longestRouteCount = 0;
+    protected transient int bonusPoints = 0;
+    protected transient int totalPoints = 0;
+    protected transient boolean hasGlobeTrotter = false;
     protected boolean hasLongestRoute = false;
-    protected boolean isWinner = false;
+    protected transient boolean isWinner = false;
 
 
     public Player(String username, boolean isHost, PlayerColor playerColor) {
@@ -310,6 +310,9 @@ public class Player {
      * @param addedRoute Route to add
      */
     public void claimRoute(Route addedRoute) {
+        if (this.connectedCities == null) {
+            this.connectedCities = new Graph<>();
+        }
         this.claimedRoutes.add(addedRoute);
         this.connectedCities.addEdge(addedRoute.getCityOne(), addedRoute.getCityTwo());
         this.pointsEarned += addedRoute.getPointValue();
