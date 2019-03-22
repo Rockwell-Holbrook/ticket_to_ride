@@ -273,6 +273,16 @@ public class Game {
         if (index != 5) {
             getPlayerWithUsername(username).addTrainCard(trainCardsFaceUp.get(index));
             trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
+            while(!isValidFaceUp(trainCardsFaceUp)){
+                // Discard all face up
+                for (TrainCard tc: trainCardsFaceUp) {
+                    this.trainCardDeck.discard(tc);
+                }
+                // Re draw
+                for (int i = 0; i < 5; i++) {
+                    this.trainCardsFaceUp.add(this.trainCardDeck.drawFromTop());
+                }
+            }
             clientProxy.updateFaceUpCards(trainCardsFaceUp);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
             this.gameHistory.add(new GameHistory(username, "Drew a Face-Up Train Card!"));

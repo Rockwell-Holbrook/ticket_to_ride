@@ -26,7 +26,7 @@ public class HasAvailableRoute extends CPUState {
         // If no available route anymore
         ArrayList<Route> claimable = game.calculateClaimableRoutes(player.getUsername());
         System.out.println("Claimable for " + player.getUsername() +": " + Integer.toString(claimable.size()));
-        if (claimable.size() > 0){
+        if (claimable.size() == 0){
             // New State
             System.out.println(player.getUsername() + " switching to no route state");
             player.setCpuState(NoRouteIncompleteTicket.getInstance());
@@ -53,7 +53,7 @@ public class HasAvailableRoute extends CPUState {
         // If no more available routes
         ArrayList<Route> claimable = game.calculateClaimableRoutes(player.getUsername());
         System.out.println("Claimable for " + player.getUsername() +": " + Integer.toString(claimable.size()));
-        if (claimable.size() > 0){
+        if (claimable.size() == 0){
             System.out.println(player.getUsername() + " switching to no route state");
             player.setCpuState(NoRouteIncompleteTicket.getInstance());
         }
