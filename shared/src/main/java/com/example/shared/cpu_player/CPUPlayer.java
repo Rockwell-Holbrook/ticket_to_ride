@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CPUPlayer extends Player {
-    private CPUState cpuState;
-    private Game game;
-    private Random rand;
+    private transient CPUState cpuState;
+    private transient Game game;
+    private transient Random rand;
 
     public CPUPlayer(String username, boolean isHost, PlayerColor playerColor, Game game) {
         super(username, isHost, playerColor);
@@ -22,18 +22,27 @@ public class CPUPlayer extends Player {
     }
 
     public void takeTurn() {
+        System.out.println(this.username + " starting a turn.");
         cpuState.takeTurn(this);
+        System.out.println(this.username + " ending a turn.");
         game.endPlayerTurn(this.username);
     }
 
     public void drawCard() {
+        System.out.println(this.username + " drawing a card.");
+
         int randCard = rand.nextInt(Integer.MAX_VALUE) % 5;
         game.cardSelected(this.username, randCard);
+
+        int secondCard = rand.nextInt(Integer.MAX_VALUE) % 5;
+        game.cardSelected(this.username, secondCard);
 
         cpuState.drawCard(this);
     }
 
     public void claimRoute() {
+        System.out.println(this.username + " claiming a route.");
+
         // Get all claimable routes and pick a random one
         ArrayList<Route> routes = game.calculateClaimableRoutes(this.username);
         int randRouteInd = rand.nextInt(Integer.MAX_VALUE) % routes.size();
@@ -55,6 +64,8 @@ public class CPUPlayer extends Player {
     }
 
     public void drawTickets() {
+        System.out.println(this.username + " drawing tickets");
+
         // Always just takes the first one
         ArrayList<Ticket> ticketsDrawn = game.initializeTickets(this.username);
         ArrayList<Ticket> returning = new ArrayList<>();

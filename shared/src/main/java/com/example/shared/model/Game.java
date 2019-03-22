@@ -70,6 +70,18 @@ public class Game {
      */
     public void startGame() {
         isPlaying = true;
+
+        // Fill empty space with CPU players
+        int suffix = 1;
+        while (playerList.size() < maxPlayers){
+            Player.PlayerColor nextColor = availableColors().get(0);
+            CPUPlayer newCPU = new CPUPlayer("CPU Player " + Integer.toString(suffix), false, nextColor, this);
+            playerList.add(newCPU);
+            initializeTrainCardsInHand(newCPU.getUsername());
+            newCPU.drawTickets();
+            setReadyPlayers(this.getReadyPlayers() + 1);
+            suffix++;
+        }
     }
 
     public void addChatToList(Chat chat) {
@@ -430,6 +442,24 @@ public class Game {
             default:
                 return null;
         }
+    }
+
+    private ArrayList<Player.PlayerColor> availableColors() {
+        ArrayList<Player.PlayerColor> availableColors = possibleColors();
+        for (Player player : playerList) {
+            availableColors.remove(player.getPlayerColor());
+        }
+        return availableColors;
+    }
+
+    private ArrayList<Player.PlayerColor> possibleColors() {
+        ArrayList<Player.PlayerColor> possibleColors = new ArrayList<>();
+        possibleColors.add(Player.PlayerColor.BLUE);
+        possibleColors.add(Player.PlayerColor.BLACK);
+        possibleColors.add(Player.PlayerColor.GREEN);
+        possibleColors.add(Player.PlayerColor.RED);
+        possibleColors.add(Player.PlayerColor.YELLOW);
+        return possibleColors;
     }
 
     /* ******************************************** GETTERS AND SETTERS ******************************************** */
