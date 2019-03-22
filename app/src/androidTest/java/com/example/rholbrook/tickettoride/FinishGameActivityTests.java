@@ -2,13 +2,17 @@ package com.example.rholbrook.tickettoride;
 
 
 import android.support.test.espresso.IdlingRegistry;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.ViewAssertion;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import com.example.rholbrook.tickettoride.assertions.RecyclerViewItemCountAssertion;
 import com.example.rholbrook.tickettoride.authentication.AuthenticationActivity;
 import com.example.rholbrook.tickettoride.finishgame.FinishGameActivity;
 import com.example.rholbrook.tickettoride.game.GameActivity;
@@ -38,6 +42,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertTrue;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -140,44 +145,40 @@ public class FinishGameActivityTests {
 
     @Test
     public void testPlayers() {
-        try {
-            Thread.sleep(100000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(withId(R.id.finish_game_players)).check(new RecyclerViewItemCountAssertion(players.size()));
+
+        //Test left most player
+        assertTrue(players.get(0).getCompletedCount() == 1);
+        assertTrue(players.get(0).getIncompletedTicketCount() == 1);
+        assertTrue(players.get(0).getTotalPoints() == 73);
+        assertTrue(players.get(0).isHasLongestRoute() == true);
+        assertTrue(players.get(0).isHasGlobeTrotter() == false);
+        assertTrue(players.get(0).getBonusPoints() == 10);
+
+        //Test middle player
+        assertTrue(players.get(2).getCompletedCount() == 1);
+        assertTrue(players.get(2).getIncompletedTicketCount() == 1);
+        assertTrue(players.get(2).getTotalPoints() == 63);
+        assertTrue(players.get(2).isHasLongestRoute() == false);
+        assertTrue(players.get(2).isHasGlobeTrotter() == false);
+        assertTrue(players.get(2).getBonusPoints() == 0);
+
+        //Test winner
+        assertTrue(players.get(4).getCompletedCount() == 2);
+        assertTrue(players.get(4).getIncompletedTicketCount() == 2);
+        assertTrue(players.get(4).getTotalPoints() == 148);
+        assertTrue(players.get(4).isHasLongestRoute() == false);
+        assertTrue(players.get(4).isHasGlobeTrotter() == true);
+        assertTrue(players.get(4).getBonusPoints() == 15);
     }
 
-//    TICKET_IMAGE_MAP = new HashMap<Integer, Integer>();
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(1), R.mipmap.boston_miami);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(2), R.mipmap.calgary_phoenix);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(3), R.mipmap.calgary_salt_lake_city);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(4), R.mipmap.chicago_new_orleans);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(5), R.mipmap.chicago_santa_fe);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(6), R.mipmap.dallas_new_york);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(7), R.mipmap.denver_el_paso);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(8), R.mipmap.denver_pittsburgh);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(9), R.mipmap.duluth_el_paso);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(10), R.mipmap.duluth_houston);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(11), R.mipmap.helena_los_angeles);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(12), R.mipmap.kansas_city_houston);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(13), R.mipmap.los_angeles_chicago);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(14), R.mipmap.los_angeles_miami);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(15), R.mipmap.los_angeles_new_york);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(16), R.mipmap.montreal_atlanta);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(17), R.mipmap.montreal_new_orleans);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(18), R.mipmap.new_york_atlanta);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(19), R.mipmap.portland_nashville);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(20), R.mipmap.portland_phoenix);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(21), R.mipmap.san_francisco_atlanta);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(22), R.mipmap.sault_st_marie_nashville);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(23), R.mipmap.sault_st_marie_oaklahoma_city);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(24), R.mipmap.seattle_los_angeles);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(25), R.mipmap.seattle_new_york);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(26), R.mipmap.toronto_miami);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(27), R.mipmap.vancouver_montreal);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(28), R.mipmap.vancouver_santa_fe);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(29), R.mipmap.winnipeg_houston);
-//        TICKET_IMAGE_MAP.put(Integer.valueOf(30), R.mipmap.winnipeg_little_rock);
+    @Test
+    public void testCloseButton() {
+        ViewInteraction closeButton = onView(withId(R.id.finish_close_button));
+        closeButton.perform(click());
+
+        onView(withText(R.string.join_game)).check(matches(isDisplayed()));
+    }
 
     @After
     public void unRegisterIdlingResource() {
