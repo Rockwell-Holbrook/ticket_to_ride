@@ -16,6 +16,7 @@ import com.example.rholbrook.tickettoride.game.GameActivityModel;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.main.MainActivity;
 import com.example.rholbrook.tickettoride.serverconnection.AuthenticationServerProxy;
+import com.example.shared.model.City;
 import com.example.shared.model.Player;
 import com.example.shared.model.Ticket;
 import com.example.shared.model.User;
@@ -68,15 +69,18 @@ public class FinishGameActivityTests {
     private static void createWinner(String usernameFive, Player.PlayerColor color) {
         Player player = new Player(usernameFive, true, color);
         player.setPointsEarned(120);
-        Ticket completedTicket = new Ticket(2, "Calgary", "Phoenix", 10);
-        Ticket incompleteTicket = new Ticket(1, "Boston", "Miami", 10);
-        Ticket incompleteTicketTwo = new Ticket(3, "Calgary", "Salt_Lake_City", 10);
+        Ticket completedTicket = new Ticket(1, new City("Los Angeles"), new City("New York City"), 21);
+        Ticket incompleteTicket = new Ticket(2, new City("Duluth"), new City("Houston"), 8);
+        Ticket incompleteTicketTwo = new Ticket(3, new City("Sault Ste Marie"), new City("Nashville"), 8);
+        Ticket completedTicketTwo = new Ticket(3, new City("Sault Ste Marie"), new City("Nashville"), 8);
         completedTicket.setCompleted(true);
         incompleteTicket.setCompleted(false);
         incompleteTicketTwo.setCompleted(false);
+        completedTicketTwo.setCompleted(true);
         player.addTicket(completedTicket);
         player.addTicket(incompleteTicket);
         player.addTicket(incompleteTicketTwo);
+        player.addTicket(completedTicketTwo);
         mModel.setOpponentFour(player);
         players.add(player);
     }
@@ -84,12 +88,13 @@ public class FinishGameActivityTests {
     private static void createPlayerOne(String usernameOne, Player.PlayerColor color) {
         Player player = new Player(usernameOne, true, color);
         player.setPointsEarned(50);
-        Ticket completedTicket = new Ticket(2, "Calgary", "Phoenix", 10);
-        Ticket incompleteTicket = new Ticket(1, "Boston", "Miami", 10);
+        Ticket completedTicket = new Ticket(1, new City("Los Angeles"), new City("New York City"), 21);
+        Ticket incompleteTicket = new Ticket(2, new City("Duluth"), new City("Houston"), 8);
         completedTicket.setCompleted(true);
         incompleteTicket.setCompleted(false);
         player.addTicket(completedTicket);
         player.addTicket(incompleteTicket);
+        player.setLongestRouteCount(45);
         mModel.setClient(player);
         players.add(player);
     }
@@ -97,8 +102,8 @@ public class FinishGameActivityTests {
     private static void createPlayerTwo(String usernameOne, Player.PlayerColor color) {
         Player player = new Player(usernameOne, true, color);
         player.setPointsEarned(50);
-        Ticket completedTicket = new Ticket(2, "Calgary", "Phoenix", 10);
-        Ticket incompleteTicket = new Ticket(1, "Boston", "Miami", 10);
+        Ticket completedTicket = new Ticket(1, new City("Los Angeles"), new City("New York City"), 21);
+        Ticket incompleteTicket = new Ticket(2, new City("Duluth"), new City("Houston"), 8);
         completedTicket.setCompleted(true);
         incompleteTicket.setCompleted(false);
         player.addTicket(completedTicket);
@@ -110,8 +115,8 @@ public class FinishGameActivityTests {
     private static void createPlayerThree(String usernameOne, Player.PlayerColor color) {
         Player player = new Player(usernameOne, true, color);
         player.setPointsEarned(50);
-        Ticket completedTicket = new Ticket(2, "Calgary", "Phoenix", 10);
-        Ticket incompleteTicket = new Ticket(1, "Boston", "Miami", 10);
+        Ticket completedTicket = new Ticket(1, new City("Los Angeles"), new City("New York City"), 21);
+        Ticket incompleteTicket = new Ticket(2, new City("Duluth"), new City("Houston"), 8);
         completedTicket.setCompleted(true);
         incompleteTicket.setCompleted(false);
         player.addTicket(completedTicket);
@@ -123,8 +128,8 @@ public class FinishGameActivityTests {
     private static void createPlayerFour(String usernameOne, Player.PlayerColor color) {
         Player player = new Player(usernameOne, true, color);
         player.setPointsEarned(50);
-        Ticket completedTicket = new Ticket(2, "Calgary", "Phoenix", 10);
-        Ticket incompleteTicket = new Ticket(1, "Boston", "Miami", 10);
+        Ticket completedTicket = new Ticket(1, new City("Los Angeles"), new City("New York City"), 21);
+        Ticket incompleteTicket = new Ticket(2, new City("Duluth"), new City("Houston"), 8);
         completedTicket.setCompleted(true);
         incompleteTicket.setCompleted(false);
         player.addTicket(completedTicket);
