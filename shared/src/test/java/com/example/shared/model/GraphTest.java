@@ -1,9 +1,9 @@
 package com.example.shared.model;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -13,13 +13,13 @@ public class GraphTest {
     @Before
     public void setup() {
         graph = new Graph<>();
-        graph.addEdge('a', 'b');
-        graph.addEdge('b', 'c');
-        graph.addEdge('b', 'f');
-        graph.addEdge('c', 'd');
-        graph.addEdge('d', 'e');
-        graph.addEdge('e', 'f');
-        graph.addEdge('h', 'g');
+        graph.addEdge('a', 'b', 1);
+        graph.addEdge('b', 'c', 2);
+        graph.addEdge('b', 'f', 5);
+        graph.addEdge('c', 'd', 4);
+        graph.addEdge('d', 'e', 6);
+        graph.addEdge('e', 'f', 7);
+        graph.addEdge('h', 'g', 3);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class GraphTest {
     @Test
     public void hasPathOneEdge() {
         Graph<Character> oneEdgeGraph = new Graph<>();
-        oneEdgeGraph.addEdge('a', 'b');
+        oneEdgeGraph.addEdge('a', 'b', 1);
         assertTrue(oneEdgeGraph.hasPath('a', 'b'));
         assertTrue(oneEdgeGraph.hasPath('b', 'a'));
         assertFalse(oneEdgeGraph.hasPath('a', 'c'));
@@ -81,13 +81,22 @@ public class GraphTest {
     @Test
     public void hasPathCityGraph() {
         Graph<City> cityGraph = new Graph<>();
-        cityGraph.addEdge(new City("San Francisco"), new City("New York"));
-        cityGraph.addEdge(new City("New York"), new City("Chicago"));
-        cityGraph.addEdge(new City("Chicago"), new City("Miami"));
-        cityGraph.addEdge(new City("Santa Fe"), new City("Salt Lake City"));
+        cityGraph.addEdge(new City("San Francisco"), new City("New York"), 15);
+        cityGraph.addEdge(new City("New York"), new City("Chicago"), 7);
+        cityGraph.addEdge(new City("Chicago"), new City("Miami"), 10);
+        cityGraph.addEdge(new City("Santa Fe"), new City("Salt Lake City"), 5);
         assertTrue(cityGraph.hasPath(new City("San Francisco"), new City("Miami")));
         assertFalse(cityGraph.hasPath(new City("New York"), new City("Salt Lake City")));
         assertFalse(cityGraph.hasPath(new City("Santa Fe"), new City("Atlantis")));
+    }
+
+    @Test
+    public void getLongestPathSimple() {
+        assertEquals(25, graph.getLongestPath());
+        graph.addEdge('f', 'h', 1);
+        assertEquals(25, graph.getLongestPath());
+        graph.addEdge('f', 'g', 2);
+        assertEquals(26, graph.getLongestPath());
     }
 
     // TODO: Make sure duplicate nodes can't be added.

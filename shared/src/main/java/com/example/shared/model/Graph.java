@@ -7,9 +7,9 @@ import java.util.*;
 /* precondition: node values must be unique */
 
 public class Graph<T> {
-    final int BASE = -1;
+    private final int BASE = -1;
 
-    class Node {
+    private class Node {
         Map<T, Integer> neighbors;
 
         Node() {
@@ -21,7 +21,7 @@ public class Graph<T> {
         }
     }
 
-    class Edge {
+    private class Edge {
         T startNode;
         T endNode;
         int length;
@@ -33,7 +33,7 @@ public class Graph<T> {
         }
     }
 
-    class PathMatrix {
+    private class PathMatrix {
         class Entry {
             int dist;
             Set<Edge> path;
