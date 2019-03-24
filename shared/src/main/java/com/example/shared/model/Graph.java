@@ -5,6 +5,7 @@ import java.util.*;
 /* Note: this is currently implemented as an undirected graph */
 /* Note: this currently only supports integer edge lengths */
 /* precondition: node values must be unique */
+/* assumes at most one edge between any given pair of nodes */
 
 public class Graph<T> {
     private final int BASE = -1;
@@ -30,6 +31,23 @@ public class Graph<T> {
             startNode = start;
             endNode = end;
             length = len;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null) {
+                return false;
+            }
+            if (o.getClass() != this.getClass()) {
+                return false;
+            }
+            Edge other = (Edge) o;
+            return this.startNode.equals(other.startNode) && this.endNode.equals(other.endNode) && this.length == other.length;
+        }
+
+        @Override
+        public int hashCode() {
+            return startNode.hashCode() + endNode.hashCode() + length * 31;
         }
     }
 
@@ -101,13 +119,13 @@ public class Graph<T> {
             if (k == BASE) {
                 return base.get(i).get(j).getDist();
             }
-            return matrix.get(i).get(j).get(k).getDist();
+            return matrix.get(k).get(i).get(j).getDist();
         }
         Set<Edge> getPath(int i, int j, int k) {
             if (k == BASE) {
                 return base.get(i).get(j).getPath();
             }
-            return matrix.get(i).get(j).get(k).getPath();
+            return matrix.get(k).get(i).get(j).getPath();
         }
         int getLargestDist() {
             return largestDistance;
@@ -188,10 +206,14 @@ public class Graph<T> {
                     Set<Edge> oldPath = matrix.getPath(start, end, pivot - 1);
                     if (pathsOverlap(path1, path2) || dist1 + dist2 <= oldDist) {
                         matrix.setDist(start, end, pivot, oldDist);
+                        matrix.setDist(end, start, pivot, oldDist);
                         matrix.setPath(start, end, pivot, oldPath);
+                        matrix.setPath(end, start, pivot, oldPath);
                     } else {
                         matrix.setDist(start, end, pivot, dist1 + dist2);
+                        matrix.setDist(end, start, pivot, dist1 + dist2);
                         matrix.setPath(start, end, pivot, getUnion(path1, path2));
+                        matrix.setPath(end, start, pivot, getUnion(path1, path2));
                     }
                 }
             }

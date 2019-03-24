@@ -7,6 +7,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+// TODO: Make sure duplicate nodes can't be added.
+
 public class GraphTest {
     private Graph<Character> graph;
 
@@ -98,6 +100,4 @@ public class GraphTest {
         graph.addEdge('f', 'g', 2);
         assertEquals(26, graph.getLongestPath());
     }
-
-    // TODO: Make sure duplicate nodes can't be added.
 }
