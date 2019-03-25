@@ -102,6 +102,8 @@ public class Deck<T> {
         return this.inUse.size();
     }
 
+    public int getDiscardDeckSize() {return this.discarded.size();}
+
     public List<T> getDeckList(){
         return inUse;
     }
