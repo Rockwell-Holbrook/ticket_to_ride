@@ -165,6 +165,13 @@ public class Game {
         ArrayList<Ticket> temp = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             Ticket ticket = this.ticketDeck.drawFromTop();
+
+            if(ticket == null) {
+                this.ticketDeck.swapDecks();
+                this.ticketDeck.shuffle();
+                ticket = this.ticketDeck.drawFromTop();
+            }
+
             getPlayerWithUsername(username).addTicket(ticket);
             temp.add(ticket);
         }
@@ -258,18 +265,24 @@ public class Game {
     }
 
     public void cardSelected(String username, int index) {
+        TrainCard trainCard = this.trainCardDeck.drawFromTop();
+        if(trainCard == null) {
+            this.trainCardDeck.swapDecks();
+            this.trainCardDeck.shuffle();
+            trainCard = this.trainCardDeck.drawFromTop();
+        }
+
         if (index != 5) {
             getPlayerWithUsername(username).addTrainCard(trainCardsFaceUp.get(index));
-            trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
+            trainCardsFaceUp.set(index, trainCard);
             clientProxy.updateFaceUpCards(trainCardsFaceUp);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
             this.gameHistory.add(new GameHistory(username, "Drew a Face-Up Train Card!"));
         }
 
         else { //5 is the index for the face-down-deck
-            TrainCard newCard = trainCardDeck.drawFromTop();
-            getPlayerWithUsername(username).addTrainCard(newCard);
-            clientProxy.receiveFaceDownCard(newCard, username, gameId);
+            getPlayerWithUsername(username).addTrainCard(trainCard);
+            clientProxy.receiveFaceDownCard(trainCard, username, gameId);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
             this.gameHistory.add(new GameHistory(username, "Drew a Train Card from the deck!"));
         }
@@ -337,6 +350,12 @@ public class Game {
             newTurn = turnOrder.get(0);
         }
 
+        //Check for Skip turn
+        if(getClaimedRoutes().size() == 0 && this.trainCardDeck.getDeckSize() == 0 && this.trainCardDeck.getDiscardDeckSize() == 0 && nullCountInFaceUpCards() == 5
+                && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
+            startNextTurn(newTurn);
+        }
+
         // Check if they are a cpu or human and let them know in their respective fashion
         if (newTurn.getClass().equals(CPUPlayer.class)){
             CPUPlayer cpuTurn = (CPUPlayer)newTurn;
@@ -347,6 +366,16 @@ public class Game {
         }
         // Let everyone know in any case
         clientProxy.turnStarted(newTurn, gameId);
+    }
+
+    private int nullCountInFaceUpCards() {
+        int counter = 0;
+        for (int i = 0; i < this.trainCardsFaceUp.size(); i++) {
+            if(this.trainCardsFaceUp.get(i) == null) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
     public Player getPlayerWithUsername(String username) {
