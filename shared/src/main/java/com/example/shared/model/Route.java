@@ -83,6 +83,15 @@ public class Route {
         this.length = length;
     }
 
+
+    public int getAdjacentRouteId() {
+        return adjacentRouteId;
+    }
+
+    public boolean isHasAdjacentRoute() {
+        return hasAdjacentRoute;
+    }
+
     public static Map<Integer, Route> ROUTE_GROUP_MAP;
     static {
         ROUTE_GROUP_MAP = new HashMap<Integer, Route>();

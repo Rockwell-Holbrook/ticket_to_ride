@@ -388,6 +388,14 @@ public class Game {
              if(route.getLength() > getPlayerWithUsername(username).getRemainingTrainCars()) {
                  continue;
              }
+
+             if(adjacentRouteOwned(route, username)) {
+                 continue;
+             }
+
+             if(lowPlayerGameAdjacentRouteOwned(route)) {
+                 continue;
+             }
              
              if(route.getColor() == Route.RouteColor.GRAY) {
                  for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
@@ -403,6 +411,32 @@ public class Game {
          }
          return claimableRoutes;
          //clientProxy.getClaimableRoutes(claimableRoutes, username, this.gameId);
+    }
+
+    private boolean adjacentRouteOwned(Route route, String username) {
+        if(!route.isHasAdjacentRoute()) {
+            return false;
+        }
+
+        for(Route claimedRoute : getPlayerWithUsername(username).getClaimedRoutes()) {
+            if(route.getAdjacentRouteId() == claimedRoute.getGroupId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean lowPlayerGameAdjacentRouteOwned(Route route) {
+        if(getMaxPlayers() > 3) {
+            return false;
+        }
+
+        for(Route claimedRoute : this.claimedRoutes) {
+            if(route.getAdjacentRouteId() == claimedRoute.getGroupId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Map<TrainCard.Color, Integer> getTrainCardGroupings(String username) {
