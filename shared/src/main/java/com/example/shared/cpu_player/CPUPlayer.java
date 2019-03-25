@@ -5,6 +5,8 @@ import com.example.shared.model.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class CPUPlayer extends Player {
     private transient CPUState cpuState;
     private transient Game game;
@@ -23,6 +25,11 @@ public class CPUPlayer extends Player {
 
     public void takeTurn() {
         System.out.println(this.username + " starting a turn.");
+        try{
+            sleep(1000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
         cpuState.takeTurn(this);
         System.out.println(this.username + " ending a turn.");
         game.endPlayerTurn(this.username);
@@ -44,7 +51,8 @@ public class CPUPlayer extends Player {
         System.out.println(this.username + " claiming a route.");
 
         // Get all claimable routes and pick a random one
-        ArrayList<Route> routes = game.calculateClaimableRoutes(this.username);
+        ArrayList<Route> routes = availableToCpu(game);
+
         int randRouteInd = rand.nextInt(Integer.MAX_VALUE) % routes.size();
         Route randRoute = routes.get(randRouteInd);
 
@@ -59,7 +67,7 @@ public class CPUPlayer extends Player {
             }
         }
 
-        game.claimRoute(this.username, randRouteInd, cardsToUse);
+        game.claimRoute(this.username, randRoute.getGroupId(), cardsToUse);
         cpuState.claimRoute(this);
     }
 
@@ -74,6 +82,21 @@ public class CPUPlayer extends Player {
 
         game.ticketsReturned(game.getGameId(), this.username, returning);
         cpuState.drawTickets(this);
+    }
+
+    private ArrayList<Route> filterGray(ArrayList<Route> routes){
+        ArrayList<Route> temp = new ArrayList<>();
+        for (Route r: routes){
+            if (r.getColor() != Route.RouteColor.GRAY){
+                temp.add(r);
+            }
+        }
+        return temp;
+    }
+
+    public ArrayList<Route> availableToCpu(Game game){
+        ArrayList<Route> routes = game.calculateClaimableRoutes(this.getUsername());
+        return filterGray(routes);
     }
 
     public Game getGame() {

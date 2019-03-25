@@ -23,7 +23,7 @@ public class NoRouteIncompleteTicket extends CPUState {
         Game game = player.getGame();
 
         // If a route is claimable
-        ArrayList<Route> claimable = game.calculateClaimableRoutes(player.getUsername());
+        ArrayList<Route> claimable = player.availableToCpu(game);
         System.out.println("Claimable for " + player.getUsername() +": " + Integer.toString(claimable.size()));
         if (claimable.size() > 0){
             System.out.println(player.getUsername() + " switching to available route state");
@@ -39,7 +39,7 @@ public class NoRouteIncompleteTicket extends CPUState {
     public void drawCard(CPUPlayer player) {
         Game game = player.getGame();
         // If a route is claimable
-        ArrayList<Route> claimable = game.calculateClaimableRoutes(player.getUsername());
+        ArrayList<Route> claimable = player.availableToCpu(game);
         System.out.println("Claimable for " + player.getUsername() +": " + Integer.toString(claimable.size()));
         if (claimable.size() > 0){
             System.out.println(player.getUsername() + " switching to available route state");

@@ -25,7 +25,7 @@ public class CompletedAllTickets extends CPUState {
     public void drawTickets(CPUPlayer player) {
         Game game = player.getGame();
         // If a route is claimable
-        ArrayList<Route> claimable = game.calculateClaimableRoutes(player.getUsername());
+        ArrayList<Route> claimable = player.availableToCpu(game);
         System.out.println("Claimable for " + player.getUsername() +": " + Integer.toString(claimable.size()));
         if (claimable.size() > 0){
             System.out.println(player.getUsername() + " switching to available route state");

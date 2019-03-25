@@ -362,13 +362,16 @@ public class Game {
         // Check if they are a cpu or human and let them know in their respective fashion
         if (newTurn.getClass().equals(CPUPlayer.class)){
             CPUPlayer cpuTurn = (CPUPlayer)newTurn;
+            // Let everyone know in any case
+            clientProxy.turnStarted(newTurn, gameId);
             cpuTurn.takeTurn();
         }
         else{
             clientProxy.startTurn(calculateClaimableRoutes(newTurn.getUsername()), newTurn.getUsername(), gameId);
+            // Let everyone know in any case
+            clientProxy.turnStarted(newTurn, gameId);
         }
-        // Let everyone know in any case
-        clientProxy.turnStarted(newTurn, gameId);
+
     }
 
     public Player getPlayerWithUsername(String username) {
