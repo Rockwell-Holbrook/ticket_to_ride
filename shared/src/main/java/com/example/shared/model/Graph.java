@@ -1,5 +1,6 @@
 package com.example.shared.model;
 
+import javax.swing.text.EditorKit;
 import java.util.*;
 
 /* Note: this is currently implemented as an undirected graph */
@@ -194,6 +195,34 @@ public class Graph<T> {
         boolean result = visited.get(end);
         clearVisited();
         return result;
+    }
+
+    public Set<Set<Edge>> findPaths(T start, T end) {
+        return findAllPaths(start, end, new HashSet<Edge>());
+    }
+
+    private Set<Set<Edge>> findAllPaths(T start, T end, Set<Edge> traversed) {
+        Set<Set<Edge>> paths = new HashSet<>();
+        Node node = nodes.get(start);
+        for (T neighbor : node.neighbors.keySet()) {
+            Edge edge = new Edge(start, neighbor, node.neighbors.get(neighbor));
+            if (!traversed.contains(edge)) {
+                if (neighbor.equals(end)) {
+                    Set<Edge> path = new HashSet<>();
+                    path.add(edge);
+                    paths.add(path);
+                }
+                traversed.add(edge);
+                Set<Set<Edge>> newPaths = findAllPaths(neighbor, end, traversed);
+                for (Set<Edge> newPath : newPaths) {
+                    Set<Edge> path = new HashSet<>();
+                    path.add(edge);
+                    path.addAll(newPath);
+                    paths.add(path);
+                }
+            }
+        }
+        return paths;
     }
 
     public int getLongestPath() {
