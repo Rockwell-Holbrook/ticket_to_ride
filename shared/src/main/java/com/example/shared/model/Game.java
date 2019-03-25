@@ -351,8 +351,7 @@ public class Game {
         }
 
         //Check for Skip turn
-        if(getClaimedRoutes().size() == 0 && this.trainCardDeck.getDeckSize() == 0 && this.trainCardDeck.getDiscardDeckSize() == 0 && nullCountInFaceUpCards() == 5
-                && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
+        if(getClaimedRoutes().size() == 0 && nullCountInFaceUpCards() > 3 && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
             startNextTurn(newTurn);
         }
 
