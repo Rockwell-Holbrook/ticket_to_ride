@@ -1,6 +1,9 @@
 package com.example.shared.cpu_player;
 
 import com.example.shared.model.Game;
+import com.example.shared.model.Route;
+
+import java.util.ArrayList;
 
 public class NoRouteIncompleteTicket extends CPUState {
     static private NoRouteIncompleteTicket instance;
@@ -20,7 +23,11 @@ public class NoRouteIncompleteTicket extends CPUState {
         Game game = player.getGame();
 
         // If a route is claimable
-        if (game.calculateClaimableRoutes(player.getUsername()).size() > 0){
+        ArrayList<Route> claimable = player.availableToCpu(game);
+        System.out.println("Claimable for " + player.getUsername() +": " + Integer.toString(claimable.size()));
+        if (claimable.size() > 0){
+            System.out.println(player.getUsername() + " switching to available route state");
+
             player.setCpuState(HasAvailableRoute.getInstance());
             player.claimRoute();
         }
@@ -32,7 +39,10 @@ public class NoRouteIncompleteTicket extends CPUState {
     public void drawCard(CPUPlayer player) {
         Game game = player.getGame();
         // If a route is claimable
-        if (game.calculateClaimableRoutes(player.getUsername()).size() > 0){
+        ArrayList<Route> claimable = player.availableToCpu(game);
+        System.out.println("Claimable for " + player.getUsername() +": " + Integer.toString(claimable.size()));
+        if (claimable.size() > 0){
+            System.out.println(player.getUsername() + " switching to available route state");
             player.setCpuState(HasAvailableRoute.getInstance());
         }
     }
