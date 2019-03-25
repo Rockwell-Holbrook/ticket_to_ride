@@ -6,6 +6,7 @@ import java.util.*;
 /* Note: this currently only supports integer edge lengths */
 /* precondition: node values must be unique */
 /* assumes at most one edge between any given pair of nodes */
+/* assumes no node has an edge to itself */
 
 public class Graph<T> {
     private final int BASE = -1;
@@ -53,21 +54,21 @@ public class Graph<T> {
 
     private class PathMatrix {
         class Entry {
-            int dist;
+            Integer dist;
             Set<Edge> path;
 
             Entry() {
-                dist = 0;
+                dist = null;
                 path = new HashSet<>();
             }
 
-            void setDist(int dist) {
+            void setDist(Integer dist) {
                 this.dist = dist;
             }
             void setPath(Set<Edge> path) {
                 this.path = path;
             }
-            int getDist() {
+            Integer getDist() {
                 return dist;
             }
             Set<Edge> getPath() {
@@ -98,13 +99,13 @@ public class Graph<T> {
             }
             largestDistance = 0;
         }
-        void setDist(int i, int j, int k, int dist) {
+        void setDist(int i, int j, int k, Integer dist) {
             if (k == BASE) {
                 base.get(i).get(j).setDist(dist);
             } else {
                 matrix.get(k).get(i).get(j).setDist(dist);
             }
-            if (dist > largestDistance) {
+            if (dist != null && dist > largestDistance) {
                 largestDistance = dist;
             }
         }
@@ -115,7 +116,7 @@ public class Graph<T> {
                 matrix.get(k).get(i).get(j).setPath(path);
             }
         }
-        int getDist(int i, int j, int k) {
+        Integer getDist(int i, int j, int k) {
             if (k == BASE) {
                 return base.get(i).get(j).getDist();
             }
@@ -129,6 +130,28 @@ public class Graph<T> {
         }
         int getLargestDist() {
             return largestDistance;
+        }
+        @Override
+        public String toString() {
+            StringBuilder str = new StringBuilder();
+            str.append("Initial\n");
+            for (List<Entry> row : base) {
+                for (Entry entry : row) {
+                    str.append(String.format("%5d", entry.dist));
+                }
+                str.append("\n");
+            }
+            str.append("\n");
+            for (List<List<Entry>> subMatrix : matrix) {
+                for (List<Entry> row : subMatrix) {
+                    for (Entry entry :row) {
+                        str.append(String.format("%5d", entry.dist));
+                    }
+                    str.append("\n");
+                }
+                str.append("\n");
+            }
+            return str.toString();
         }
     }
 
@@ -183,28 +206,35 @@ public class Graph<T> {
         indexMap.put(null, BASE);
 
         PathMatrix matrix = new PathMatrix(nodes.size());
+        int pivot = indexMap.get(null);
+        for (int i = 0; i < nodes.size(); i++) {
+            matrix.setDist(i,i,pivot,0);
+        }
         for (Edge edge : edges) {
             int start = indexMap.get(edge.startNode);
             int end = indexMap.get(edge.endNode);
-            int pivot = indexMap.get(null);
             matrix.setDist(start,end,pivot,edge.length);
+            matrix.setDist(end,start,pivot,edge.length);
             Set<Edge> set = new HashSet<>();
             set.add(edge);
             matrix.setPath(start,end,pivot,set);
+            matrix.setPath(end,start,pivot,set);
         }
         for (T pivotNode : nodes.keySet()) {
             for (T startNode : nodes.keySet()) {
                 for (T endNode : nodes.keySet()) {
                     int start = indexMap.get(startNode);
                     int end = indexMap.get(endNode);
-                    int pivot = indexMap.get(pivotNode);
-                    int dist1 = matrix.getDist(start, pivot, pivot - 1);
-                    int dist2 = matrix.getDist(pivot, end, pivot - 1);
-                    int oldDist = matrix.getDist(start, end, pivot - 1);
+                    pivot = indexMap.get(pivotNode);
+                    Integer dist1 = matrix.getDist(start, pivot, pivot - 1);
+                    Integer dist2 = matrix.getDist(pivot, end, pivot - 1);
+                    Integer oldDist = matrix.getDist(start, end, pivot - 1);
+                    Integer oldDistTemp = (oldDist == null ? 0 : oldDist);
                     Set<Edge> path1 = matrix.getPath(start, pivot, pivot - 1);
                     Set<Edge> path2 = matrix.getPath(pivot, end, pivot - 1);
                     Set<Edge> oldPath = matrix.getPath(start, end, pivot - 1);
-                    if (pathsOverlap(path1, path2) || dist1 + dist2 <= oldDist) {
+                    // if paths overlap, check combinations of previous dist1, dist2
+                    if (dist1 == null || dist2 == null || pathsOverlap(path1, path2) || dist1 + dist2 <= oldDistTemp) {
                         matrix.setDist(start, end, pivot, oldDist);
                         matrix.setDist(end, start, pivot, oldDist);
                         matrix.setPath(start, end, pivot, oldPath);
@@ -218,6 +248,7 @@ public class Graph<T> {
                 }
             }
         }
+        System.out.print(matrix.toString());
         return matrix.getLargestDist();
     }
 
