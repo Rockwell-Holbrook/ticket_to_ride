@@ -166,10 +166,9 @@ public class Game {
         for (int i = 0; i < 3; i++) {
             Ticket ticket = this.ticketDeck.drawFromTop();
 
-            if(ticket == null) {
+            if(this.ticketDeck.getDeckSize() == 0) {
                 this.ticketDeck.swapDecks();
                 this.ticketDeck.shuffle();
-                ticket = this.ticketDeck.drawFromTop();
             }
 
             getPlayerWithUsername(username).addTicket(ticket);
@@ -266,10 +265,9 @@ public class Game {
 
     public void cardSelected(String username, int index) {
         TrainCard trainCard = this.trainCardDeck.drawFromTop();
-        if(trainCard == null) {
+        if(this.trainCardDeck.getDeckSize() == 0) {
             this.trainCardDeck.swapDecks();
             this.trainCardDeck.shuffle();
-            trainCard = this.trainCardDeck.drawFromTop();
         }
 
         if (index != 5) {
