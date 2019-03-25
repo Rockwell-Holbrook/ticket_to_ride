@@ -163,6 +163,11 @@ public class Game {
 
     public ArrayList<Ticket> initializeTickets(String username) {
         ArrayList<Ticket> temp = new ArrayList<>();
+
+        if((this.trainCardDeck.getDeckSize() + this.trainCardDeck.getDiscardDeckSize()) < 3) {
+            return temp;
+        }
+
         for (int i = 0; i < 3; i++) {
             Ticket ticket = this.ticketDeck.drawFromTop();
 
