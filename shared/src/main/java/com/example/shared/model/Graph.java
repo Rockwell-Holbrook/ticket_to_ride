@@ -1,6 +1,5 @@
 package com.example.shared.model;
 
-import javax.swing.text.EditorKit;
 import java.util.*;
 
 /* Note: this is currently implemented as an undirected graph */
@@ -24,7 +23,7 @@ public class Graph<T> {
         }
     }
 
-    private class Edge {
+    public class Edge {
         T startNode;
         T endNode;
         int length;
@@ -212,8 +211,9 @@ public class Graph<T> {
                     path.add(edge);
                     paths.add(path);
                 }
-                traversed.add(edge);
-                Set<Set<Edge>> newPaths = findAllPaths(neighbor, end, traversed);
+                Set<Edge> traversedCopy = new HashSet<>(traversed);
+                traversedCopy.add(edge);
+                Set<Set<Edge>> newPaths = findAllPaths(neighbor, end, traversedCopy);
                 for (Set<Edge> newPath : newPaths) {
                     Set<Edge> path = new HashSet<>();
                     path.add(edge);
@@ -221,6 +221,9 @@ public class Graph<T> {
                     paths.add(path);
                 }
             }
+        }
+        if (paths.size() == 0) {
+            if (start != end) { return null; }
         }
         return paths;
     }

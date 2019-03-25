@@ -3,9 +3,9 @@ package com.example.shared.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.Set;
+
+import static org.junit.Assert.*;
 
 // TODO: Make sure duplicate nodes can't be added.
 
@@ -94,10 +94,12 @@ public class GraphTest {
 
     @Test
     public void getLongestPathSimple() {
-        assertEquals(25, graph.getLongestPath());
-        graph.addEdge('f', 'h', 1);
-        assertEquals(25, graph.getLongestPath());
-        graph.addEdge('f', 'g', 2);
-        assertEquals(26, graph.getLongestPath());
+        Set<Set<Graph<Character>.Edge>> paths = graph.findPaths('a', 'f');
+        assertEquals(2, paths.size());
+//        assertEquals(25, graph.getLongestPath());
+//        graph.addEdge('f', 'h', 1);
+//        assertEquals(25, graph.getLongestPath());
+//        graph.addEdge('f', 'g', 2);
+//        assertEquals(26, graph.getLongestPath());
     }
 }
