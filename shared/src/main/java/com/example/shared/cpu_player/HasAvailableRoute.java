@@ -42,8 +42,7 @@ public class HasAvailableRoute extends CPUState {
 
         boolean allTicketsDone = true;
         for (Ticket ticket : player.getTickets()){
-            // TODO actually use function for finding out if ticket is done
-            allTicketsDone = false;
+            allTicketsDone &= ticket.isCompleted();
         }
 
         if (allTicketsDone) {
