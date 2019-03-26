@@ -70,6 +70,18 @@ public class Game {
      */
     public void startGame() {
         isPlaying = true;
+
+        // Fill empty space with CPU players
+        int suffix = 1;
+        while (playerList.size() < maxPlayers){
+            Player.PlayerColor nextColor = availableColors().get(0);
+            CPUPlayer newCPU = new CPUPlayer("CPU Player " + Integer.toString(suffix), false, nextColor, this);
+            playerList.add(newCPU);
+            initializeTrainCardsInHand(newCPU.getUsername());
+            newCPU.drawTickets();
+            setReadyPlayers(this.getReadyPlayers() + 1);
+            suffix++;
+        }
     }
 
     public void addChatToList(Chat chat) {
@@ -163,8 +175,19 @@ public class Game {
 
     public ArrayList<Ticket> initializeTickets(String username) {
         ArrayList<Ticket> temp = new ArrayList<>();
+
+        if((this.trainCardDeck.getDeckSize() + this.trainCardDeck.getDiscardDeckSize()) < 3) {
+            return temp;
+        }
+
         for (int i = 0; i < 3; i++) {
             Ticket ticket = this.ticketDeck.drawFromTop();
+
+            if(this.ticketDeck.getDeckSize() == 0) {
+                this.ticketDeck.swapDecks();
+                this.ticketDeck.shuffle();
+            }
+
             getPlayerWithUsername(username).addTicket(ticket);
             temp.add(ticket);
         }
@@ -258,18 +281,38 @@ public class Game {
     }
 
     public void cardSelected(String username, int index) {
+        TrainCard trainCard = this.trainCardDeck.drawFromTop();
+        if(this.trainCardDeck.getDeckSize() == 0) {
+            this.trainCardDeck.swapDecks();
+            this.trainCardDeck.shuffle();
+        }
+
         if (index != 5) {
             getPlayerWithUsername(username).addTrainCard(trainCardsFaceUp.get(index));
-            trainCardsFaceUp.set(index, trainCardDeck.drawFromTop());
+            trainCardsFaceUp.set(index, trainCard);
+            while(!isValidFaceUp(trainCardsFaceUp)){
+                // Discard all face up
+                for (TrainCard tc: trainCardsFaceUp) {
+                    this.trainCardDeck.discard(tc);
+                }
+                // Re draw
+                for (int i = 0; i < 5; i++) {
+                    this.trainCardsFaceUp.add(this.trainCardDeck.drawFromTop());
+                    if(this.trainCardDeck.getDeckSize() == 0) {
+                        this.trainCardDeck.swapDecks();
+                        this.trainCardDeck.shuffle();
+                    }
+                }
+            }
+
             clientProxy.updateFaceUpCards(trainCardsFaceUp);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
             this.gameHistory.add(new GameHistory(username, "Drew a Face-Up Train Card!"));
         }
 
         else { //5 is the index for the face-down-deck
-            TrainCard newCard = trainCardDeck.drawFromTop();
-            getPlayerWithUsername(username).addTrainCard(newCard);
-            clientProxy.receiveFaceDownCard(newCard, username, gameId);
+            getPlayerWithUsername(username).addTrainCard(trainCard);
+            clientProxy.receiveFaceDownCard(trainCard, username, gameId);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
             this.gameHistory.add(new GameHistory(username, "Drew a Train Card from the deck!"));
         }
@@ -337,16 +380,34 @@ public class Game {
             newTurn = turnOrder.get(0);
         }
 
+        //Check for Skip turn
+        if(getClaimedRoutes().size() == 0 && nullCountInFaceUpCards() > 3 && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
+            startNextTurn(newTurn);
+        }
+
         // Check if they are a cpu or human and let them know in their respective fashion
         if (newTurn.getClass().equals(CPUPlayer.class)){
             CPUPlayer cpuTurn = (CPUPlayer)newTurn;
+            // Let everyone know in any case
+            clientProxy.turnStarted(newTurn, gameId);
             cpuTurn.takeTurn();
         }
         else{
             clientProxy.startTurn(calculateClaimableRoutes(newTurn.getUsername()), newTurn.getUsername(), gameId);
+            // Let everyone know in any case
+            clientProxy.turnStarted(newTurn, gameId);
         }
-        // Let everyone know in any case
-        clientProxy.turnStarted(newTurn, gameId);
+
+    }
+
+    private int nullCountInFaceUpCards() {
+        int counter = 0;
+        for (int i = 0; i < this.trainCardsFaceUp.size(); i++) {
+            if(this.trainCardsFaceUp.get(i) == null) {
+                counter++;
+            }
+        }
+        return counter;
     }
 
     public Player getPlayerWithUsername(String username) {
@@ -464,6 +525,24 @@ public class Game {
             default:
                 return null;
         }
+    }
+
+    private ArrayList<Player.PlayerColor> availableColors() {
+        ArrayList<Player.PlayerColor> availableColors = possibleColors();
+        for (Player player : playerList) {
+            availableColors.remove(player.getPlayerColor());
+        }
+        return availableColors;
+    }
+
+    private ArrayList<Player.PlayerColor> possibleColors() {
+        ArrayList<Player.PlayerColor> possibleColors = new ArrayList<>();
+        possibleColors.add(Player.PlayerColor.BLUE);
+        possibleColors.add(Player.PlayerColor.BLACK);
+        possibleColors.add(Player.PlayerColor.GREEN);
+        possibleColors.add(Player.PlayerColor.RED);
+        possibleColors.add(Player.PlayerColor.YELLOW);
+        return possibleColors;
     }
 
     /* ******************************************** GETTERS AND SETTERS ******************************************** */
