@@ -35,7 +35,6 @@ class LoginFragmentModel extends Observable {
         try {
             User user = new User(username, password);
             message = AuthenticationServerProxy.getInstance().login(user);
-            ServerProxy.getInstance().connectToManagementSocket(username);
             Authentication.getInstance().setUsername(username);
             success = true;
 

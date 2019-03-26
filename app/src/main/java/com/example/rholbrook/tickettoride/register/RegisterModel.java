@@ -73,11 +73,6 @@ public class RegisterModel extends Observable {
                 public void onComplete(Object result) {
                     Message message = (Message) result;
                     if (message.isSuccess()) {
-                        try {
-                            ServerProxy.getInstance().connectToManagementSocket(username);
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        }
                         Authentication.getInstance().setUsername(username);
                     }
                     setChanged();

@@ -230,7 +230,7 @@ public class Game {
         int index = 1;
         temp.add(new Ticket(index, new City("Los Angeles"), new City("New York City"), 21));     index++;
         temp.add(new Ticket(index, new City("Duluth"), new City("Houston"), 8));                 index++;
-        temp.add(new Ticket(index, new City("Sault Ste Marie"), new City("Nashville"), 8));      index++;
+        temp.add(new Ticket(index, new City("Sault St Marie"), new City("Nashville"), 8));      index++;
         temp.add(new Ticket(index, new City("New York"), new City("Atlanta"), 6));               index++;
         temp.add(new Ticket(index, new City("Portland"), new City("Nashville"), 17));            index++;
         temp.add(new Ticket(index, new City("Vancouver"), new City("Montréal"), 20));            index++;
@@ -256,7 +256,7 @@ public class Game {
         temp.add(new Ticket(index, new City("Helena"), new City("Los Angeles"), 8));             index++;
         temp.add(new Ticket(index, new City("Winnipeg"), new City("Houston"), 12));              index++;
         temp.add(new Ticket(index, new City("Montreal"), new City("New Orleans"), 13));          index++;
-        temp.add(new Ticket(index, new City("Sault Ste Marie"), new City("Oklahoma City"), 9));  index++;
+        temp.add(new Ticket(index, new City("Sault St Marie"), new City("Oklahoma City"), 9));  index++;
         temp.add(new Ticket(index, new City("Seattle"), new City("Los Angeles"), 9));
         return temp;
     }

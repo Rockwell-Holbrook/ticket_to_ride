@@ -27,6 +27,7 @@ import com.example.rholbrook.tickettoride.R;
 public class RegisterFragment extends Fragment implements RegisterContract.View {
     private RegisterContract.Presenter mPresenter = new RegisterPresenter(this);
     private static final int SUCCESSFUL_AUTHENTICATION = 1;
+    private static final int SWITCH_TO_LOGIN = 2;
     private Button mRegisterButton;
     private EditText mUsernameField;
     private EditText mPasswordField;
@@ -36,6 +37,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     private boolean passwordFilled;
     private boolean confPasswordFilled;
     private Listener mListener;
+    private int authenticationStatus;
     private CountingIdlingResource idlingResource;
 
     public interface Listener {
@@ -85,6 +87,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             public void afterTextChanged(Editable s) {
                 // No action required
             }
+
         });
 
         mPasswordField = v.findViewById(R.id.register_password_field);
@@ -147,6 +150,8 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 mPresenter.register();
             }
         });
+
+        authenticationStatus = SWITCH_TO_LOGIN;
         return v;
     }
 
@@ -154,7 +159,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
     public void onDetach() {
         super.onDetach();
         if (callback != null) {
-            callback.onCall(SUCCESSFUL_AUTHENTICATION);
+            callback.onCall(authenticationStatus);
         }
     }
 
@@ -163,6 +168,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                authenticationStatus = SUCCESSFUL_AUTHENTICATION;
                 getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
                 idlingResource.decrement();
             }
