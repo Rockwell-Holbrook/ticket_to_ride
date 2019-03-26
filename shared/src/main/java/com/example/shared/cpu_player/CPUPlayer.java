@@ -71,14 +71,20 @@ public class CPUPlayer extends Player {
         cpuState.claimRoute(this);
     }
 
-    public void drawTickets() {
+    public void drawTickets(boolean start) {
         System.out.println(this.username + " drawing tickets");
-
-        // Always just takes the first one
         ArrayList<Ticket> ticketsDrawn = game.initializeTickets(this.username);
         ArrayList<Ticket> returning = new ArrayList<>();
-        returning.add(ticketsDrawn.get(1));
-        returning.add(ticketsDrawn.get(2));
+        if (start){
+            // Takes first two
+            returning.add(ticketsDrawn.get(2));
+        }
+        else{
+            // Always just takes the first one
+            returning.add(ticketsDrawn.get(1));
+            returning.add(ticketsDrawn.get(2));
+        }
+
 
         game.ticketsReturned(game.getGameId(), this.username, returning);
         cpuState.drawTickets(this);

@@ -228,7 +228,7 @@ public class Player {
         }
     }
 
-    private int getCompletedTicketCount() {
+    public int getCompletedTicketCount() {
         int completedTicketCount = 0;
         for (Ticket ticket : tickets) {
             if (ticket.isCompleted()) {
@@ -238,7 +238,7 @@ public class Player {
         return completedTicketCount;
     }
 
-    private int getIncompleteTicketCount() {
+    public int getIncompleteTicketCount() {
         int incompleteTicketCount = 0;
         for (Ticket ticket : tickets) {
             if (!ticket.isCompleted()) {
