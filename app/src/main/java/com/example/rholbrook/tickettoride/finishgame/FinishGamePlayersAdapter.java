@@ -22,6 +22,10 @@ public class FinishGamePlayersAdapter extends RecyclerView.Adapter<FinishGamePla
     public FinishGamePlayersAdapter(ArrayList<Player> players) {
         this.players = players;
         for (Player player : players) {
+            player.setCompletedTicketCount(player.getCompletedTicketCount());
+            player.setIncompletedTicketCount(player.getIncompleteTicketCount());
+        }
+        for (Player player : players) {
             player.calculateEndGame(players);
         }
     }
@@ -47,11 +51,13 @@ public class FinishGamePlayersAdapter extends RecyclerView.Adapter<FinishGamePla
         viewHolder.totalPointsTextView.setText(String.valueOf(player.getTotalPoints()));
         if (player.isHasGlobeTrotter()) {
             viewHolder.globetrotterImageView.setVisibility(View.VISIBLE);
+            viewHolder.noBonusTextView.setVisibility(View.INVISIBLE);
         } else {
             viewHolder.globetrotterImageView.setVisibility(GONE);
         }
         if (player.isHasLongestRoute()) {
             viewHolder.longestRouteImageView.setVisibility(View.VISIBLE);
+            viewHolder.noBonusTextView.setVisibility(View.INVISIBLE);
         } else {
             viewHolder.longestRouteImageView.setVisibility(GONE);
         }

@@ -360,6 +360,7 @@ public class GameActivity extends AppCompatActivity implements
         playerHandLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playerHandLayout.setEnabled(false);
                 ViewTrainCardsDialogFragment dialog = ViewTrainCardsDialogFragment.newInstance(mPresenter.getPlayerHand(), getApplicationContext());
                 dialog.setCancelable(false);
                 dialog.show(getSupportFragmentManager(), "View Train Cards Dialog Fragment");
@@ -369,6 +370,7 @@ public class GameActivity extends AppCompatActivity implements
         playerTicketDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playerTicketCountTextView.setEnabled(false);
                 ViewTicketsDialogFragment dialog = ViewTicketsDialogFragment.newInstance(mPresenter.getPlayerTickets());
                 dialog.setCancelable(false);
                 dialog.show(getSupportFragmentManager(), "View Tickets Dialog Fragment");
@@ -774,6 +776,8 @@ public class GameActivity extends AppCompatActivity implements
     @Override
     public void onClosePressed(DialogFragment dialogFragment) {
         dialogFragment.dismiss();
+        playerTicketDeck.setEnabled(true);
+        playerHandLayout.setEnabled(true);
     }
 
     @Override
