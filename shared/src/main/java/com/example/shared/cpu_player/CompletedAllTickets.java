@@ -19,7 +19,7 @@ public class CompletedAllTickets extends CPUState {
 
     }
     public void takeTurn(CPUPlayer player) {
-        player.drawTickets();
+        player.drawTickets(false);
     }
 
     public void drawTickets(CPUPlayer player) {

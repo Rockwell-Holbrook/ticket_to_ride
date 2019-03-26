@@ -78,7 +78,7 @@ public class Game {
             CPUPlayer newCPU = new CPUPlayer("CPU Player " + Integer.toString(suffix), false, nextColor, this);
             playerList.add(newCPU);
             initializeTrainCardsInHand(newCPU.getUsername());
-            newCPU.drawTickets();
+            newCPU.drawTickets(true);
             setReadyPlayers(this.getReadyPlayers() + 1);
             suffix++;
         }
