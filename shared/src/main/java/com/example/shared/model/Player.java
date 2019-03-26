@@ -315,6 +315,7 @@ public class Player {
         }
         this.claimedRoutes.add(addedRoute);
         this.connectedCities.addEdge(addedRoute.getCityOne(), addedRoute.getCityTwo(), addedRoute.getLength());
+        this.longestRouteCount = this.connectedCities.getLongestPath();
         this.pointsEarned += addedRoute.getPointValue();
         this.remainingTrainCars -= addedRoute.getLength();
         for (Ticket ticket : this.tickets) {
