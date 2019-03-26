@@ -14,10 +14,13 @@ import com.example.rholbrook.tickettoride.chat.ChatAdapter;
 import com.example.rholbrook.tickettoride.chat.ChatContract;
 import com.example.rholbrook.tickettoride.chat.ChatPresenter;
 import com.example.rholbrook.tickettoride.game.GameActivity;
+import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.main.MainActivity;
+import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +63,16 @@ public class GameLobbyActivity extends AppCompatActivity implements
         chatPresenter = new ChatPresenter(this, GameLobbyActivityModel.getInstance());
         mPresenter.init();
         mPresenter.setGameId(gameId);
-        mPresenter.getPlayerList();
+        try {
+            mPresenter.getPlayerList();
+        } catch (Exception e) {
+            try {
+                ServerProxy.getInstance().connectToGameSocket(gameId, Authentication.getInstance().getUsername());
+                mPresenter.getPlayerList();
+            } catch (URISyntaxException e1) {
+                e1.printStackTrace();
+            }
+        }
         mPresenter.checkHost(hostUsername);
         chatSendButton.setOnClickListener(new View.OnClickListener() {
             @Override

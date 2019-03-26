@@ -62,6 +62,11 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     }
 
     @Override
+    public void socketConnectionError(Exception ex) {
+        ex.printStackTrace();
+    }
+
+    @Override
     public void update(Observable observable, Object o) {
 
     }

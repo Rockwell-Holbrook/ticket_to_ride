@@ -21,5 +21,6 @@ public class GameLobbyActivityContract {
         void getPlayerList();
         void checkHost(String username);
         List<Player> getConnectedPlayers();
+        void socketConnectionError(Exception ex);
     }
 }

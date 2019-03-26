@@ -33,11 +33,13 @@ public class ServerProxy implements IServer {
             if (socketClientCommunicator != null) {
                 socketClientCommunicator.close();
             }
-            String url = "ws://10.0.2.2:7777/management?user=" + username;
+            String url = "ws://ec2-13-59-199-142.us-east-2.compute.amazonaws.com:7777/management?user=" + username;
             socketClientCommunicator = new SocketClientCommunicator(new URI(url));
-            socketClientCommunicator.connect();
+            socketClientCommunicator.connectBlocking();
         } catch (URISyntaxException e) {
             throw e;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -46,11 +48,13 @@ public class ServerProxy implements IServer {
             if (socketClientCommunicator != null) {
                 socketClientCommunicator.close();
             }
-            String url = "ws://10.0.2.2:7777/game/" + gameId + "?user=" + username;
+            String url = "ws://ec2-13-59-199-142.us-east-2.compute.amazonaws.com:7777/game/" + gameId + "?user=" + username;
             socketClientCommunicator = new SocketClientCommunicator(new URI(url));
-            socketClientCommunicator.connect();
+            socketClientCommunicator.connectBlocking();
         } catch (URISyntaxException e) {
             throw e;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -177,5 +181,9 @@ public class ServerProxy implements IServer {
     @Override
     public void calculateClaimableRoutes(String gameId, String username) {
         //todo make it work!
+    }
+
+    public SocketClientCommunicator getSocketClientCommunicator() {
+        return socketClientCommunicator;
     }
 }

@@ -224,4 +224,8 @@ public class GameLobbyActivityModel extends Observable implements ChatContract.C
     public void setConnectedPlayers(ArrayList<Player> connectedPlayers) {
         this.connectedPlayers = connectedPlayers;
     }
+
+    public void socketConnectionError(Exception ex) {
+        mListener.socketConnectionError(ex);
+    }
 }
