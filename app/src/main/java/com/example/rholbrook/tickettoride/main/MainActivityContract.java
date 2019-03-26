@@ -25,5 +25,6 @@ public class MainActivityContract {
         void joinedGame(String gameId);
         void newGameList(ArrayList<Game> games);
         Game getSelectedGame();
+        void socketConnectionError(Exception ex);
     }
 }

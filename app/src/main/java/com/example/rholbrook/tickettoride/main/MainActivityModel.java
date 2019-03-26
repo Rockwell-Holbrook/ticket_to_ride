@@ -89,7 +89,9 @@ public class MainActivityModel extends Observable {
 
     public void getGameList() {
         if (Authentication.getInstance().getUsername() != null) {
-            ServerProxy.getInstance().getGameList(Authentication.getInstance().getUsername());
+            if (ServerProxy.getInstance().getSocketClientCommunicator() != null) {
+                ServerProxy.getInstance().getGameList(Authentication.getInstance().getUsername());
+            }
         }
     }
 
@@ -109,5 +111,9 @@ public class MainActivityModel extends Observable {
         possibleColors.add(Player.PlayerColor.GREEN);
         possibleColors.add(Player.PlayerColor.RED);
         possibleColors.add(Player.PlayerColor.YELLOW);
+    }
+
+    public void socketConnectionError(Exception ex) {
+        mPresenter.socketConnectionError(ex);
     }
 }
