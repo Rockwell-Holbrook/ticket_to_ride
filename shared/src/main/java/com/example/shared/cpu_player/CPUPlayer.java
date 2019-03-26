@@ -5,10 +5,12 @@ import com.example.shared.model.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static java.lang.Thread.sleep;
+
 public class CPUPlayer extends Player {
-    private CPUState cpuState;
-    private Game game;
-    private Random rand;
+    private transient CPUState cpuState;
+    private transient Game game;
+    private transient Random rand;
 
     public CPUPlayer(String username, boolean isHost, PlayerColor playerColor, Game game) {
         super(username, isHost, playerColor);
@@ -22,20 +24,35 @@ public class CPUPlayer extends Player {
     }
 
     public void takeTurn() {
+        System.out.println(this.username + " starting a turn.");
+        try{
+            sleep(1000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
         cpuState.takeTurn(this);
+        System.out.println(this.username + " ending a turn.");
         game.endPlayerTurn(this.username);
     }
 
     public void drawCard() {
+        System.out.println(this.username + " drawing a card.");
+
         int randCard = rand.nextInt(Integer.MAX_VALUE) % 5;
         game.cardSelected(this.username, randCard);
+
+        int secondCard = rand.nextInt(Integer.MAX_VALUE) % 5;
+        game.cardSelected(this.username, secondCard);
 
         cpuState.drawCard(this);
     }
 
     public void claimRoute() {
+        System.out.println(this.username + " claiming a route.");
+
         // Get all claimable routes and pick a random one
-        ArrayList<Route> routes = game.calculateClaimableRoutes(this.username);
+        ArrayList<Route> routes = availableToCpu(game);
+
         int randRouteInd = rand.nextInt(Integer.MAX_VALUE) % routes.size();
         Route randRoute = routes.get(randRouteInd);
 
@@ -50,11 +67,13 @@ public class CPUPlayer extends Player {
             }
         }
 
-        game.claimRoute(this.username, randRouteInd, cardsToUse);
+        game.claimRoute(this.username, randRoute.getGroupId(), cardsToUse);
         cpuState.claimRoute(this);
     }
 
     public void drawTickets() {
+        System.out.println(this.username + " drawing tickets");
+
         // Always just takes the first one
         ArrayList<Ticket> ticketsDrawn = game.initializeTickets(this.username);
         ArrayList<Ticket> returning = new ArrayList<>();
@@ -63,6 +82,21 @@ public class CPUPlayer extends Player {
 
         game.ticketsReturned(game.getGameId(), this.username, returning);
         cpuState.drawTickets(this);
+    }
+
+    private ArrayList<Route> filterGray(ArrayList<Route> routes){
+        ArrayList<Route> temp = new ArrayList<>();
+        for (Route r: routes){
+            if (r.getColor() != Route.RouteColor.GRAY){
+                temp.add(r);
+            }
+        }
+        return temp;
+    }
+
+    public ArrayList<Route> availableToCpu(Game game){
+        ArrayList<Route> routes = game.calculateClaimableRoutes(this.getUsername());
+        return filterGray(routes);
     }
 
     public Game getGame() {
