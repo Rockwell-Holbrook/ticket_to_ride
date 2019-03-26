@@ -196,92 +196,71 @@ public class Graph<T> {
         return result;
     }
 
-    public Set<Set<Edge>> findPaths(T start, T end) {
-        return findAllPaths(start, end, new HashSet<Edge>());
-    }
-
-    private Set<Set<Edge>> findAllPaths(T start, T end, Set<Edge> traversed) {
-        Set<Set<Edge>> paths = new HashSet<>();
-        Node node = nodes.get(start);
-        for (T neighbor : node.neighbors.keySet()) {
-            Edge edge = new Edge(start, neighbor, node.neighbors.get(neighbor));
-            if (!traversed.contains(edge)) {
-                if (neighbor.equals(end)) {
-                    Set<Edge> path = new HashSet<>();
-                    path.add(edge);
-                    paths.add(path);
-                }
-                Set<Edge> traversedCopy = new HashSet<>(traversed);
-                traversedCopy.add(edge);
-                Set<Set<Edge>> newPaths = findAllPaths(neighbor, end, traversedCopy);
-                for (Set<Edge> newPath : newPaths) {
-                    Set<Edge> path = new HashSet<>();
-                    path.add(edge);
-                    path.addAll(newPath);
-                    paths.add(path);
-                }
-            }
-        }
-        if (paths.size() == 0) {
-            if (start != end) { return null; }
-        }
-        return paths;
-    }
-
     public int getLongestPath() {
-        LinkedHashMap<T, Integer> indexMap = new LinkedHashMap<>();
-        int index = 0;
-        for (T value : nodes.keySet()) {
-            indexMap.put(value, index);
-            index++;
-        }
-        indexMap.put(null, BASE);
-
-        PathMatrix matrix = new PathMatrix(nodes.size());
-        int pivot = indexMap.get(null);
-        for (int i = 0; i < nodes.size(); i++) {
-            matrix.setDist(i,i,pivot,0);
-        }
-        for (Edge edge : edges) {
-            int start = indexMap.get(edge.startNode);
-            int end = indexMap.get(edge.endNode);
-            matrix.setDist(start,end,pivot,edge.length);
-            matrix.setDist(end,start,pivot,edge.length);
-            Set<Edge> set = new HashSet<>();
-            set.add(edge);
-            matrix.setPath(start,end,pivot,set);
-            matrix.setPath(end,start,pivot,set);
-        }
-        for (T pivotNode : nodes.keySet()) {
-            for (T startNode : nodes.keySet()) {
-                for (T endNode : nodes.keySet()) {
-                    int start = indexMap.get(startNode);
-                    int end = indexMap.get(endNode);
-                    pivot = indexMap.get(pivotNode);
-                    Integer dist1 = matrix.getDist(start, pivot, pivot - 1);
-                    Integer dist2 = matrix.getDist(pivot, end, pivot - 1);
-                    Integer oldDist = matrix.getDist(start, end, pivot - 1);
-                    Integer oldDistTemp = (oldDist == null ? 0 : oldDist);
-                    Set<Edge> path1 = matrix.getPath(start, pivot, pivot - 1);
-                    Set<Edge> path2 = matrix.getPath(pivot, end, pivot - 1);
-                    Set<Edge> oldPath = matrix.getPath(start, end, pivot - 1);
-                    // if paths overlap, check combinations of previous dist1, dist2
-                    if (dist1 == null || dist2 == null || pathsOverlap(path1, path2) || dist1 + dist2 <= oldDistTemp) {
-                        matrix.setDist(start, end, pivot, oldDist);
-                        matrix.setDist(end, start, pivot, oldDist);
-                        matrix.setPath(start, end, pivot, oldPath);
-                        matrix.setPath(end, start, pivot, oldPath);
-                    } else {
-                        matrix.setDist(start, end, pivot, dist1 + dist2);
-                        matrix.setDist(end, start, pivot, dist1 + dist2);
-                        matrix.setPath(start, end, pivot, getUnion(path1, path2));
-                        matrix.setPath(end, start, pivot, getUnion(path1, path2));
-                    }
+        Set<Set<Edge>> paths = new HashSet<>();
+        for (T node1 : nodes.keySet()) {
+            for (T node2 : nodes.keySet()) {
+                Set<Set<Edge>> allDaPaths = findPaths(node1, node2);
+                if (allDaPaths != null) {
+                    paths.addAll(allDaPaths);
                 }
             }
         }
-        System.out.print(matrix.toString());
-        return matrix.getLargestDist();
+        Set<Edge> longest = getLongest(paths);
+        return getLength(longest);
+//        LinkedHashMap<T, Integer> indexMap = new LinkedHashMap<>();
+//        int index = 0;
+//        for (T value : nodes.keySet()) {
+//            indexMap.put(value, index);
+//            index++;
+//        }
+//        indexMap.put(null, BASE);
+//
+//        PathMatrix matrix = new PathMatrix(nodes.size());
+//        int pivot = indexMap.get(null);
+//        for (int i = 0; i < nodes.size(); i++) {
+//            matrix.setDist(i,i,pivot,0);
+//        }
+//        for (Edge edge : edges) {
+//            int start = indexMap.get(edge.startNode);
+//            int end = indexMap.get(edge.endNode);
+//            matrix.setDist(start,end,pivot,edge.length);
+//            matrix.setDist(end,start,pivot,edge.length);
+//            Set<Edge> set = new HashSet<>();
+//            set.add(edge);
+//            matrix.setPath(start,end,pivot,set);
+//            matrix.setPath(end,start,pivot,set);
+//        }
+//        for (T pivotNode : nodes.keySet()) {
+//            for (T startNode : nodes.keySet()) {
+//                for (T endNode : nodes.keySet()) {
+//                    int start = indexMap.get(startNode);
+//                    int end = indexMap.get(endNode);
+//                    pivot = indexMap.get(pivotNode);
+//                    Integer dist1 = matrix.getDist(start, pivot, pivot - 1);
+//                    Integer dist2 = matrix.getDist(pivot, end, pivot - 1);
+//                    Integer oldDist = matrix.getDist(start, end, pivot - 1);
+//                    Integer oldDistTemp = (oldDist == null ? 0 : oldDist);
+//                    Set<Edge> path1 = matrix.getPath(start, pivot, pivot - 1);
+//                    Set<Edge> path2 = matrix.getPath(pivot, end, pivot - 1);
+//                    Set<Edge> oldPath = matrix.getPath(start, end, pivot - 1);
+//                    // if paths overlap, check combinations of previous dist1, dist2
+//                    if (dist1 == null || dist2 == null || pathsOverlap(path1, path2) || dist1 + dist2 <= oldDistTemp) {
+//                        matrix.setDist(start, end, pivot, oldDist);
+//                        matrix.setDist(end, start, pivot, oldDist);
+//                        matrix.setPath(start, end, pivot, oldPath);
+//                        matrix.setPath(end, start, pivot, oldPath);
+//                    } else {
+//                        matrix.setDist(start, end, pivot, dist1 + dist2);
+//                        matrix.setDist(end, start, pivot, dist1 + dist2);
+//                        matrix.setPath(start, end, pivot, getUnion(path1, path2));
+//                        matrix.setPath(end, start, pivot, getUnion(path1, path2));
+//                    }
+//                }
+//            }
+//        }
+//        System.out.print(matrix.toString());
+//        return matrix.getLargestDist();
     }
 
     private void explore(T start) {
@@ -312,5 +291,63 @@ public class Graph<T> {
         HashSet<Edge> b = new HashSet<>(pathB);
         a.addAll(b);
         return a;
+    }
+
+    private Set<Set<Edge>> findPaths(T start, T end) {
+        return findAllPaths(start, end, new HashSet<Edge>());
+    }
+
+    private Set<Set<Edge>> findAllPaths(T start, T end, Set<Edge> traversed) {
+        Set<Set<Edge>> paths = new HashSet<>();
+        Node node = nodes.get(start);
+        for (T neighbor : node.neighbors.keySet()) {
+            Edge edge = new Edge(start, neighbor, node.neighbors.get(neighbor));
+            Edge reverseEdge = new Edge(neighbor, start, node.neighbors.get(neighbor));
+            if (!traversed.contains(edge) && !traversed.contains(reverseEdge)) {
+                if (neighbor.equals(end)) {
+                    Set<Edge> path = new HashSet<>();
+                    path.add(edge);
+                    paths.add(path);
+                }
+                Set<Edge> traversedCopy = new HashSet<>(traversed);
+                traversedCopy.add(edge);
+                traversedCopy.add(reverseEdge);
+                Set<Set<Edge>> newPaths = findAllPaths(neighbor, end, traversedCopy);
+                if (newPaths != null) {
+                    for (Set<Edge> newPath : newPaths) {
+                        if (newPath != null) {
+                            Set<Edge> path = new HashSet<>();
+                            path.add(edge);
+                            path.addAll(newPath);
+                            paths.add(path);
+                        }
+                    }
+                }
+            }
+        }
+        if (paths.size() == 0) {
+            if (start != end) { return null; }
+        }
+        return paths;
+    }
+
+    private Set<Edge> getLongest(Set<Set<Edge>> paths) {
+        Set<Edge> longest = null;
+        int longestLength = 0;
+        for (Set<Edge> path : paths) {
+            if (getLength(path) > longestLength) {
+                longest = path;
+                longestLength = getLength(path);
+            }
+        }
+        return longest;
+    }
+
+    private int getLength(Set<Edge> path) {
+        int length = 0;
+        for (Edge edge : path) {
+            length += edge.length;
+        }
+        return length;
     }
 }

@@ -94,12 +94,39 @@ public class GraphTest {
 
     @Test
     public void getLongestPathSimple() {
-        Set<Set<Graph<Character>.Edge>> paths = graph.findPaths('a', 'f');
-        assertEquals(2, paths.size());
-//        assertEquals(25, graph.getLongestPath());
-//        graph.addEdge('f', 'h', 1);
-//        assertEquals(25, graph.getLongestPath());
-//        graph.addEdge('f', 'g', 2);
-//        assertEquals(26, graph.getLongestPath());
+        assertEquals(25, graph.getLongestPath());
+        Graph<Character> otherGraph = new Graph<>();
+        otherGraph.addEdge('a', 'c', 1);
+        otherGraph.addEdge('c', 'b', 1);
+        otherGraph.addEdge('b', 'e', 1);
+        otherGraph.addEdge('b', 'd', 1);
+        otherGraph.addEdge('d', 'e', 1);
+        otherGraph.addEdge('e', 'f', 1);
+        otherGraph.addEdge('f', 'c', 1);
+        assertEquals(6,  otherGraph.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathCities() {
+        Graph<City> black = new Graph<>();
+        black.addEdge(new City("Vancouver"), new City("Calgary"), 3);
+        black.addEdge(new City("Vancouver"), new City("Seattle"), 1);
+        black.addEdge(new City("Seattle"), new City("Portland"), 1);
+        black.addEdge(new City("Portland"), new City("San Francisco"), 5);
+        black.addEdge(new City("San Francisco"), new City("Los Angeles"), 3);
+        black.addEdge(new City("Los Angeles"), new City("Las Vegas"), 2);
+        black.addEdge(new City("San Francisco"), new City("Salt Lake City"), 5);
+        black.addEdge(new City("Salt Lake City"), new City("Denver"), 3);
+        black.addEdge(new City("Denver"), new City("Kansas City"), 4);
+        black.addEdge(new City("Santa Fe"), new City("Oklahoma City"), 3);
+        black.addEdge(new City("Houston"), new City("Dallas"), 1);
+        black.addEdge(new City("Dallas"), new City("Oklahoma City"), 2);
+        black.addEdge(new City("Oklahoma City"), new City("Kansas City"), 2);
+        black.addEdge(new City("Kansas City"), new City("Omaha"), 1);
+        black.addEdge(new City("Omaha"), new City("Duluth"), 2);
+        black.addEdge(new City("Duluth"), new City("Sault St Marie"), 3);
+        black.addEdge(new City("Montreal"), new City("Boston"), 2);
+        assertEquals(28, black.getLongestPath());
+
     }
 }
