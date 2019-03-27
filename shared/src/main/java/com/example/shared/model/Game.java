@@ -104,10 +104,7 @@ public class Game {
 
             // If it's not valid, discard all and make a new temp
             if(!valid){
-                for (TrainCard tc: temp) {
-                    this.trainCardDeck.discard(tc);
-                    temp.remove(tc);
-                }
+                this.trainCardDeck.discard(temp);
                 temp = new ArrayList<>();
             }
         }
@@ -293,10 +290,8 @@ public class Game {
             trainCardsFaceUp.set(index, trainCard);
             while(!isValidFaceUp(trainCardsFaceUp)){
                 // Discard all face up
-                for (TrainCard tc: trainCardsFaceUp) {
-                    this.trainCardDeck.discard(tc);
-                    this.trainCardsFaceUp.remove(tc);
-                }
+                this.trainCardDeck.discard(this.trainCardsFaceUp);
+                trainCardsFaceUp.clear();
                 // Re draw
                 for (int i = 0; i < 5; i++) {
                     this.trainCardsFaceUp.add(this.trainCardDeck.drawFromTop());
