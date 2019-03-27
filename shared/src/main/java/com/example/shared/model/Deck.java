@@ -93,6 +93,12 @@ public class Deck<T> {
         discarded.add(card);
     }
 
+    public void discard(List<T> cards){
+        for (T card : cards){
+            discard(card);
+        }
+    }
+
     /**
      * Gets the size of the in-use deck
      *
