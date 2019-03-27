@@ -1,11 +1,13 @@
 package com.example.shared.model;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.Set;
+
+import static org.junit.Assert.*;
+
+// TODO: Make sure duplicate nodes can't be added.
 
 public class GraphTest {
     private Graph<Character> graph;
@@ -13,13 +15,13 @@ public class GraphTest {
     @Before
     public void setup() {
         graph = new Graph<>();
-        graph.addEdge('a', 'b');
-        graph.addEdge('b', 'c');
-        graph.addEdge('b', 'f');
-        graph.addEdge('c', 'd');
-        graph.addEdge('d', 'e');
-        graph.addEdge('e', 'f');
-        graph.addEdge('h', 'g');
+        graph.addEdge('a', 'b', 1);
+        graph.addEdge('b', 'c', 2);
+        graph.addEdge('b', 'f', 5);
+        graph.addEdge('c', 'd', 4);
+        graph.addEdge('d', 'e', 6);
+        graph.addEdge('e', 'f', 7);
+        graph.addEdge('h', 'g', 3);
     }
 
     @Test
@@ -55,7 +57,7 @@ public class GraphTest {
     @Test
     public void hasPathOneEdge() {
         Graph<Character> oneEdgeGraph = new Graph<>();
-        oneEdgeGraph.addEdge('a', 'b');
+        oneEdgeGraph.addEdge('a', 'b', 1);
         assertTrue(oneEdgeGraph.hasPath('a', 'b'));
         assertTrue(oneEdgeGraph.hasPath('b', 'a'));
         assertFalse(oneEdgeGraph.hasPath('a', 'c'));
@@ -81,14 +83,50 @@ public class GraphTest {
     @Test
     public void hasPathCityGraph() {
         Graph<City> cityGraph = new Graph<>();
-        cityGraph.addEdge(new City("San Francisco"), new City("New York"));
-        cityGraph.addEdge(new City("New York"), new City("Chicago"));
-        cityGraph.addEdge(new City("Chicago"), new City("Miami"));
-        cityGraph.addEdge(new City("Santa Fe"), new City("Salt Lake City"));
+        cityGraph.addEdge(new City("San Francisco"), new City("New York"), 15);
+        cityGraph.addEdge(new City("New York"), new City("Chicago"), 7);
+        cityGraph.addEdge(new City("Chicago"), new City("Miami"), 10);
+        cityGraph.addEdge(new City("Santa Fe"), new City("Salt Lake City"), 5);
         assertTrue(cityGraph.hasPath(new City("San Francisco"), new City("Miami")));
         assertFalse(cityGraph.hasPath(new City("New York"), new City("Salt Lake City")));
         assertFalse(cityGraph.hasPath(new City("Santa Fe"), new City("Atlantis")));
     }
 
-    // TODO: Make sure duplicate nodes can't be added.
+    @Test
+    public void getLongestPathSimple() {
+        assertEquals(25, graph.getLongestPath());
+        Graph<Character> otherGraph = new Graph<>();
+        otherGraph.addEdge('a', 'c', 1);
+        otherGraph.addEdge('c', 'b', 1);
+        otherGraph.addEdge('b', 'e', 1);
+        otherGraph.addEdge('b', 'd', 1);
+        otherGraph.addEdge('d', 'e', 1);
+        otherGraph.addEdge('e', 'f', 1);
+        otherGraph.addEdge('f', 'c', 1);
+        assertEquals(6,  otherGraph.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathCities() {
+        Graph<City> black = new Graph<>();
+        black.addEdge(new City("Vancouver"), new City("Calgary"), 3);
+        black.addEdge(new City("Vancouver"), new City("Seattle"), 1);
+        black.addEdge(new City("Seattle"), new City("Portland"), 1);
+        black.addEdge(new City("Portland"), new City("San Francisco"), 5);
+        black.addEdge(new City("San Francisco"), new City("Los Angeles"), 3);
+        black.addEdge(new City("Los Angeles"), new City("Las Vegas"), 2);
+        black.addEdge(new City("San Francisco"), new City("Salt Lake City"), 5);
+        black.addEdge(new City("Salt Lake City"), new City("Denver"), 3);
+        black.addEdge(new City("Denver"), new City("Kansas City"), 4);
+        black.addEdge(new City("Santa Fe"), new City("Oklahoma City"), 3);
+        black.addEdge(new City("Houston"), new City("Dallas"), 1);
+        black.addEdge(new City("Dallas"), new City("Oklahoma City"), 2);
+        black.addEdge(new City("Oklahoma City"), new City("Kansas City"), 2);
+        black.addEdge(new City("Kansas City"), new City("Omaha"), 1);
+        black.addEdge(new City("Omaha"), new City("Duluth"), 2);
+        black.addEdge(new City("Duluth"), new City("Sault St Marie"), 3);
+        black.addEdge(new City("Montreal"), new City("Boston"), 2);
+        assertEquals(28, black.getLongestPath());
+
+    }
 }
