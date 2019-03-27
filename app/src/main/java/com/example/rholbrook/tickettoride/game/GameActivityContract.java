@@ -2,6 +2,7 @@ package com.example.rholbrook.tickettoride.game;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import com.example.shared.model.Chat;
 import com.example.shared.model.Ticket;
 import com.example.shared.model.Player;
 import com.example.shared.model.TrainCard;
@@ -34,6 +35,7 @@ public class GameActivityContract {
         void selectingCards();
         void notifyLastTurn();
         void endGame();
+        void sendMessageNotification(Chat chat);
     }
 
     public interface Presenter {
@@ -69,5 +71,6 @@ public class GameActivityContract {
         void selectingCards();
         void notifyLastTurn();
         void endGame();
+        void sendNotification(Chat chat);
     }
 }

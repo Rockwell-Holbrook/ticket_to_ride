@@ -1,27 +1,29 @@
 package com.example.rholbrook.tickettoride.game;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.*;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.*;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.finishgame.FinishGameActivity;
+import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.model.*;
 
 import java.util.List;
+import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements
         GameActivityContract.View,
@@ -31,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements
         ClaimRouteDialogFragment.ClaimRouteDialogFragmentInterface,
         LastRoundDialogFragment.LastRoundDialogFragmentInterface {
     private GameActivityContract.Presenter mPresenter;
+    private final static String CHANNEL_ID = "chat_channel";
 
     private Button demoButton;
 
@@ -168,12 +171,16 @@ public class GameActivity extends AppCompatActivity implements
         faceDownTrainCardDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.selectingCards();
-                mPresenter.selectFaceDownCardDeck();
-                cardsDrawn += 1;
-                if (cardsDrawn == 2) {
-                    endUserTurn();
-                    mPresenter.endTurn();
+                if (!trainCardDeckCount.getText().toString().equals(0)) {
+                    mPresenter.selectingCards();
+                    mPresenter.selectFaceDownCardDeck();
+                    cardsDrawn += 1;
+                    if (cardsDrawn == 2) {
+                        endUserTurn();
+                        mPresenter.endTurn();
+                    }
+                } else {
+                    showToast(getString(R.string.train_card_deck_empty));
                 }
             }
         });
@@ -414,7 +421,9 @@ public class GameActivity extends AppCompatActivity implements
                 if (handCards != null) {
                     for (TrainCard trainCard : handCards) {
                         ImageView iv = new ImageView(GameActivity.this);
-                        iv.setImageDrawable(getColorCardDrawable(trainCard));
+                        if (trainCard != null) {
+                            iv.setImageDrawable(getColorCardDrawable(trainCard));
+                        }
                         iv.setTranslationX(xOffset);
                         xOffset += 2 * width / handCards.size();
                         playerHandLayout.addView(iv);
@@ -456,11 +465,41 @@ public class GameActivity extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                faceUpCardOne.setImageDrawable(getColorCardDrawable(faceUpDeck.get(0)));
-                faceUpCardTwo.setImageDrawable(getColorCardDrawable(faceUpDeck.get(1)));
-                faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck.get(2)));
-                faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck.get(3)));
-                faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck.get(4)));
+                if (faceUpDeck.get(0) != null) {
+                    faceUpCardOne.setImageDrawable(getColorCardDrawable(faceUpDeck.get(0)));
+                    faceUpCardOne.setEnabled(true);
+                } else {
+                    faceUpCardOne.setImageResource(R.mipmap.card_back);
+                    faceUpCardOne.setEnabled(false);
+                }
+                if (faceUpDeck.get(1) != null) {
+                    faceUpCardTwo.setImageDrawable(getColorCardDrawable(faceUpDeck.get(1)));
+                    faceUpCardTwo.setEnabled(true);
+                } else {
+                    faceUpCardTwo.setImageResource(R.mipmap.card_back);
+                    faceUpCardTwo.setEnabled(false);
+                }
+                if (faceUpDeck.get(2) != null) {
+                    faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck.get(2)));
+                    faceUpCardThree.setEnabled(true);
+                } else {
+                    faceUpCardThree.setImageResource(R.mipmap.card_back);
+                    faceUpCardThree.setEnabled(false);
+                }
+                if (faceUpDeck.get(3) != null) {
+                    faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck.get(3)));
+                    faceUpCardFour.setEnabled(true);
+                } else {
+                    faceUpCardFour.setImageResource(R.mipmap.card_back);
+                    faceUpCardFour.setEnabled(false);
+                }
+                if (faceUpDeck.get(4) != null) {
+                    faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck.get(4)));
+                    faceUpCardFive.setEnabled(true);
+                } else {
+                    faceUpCardFive.setImageResource(R.mipmap.card_back);
+                    faceUpCardFive.setEnabled(false);
+                }
             }
         });
     }
@@ -760,13 +799,45 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void sendMessageNotification(final Chat chat) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (!chat.getUsername().equals(Authentication.getInstance().getUsername())) {
+                    Random random = new Random();
+                    int notificationId = random.nextInt();
+                    String notificationTitle = chat.getUsername() + " " + getString(R.string.chat_title);
+                    String notificationMessage = chat.getMessage();
+
+                    NotificationManager notificationManager = getSystemService(NotificationManager.class);
+
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "chat channel", NotificationManager.IMPORTANCE_HIGH);
+                        notificationManager.createNotificationChannel(channel);
+                    }
+                    NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+                    builder.setSmallIcon(R.mipmap.app_icon)
+                            .setContentTitle(notificationTitle)
+                            .setContentText(notificationMessage)
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setChannelId(CHANNEL_ID)
+                            .setAutoCancel(true);
+
+
+                    notificationManager.notify(notificationId, builder.build());
+                }
+            }
+        });
+    }
+
+    @Override
     public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards, int indicator) {
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);
         mPresenter.returnTickets(returnedCards);
         if (indicator == GameActivityModel.INITIALIZE_TICKETS_SELECTION_TYPE) {
             mPresenter.initializeComplete();
-//            mPresenter.runDemo1();
         } else {
             endUserTurn();
             mPresenter.endTurn();

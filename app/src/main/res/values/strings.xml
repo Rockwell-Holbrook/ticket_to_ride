@@ -65,4 +65,6 @@
     <string name="tickets">Tickets</string>
     <string name="bonus">Bonus</string>
     <string name="no_bonuses">No Bonuses</string>
+    <string name="chat_title"> sent a message</string>
+    <string name="train_card_deck_empty">There are no more train cards here</string>
 </resources>

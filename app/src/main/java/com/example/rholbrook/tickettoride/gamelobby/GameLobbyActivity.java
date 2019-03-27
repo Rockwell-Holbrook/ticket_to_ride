@@ -136,5 +136,6 @@ public class GameLobbyActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("gameId", gameId);
         startActivity(intent);
+        this.finish();
     }
 }

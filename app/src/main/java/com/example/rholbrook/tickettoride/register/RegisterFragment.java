@@ -169,8 +169,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             @Override
             public void run() {
                 authenticationStatus = SUCCESSFUL_AUTHENTICATION;
-                getActivity().getSupportFragmentManager().beginTransaction().remove(RegisterFragment.this).commit();
-                idlingResource.decrement();
+                callback.onCall(authenticationStatus);
             }
         });
     }
@@ -180,7 +179,6 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
             @Override
             public void run() {
                 showToast(message);
-                idlingResource.decrement();
             }
         });
     }
@@ -220,6 +218,7 @@ public class RegisterFragment extends Fragment implements RegisterContract.View 
                 else {
                     onFailure(message.getMessage());
                 }
+                idlingResource.decrement();
             }
         });
 
