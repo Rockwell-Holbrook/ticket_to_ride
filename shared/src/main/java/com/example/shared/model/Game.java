@@ -324,9 +324,9 @@ public class Game {
     }
 
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
-        for (int i = 0; i < returned.size(); i++) {
-            this.ticketDeck.putToBottom(returned.get(i));
-        }
+
+        this.ticketDeck.discard(returned);
+
 
         getPlayerWithUsername(username).returnedTickets(returned);
 //        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
@@ -339,6 +339,7 @@ public class Game {
 
         getPlayerWithUsername(username).claimRoute(routeToClaim);
         getPlayerWithUsername(username).removeTrainCards(selectedCards);
+        this.trainCardDeck.discard(selectedCards);
 
         this.availableRoutes.remove(routeToClaim);
         this.claimedRoutes.add(routeToClaim);

@@ -2,6 +2,7 @@ package communication;
 
 import com.example.shared.commands.Command;
 import com.google.gson.Gson;
+import game.GameManager;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -61,10 +62,17 @@ public class SocketServer extends WebSocketServer {
             managementConnections.remove(conn);
             System.out.println(conn.getAttachment() + " has left management!");
         } else if (path.contains("/game")) {
-            String gameId = getGameId(path);
+            String gameId = getGameId(path.substring(5));
             System.out.println(gameConnections.toString());
-//            gameConnections.get(gameId).remove(conn);
             System.out.println(conn.getAttachment() + " has left game: " + gameId);
+            gameConnections.get(gameId).remove(conn);
+
+            // Get rid of inactive games
+            if (gameConnections.get(gameId).size() == 0){
+                System.out.println(gameId + " is inactive. Deleting it.");
+                gameConnections.remove(gameId);
+                GameManager.getInstance().removeGame(gameId);
+            }
         }
 
     }
