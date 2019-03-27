@@ -106,6 +106,7 @@ public class Game {
             if(!valid){
                 for (TrainCard tc: temp) {
                     this.trainCardDeck.discard(tc);
+                    temp.remove(tc);
                 }
                 temp = new ArrayList<>();
             }
@@ -294,6 +295,7 @@ public class Game {
                 // Discard all face up
                 for (TrainCard tc: trainCardsFaceUp) {
                     this.trainCardDeck.discard(tc);
+                    this.trainCardsFaceUp.remove(tc);
                 }
                 // Re draw
                 for (int i = 0; i < 5; i++) {
