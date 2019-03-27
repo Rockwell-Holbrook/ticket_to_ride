@@ -313,4 +313,9 @@ public class GameManager {
         Game game = this.playingGameList.get(gameId);
         game.calculateClaimableRoutes(username);
     }
+
+    public void removeGame(String gameId){
+        notPlayingGameList.remove(gameId);
+        playingGameList.remove(gameId);
+    }
 }
