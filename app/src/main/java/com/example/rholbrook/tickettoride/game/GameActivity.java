@@ -149,22 +149,17 @@ public class GameActivity extends AppCompatActivity implements
         trainCardDeckCount = findViewById(R.id.face_down_card_deck_count);
         ticketDeckCountTextView = findViewById(R.id.ticket_deck_count);
 
-
-        demoButton = findViewById(R.id.demo_button);
-        demoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.runDemo2();
-            }
-        });
-        demoButton.setEnabled(false);
-
         mPresenter = new GameActivityPresenter(this);
 
         faceDownTicketDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.clickDrawTickets();
+                int deckCount = Integer.valueOf(ticketDeckCountTextView.getText().toString());
+                if (deckCount < 2) {
+                    mPresenter.clickDrawTickets();
+                } else {
+                    showToast(getString(R.string.tickets_empty));
+                }
             }
         });
 
@@ -189,21 +184,25 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 TrainCard selectedCard = mPresenter.getFaceUpCard(0);
-                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
-                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
-                } else {
-                    mPresenter.selectingCards();
-                    mPresenter.selectFaceUpCard(0);
-                    if(selectedCard.getColor() == TrainCard.Color.WILD) {
-                        endUserTurn();
-                        mPresenter.endTurn();
+                if (selectedCard != null) {
+                    if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                        Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                     } else {
-                        cardsDrawn += 1;
-                        if (cardsDrawn == 2) {
+                        mPresenter.selectingCards();
+                        mPresenter.selectFaceUpCard(0);
+                        if(selectedCard.getColor() == TrainCard.Color.WILD) {
                             endUserTurn();
                             mPresenter.endTurn();
+                        } else {
+                            cardsDrawn += 1;
+                            if (cardsDrawn == 2) {
+                                endUserTurn();
+                                mPresenter.endTurn();
+                            }
                         }
                     }
+                } else {
+                    showToast(getString(R.string.train_card_deck_empty));
                 }
             }
         });
@@ -211,21 +210,25 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 TrainCard selectedCard = mPresenter.getFaceUpCard(1);
-                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
-                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
-                } else {
-                    mPresenter.selectingCards();
-                    mPresenter.selectFaceUpCard(1);
-                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
-                        endUserTurn();
-                        mPresenter.endTurn();
+                if (selectedCard != null) {
+                    if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                        Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                     } else {
-                        cardsDrawn += 1;
-                        if (cardsDrawn == 2) {
+                        mPresenter.selectingCards();
+                        mPresenter.selectFaceUpCard(1);
+                        if (selectedCard.getColor() == TrainCard.Color.WILD) {
                             endUserTurn();
                             mPresenter.endTurn();
+                        } else {
+                            cardsDrawn += 1;
+                            if (cardsDrawn == 2) {
+                                endUserTurn();
+                                mPresenter.endTurn();
+                            }
                         }
                     }
+                } else {
+                    showToast(getString(R.string.train_card_deck_empty));
                 }
             }
         });
@@ -233,21 +236,25 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 TrainCard selectedCard = mPresenter.getFaceUpCard(2);
-                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
-                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
-                } else {
-                    mPresenter.selectingCards();
-                    mPresenter.selectFaceUpCard(2);
-                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
-                        endUserTurn();
-                        mPresenter.endTurn();
+                if (selectedCard != null) {
+                    if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                        Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                     } else {
-                        cardsDrawn += 1;
-                        if (cardsDrawn == 2) {
+                        mPresenter.selectingCards();
+                        mPresenter.selectFaceUpCard(2);
+                        if (selectedCard.getColor() == TrainCard.Color.WILD) {
                             endUserTurn();
                             mPresenter.endTurn();
+                        } else {
+                            cardsDrawn += 1;
+                            if (cardsDrawn == 2) {
+                                endUserTurn();
+                                mPresenter.endTurn();
+                            }
                         }
                     }
+                } else {
+                    showToast(getString(R.string.train_card_deck_empty));
                 }
             }
         });
@@ -255,21 +262,25 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 TrainCard selectedCard = mPresenter.getFaceUpCard(3);
-                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
-                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
-                } else {
-                    mPresenter.selectingCards();
-                    mPresenter.selectFaceUpCard(3);
-                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
-                        endUserTurn();
-                        mPresenter.endTurn();
+                if (selectedCard != null) {
+                    if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                        Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                     } else {
-                        cardsDrawn += 1;
-                        if (cardsDrawn == 2) {
+                        mPresenter.selectingCards();
+                        mPresenter.selectFaceUpCard(3);
+                        if (selectedCard.getColor() == TrainCard.Color.WILD) {
                             endUserTurn();
                             mPresenter.endTurn();
+                        } else {
+                            cardsDrawn += 1;
+                            if (cardsDrawn == 2) {
+                                endUserTurn();
+                                mPresenter.endTurn();
+                            }
                         }
                     }
+                } else {
+                    showToast(getString(R.string.train_card_deck_empty));
                 }
             }
         });
@@ -277,21 +288,25 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 TrainCard selectedCard = mPresenter.getFaceUpCard(4);
-                if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
-                    Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
-                } else {
-                    mPresenter.selectingCards();
-                    mPresenter.selectFaceUpCard(4);
-                    if (selectedCard.getColor() == TrainCard.Color.WILD) {
-                        endUserTurn();
-                        mPresenter.endTurn();
+                if (selectedCard != null) {
+                    if(selectedCard.getColor() == TrainCard.Color.WILD && cardsDrawn == 1) {
+                        Toast.makeText(getApplicationContext(), R.string.cannot_take_wild, Toast.LENGTH_SHORT).show();
                     } else {
-                        cardsDrawn += 1;
-                        if (cardsDrawn == 2) {
+                        mPresenter.selectingCards();
+                        mPresenter.selectFaceUpCard(4);
+                        if (selectedCard.getColor() == TrainCard.Color.WILD) {
                             endUserTurn();
                             mPresenter.endTurn();
+                        } else {
+                            cardsDrawn += 1;
+                            if (cardsDrawn == 2) {
+                                endUserTurn();
+                                mPresenter.endTurn();
+                            }
                         }
                     }
+                } else {
+                    showToast(getString(R.string.train_card_deck_empty));
                 }
             }
         });
