@@ -172,7 +172,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView13"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/imageView13"
-                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"
+                    android:textColor="@color/white"/>
             <TextView
                     android:text="2"
                     android:layout_width="wrap_content"
@@ -180,7 +181,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView12"
                     app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12" android:textColor="@color/white"/>
             <TextView
                     android:text="4"
                     android:layout_width="wrap_content"
@@ -188,7 +189,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView14"
                     app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14" android:textColor="@color/white"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -244,7 +245,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView13"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/imageView13"
-                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"
+                    android:textColor="@color/white"/>
             <TextView
                     android:text="2"
                     android:layout_width="wrap_content"
@@ -252,7 +254,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView12"
                     app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12" android:textColor="@color/white"/>
             <TextView
                     android:text="4"
                     android:layout_width="wrap_content"
@@ -260,7 +262,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView14"
                     app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14" android:textColor="@color/white"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -318,7 +320,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView13"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/imageView13"
-                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"
+                    android:textColor="@color/white"/>
             <TextView
                     android:text="2"
                     android:layout_width="wrap_content"
@@ -326,7 +329,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView12"
                     app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12" android:textColor="@color/white"/>
             <TextView
                     android:text="4"
                     android:layout_width="wrap_content"
@@ -334,7 +337,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView14"
                     app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14" android:textColor="@color/white"/>
         </android.support.constraint.ConstraintLayout>
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -392,7 +395,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView13"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/imageView13"
-                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"/>
+                    app:layout_constraintStart_toStartOf="@+id/imageView13" android:layout_marginBottom="2dp"
+                    android:textColor="@color/white"/>
             <TextView
                     android:text="2"
                     android:layout_width="wrap_content"
@@ -400,7 +404,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView12"
                     app:layout_constraintStart_toStartOf="@+id/imageView12" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView12"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView12" android:textColor="@color/white"/>
             <TextView
                     android:text="4"
                     android:layout_width="wrap_content"
@@ -408,7 +412,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView14"
                     app:layout_constraintStart_toStartOf="@+id/imageView14" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView14"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView14" android:textColor="@color/white"/>
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
     <android.support.constraint.ConstraintLayout
@@ -445,7 +449,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView16"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/imageView16"
-                    app:layout_constraintStart_toStartOf="@+id/imageView16" android:layout_marginBottom="2dp"/>
+                    app:layout_constraintStart_toStartOf="@+id/imageView16" android:layout_marginBottom="2dp"
+                    android:textColor="@color/white"/>
             <TextView
                     android:text="2"
                     android:layout_width="wrap_content"
@@ -453,7 +458,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView15"
                     app:layout_constraintStart_toStartOf="@+id/imageView15" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView15"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView15" android:textColor="@color/white"/>
             <TextView
                     android:text="4"
                     android:layout_width="wrap_content"
@@ -461,7 +466,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/imageView17"
                     app:layout_constraintStart_toStartOf="@+id/imageView17" android:layout_marginBottom="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView17"/>
+                    app:layout_constraintTop_toBottomOf="@+id/imageView17" android:textColor="@color/white"/>
             <ImageView
                     android:layout_width="25dp"
                     android:layout_height="20dp" app:srcCompat="@mipmap/ticket_back"

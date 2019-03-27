@@ -14,6 +14,7 @@ import com.example.shared.model.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Random;
 
 public class GameActivityModel extends Observable implements ChatContract.ChatModel {
     private String TAG = "GameActivityModel";
@@ -160,6 +161,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     public void receivedChat(Chat chat) {
         chatMessages.add(chat);
         chatListener.updateChatList(chatMessages);
+        gameActivityPresenter.sendNotification(chat);
     }
 
     public void receivedChatHistory(List<Chat> chatHistory) {
