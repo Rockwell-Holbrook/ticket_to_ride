@@ -3,8 +3,6 @@ package com.example.shared.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Set;
-
 import static org.junit.Assert.*;
 
 // TODO: Make sure duplicate nodes can't be added.
@@ -127,6 +125,43 @@ public class GraphTest {
         black.addEdge(new City("Duluth"), new City("Sault St Marie"), 3);
         black.addEdge(new City("Montreal"), new City("Boston"), 2);
         assertEquals(28, black.getLongestPath());
+
+        Graph<City> red = new Graph<>();
+        red.addEdge(new City("Vancouver"), new City("Seattle"), 1);
+        red.addEdge(new City("Seattle"), new City("Helena"), 6);
+        red.addEdge(new City("Helena"), new City("Salt Lake City"), 3);
+        red.addEdge(new City("Helena"), new City("Denver"), 4);
+        red.addEdge(new City("Denver"), new City("Oklahoma City"), 4);
+        red.addEdge(new City("Saint Saul Marie"), new City("Toronto"), 2);
+        red.addEdge(new City("Saint Saul Marie"), new City("Ehostter"), 5);
+        red.addEdge(new City("Ehostter"), new City("New York"), 3);
+        red.addEdge(new City("New York"), new City("Washington"), 2);
+        red.addEdge(new City("Washington"), new City("Raleigh"), 2);
+        red.addEdge(new City("Raleigh"), new City("Charleston"), 2);
+        red.addEdge(new City("Charleston"), new City("Atlanta"), 2);
+        red.addEdge(new City("Charleston"), new City("Miami"), 4);
+        assertEquals(20, red.getLongestPath());
+
+        Graph<City> yellow = new Graph<>();
+        yellow.addEdge(new City("Los Angeles"), new City("El Paso"), 6);
+        yellow.addEdge(new City("Los Angeles"), new City("Phoenix"), 3);
+        yellow.addEdge(new City("Phoenix"), new City("El Paso"), 3);
+        yellow.addEdge(new City("Phoenix"), new City("Santa Fe"), 3);
+        yellow.addEdge(new City("El Paso"), new City("Dallas"), 4);
+        yellow.addEdge(new City("Dallas"), new City("Oklahoma City"), 2);
+        yellow.addEdge(new City("Oklahoma City"), new City("Kansas City"), 2);
+        yellow.addEdge(new City("Kansas City"), new City("Omaha"), 1);
+        yellow.addEdge(new City("Omaha"), new City("Duluth"), 2);
+        yellow.addEdge(new City("Kansas City"), new City("St. Louis"), 2);
+        yellow.addEdge(new City("St. Louis"), new City("Nashville"),2);
+        yellow.addEdge(new City("Nashville"), new City("Atlanta"), 1);
+        yellow.addEdge(new City("Nashville"), new City("Pittsburg"), 4);
+        yellow.addEdge(new City("Pittsburg"), new City("Raleigh"), 2);
+        yellow.addEdge(new City("Pittsburg"), new City("Toronto"), 2);
+        yellow.addEdge(new City("Toronto"), new City("Ehostter"), 3);
+        yellow.addEdge(new City("Ehostter"), new City("Boston"), 2);
+        assertEquals(35, yellow.getLongestPath());
+
 
     }
 }
