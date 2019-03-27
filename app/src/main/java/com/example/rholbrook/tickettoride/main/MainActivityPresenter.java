@@ -21,7 +21,14 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
     @Override
     public void init() {
         mModel.setmPresenter(this);
-        mModel.getGameList();
+        try {
+            mModel.connectToManagementServer();
+            mModel.getGameList();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -67,6 +74,16 @@ public class MainActivityPresenter implements MainActivityContract.Presenter, Ob
 
     public Game getSelectedGame() {
         return mModel.getSelectedGame();
+    }
+
+    @Override
+    public void socketConnectionError(Exception ex) {
+        viewCallback.showToast("There was an error connection to the server.");
+        try {
+            mModel.connectToManagementServer();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

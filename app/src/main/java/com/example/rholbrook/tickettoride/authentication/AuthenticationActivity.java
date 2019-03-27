@@ -19,6 +19,7 @@ public class AuthenticationActivity extends AppCompatActivity implements
     private AuthenticationActivityContract.Presenter mPresenter;
     private static final int AUTHENTICATION_SUCCESS = 1;
     private static final int SWITCH_FRAGMENT = 0;
+    private static final int LOGIN_FRAGMENT = 2;
     private static CountingIdlingResource authenticationIdlingResource;
 
     @Override
@@ -51,6 +52,11 @@ public class AuthenticationActivity extends AppCompatActivity implements
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 this.finish();
+                break;
+            case LOGIN_FRAGMENT:
+                Fragment loginFragment = LoginFragment.newInstance(authenticationIdlingResource);
+                ((LoginFragment) loginFragment).setCallback(this);
+                getSupportFragmentManager().beginTransaction().add(R.id.authentication_fragment_container, loginFragment).commit();
                 break;
             case SWITCH_FRAGMENT:
                 authenticationIdlingResource = new CountingIdlingResource("Authentication Idling Resource");
