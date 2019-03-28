@@ -105,6 +105,43 @@ public class GraphTest {
     }
 
     @Test
+    public void getLongestPathSimple2() {
+        Graph<Character> otherGraph = new Graph<>();
+        otherGraph.addEdge('a', 'c', 1);
+        otherGraph.addEdge('c', 'b', 1);
+        otherGraph.addEdge('b', 'e', 2);
+        otherGraph.addEdge('b', 'd', 1);
+        otherGraph.addEdge('d', 'e', 1);
+        otherGraph.addEdge('e', 'f', 1);
+        otherGraph.addEdge('f', 'c', 1);
+        assertEquals(7,  otherGraph.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathDeadEnd() {
+        Graph<Character> deadEnd = new Graph<>();
+        deadEnd.addEdge('a', 'b', 1);
+        deadEnd.addEdge('b', 'c', 1);
+        deadEnd.addEdge('c', 'd', 1);
+        deadEnd.addEdge('c', 'e', 1);
+        deadEnd.addEdge('e', 'f', 1);
+        deadEnd.addEdge('f', 'g', 1);
+        assertEquals(5, deadEnd.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathLongDeadEnd() {
+        Graph<Character> deadEnd = new Graph<>();
+        deadEnd.addEdge('a', 'b', 1);
+        deadEnd.addEdge('b', 'c', 1);
+        deadEnd.addEdge('c', 'd', 4);
+        deadEnd.addEdge('c', 'e', 1);
+        deadEnd.addEdge('e', 'f', 1);
+        deadEnd.addEdge('f', 'g', 1);
+        assertEquals(7, deadEnd.getLongestPath());
+    }
+
+    @Test
     public void getLongestPathCities() {
         Graph<City> black = new Graph<>();
         black.addEdge(new City("Vancouver"), new City("Calgary"), 3);
@@ -161,7 +198,108 @@ public class GraphTest {
         yellow.addEdge(new City("Toronto"), new City("Ehostter"), 3);
         yellow.addEdge(new City("Ehostter"), new City("Boston"), 2);
         assertEquals(35, yellow.getLongestPath());
+    }
 
+    @Test
+    public void getLongestPathOneEdge() {
+        Graph<Character> oneEdgeGraph = new Graph<>();
+        oneEdgeGraph.addEdge('a', 'b', 3);
+        assertEquals(3, oneEdgeGraph.getLongestPath());
+    }
 
+    @Test
+    public void getLongestPathEmptyGraph() {
+        Graph<Character> emptyGraph = new Graph<>();
+        assertEquals(0, emptyGraph.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathNoEdges() {
+        Graph<Character> noEdgeGraph = new Graph<>();
+        noEdgeGraph.addNode('a');
+        noEdgeGraph.addNode('b');
+        noEdgeGraph.addNode('c');
+        assertEquals(0, noEdgeGraph.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathPureCycle() {
+        Graph<Character> cycleGraph = new Graph<>();
+        cycleGraph.addEdge('a', 'b', 1);
+        cycleGraph.addEdge('b', 'c', 1);
+        cycleGraph.addEdge('c', 'd', 2);
+        cycleGraph.addEdge('d', 'e', 1);
+        cycleGraph.addEdge('e', 'f', 3);
+        cycleGraph.addEdge('f', 'a', 1);
+        assertEquals(9, cycleGraph.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathDisjointGraph() {
+        Graph<Character> disjoint = new Graph<>();
+        disjoint.addEdge('a', 'b', 3);
+        disjoint.addEdge('c', 'd', 2);
+        disjoint.addEdge('e', 'f', 7);
+        assertEquals(7, disjoint.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathBigDisjointGraph() {
+        Graph<Character> bigDisjoint = new Graph<>();
+        bigDisjoint.addEdge('a', 'b', 1);
+        bigDisjoint.addEdge('b', 'c', 1);
+        bigDisjoint.addEdge('b', 'f', 1);
+        bigDisjoint.addEdge('c', 'd', 1);
+        bigDisjoint.addEdge('d', 'e', 1);
+        bigDisjoint.addEdge('e', 'f', 1);
+        bigDisjoint.addEdge('h', 'g', 1);
+        bigDisjoint.addEdge('z', 'x', 1);
+        bigDisjoint.addEdge('x', 'y', 1);
+        bigDisjoint.addEdge('y', 'v', 1);
+        bigDisjoint.addEdge('y', 'w', 1);
+        bigDisjoint.addEdge('w', 'v', 1);
+        bigDisjoint.addEdge('v', 'u', 1);
+        bigDisjoint.addEdge('u', 'x', 1);
+        assertEquals(6, bigDisjoint.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathBigDisjoint2() {
+        Graph<Character> bigDisjoint = new Graph<>();
+        bigDisjoint.addEdge('a', 'b', 1);
+        bigDisjoint.addEdge('b', 'c', 1);
+        bigDisjoint.addEdge('b', 'f', 1);
+        bigDisjoint.addEdge('c', 'd', 1);
+        bigDisjoint.addEdge('d', 'e', 1);
+        bigDisjoint.addEdge('e', 'f', 2);
+        bigDisjoint.addEdge('h', 'g', 1);
+        bigDisjoint.addEdge('z', 'x', 1);
+        bigDisjoint.addEdge('x', 'y', 1);
+        bigDisjoint.addEdge('y', 'v', 1);
+        bigDisjoint.addEdge('y', 'w', 1);
+        bigDisjoint.addEdge('w', 'v', 1);
+        bigDisjoint.addEdge('v', 'u', 1);
+        bigDisjoint.addEdge('u', 'x', 1);
+        assertEquals(7, bigDisjoint.getLongestPath());
+    }
+
+    @Test
+    public void getLongestPathBigDisjoint3() {
+        Graph<Character> bigDisjoint = new Graph<>();
+        bigDisjoint.addEdge('a', 'b', 1);
+        bigDisjoint.addEdge('b', 'c', 1);
+        bigDisjoint.addEdge('b', 'f', 1);
+        bigDisjoint.addEdge('c', 'd', 1);
+        bigDisjoint.addEdge('d', 'e', 1);
+        bigDisjoint.addEdge('e', 'f', 1);
+        bigDisjoint.addEdge('h', 'g', 1);
+        bigDisjoint.addEdge('z', 'x', 1);
+        bigDisjoint.addEdge('x', 'y', 1);
+        bigDisjoint.addEdge('y', 'v', 1);
+        bigDisjoint.addEdge('y', 'w', 1);
+        bigDisjoint.addEdge('w', 'v', 1);
+        bigDisjoint.addEdge('v', 'u', 1);
+        bigDisjoint.addEdge('u', 'x', 3);
+        assertEquals(8, bigDisjoint.getLongestPath());
     }
 }

@@ -171,6 +171,9 @@ public class Graph<T> {
     }
 
     private int getLength(Set<Edge> path) {
+        if (path == null) {
+            return 0;
+        }
         int length = 0;
         for (Edge edge : path) {
             length += edge.length;
