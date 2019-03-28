@@ -479,35 +479,27 @@ public class GameActivity extends AppCompatActivity implements
             public void run() {
                 if (faceUpDeck.get(0) != null) {
                     faceUpCardOne.setImageDrawable(getColorCardDrawable(faceUpDeck.get(0)));
-                    faceUpCardOne.setEnabled(true);
                 } else {
                     faceUpCardOne.setImageResource(R.mipmap.card_back);
-                    faceUpCardOne.setEnabled(false);
                 }
                 if (faceUpDeck.get(1) != null) {
                     faceUpCardTwo.setImageDrawable(getColorCardDrawable(faceUpDeck.get(1)));
-                    faceUpCardTwo.setEnabled(true);
                 } else {
                     faceUpCardTwo.setImageResource(R.mipmap.card_back);
-                    faceUpCardTwo.setEnabled(false);
                 }
                 if (faceUpDeck.get(2) != null) {
                     faceUpCardThree.setImageDrawable(getColorCardDrawable(faceUpDeck.get(2)));
-                    faceUpCardThree.setEnabled(true);
                 } else {
                     faceUpCardThree.setImageResource(R.mipmap.card_back);
-                    faceUpCardThree.setEnabled(false);
                 }
                 if (faceUpDeck.get(3) != null) {
                     faceUpCardFour.setImageDrawable(getColorCardDrawable(faceUpDeck.get(3)));
-                    faceUpCardFour.setEnabled(true);
                 } else {
                     faceUpCardFour.setImageResource(R.mipmap.card_back);
                     faceUpCardFour.setEnabled(false);
                 }
                 if (faceUpDeck.get(4) != null) {
                     faceUpCardFive.setImageDrawable(getColorCardDrawable(faceUpDeck.get(4)));
-                    faceUpCardFive.setEnabled(true);
                 } else {
                     faceUpCardFive.setImageResource(R.mipmap.card_back);
                     faceUpCardFive.setEnabled(false);
