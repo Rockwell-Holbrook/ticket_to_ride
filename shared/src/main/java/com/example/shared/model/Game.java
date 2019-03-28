@@ -388,7 +388,8 @@ public class Game {
             CPUPlayer cpuTurn = (CPUPlayer)newTurn;
             // Let everyone know in any case
             clientProxy.turnStarted(newTurn, gameId);
-            cpuTurn.takeTurn();
+            Thread cpuThread = new Thread(cpuTurn);
+            cpuThread.start();
         }
         else{
             clientProxy.startTurn(calculateClaimableRoutes(newTurn.getUsername()), newTurn.getUsername(), gameId);
