@@ -7,7 +7,7 @@ import java.util.Random;
 
 import static java.lang.Thread.sleep;
 
-public class CPUPlayer extends Player {
+public class CPUPlayer extends Player implements Runnable{
     private transient CPUState cpuState;
     private transient Game game;
     private transient Random rand;
@@ -107,5 +107,10 @@ public class CPUPlayer extends Player {
 
     public Game getGame() {
         return game;
+    }
+
+    @Override
+    public void run() {
+        this.takeTurn();
     }
 }
