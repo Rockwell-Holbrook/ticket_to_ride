@@ -38,10 +38,18 @@ public class CPUPlayer extends Player implements Runnable{
     public void drawCard() {
         System.out.println(this.username + " drawing a card.");
 
-        int randCard = rand.nextInt(Integer.MAX_VALUE) % 5;
+        int randCard = rand.nextInt(Integer.MAX_VALUE) % 6;
+        // If they choose from the face up and it's null, take from the deck
+        if (randCard < 5 && game.getTrainCardsFaceUp().get(randCard) == null){
+            randCard = 5;
+        }
+
         game.cardSelected(this.username, randCard);
 
-        int secondCard = rand.nextInt(Integer.MAX_VALUE) % 5;
+        int secondCard = rand.nextInt(Integer.MAX_VALUE) % 6;
+        if (secondCard < 5 && game.getTrainCardsFaceUp().get(secondCard) == null) {
+            secondCard = 5;
+        }
         game.cardSelected(this.username, secondCard);
 
         cpuState.drawCard(this);
