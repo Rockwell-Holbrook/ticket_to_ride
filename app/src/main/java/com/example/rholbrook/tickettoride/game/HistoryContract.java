@@ -7,10 +7,12 @@ import java.util.List;
 
 public class HistoryContract {
     interface HistoryView {
-        void updateGameHistory(List<GameHistory> gameHistory);
+        void updateGameHistory();
     }
 
     interface HistoryPresenter {
+        List<GameHistory> getGameHistoryList();
+
         void updateGameHistory(List<GameHistory> gameHistory);
         void getGameHistory();
         Player.PlayerColor getPlayerColor(String username);

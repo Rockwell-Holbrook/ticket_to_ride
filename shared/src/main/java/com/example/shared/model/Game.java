@@ -174,7 +174,7 @@ public class Game {
     public ArrayList<Ticket> initializeTickets(String username) {
         ArrayList<Ticket> temp = new ArrayList<>();
 
-        if((this.trainCardDeck.getDeckSize() + this.trainCardDeck.getDiscardDeckSize()) < 3) {
+        if((this.ticketDeck.getDeckSize() + this.trainCardDeck.getDiscardDeckSize()) < 3) {
             return temp;
         }
 
@@ -231,7 +231,7 @@ public class Game {
         temp.add(new Ticket(index, new City("Sault St Marie"), new City("Nashville"), 8));      index++;
         temp.add(new Ticket(index, new City("New York"), new City("Atlanta"), 6));               index++;
         temp.add(new Ticket(index, new City("Portland"), new City("Nashville"), 17));            index++;
-        temp.add(new Ticket(index, new City("Vancouver"), new City("Montréal"), 20));            index++;
+        temp.add(new Ticket(index, new City("Vancouver"), new City("Montreal"), 20));            index++;
         temp.add(new Ticket(index, new City("Duluth"), new City("El Paso"), 10));                index++;
         temp.add(new Ticket(index, new City("Toronto"), new City("Miami"), 10));                 index++;
         temp.add(new Ticket(index, new City("Portland"), new City("Phoenix"), 11));              index++;
@@ -279,23 +279,32 @@ public class Game {
     }
 
     public void cardSelected(String username, int index) {
-        TrainCard trainCard = this.trainCardDeck.drawFromTop();
-        if(this.trainCardDeck.getDeckSize() == 0) {
-            this.trainCardDeck.swapDecks();
-            this.trainCardDeck.shuffle();
+        TrainCard trainCard;
+        if((this.trainCardDeck.getDiscardDeckSize() + this.trainCardDeck.getDeckSize()) == 0) {
+            trainCard = null;
+        }
+
+        else{
+            trainCard = this.trainCardDeck.drawFromTop();
+
+            if(this.trainCardDeck.getDeckSize() == 0) {
+                this.trainCardDeck.swapDecks();
+                this.trainCardDeck.shuffle();
+            }
         }
 
         if (index != 5) {
             getPlayerWithUsername(username).addTrainCard(trainCardsFaceUp.get(index));
             trainCardsFaceUp.set(index, trainCard);
-            while(!isValidFaceUp(trainCardsFaceUp)){
-                // Discard all face up
+            while(!isValidFaceUp(trainCardsFaceUp)) {
+                //Discard all face up
                 this.trainCardDeck.discard(this.trainCardsFaceUp);
                 trainCardsFaceUp.clear();
-                // Re draw
+
+                //Re-draw
                 for (int i = 0; i < 5; i++) {
                     this.trainCardsFaceUp.add(this.trainCardDeck.drawFromTop());
-                    if(this.trainCardDeck.getDeckSize() == 0) {
+                    if (this.trainCardDeck.getDeckSize() == 0) {
                         this.trainCardDeck.swapDecks();
                         this.trainCardDeck.shuffle();
                     }
@@ -308,7 +317,9 @@ public class Game {
         }
 
         else { //5 is the index for the face-down-deck
-            getPlayerWithUsername(username).addTrainCard(trainCard);
+            if(trainCard != null) {
+                getPlayerWithUsername(username).addTrainCard(trainCard);
+            }
             clientProxy.receiveFaceDownCard(trainCard, username, gameId);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
             this.gameHistory.add(new GameHistory(username, "Drew a Train Card from the deck!"));
@@ -379,7 +390,7 @@ public class Game {
         }
 
         //Check for Skip turn
-        if(getClaimedRoutes().size() == 0 && nullCountInFaceUpCards() > 3 && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
+        if(calculateClaimableRoutes(newTurn.getUsername()).size() == 0 && nullCountInFaceUpCards() == 5 && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
             startNextTurn(newTurn);
         }
 
@@ -464,7 +475,7 @@ public class Game {
     }
 
     private boolean lowPlayerGameAdjacentRouteOwned(Route route) {
-        if(getMaxPlayers() > 3) {
+        if(getMaxPlayers() > 4) {
             return false;
         }
 
@@ -490,13 +501,15 @@ public class Game {
         cardGroupings.put(TrainCard.Color.WILD, 0);
 
         for(TrainCard card : getPlayerWithUsername(username).getTrainCards()) {
-            if(card.getColor() == TrainCard.Color.WILD) {
-                for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
-                    cardGroupings.put(entry.getKey(), entry.getValue() + 1);
+            if (card != null) {
+                if(card.getColor() == TrainCard.Color.WILD) {
+                    for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
+                        cardGroupings.put(entry.getKey(), entry.getValue() + 1);
+                    }
                 }
-            }
-            else {
-                cardGroupings.put(card.getColor(), cardGroupings.get(card.getColor()) + 1);
+                else {
+                    cardGroupings.put(card.getColor(), cardGroupings.get(card.getColor()) + 1);
+                }
             }
         }
         return cardGroupings;

@@ -154,23 +154,18 @@ public class GameActivity extends AppCompatActivity implements
         faceDownTicketDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int deckCount = Integer.valueOf(ticketDeckCountTextView.getText().toString());
-                if (deckCount < 2) {
-                    mPresenter.clickDrawTickets();
-                } else {
-                    showToast(getString(R.string.tickets_empty));
-                }
+                mPresenter.clickDrawTickets();
             }
         });
 
         faceDownTrainCardDeck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!trainCardDeckCount.getText().toString().equals(0)) {
+                if (mPresenter.getTrainDeckCount() != 0) {
                     mPresenter.selectingCards();
                     mPresenter.selectFaceDownCardDeck();
                     cardsDrawn += 1;
-                    if (cardsDrawn == 2) {
+                    if (cardsDrawn == 2 || !checkHasMovesLeft()) {
                         endUserTurn();
                         mPresenter.endTurn();
                     }
@@ -195,7 +190,7 @@ public class GameActivity extends AppCompatActivity implements
                             mPresenter.endTurn();
                         } else {
                             cardsDrawn += 1;
-                            if (cardsDrawn == 2) {
+                            if (cardsDrawn == 2 || !checkHasMovesLeft()) {
                                 endUserTurn();
                                 mPresenter.endTurn();
                             }
@@ -221,7 +216,7 @@ public class GameActivity extends AppCompatActivity implements
                             mPresenter.endTurn();
                         } else {
                             cardsDrawn += 1;
-                            if (cardsDrawn == 2) {
+                            if (cardsDrawn == 2 || !checkHasMovesLeft()) {
                                 endUserTurn();
                                 mPresenter.endTurn();
                             }
@@ -247,7 +242,7 @@ public class GameActivity extends AppCompatActivity implements
                             mPresenter.endTurn();
                         } else {
                             cardsDrawn += 1;
-                            if (cardsDrawn == 2) {
+                            if (cardsDrawn == 2 || !checkHasMovesLeft()) {
                                 endUserTurn();
                                 mPresenter.endTurn();
                             }
@@ -273,7 +268,7 @@ public class GameActivity extends AppCompatActivity implements
                             mPresenter.endTurn();
                         } else {
                             cardsDrawn += 1;
-                            if (cardsDrawn == 2) {
+                            if (cardsDrawn == 2 || !checkHasMovesLeft()) {
                                 endUserTurn();
                                 mPresenter.endTurn();
                             }
@@ -299,7 +294,7 @@ public class GameActivity extends AppCompatActivity implements
                             mPresenter.endTurn();
                         } else {
                             cardsDrawn += 1;
-                            if (cardsDrawn == 2) {
+                            if (cardsDrawn == 2 || !checkHasMovesLeft()) {
                                 endUserTurn();
                                 mPresenter.endTurn();
                             }
@@ -366,6 +361,8 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void onDrawerOpened(@NonNull View view) {
                 // Do nothing
+                GameActivityModel.getInstance().getChatHistory();
+                GameActivityModel.getInstance().getGameHistory();
             }
 
             @Override
@@ -526,6 +523,7 @@ public class GameActivity extends AppCompatActivity implements
             @Override
             public void run() {
                 faceDownTicketDeck.setEnabled(true);
+                faceDownTicketDeck.setActivated(true);
                 faceDownTrainCardDeck.setEnabled(true);
                 faceUpCardOne.setEnabled(true);
                 faceUpCardTwo.setEnabled(true);
@@ -570,6 +568,18 @@ public class GameActivity extends AppCompatActivity implements
                 playerTicketDeck.setImageDrawable(getResources().getDrawable(GameActivityPresenter.TICKET_IMAGE_MAP.get(id)));
             }
         });
+    }
+
+    public boolean checkHasMovesLeft() {
+        if (mPresenter.getTrainDeckCount() != 0) {
+            return true;
+        }
+        for (int i = 0; i < 5; i++) {
+            if (mPresenter.getFaceUpCard(i) != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

@@ -46,6 +46,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     private Game game;
     private List<Chat> chatMessages;
     private List<GameHistory> gameHistory;
+    private List<Route> availableRoutes;
 
     public GameActivityModel() {
         server = ServerProxy.getInstance();
@@ -57,9 +58,15 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
         gameActivityPresenter.notifyLastTurn();
     }
 
+
+
     /**
      * Getters and Setters
      */
+
+    public List<Route> getAvailableRoutes() {
+        return availableRoutes;
+    }
 
     public String getGameId() {
         return gameId;
@@ -178,6 +185,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
 
     @Override
     public void getChatHistory() {
+        if (chatListener != null)
         chatListener.updateChatList(chatMessages);
         //server.getChatHistory(gameId, Authentication.getInstance().getUsername(), true);
     }
@@ -191,6 +199,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     }
 
     public void receivedGameHistory(List<GameHistory> gameHistory) {
+        if (historyListener != null)
         this.gameHistory = gameHistory;
         historyListener.updateGameHistory(this.gameHistory);
     }
@@ -269,6 +278,7 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
      */
 
     public void startTurn(List<Route> availableRoutes) {
+        this.availableRoutes = availableRoutes;
         gameMapFragmentPresenter.updateAvailableRoutes(availableRoutes);
         isTurn = true;
         setChanged();

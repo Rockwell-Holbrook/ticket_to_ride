@@ -16,12 +16,34 @@ public class GameActivityPresenter implements
 
     private GameActivityContract.View viewCallback;
     private GameActivityModel mModel;
+    public int ticketDeckCount;
+    public int trainDeckCount;
 
     public GameActivityPresenter(GameActivityContract.View viewCallback) {
         this.viewCallback = viewCallback;
         this.mModel = GameActivityModel.getInstance();
         mModel.setGameActivityPresenter(this);
         mModel.addObserver(this);
+    }
+
+    @Override
+    public int getTicketDeckCount() {
+        return ticketDeckCount;
+    }
+
+    @Override
+    public void setTicketDeckCount(int ticketDeckCount) {
+        this.ticketDeckCount = ticketDeckCount;
+    }
+
+    @Override
+    public int getTrainDeckCount() {
+        return trainDeckCount;
+    }
+
+    @Override
+    public void setTrainDeckCount(int trainDeckCount) {
+        this.trainDeckCount = trainDeckCount;
     }
 
     @Override
@@ -201,6 +223,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public int getAvailableRoutesSize() {
+        return mModel.getAvailableRoutes().size();
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }
@@ -212,7 +239,11 @@ public class GameActivityPresenter implements
 
     @Override
     public void selectTickets(List<Ticket> tickets) {
-        viewCallback.selectTickets(tickets, GameActivityModel.ADDITIONAL_TICKETS_SELECTION_TYPE);
+        if (tickets.size() == 3) {
+            viewCallback.selectTickets(tickets, GameActivityModel.ADDITIONAL_TICKETS_SELECTION_TYPE);
+        } else {
+            viewCallback.showToast("Not enough tickets left");
+        }
     }
 
     @Override
@@ -290,6 +321,8 @@ public class GameActivityPresenter implements
 
     @Override
     public void setDeckCount(int ticketDeckCount, int trainDeckCount) {
+        this.ticketDeckCount = ticketDeckCount;
+        this.trainDeckCount = trainDeckCount;
         viewCallback.updateDeckCounts(ticketDeckCount, trainDeckCount);
     }
 
