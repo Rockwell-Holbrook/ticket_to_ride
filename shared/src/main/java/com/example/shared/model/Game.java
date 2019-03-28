@@ -104,9 +104,7 @@ public class Game {
 
             // If it's not valid, discard all and make a new temp
             if(!valid){
-                for (TrainCard tc: temp) {
-                    this.trainCardDeck.discard(tc);
-                }
+                this.trainCardDeck.discard(temp);
                 temp = new ArrayList<>();
             }
         }
@@ -292,9 +290,8 @@ public class Game {
             trainCardsFaceUp.set(index, trainCard);
             while(!isValidFaceUp(trainCardsFaceUp)){
                 // Discard all face up
-                for (TrainCard tc: trainCardsFaceUp) {
-                    this.trainCardDeck.discard(tc);
-                }
+                this.trainCardDeck.discard(this.trainCardsFaceUp);
+                trainCardsFaceUp.clear();
                 // Re draw
                 for (int i = 0; i < 5; i++) {
                     this.trainCardsFaceUp.add(this.trainCardDeck.drawFromTop());
@@ -324,9 +321,9 @@ public class Game {
     }
 
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
-        for (int i = 0; i < returned.size(); i++) {
-            this.ticketDeck.putToBottom(returned.get(i));
-        }
+
+        this.ticketDeck.discard(returned);
+
 
         getPlayerWithUsername(username).returnedTickets(returned);
 //        clientProxy.ticketsReceived(getPlayerWithUsername(username).getTickets(), username, gameId);
@@ -339,6 +336,7 @@ public class Game {
 
         getPlayerWithUsername(username).claimRoute(routeToClaim);
         getPlayerWithUsername(username).removeTrainCards(selectedCards);
+        this.trainCardDeck.discard(selectedCards);
 
         this.availableRoutes.remove(routeToClaim);
         this.claimedRoutes.add(routeToClaim);
