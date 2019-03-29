@@ -131,4 +131,6 @@ public interface IClientInGame {
     void gameEnding(String gameId);
 
     void gameEnded(String gameId);
+
+    void fatalError(String message);
 }
