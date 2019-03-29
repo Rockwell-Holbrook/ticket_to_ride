@@ -66,8 +66,7 @@ public class DatabaseAccess {
         }
 
         try {
-            final String CONNECTION_URL = "jdbc:sqlite:server/userDatabase.db";
-            //final String CONNECTION_URL = "jdbc:sqlite:userDatabase.db";
+            final String CONNECTION_URL = "jdbc:sqlite:userDatabase.db";
 
             // Open a database connection
             conn = DriverManager.getConnection(CONNECTION_URL);
