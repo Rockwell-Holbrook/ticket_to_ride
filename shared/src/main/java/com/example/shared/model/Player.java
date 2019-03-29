@@ -20,7 +20,7 @@ public class Player {
     protected transient int incompletedTicketCount = 0;
     protected transient int completedTicketPoints = 0;
     protected transient int incompleteTicketPoints = 0;
-    protected transient int longestRouteCount = 0;
+    protected int longestRouteCount = 0;
     protected transient int bonusPoints = 0;
     protected transient int totalPoints = 0;
     protected transient boolean hasGlobeTrotter = false;

@@ -127,34 +127,36 @@ public class Game {
         final int WILD_MAX = 3;
 
         for(TrainCard tc : faceUp){
-            switch (tc.getColor()){
-                case PINK:
-                    pinkCnt++;
-                    break;
-                case WHITE:
-                    whiteCnt++;
-                    break;
-                case BLUE:
-                    blueCnt++;
-                    break;
-                case YELLOW:
-                    yellowCnt++;
-                    break;
-                case ORANGE:
-                    orangeCnt++;
-                    break;
-                case BLACK:
-                    blackCnt++;
-                    break;
-                case RED:
-                    redCnt++;
-                    break;
-                case GREEN:
-                    greenCnt++;
-                    break;
-                case WILD:
-                    wildCnt++;
-                    break;
+            if (tc != null) {
+                switch (tc.getColor()){
+                    case PINK:
+                        pinkCnt++;
+                        break;
+                    case WHITE:
+                        whiteCnt++;
+                        break;
+                    case BLUE:
+                        blueCnt++;
+                        break;
+                    case YELLOW:
+                        yellowCnt++;
+                        break;
+                    case ORANGE:
+                        orangeCnt++;
+                        break;
+                    case BLACK:
+                        blackCnt++;
+                        break;
+                    case RED:
+                        redCnt++;
+                        break;
+                    case GREEN:
+                        greenCnt++;
+                        break;
+                    case WILD:
+                        wildCnt++;
+                        break;
+                }
             }
         }
 
