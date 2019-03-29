@@ -16,7 +16,7 @@ import java.net.URL;
 public class AuthenticationServerProxy {
     private static AuthenticationServerProxy instance;
     private static final int SERVER_PORT_NUMBER = 6666;
-    private static final String SERVER_HOST = "ec2-13-58-12-187.us-east-2.compute.amazonaws.com";
+    private static final String SERVER_HOST = "ec2-3-19-11-239.us-east-2.compute.amazonaws.com";
     private static final String URL_PREFIX = "http://" + SERVER_HOST + ":" + SERVER_PORT_NUMBER;
     public static final String LOGIN_DESIGNATOR = "/authenticate/login";
     public static final String REGISTER_DESIGNATOR = "/authenticate/register";

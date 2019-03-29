@@ -217,6 +217,11 @@ public class Player {
         for (Ticket ticket : returnedTickets) {
             removeTicket(ticket);
         }
+        for (Ticket ticket : this.tickets) {
+            if (!ticket.isCompleted()) {
+                ticket.setCompleted(connectedCities.hasPath(ticket.getFirstCity(), ticket.getSecondCity()));
+            }
+        }
     }
 
     private void removeTicket(Ticket ticket) {
