@@ -9,6 +9,7 @@ import java.util.List;
 public class ChatPresenter implements ChatContract.ChatPresenter {
     private ChatContract.ChatView viewCallback;
     private ChatContract.ChatModel model;
+    public List<Chat> chatMessagesList;
 
     public ChatPresenter(ChatContract.ChatView viewCallback, ChatContract.ChatModel model) {
         this.viewCallback = viewCallback;
@@ -17,7 +18,19 @@ public class ChatPresenter implements ChatContract.ChatPresenter {
     }
 
     @Override
+    public List<Chat> getChatMessagesList() {
+        return chatMessagesList;
+    }
+
+    @Override
+    public void setChatMessagesList(List<Chat> chatMessagesList) {
+        this.chatMessagesList = chatMessagesList;
+    }
+
+    @Override
     public void updateChatList(List<Chat> chatMessages) {
+        chatMessagesList = chatMessages;
+        if (viewCallback != null)
         viewCallback.updateChatList(chatMessages);
     }
 

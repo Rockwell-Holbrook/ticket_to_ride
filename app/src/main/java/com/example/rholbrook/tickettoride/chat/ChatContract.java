@@ -11,6 +11,8 @@ public class ChatContract {
     }
 
     public interface ChatPresenter {
+        List<Chat> getChatMessagesList();
+        void setChatMessagesList(List<Chat> chatMessagesList);
         void updateChatList(List<Chat> chatMessages);
         void sendChat(String message);
         void getChatHistory();

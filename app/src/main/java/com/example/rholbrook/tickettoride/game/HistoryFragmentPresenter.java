@@ -8,6 +8,7 @@ import java.util.List;
 public class HistoryFragmentPresenter implements HistoryContract.HistoryPresenter {
     private HistoryContract.HistoryView viewCallback;
     private GameActivityModel model;
+    public List<GameHistory> gameHistoryList;
 
     public HistoryFragmentPresenter(HistoryContract.HistoryView viewCallback) {
         this.viewCallback = viewCallback;
@@ -16,8 +17,18 @@ public class HistoryFragmentPresenter implements HistoryContract.HistoryPresente
     }
 
     @Override
+    public List<GameHistory> getGameHistoryList() {
+        return gameHistoryList;
+    }
+
+    public void setGameHistoryList(List<GameHistory> gameHistoryList) {
+        this.gameHistoryList = gameHistoryList;
+    }
+
+    @Override
     public void updateGameHistory(List<GameHistory> gameHistory) {
-        viewCallback.updateGameHistory(gameHistory);
+        gameHistoryList = gameHistory;
+        viewCallback.updateGameHistory();
     }
 
     @Override

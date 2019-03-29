@@ -74,14 +74,30 @@ public class ChatFragment extends Fragment implements ChatContract.ChatView {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        presenter.getChatHistory();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getChatHistory();
+    }
+
+    @Override
     public void updateChatList (List<Chat> chatMessages) {
-        final List<Chat> messages = chatMessages;
+        final List<Chat> messages = presenter.getChatMessagesList();
+        if (getActivity() != null)
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                chatRecyclerView.setAdapter(new ChatAdapter(messages, presenter, getContext()));
-                chatRecyclerView.scrollToPosition(messages.size() - 1);
+                if (chatRecyclerView != null) {
+                    chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    chatRecyclerView.setAdapter(new ChatAdapter(messages, presenter, getContext()));
+                    chatRecyclerView.scrollToPosition(messages.size() - 1);
+                }
+
             }
         });
     }

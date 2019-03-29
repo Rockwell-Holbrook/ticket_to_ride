@@ -39,6 +39,10 @@ public class GameActivityContract {
     }
 
     public interface Presenter {
+        int getTicketDeckCount();
+        void setTicketDeckCount(int ticketDeckCount);
+        int getTrainDeckCount();
+        void setTrainDeckCount(int trainDeckCount);
         void selectFaceUpCard(int index);
         void selectFaceDownCardDeck();
         void clickDrawTickets();
@@ -72,5 +76,6 @@ public class GameActivityContract {
         void notifyLastTurn();
         void endGame();
         void sendNotification(Chat chat);
+        int getAvailableRoutesSize();
     }
 }

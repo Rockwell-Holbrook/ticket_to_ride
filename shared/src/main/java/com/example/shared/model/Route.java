@@ -114,8 +114,8 @@ public class Route {
         ROUTE_GROUP_MAP.put(17, new Route(17, new City("Los Angeles"), new City("Phoenix"), RouteColor.GRAY, 4, 3));
         ROUTE_GROUP_MAP.put(18, new Route(18, new City("Calgary"), new City("Helena"), RouteColor.GRAY, 7, 4));
         ROUTE_GROUP_MAP.put(19, new Route(19, new City("Salt Lake City"), new City("Helena"), RouteColor.PINK, 4, 3));
-        ROUTE_GROUP_MAP.put(20, new Route(20, new City("Salt Lake City"), new City("Denver"), RouteColor.RED, 4, 3, true, 20));
-        ROUTE_GROUP_MAP.put(21, new Route(21, new City("Salt Lake City"), new City("Denver"), RouteColor.YELLOW, 4, 3, true, 19));
+        ROUTE_GROUP_MAP.put(20, new Route(20, new City("Salt Lake City"), new City("Denver"), RouteColor.RED, 4, 3, true, 21));
+        ROUTE_GROUP_MAP.put(21, new Route(21, new City("Salt Lake City"), new City("Denver"), RouteColor.YELLOW, 4, 3, true, 20));
         ROUTE_GROUP_MAP.put(22, new Route(22, new City("Los Angeles"), new City("El Paso"), RouteColor.BLACK, 15, 6));
         ROUTE_GROUP_MAP.put(23, new Route(23, new City("Phoenix"), new City("El Paso"), RouteColor.GRAY, 4, 3));
         ROUTE_GROUP_MAP.put(24, new Route(24, new City("Phoenix"), new City("Denver"), RouteColor.WHITE, 10, 5));

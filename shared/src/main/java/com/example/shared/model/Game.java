@@ -127,34 +127,36 @@ public class Game {
         final int WILD_MAX = 3;
 
         for(TrainCard tc : faceUp){
-            switch (tc.getColor()){
-                case PINK:
-                    pinkCnt++;
-                    break;
-                case WHITE:
-                    whiteCnt++;
-                    break;
-                case BLUE:
-                    blueCnt++;
-                    break;
-                case YELLOW:
-                    yellowCnt++;
-                    break;
-                case ORANGE:
-                    orangeCnt++;
-                    break;
-                case BLACK:
-                    blackCnt++;
-                    break;
-                case RED:
-                    redCnt++;
-                    break;
-                case GREEN:
-                    greenCnt++;
-                    break;
-                case WILD:
-                    wildCnt++;
-                    break;
+            if (tc != null) {
+                switch (tc.getColor()){
+                    case PINK:
+                        pinkCnt++;
+                        break;
+                    case WHITE:
+                        whiteCnt++;
+                        break;
+                    case BLUE:
+                        blueCnt++;
+                        break;
+                    case YELLOW:
+                        yellowCnt++;
+                        break;
+                    case ORANGE:
+                        orangeCnt++;
+                        break;
+                    case BLACK:
+                        blackCnt++;
+                        break;
+                    case RED:
+                        redCnt++;
+                        break;
+                    case GREEN:
+                        greenCnt++;
+                        break;
+                    case WILD:
+                        wildCnt++;
+                        break;
+                }
             }
         }
 
@@ -174,7 +176,7 @@ public class Game {
     public ArrayList<Ticket> initializeTickets(String username) {
         ArrayList<Ticket> temp = new ArrayList<>();
 
-        if((this.trainCardDeck.getDeckSize() + this.trainCardDeck.getDiscardDeckSize()) < 3) {
+        if((this.ticketDeck.getDeckSize() + this.trainCardDeck.getDiscardDeckSize()) < 3) {
             return temp;
         }
 
@@ -279,23 +281,32 @@ public class Game {
     }
 
     public void cardSelected(String username, int index) {
-        TrainCard trainCard = this.trainCardDeck.drawFromTop();
-        if(this.trainCardDeck.getDeckSize() == 0) {
-            this.trainCardDeck.swapDecks();
-            this.trainCardDeck.shuffle();
+        TrainCard trainCard;
+        if((this.trainCardDeck.getDiscardDeckSize() + this.trainCardDeck.getDeckSize()) == 0) {
+            trainCard = null;
+        }
+
+        else{
+            trainCard = this.trainCardDeck.drawFromTop();
+
+            if(this.trainCardDeck.getDeckSize() == 0) {
+                this.trainCardDeck.swapDecks();
+                this.trainCardDeck.shuffle();
+            }
         }
 
         if (index != 5) {
             getPlayerWithUsername(username).addTrainCard(trainCardsFaceUp.get(index));
             trainCardsFaceUp.set(index, trainCard);
-            while(!isValidFaceUp(trainCardsFaceUp)){
-                // Discard all face up
+            while(!isValidFaceUp(trainCardsFaceUp)) {
+                //Discard all face up
                 this.trainCardDeck.discard(this.trainCardsFaceUp);
                 trainCardsFaceUp.clear();
-                // Re draw
+
+                //Re-draw
                 for (int i = 0; i < 5; i++) {
                     this.trainCardsFaceUp.add(this.trainCardDeck.drawFromTop());
-                    if(this.trainCardDeck.getDeckSize() == 0) {
+                    if (this.trainCardDeck.getDeckSize() == 0) {
                         this.trainCardDeck.swapDecks();
                         this.trainCardDeck.shuffle();
                     }
@@ -308,7 +319,9 @@ public class Game {
         }
 
         else { //5 is the index for the face-down-deck
-            getPlayerWithUsername(username).addTrainCard(trainCard);
+            if(trainCard != null) {
+                getPlayerWithUsername(username).addTrainCard(trainCard);
+            }
             clientProxy.receiveFaceDownCard(trainCard, username, gameId);
             clientProxy.sendDeckCount(ticketDeck.getDeckSize(), trainCardDeck.getDeckSize());
             this.gameHistory.add(new GameHistory(username, "Drew a Train Card from the deck!"));
@@ -379,7 +392,7 @@ public class Game {
         }
 
         //Check for Skip turn
-        if(getClaimedRoutes().size() == 0 && nullCountInFaceUpCards() > 3 && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
+        if(calculateClaimableRoutes(newTurn.getUsername()).size() == 0 && nullCountInFaceUpCards() == 5 && (this.ticketDeck.getDeckSize() + this.ticketDeck.getDiscardDeckSize() < 3)) {
             startNextTurn(newTurn);
         }
 
@@ -388,7 +401,8 @@ public class Game {
             CPUPlayer cpuTurn = (CPUPlayer)newTurn;
             // Let everyone know in any case
             clientProxy.turnStarted(newTurn, gameId);
-            cpuTurn.takeTurn();
+            Thread cpuThread = new Thread(cpuTurn);
+            cpuThread.start();
         }
         else{
             clientProxy.startTurn(calculateClaimableRoutes(newTurn.getUsername()), newTurn.getUsername(), gameId);
@@ -464,7 +478,7 @@ public class Game {
     }
 
     private boolean lowPlayerGameAdjacentRouteOwned(Route route) {
-        if(getMaxPlayers() > 3) {
+        if(getMaxPlayers() > 4) {
             return false;
         }
 
@@ -490,13 +504,15 @@ public class Game {
         cardGroupings.put(TrainCard.Color.WILD, 0);
 
         for(TrainCard card : getPlayerWithUsername(username).getTrainCards()) {
-            if(card.getColor() == TrainCard.Color.WILD) {
-                for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
-                    cardGroupings.put(entry.getKey(), entry.getValue() + 1);
+            if (card != null) {
+                if(card.getColor() == TrainCard.Color.WILD) {
+                    for (Map.Entry<TrainCard.Color, Integer> entry : cardGroupings.entrySet()) {
+                        cardGroupings.put(entry.getKey(), entry.getValue() + 1);
+                    }
                 }
-            }
-            else {
-                cardGroupings.put(card.getColor(), cardGroupings.get(card.getColor()) + 1);
+                else {
+                    cardGroupings.put(card.getColor(), cardGroupings.get(card.getColor()) + 1);
+                }
             }
         }
         return cardGroupings;
