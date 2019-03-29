@@ -133,14 +133,20 @@ public class GameManager {
      * @param gameStarted whether the game is started or not so we know which list to grab the game from
      */
     public void sendChat(Chat chat, String gameId, boolean gameStarted) {
-        Game game;
-        if (gameStarted) {
-            game = this.playingGameList.get(gameId);
-        } else {
-            game = this.notPlayingGameList.get(gameId);
+        try {
+            Game game;
+            if (gameStarted) {
+                game = this.playingGameList.get(gameId);
+            } else {
+                game = this.notPlayingGameList.get(gameId);
+            }
+            game.addChatToList(chat);
+            clientProxy.receivedChat(chat, game.isPlaying(), gameId);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
         }
-        game.addChatToList(chat);
-        clientProxy.receivedChat(chat, game.isPlaying(), gameId);
     }
 
     /**
@@ -155,13 +161,19 @@ public class GameManager {
      * @param gameStarted whether the game is started or not so we know which list to grab the game from
      */
     public void getChatHistory(String gameId, String username, boolean gameStarted) {
-        Game game;
-        if (gameStarted) {
-            game = this.playingGameList.get(gameId);
-        } else {
-            game = this.notPlayingGameList.get(gameId);
+        try {
+            Game game;
+            if (gameStarted) {
+                game = this.playingGameList.get(gameId);
+            } else {
+                game = this.notPlayingGameList.get(gameId);
+            }
+            clientProxy.receivedChatHistory(game.getChatHistory(), gameStarted, username, game.getGameId());
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
         }
-        clientProxy.receivedChatHistory(game.getChatHistory(), gameStarted, username, game.getGameId());
     }
 
     /**
@@ -174,8 +186,14 @@ public class GameManager {
      * @param gameId The ID of the game we need to work with!
      */
     public void getGameHistory(String gameId, String username) {
-        Game game = this.playingGameList.get(gameId);
-        clientProxy.receivedGameHistory(game.getGameHistory(), username, gameId);
+        try {
+            Game game = this.playingGameList.get(gameId);
+            clientProxy.receivedGameHistory(game.getGameHistory(), username, gameId);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
+        }
     }
 
     /**
@@ -237,8 +255,14 @@ public class GameManager {
      * @param index a number from 0-5 where 5 is the deck and 0-4 are face up cards
      */
     public void getCard(String gameId, String username, int index) {
-        Game game = this.playingGameList.get(gameId);
-        game.cardSelected(username, index);
+        try {
+            Game game = this.playingGameList.get(gameId);
+            game.cardSelected(username, index);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
+        }
     }
 
     /**
@@ -253,8 +277,14 @@ public class GameManager {
      * @param username The username of the User that has requested a ticket.
      */
     public void requestTickets(String gameId, String username) {
-        Game game = this.playingGameList.get(gameId);
-        game.ticketsRequested(username);
+        try {
+            Game game = this.playingGameList.get(gameId);
+            game.ticketsRequested(username);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
+        }
     }
 
     /**
@@ -271,8 +301,14 @@ public class GameManager {
      * @param returned The Tickets the player wishes to return to the deck.
      */
     public void ticketsReturned(String gameId, String username, ArrayList<Ticket> returned) {
-        Game game = this.playingGameList.get(gameId);
-        game.ticketsReturned(gameId, username, returned);
+        try {
+            Game game = this.playingGameList.get(gameId);
+            game.ticketsReturned(gameId, username, returned);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
+        }
     }
 
     /**
@@ -289,8 +325,14 @@ public class GameManager {
      * @param routeId The ID of the route that the user is asking to claim.
      */
     public void claimRoute(String gameId, String username, int routeId, List<TrainCard> selectedCards) {
-        Game game = this.playingGameList.get(gameId);
-        game.claimRoute(username, routeId, selectedCards);
+        try {
+            Game game = this.playingGameList.get(gameId);
+            game.claimRoute(username, routeId, selectedCards);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
+        }
     }
 
     /**
@@ -305,13 +347,25 @@ public class GameManager {
      * @param username The username of the User that has ended his turn.
      */
     public void endPlayerTurn(String gameId, String username) {
-        Game game = this.playingGameList.get(gameId);
-        game.endPlayerTurn(username);
+        try {
+            Game game = this.playingGameList.get(gameId);
+            game.endPlayerTurn(username);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
+        }
     }
 
     public void calculateClaimableRoutes(String gameId, String username) {
-        Game game = this.playingGameList.get(gameId);
-        game.calculateClaimableRoutes(username);
+        try {
+            Game game = this.playingGameList.get(gameId);
+            game.calculateClaimableRoutes(username);
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            e.printStackTrace();
+            clientProxy.fatalError(e.getMessage());
+        }
     }
 
     public void removeGame(String gameId){

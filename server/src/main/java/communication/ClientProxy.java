@@ -221,4 +221,13 @@ public class ClientProxy implements IClientInGame, IClientNotInGame {
 
         ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
     }
+
+    @Override
+    public void fatalError(String message) {
+        String methodName = "fatalError";
+        String[] typeNames = {String.class.getName()};
+        Object[] inputVals = {message};
+
+        ss.broadcastToGame(new Command(methodName, typeNames, inputVals), gameId);
+    }
 }
