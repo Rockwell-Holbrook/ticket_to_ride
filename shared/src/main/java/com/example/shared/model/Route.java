@@ -167,17 +167,17 @@ public class Route {
         ROUTE_GROUP_MAP.put(70, new Route(70, new City("Little Rock"), new City("Nashville"), RouteColor.WHITE, 4, 3));
         ROUTE_GROUP_MAP.put(71, new Route(71, new City("Little Rock"), new City("Saint Louis"), RouteColor.GRAY, 2, 2));
         ROUTE_GROUP_MAP.put(72, new Route(72, new City("Pittsburgh"), new City("Washington"), RouteColor.GRAY, 2, 2));
-        ROUTE_GROUP_MAP.put(73, new Route(73, new City("New York"), new City("Washington"), RouteColor.ORANGE, 2, 2, true, 74));
-        ROUTE_GROUP_MAP.put(74, new Route(74, new City("New York"), new City("Washington"), RouteColor.BLACK, 2, 2, true, 73));
-        ROUTE_GROUP_MAP.put(75, new Route(75, new City("Montreal"), new City("New York"), RouteColor.BLUE, 4, 3));
+        ROUTE_GROUP_MAP.put(73, new Route(73, new City("New York City"), new City("Washington"), RouteColor.ORANGE, 2, 2, true, 74));
+        ROUTE_GROUP_MAP.put(74, new Route(74, new City("New York City"), new City("Washington"), RouteColor.BLACK, 2, 2, true, 73));
+        ROUTE_GROUP_MAP.put(75, new Route(75, new City("Montreal"), new City("New York City"), RouteColor.BLUE, 4, 3));
         ROUTE_GROUP_MAP.put(76, new Route(76, new City("Montreal"), new City("Boston"), RouteColor.GRAY, 2, 2, true, 77));
         ROUTE_GROUP_MAP.put(77, new Route(77, new City("Montreal"), new City("Boston"), RouteColor.GRAY, 2, 2, true, 76));
-        ROUTE_GROUP_MAP.put(78, new Route(78, new City("Pittsburgh"), new City("New York"), RouteColor.GREEN, 2, 2, true, 83));
+        ROUTE_GROUP_MAP.put(78, new Route(78, new City("Pittsburgh"), new City("New York City"), RouteColor.GREEN, 2, 2, true, 83));
         ROUTE_GROUP_MAP.put(79, new Route(79, new City("Raleigh"), new City("Washington"), RouteColor.GRAY, 2, 2, true, 82));
         ROUTE_GROUP_MAP.put(80, new Route(80, new City("Atlanta"), new City("Raleigh"), RouteColor.GRAY, 2, 2, true, 81));
         ROUTE_GROUP_MAP.put(81, new Route(81, new City("Atlanta"), new City("Raleigh"), RouteColor.GRAY, 2, 2, true, 80));
         ROUTE_GROUP_MAP.put(82, new Route(82, new City("Raleigh"), new City("Washington"), RouteColor.GRAY, 2, 2, true, 79));
-        ROUTE_GROUP_MAP.put(83, new Route(83, new City("Pittsburgh"), new City("New York"), RouteColor.WHITE, 2, 2, true, 78));
+        ROUTE_GROUP_MAP.put(83, new Route(83, new City("Pittsburgh"), new City("New York City"), RouteColor.WHITE, 2, 2, true, 78));
         ROUTE_GROUP_MAP.put(84, new Route(84, new City("New Orleans"), new City("Little Rock"), RouteColor.GREEN, 4, 3));
         ROUTE_GROUP_MAP.put(85, new Route(85, new City("Toronto"), new City("Pittsburgh"), RouteColor.GRAY, 2, 2));
         ROUTE_GROUP_MAP.put(86, new Route(86, new City("Chicago"), new City("Pittsburgh"), RouteColor.BLACK, 4, 3, true, 96));
@@ -191,8 +191,8 @@ public class Route {
         ROUTE_GROUP_MAP.put(94, new Route(94, new City("Atlanta"), new City("Charleston"), RouteColor.GRAY, 2, 2));
         ROUTE_GROUP_MAP.put(95, new Route(95, new City("Nashville"), new City("Atlanta"), RouteColor.GRAY, 1, 1));
         ROUTE_GROUP_MAP.put(96, new Route(96, new City("Chicago"), new City("Pittsburgh"), RouteColor.ORANGE, 4, 3, true, 86));
-        ROUTE_GROUP_MAP.put(97, new Route(97, new City("Boston"), new City("New York"), RouteColor.RED, 2, 2, true, 98));
-        ROUTE_GROUP_MAP.put(98, new Route(98, new City("Boston"), new City("New York"), RouteColor.YELLOW, 2, 2, true, 97));
+        ROUTE_GROUP_MAP.put(97, new Route(97, new City("Boston"), new City("New York City"), RouteColor.RED, 2, 2, true, 98));
+        ROUTE_GROUP_MAP.put(98, new Route(98, new City("Boston"), new City("New York City"), RouteColor.YELLOW, 2, 2, true, 97));
         ROUTE_GROUP_MAP.put(99, new Route(99, new City("Chicago"), new City("Toronto"), RouteColor.WHITE, 7, 4));
         ROUTE_GROUP_MAP.put(100, new Route(100, new City("Toronto"), new City("Montreal"), RouteColor.GRAY, 4, 3));
     }

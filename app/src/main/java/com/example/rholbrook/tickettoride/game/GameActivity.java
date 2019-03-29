@@ -1,7 +1,9 @@
 package com.example.rholbrook.tickettoride.game;
 
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -846,6 +848,19 @@ public class GameActivity extends AppCompatActivity implements
                 }
             }
         });
+    }
+
+    @Override
+    public void showFatalError() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getApplicationContext())
+                .setTitle(R.string.fatal_server_error)
+                .setPositiveButton(R.string.finish_game, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                GameActivity.this.endGame();
+            }
+        });
+        dialog.show();
     }
 
     @Override

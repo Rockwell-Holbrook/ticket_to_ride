@@ -228,6 +228,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public void fatalError() {
+        viewCallback.showFatalError();
+    }
+
+    @Override
     public void endTurn() {
         mModel.endUserTurn();
     }

@@ -452,4 +452,8 @@ public class GameActivityModel extends Observable implements ChatContract.ChatMo
     public void endGame() {
         gameActivityPresenter.endGame();
     }
+
+    public void fatalError(String message) {
+        gameActivityPresenter.fatalError();
+    }
 }

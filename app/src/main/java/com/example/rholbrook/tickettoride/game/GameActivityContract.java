@@ -36,6 +36,7 @@ public class GameActivityContract {
         void notifyLastTurn();
         void endGame();
         void sendMessageNotification(Chat chat);
+        void showFatalError();
     }
 
     public interface Presenter {
@@ -77,5 +78,6 @@ public class GameActivityContract {
         void endGame();
         void sendNotification(Chat chat);
         int getAvailableRoutesSize();
+        void fatalError();
     }
 }

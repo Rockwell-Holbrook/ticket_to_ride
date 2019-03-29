@@ -431,7 +431,7 @@ public class Game {
         return null;
     }
 
-    public ArrayList<Route> calculateClaimableRoutes(String username) { //todo: need to do a check for already owning the same 2-way route.
+    public ArrayList<Route> calculateClaimableRoutes(String username) {
          Map<TrainCard.Color, Integer> cardGroupings = getTrainCardGroupings(username);
          ArrayList<Route> claimableRoutes = new ArrayList<>();
 

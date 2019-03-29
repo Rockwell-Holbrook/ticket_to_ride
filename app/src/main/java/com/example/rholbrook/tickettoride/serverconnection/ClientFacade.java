@@ -191,4 +191,9 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     public void gameEnded(String gameId) {
         GameActivityModel.getInstance().endGame();
     }
+
+    @Override
+    public void fatalError(String message) {
+        GameActivityModel.getInstance().fatalError(message);
+    }
 }

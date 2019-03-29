@@ -5,8 +5,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-// TODO: Make sure duplicate nodes can't be added.
-
 public class GraphTest {
     private Graph<Character> graph;
 

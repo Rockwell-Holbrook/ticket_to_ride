@@ -100,7 +100,6 @@ public class GameManager {
         this.playingGameList.put(game.getGameId(), game);
         clientProxy.gameStarted(gameId);
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
-        // todo: initialize game
     }
 
     /**

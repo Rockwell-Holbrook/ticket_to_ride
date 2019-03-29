@@ -180,7 +180,6 @@ public class ServerProxy implements IServer {
 
     @Override
     public void calculateClaimableRoutes(String gameId, String username) {
-        //todo make it work!
     }
 
     public SocketClientCommunicator getSocketClientCommunicator() {
