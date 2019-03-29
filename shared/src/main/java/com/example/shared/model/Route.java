@@ -136,8 +136,8 @@ public class Route {
         ROUTE_GROUP_MAP.put(39, new Route(39, new City("El Paso"), new City("Oklahoma City"), RouteColor.YELLOW, 10, 5));
         ROUTE_GROUP_MAP.put(40, new Route(40, new City("El Paso"), new City("Dallas"), RouteColor.RED, 7, 4));
         ROUTE_GROUP_MAP.put(41, new Route(41, new City("El Paso"), new City("Houston"), RouteColor.GREEN, 15, 6));
-        ROUTE_GROUP_MAP.put(42, new Route(42, new City("Winnipeg"), new City("Sault Saint Marie"), RouteColor.GRAY, 15, 6));
-        ROUTE_GROUP_MAP.put(43, new Route(43, new City("Duluth"), new City("Sault Saint Marie"), RouteColor.GRAY, 4, 3));
+        ROUTE_GROUP_MAP.put(42, new Route(42, new City("Winnipeg"), new City("Sault St Marie"), RouteColor.GRAY, 15, 6));
+        ROUTE_GROUP_MAP.put(43, new Route(43, new City("Duluth"), new City("Sault St Marie"), RouteColor.GRAY, 4, 3));
         ROUTE_GROUP_MAP.put(44, new Route(44, new City("Duluth"), new City("Omaha"), RouteColor.GRAY, 2, 2, true, 45));
         ROUTE_GROUP_MAP.put(45, new Route(45, new City("Duluth"), new City("Omaha"), RouteColor.GRAY, 2, 2, true, 44));
         ROUTE_GROUP_MAP.put(46, new Route(46, new City("Omaha"), new City("Kansas City"), RouteColor.GRAY, 1, 1, true, 47));
@@ -156,8 +156,8 @@ public class Route {
         ROUTE_GROUP_MAP.put(59, new Route(59, new City("Omaha"), new City("Chicago"), RouteColor.BLUE, 7, 4));
         ROUTE_GROUP_MAP.put(60, new Route(60, new City("Duluth"), new City("Chicago"), RouteColor.RED, 4, 3));
         ROUTE_GROUP_MAP.put(61, new Route(61, new City("Duluth"), new City("Toronto"), RouteColor.PINK, 15, 6));
-        ROUTE_GROUP_MAP.put(62, new Route(62, new City("Sault Saint Marie"), new City("Toronto"), RouteColor.GRAY, 2, 2));
-        ROUTE_GROUP_MAP.put(63, new Route(63, new City("Sault Saint Marie"), new City("Montreal"), RouteColor.BLACK, 10, 5));
+        ROUTE_GROUP_MAP.put(62, new Route(62, new City("Sault St Marie"), new City("Toronto"), RouteColor.GRAY, 2, 2));
+        ROUTE_GROUP_MAP.put(63, new Route(63, new City("Sault St Marie"), new City("Montreal"), RouteColor.BLACK, 10, 5));
         ROUTE_GROUP_MAP.put(64, new Route(64, new City("Pittsburgh"), new City("Raleigh"), RouteColor.GRAY, 2, 2));
         ROUTE_GROUP_MAP.put(65, new Route(65, new City("Charleston"), new City("Miami"), RouteColor.PINK, 7, 4));
         ROUTE_GROUP_MAP.put(66, new Route(66, new City("Saint Louis"), new City("Chicago"), RouteColor.WHITE, 2, 2, true, 67));

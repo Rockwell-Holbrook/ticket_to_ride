@@ -20,7 +20,7 @@ public class Player {
     protected transient int incompletedTicketCount = 0;
     protected transient int completedTicketPoints = 0;
     protected transient int incompleteTicketPoints = 0;
-    protected transient int longestRouteCount = 0;
+    protected int longestRouteCount = 0;
     protected transient int bonusPoints = 0;
     protected transient int totalPoints = 0;
     protected transient boolean hasGlobeTrotter = false;
@@ -217,6 +217,11 @@ public class Player {
         for (Ticket ticket : returnedTickets) {
             removeTicket(ticket);
         }
+        for (Ticket ticket : this.tickets) {
+            if (!ticket.isCompleted()) {
+                ticket.setCompleted(connectedCities.hasPath(ticket.getFirstCity(), ticket.getSecondCity()));
+            }
+        }
     }
 
     private void removeTicket(Ticket ticket) {
@@ -306,7 +311,7 @@ public class Player {
     }
 
     /**
-     * Adds route to claimed route list AND adds points AND removes cars AND checks for completed ticket
+     * Adds route to claimed route list AND adds points AND removes cars AND checks for completed ticket AND updates longest path
      * @param addedRoute Route to add
      */
     public void claimRoute(Route addedRoute) {
