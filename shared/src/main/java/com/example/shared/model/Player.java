@@ -214,6 +214,9 @@ public class Player {
     }
 
     public void returnedTickets(ArrayList<Ticket> returnedTickets) {
+        if (this.connectedCities == null) {
+            this.connectedCities = new Graph<>();
+        }
         for (Ticket ticket : returnedTickets) {
             removeTicket(ticket);
         }
