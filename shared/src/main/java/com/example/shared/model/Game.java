@@ -186,7 +186,7 @@ public class Game {
             if(this.ticketDeck.getDeckSize() == 0) {
                 this.ticketDeck.swapDecks();
                 this.ticketDeck.shuffle();
-                this.gameHistory.add(new GameHistory("Game", "Ran out of cards in deck. Shuffling!"));
+                this.gameHistory.add(new GameHistory("Game", "Ran out of cards in ticket deck. Shuffling!"));
             }
 
             getPlayerWithUsername(username).addTicket(ticket);
@@ -293,7 +293,7 @@ public class Game {
             if(this.trainCardDeck.getDeckSize() == 0) {
                 this.trainCardDeck.swapDecks();
                 this.trainCardDeck.shuffle();
-                this.gameHistory.add(new GameHistory("Game", "Ran out of cards in deck. Shuffling!"));
+                this.gameHistory.add(new GameHistory("Game", "Ran out of cards in train card deck. Shuffling!"));
 
             }
         }
@@ -312,7 +312,7 @@ public class Game {
                     if (this.trainCardDeck.getDeckSize() == 0) {
                         this.trainCardDeck.swapDecks();
                         this.trainCardDeck.shuffle();
-                        this.gameHistory.add(new GameHistory("Game", "Ran out of cards in deck. Shuffling!"));
+                        this.gameHistory.add(new GameHistory("Game", "Ran out of cards in train card deck. Shuffling!"));
                     }
                 }
             }
