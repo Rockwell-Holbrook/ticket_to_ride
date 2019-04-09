@@ -1,5 +1,6 @@
 package authentication;
 
+import DatabaseAccess.DatabaseAccess;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 

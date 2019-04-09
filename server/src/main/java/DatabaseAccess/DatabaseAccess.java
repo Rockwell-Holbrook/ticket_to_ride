@@ -1,4 +1,4 @@
-package authentication;
+package DatabaseAccess;
 
 
 import com.example.shared.model.User;
