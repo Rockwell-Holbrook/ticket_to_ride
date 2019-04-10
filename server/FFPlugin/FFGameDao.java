@@ -1,7 +1,8 @@
-package DatabaseAccess;
+package FFPlugin;
 
 import com.example.shared.commands.Command;
 import com.example.shared.model.Game;
+import DatabaseAccess.IGameDao;
 
 import java.util.List;
 
@@ -9,11 +10,13 @@ public class FFGameDao implements IGameDao {
 
     @Override
     public void saveGame(Game game) {
-
+        // is game in filesystem?
+        // if yes, replace
+        // if no, add
     }
 
     @Override
-    public void saveDelta(Command delta) {
+    public void saveDelta(String gameid, Command delta) {
 
     }
 

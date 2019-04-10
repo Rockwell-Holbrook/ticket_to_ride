@@ -1,18 +1,17 @@
-package DatabaseAccess;
+package SQLPlugin;
 
 import com.example.shared.model.User;
+import DatabaseAccess.IUserDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static DatabaseAccess.SQLManager.getConnected;
-
 public class SQLUserDao implements IUserDao {
     @Override
     public void registerUser(User user) throws SQLException {
-        Connection con = getConnected();
+        Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("INSERT INTO user " +
                 "(username, password) " + "VALUES (?, ?);");
@@ -28,7 +27,7 @@ public class SQLUserDao implements IUserDao {
 
     @Override
     public User getUser(String username) throws SQLException {
-        Connection con = getConnected();
+        Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("SELECT password " +
                 "FROM user " + "WHERE username = '"+username+"'");
@@ -52,7 +51,7 @@ public class SQLUserDao implements IUserDao {
 
     @Override
     public void clear() throws SQLException {
-        Connection con = getConnected();
+        Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("DELETE FROM user");
 

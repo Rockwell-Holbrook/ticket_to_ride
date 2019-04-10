@@ -1,4 +1,4 @@
-package DatabaseAccess;
+package SQLPlugin;
 
 import java.sql.*;
 
@@ -16,7 +16,7 @@ public class SQLManager {
         }
 
         try {
-            final String CONNECTION_URL = "jdbc:sqlite:userDatabase.db";
+            final String CONNECTION_URL = "jdbc:sqlite:SQLDatabase.db";
 
             // Open a database connection
             conn = DriverManager.getConnection(CONNECTION_URL);
