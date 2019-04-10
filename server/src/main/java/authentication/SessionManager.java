@@ -1,11 +1,11 @@
 package authentication;
 
-import DatabaseAccess.DatabaseAccess;
+import DatabaseAccess.SQLManager;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 
 public class SessionManager {
-    private DatabaseAccess databaseAccess = new DatabaseAccess();
+    private SQLManager databaseAccess = new SQLManager();
 
     /**
      * Add the specified user to the database and log them in. If there is a duplicate return an error message back to the client.

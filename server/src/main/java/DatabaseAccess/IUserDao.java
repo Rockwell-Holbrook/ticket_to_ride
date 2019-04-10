@@ -3,7 +3,7 @@ package DatabaseAccess;
 import com.example.shared.model.User;
 
 public interface IUserDao {
-    public void registerUser(User user);
-    public User getUser(String username);
-    public void clear();
+    void registerUser(User user) throws Exception;
+    User getUser(String username) throws Exception;
+    void clear() throws Exception;
 }
