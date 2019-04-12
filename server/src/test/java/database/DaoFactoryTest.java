@@ -23,11 +23,11 @@ public class DaoFactoryTest {
     }
 
     private IDaoFactory getFactory(String pluginDirectory, String pluginJarName, String pluginClassName) throws Exception {
-// Get a class loader and set it up to load the jar file
+        // Get a class loader and set it up to load the jar file
         File pluginJarFile = new File(pluginDirectory, pluginJarName);
         URL pluginURL = pluginJarFile.toURI().toURL();
         URLClassLoader loader = new URLClassLoader(new URL[]{pluginURL});
-// Load the jar file's plugin class, create and return an instance
+        // Load the jar file's plugin class, create and return an instance
         Class<? extends IDaoFactory> factoryClass = (Class<? extends IDaoFactory>) loader.loadClass(pluginClassName);
         return factoryClass.getDeclaredConstructor(null).newInstance();
     }
