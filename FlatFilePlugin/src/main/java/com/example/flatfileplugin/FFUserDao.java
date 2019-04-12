@@ -1,7 +1,7 @@
-package FFPlugin;
+package com.example.flatfileplugin;
 
+import com.example.shared.interfaces.IUserDao;
 import com.example.shared.model.User;
-import database.IUserDao;
 
 public class FFUserDao implements IUserDao {
     @Override

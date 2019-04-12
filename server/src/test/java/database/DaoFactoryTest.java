@@ -13,7 +13,7 @@ public class DaoFactoryTest {
     @Test
     public void factoryTest() {
         try{
-            IDaoFactory ourFac = getFactory("C:\\Users\\taylo\\StudioProjects\\ticket_to_ride\\server", "SQLPlugin.jar", "com.example.sqlplugin.SQLDaoFactory");
+            IDaoFactory ourFac = getFactory("C:\\Users\\Blaine Johnson\\StudioProjects\\ticket_to_ride\\server", "SQLPlugin.jar", "com.example.sqlplugin.SQLDaoFactory");
             IGameDao ourGD = ourFac.createGameDao();
         }
         catch (Exception e){
