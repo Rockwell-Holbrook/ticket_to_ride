@@ -1,6 +1,8 @@
 package database;
 
 
+import com.example.shared.interfaces.IDaoFactory;
+import com.example.shared.interfaces.IGameDao;
 import org.junit.Test;
 
 import java.io.File;

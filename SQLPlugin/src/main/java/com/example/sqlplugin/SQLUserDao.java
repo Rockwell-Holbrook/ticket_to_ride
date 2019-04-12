@@ -1,5 +1,6 @@
 package com.example.sqlplugin;
 
+import com.example.shared.interfaces.IUserDao;
 import com.example.shared.model.User;
 
 import java.sql.Connection;
@@ -7,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SQLUserDao {
+public class SQLUserDao implements IUserDao {
     public void registerUser(User user) throws SQLException {
         Connection con = SQLManager.getConnected();
 

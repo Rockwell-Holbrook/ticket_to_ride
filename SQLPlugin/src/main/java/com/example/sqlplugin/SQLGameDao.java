@@ -1,6 +1,7 @@
 package com.example.sqlplugin;
 
 import com.example.shared.commands.Command;
+import com.example.shared.interfaces.IGameDao;
 import com.example.shared.model.Game;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SQLGameDao {
+public class SQLGameDao implements IGameDao {
     private Gson gson = new Gson();
 
     public void saveGame(Game game) throws SQLException  {

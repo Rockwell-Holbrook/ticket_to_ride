@@ -1,6 +1,12 @@
 package com.example.sqlplugin;
 
-public class SQLDaoFactory {
+import com.example.shared.interfaces.IDaoFactory;
+
+public class SQLDaoFactory implements IDaoFactory {
+
+    public SQLDaoFactory(){
+
+    }
 
     public SQLGameDao createGameDao(){
         return new SQLGameDao();

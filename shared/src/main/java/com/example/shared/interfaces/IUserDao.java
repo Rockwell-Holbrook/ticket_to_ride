@@ -1,4 +1,4 @@
-package database;
+package com.example.shared.interfaces;
 
 import com.example.shared.model.User;
 
