@@ -1,4 +1,4 @@
-package SQLPlugin;
+package com.example.sqlplugin;
 
 import java.sql.*;
 

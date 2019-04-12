@@ -1,15 +1,13 @@
-package SQLPlugin;
+package com.example.sqlplugin;
 
 import com.example.shared.model.User;
-import DatabaseAccess.IUserDao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class SQLUserDao implements IUserDao {
-    @Override
+public class SQLUserDao {
     public void registerUser(User user) throws SQLException {
         Connection con = SQLManager.getConnected();
 
@@ -25,7 +23,6 @@ public class SQLUserDao implements IUserDao {
 
     }
 
-    @Override
     public User getUser(String username) throws SQLException {
         Connection con = SQLManager.getConnected();
 
@@ -49,7 +46,6 @@ public class SQLUserDao implements IUserDao {
         return user;
     }
 
-    @Override
     public void clear() throws SQLException {
         Connection con = SQLManager.getConnected();
 

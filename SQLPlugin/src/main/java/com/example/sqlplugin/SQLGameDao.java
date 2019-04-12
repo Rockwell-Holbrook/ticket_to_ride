@@ -1,8 +1,7 @@
-package SQLPlugin;
+package com.example.sqlplugin;
 
 import com.example.shared.commands.Command;
 import com.example.shared.model.Game;
-import DatabaseAccess.IGameDao;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,10 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SQLGameDao implements IGameDao {
+public class SQLGameDao {
     private Gson gson = new Gson();
 
-    @Override
     public void saveGame(Game game) throws SQLException  {
         Connection con = SQLManager.getConnected();
 
@@ -31,7 +29,6 @@ public class SQLGameDao implements IGameDao {
         con.close();
     }
 
-    @Override
     public void saveDelta(String gameid, Command delta) throws SQLException {
         List<Command> commands = getDeltas(gameid);
         commands.add(delta);
@@ -49,7 +46,6 @@ public class SQLGameDao implements IGameDao {
         con.close();
     }
 
-    @Override
     public Game getGame(String gameid) throws SQLException {
         Connection con = SQLManager.getConnected();
 
@@ -64,7 +60,6 @@ public class SQLGameDao implements IGameDao {
         return game;
     }
 
-    @Override
     public List<Command> getDeltas(String gameid) throws SQLException {
         Connection con = SQLManager.getConnected();
 
@@ -80,7 +75,6 @@ public class SQLGameDao implements IGameDao {
         return commands;
     }
 
-    @Override
     public void clear() throws SQLException {
         Connection con = SQLManager.getConnected();
 

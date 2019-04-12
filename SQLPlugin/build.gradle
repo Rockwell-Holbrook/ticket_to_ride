@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation files('libs/sqlite-jdbc-3.8.7.jar')
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation project(':shared')
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
