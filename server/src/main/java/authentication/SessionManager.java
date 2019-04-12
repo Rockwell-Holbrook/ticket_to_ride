@@ -1,6 +1,6 @@
 package authentication;
 
-import DatabaseAccess.SQLManager;
+import database.SQLManager;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 
@@ -14,13 +14,13 @@ public class SessionManager {
      * @return Returns a success or failure message.
      */
     public Message register(User user) {
-        try {
-            databaseAccess.store(user);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return new Message(false, "This Username Already Exists"); // The only reason this would fail is if there is a duplicate.
-        }
+//        try {
+//            databaseAccess.store(user);
+//        }
+//        catch(Exception e) {
+//            e.printStackTrace();
+//            return new Message(false, "This Username Already Exists"); // The only reason this would fail is if there is a duplicate.
+//        }
 
         return new Message(true, "Some future endpoint for the Socket Server");
     }
@@ -32,18 +32,18 @@ public class SessionManager {
      * @return Returns a success or failure message.
      */
     public Message login(User user) {
-        User databaseUser;
-        try {
-           databaseUser = databaseAccess.retrieve(user.getUserName());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return new Message(false, "Invalid Username or Password");
-        }
-
-        if(!databaseUser.getPassword().equals(user.getPassword())) {
-            return new Message(false, "Invalid Username or Password");
-        }
+//        User databaseUser;
+//        try {
+//           databaseUser = databaseAccess.retrieve(user.getUserName());
+//        }
+//        catch(Exception e) {
+//            e.printStackTrace();
+//            return new Message(false, "Invalid Username or Password");
+//        }
+//
+//        if(!databaseUser.getPassword().equals(user.getPassword())) {
+//            return new Message(false, "Invalid Username or Password");
+//        }
 
         return new Message(true, "Some future endpoint for the Socket Server");
     }

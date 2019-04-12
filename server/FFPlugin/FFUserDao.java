@@ -1,7 +1,7 @@
 package FFPlugin;
 
 import com.example.shared.model.User;
-import DatabaseAccess.IUserDao;
+import database.IUserDao;
 
 public class FFUserDao implements IUserDao {
     @Override

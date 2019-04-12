@@ -1,4 +1,4 @@
-package DatabaseAccess;
+package database;
 
 import com.example.shared.commands.Command;
 import com.example.shared.model.Game;

@@ -2,7 +2,7 @@ package FFPlugin;
 
 import com.example.shared.commands.Command;
 import com.example.shared.model.Game;
-import DatabaseAccess.IGameDao;
+import database.IGameDao;
 
 import java.util.List;
 
