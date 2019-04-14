@@ -2,7 +2,7 @@ package com.example.server;
 
 import authentication.AuthenticationServer;
 import communication.SocketServer;
-import database.PluginManager;
+import com.example.shared.database.PluginManager;
 
 public class Server {
     /**
