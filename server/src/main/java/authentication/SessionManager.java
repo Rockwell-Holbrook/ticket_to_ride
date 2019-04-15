@@ -1,10 +1,23 @@
 package authentication;
 
+import database.PluginManager;
+import com.example.shared.interfaces.IDaoFactory;
+import com.example.shared.interfaces.IUserDao;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;
 
 public class SessionManager {
-    private DatabaseAccess databaseAccess = new DatabaseAccess();
+    private IDaoFactory factory;
+    private IUserDao dao;
+
+    public SessionManager() {
+        try {
+            factory = PluginManager.getInstance().getFactory();
+            dao = factory.createUserDao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Add the specified user to the database and log them in. If there is a duplicate return an error message back to the client.
@@ -14,7 +27,7 @@ public class SessionManager {
      */
     public Message register(User user) {
         try {
-            databaseAccess.store(user);
+            dao.registerUser(user);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -33,7 +46,7 @@ public class SessionManager {
     public Message login(User user) {
         User databaseUser;
         try {
-           databaseUser = databaseAccess.retrieve(user.getUserName());
+           databaseUser = dao.getUser(user.getUserName());
         }
         catch(Exception e) {
             e.printStackTrace();

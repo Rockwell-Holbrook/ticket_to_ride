@@ -3,6 +3,7 @@ package com.example.shared.model;
 
 import com.example.shared.cpu_player.CPUPlayer;
 import com.example.shared.interfaces.IClientInGame;
+import com.example.shared.interfaces.IDaoFactory;
 
 import java.util.*;
 

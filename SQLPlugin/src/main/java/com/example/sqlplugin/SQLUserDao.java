@@ -1,14 +1,16 @@
-package authentication;
+package com.example.sqlplugin;
 
-
+import com.example.shared.interfaces.IUserDao;
 import com.example.shared.model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class DatabaseAccess {
-
-    void store(User user) throws SQLException {
-        Connection con = getConnected();
+public class SQLUserDao implements IUserDao {
+    public void registerUser(User user) throws SQLException {
+        Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("INSERT INTO user " +
                 "(username, password) " + "VALUES (?, ?);");
@@ -19,10 +21,11 @@ public class DatabaseAccess {
         p.executeUpdate();
 
         con.close();
+
     }
 
-    User retrieve(String username) throws SQLException {
-        Connection con = getConnected();
+    public User getUser(String username) throws SQLException {
+        Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("SELECT password " +
                 "FROM user " + "WHERE username = '"+username+"'");
@@ -45,37 +48,12 @@ public class DatabaseAccess {
     }
 
     public void clear() throws SQLException {
-        Connection con = getConnected();
+        Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("DELETE FROM user");
 
         p.execute();
 
         con.close();
-    }
-
-    private Connection getConnected() {
-        Connection conn = null;
-
-        try {
-            final String driver = "org.sqlite.JDBC";
-            Class.forName(driver);
-        }
-        catch(ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            final String CONNECTION_URL = "jdbc:sqlite:userDatabase.db";
-
-            // Open a database connection
-            conn = DriverManager.getConnection(CONNECTION_URL);
-
-        }
-        catch (SQLException e) {
-            System.out.println("Error When Connecting to the Database!");
-        }
-
-        return conn;
     }
 }

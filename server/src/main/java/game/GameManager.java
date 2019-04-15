@@ -1,8 +1,11 @@
 package game;
 
+import com.example.shared.interfaces.IDaoFactory;
+import com.example.shared.interfaces.IGameDao;
 import com.example.shared.model.*;
 import communication.ClientProxy;
 import communication.SocketServer;
+import database.PluginManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +51,17 @@ public class GameManager {
         this.notPlayingGameList.put(game.getGameId(), game);
         SocketServer.getInstance().addGame(game.getGameId());
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
-//        joinGame(game.getGameId(), host);
+
+        try {
+            IDaoFactory factory = PluginManager.getInstance().getFactory();
+            IGameDao dao = factory.createGameDao();
+            
+            dao.saveGame(game);
+        }
+        catch(Exception exception) {
+            System.out.println("OH NO I DIED!");
+        }
+
         return game.getGameId();
     }
 
