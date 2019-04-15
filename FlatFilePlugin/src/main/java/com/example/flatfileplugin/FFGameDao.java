@@ -147,6 +147,36 @@ public class FFGameDao implements IGameDao {
     }
 
     @Override
+    public void clearDeltas(String gameid) throws Exception {
+        List<Command> deltas;
+        Path dir = Paths.get(dblocation, "deltas");
+        Path deltaPath = null;
+        try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
+            for (Path path: files) {
+                String fileName = path.getFileName().toString();
+                if (fileName.equals(gameid)) {
+                    deltaPath = path;
+                    break;
+                }
+            }
+            deltas = new ArrayList<>();
+            if (deltaPath != null) {
+                Files.delete(deltaPath);
+            }
+            deltaPath = Files.createFile(Paths.get(dir.toString(), gameid));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        try (FileWriter writer = new FileWriter(deltaPath.toFile())) {
+            writer.write(gson.toJson(deltas));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
     public void clear() {
         File gameDir = new File(dblocation, "games");
         File[] gameFiles = gameDir.listFiles();
@@ -158,5 +188,11 @@ public class FFGameDao implements IGameDao {
         for (int i = 0; i < deltaDir.length(); i++) {
             deltaFiles[i].delete();
         }
+    }
+
+    @Override
+    public int getDeltaCount(String gameid) throws Exception {
+        List<Command> deltas = getDeltas(gameid);
+        return deltas.size();
     }
 }

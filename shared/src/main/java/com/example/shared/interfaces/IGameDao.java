@@ -10,5 +10,7 @@ public interface IGameDao {
     void saveDelta(String gameid, Command delta) throws Exception;
     Game getGame(String gameid) throws Exception;
     List<Command> getDeltas(String gameid) throws Exception;
+    void clearDeltas(String gameid) throws Exception;
     void clear() throws Exception;
+    int getDeltaCount(String gameid) throws Exception;
 }

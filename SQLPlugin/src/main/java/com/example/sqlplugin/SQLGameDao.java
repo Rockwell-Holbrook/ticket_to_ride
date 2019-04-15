@@ -11,38 +11,74 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SQLGameDao implements IGameDao {
     private Gson gson = new Gson();
 
     public void saveGame(Game game) throws SQLException  {
+        String gameid = game.getGameId();
+
         Connection con = SQLManager.getConnected();
 
-        PreparedStatement p = con.prepareStatement("INSERT INTO game " +
-                "(gameID, game) " + "VALUES (?, ?);");
+        PreparedStatement p = con.prepareStatement("SELECT count(*) " +
+                "FROM game " + "WHERE gameID = '" + gameid + "'");
 
-        p.setString(1, game.getGameId());
-        p.setString(2, gson.toJson(game));
+        ResultSet result = p.executeQuery();
 
-        p.executeUpdate();
+        int count = result.getInt("count(*)");
+
+        if (count == 0) {
+            p = con.prepareStatement("INSERT INTO game " +
+                    "(gameID, game) " + "VALUES (?, ?);");
+
+            p.setString(1, gameid);
+            p.setString(2, gson.toJson(game));
+
+            p.executeUpdate();
+        } else {
+            p = con.prepareStatement("UPDATE game " +
+                    "SET gameID = ?, game = ? " +
+                    "WHERE gameID = '" + gameid + "'");
+
+            p.setString(1, gameid);
+            p.setString(2, gson.toJson(game));
+        }
 
         con.close();
     }
 
     public void saveDelta(String gameid, Command delta) throws SQLException {
-        List<Command> commands = getDeltas(gameid);
-        commands.add(delta);
-
         Connection con = SQLManager.getConnected();
 
-        PreparedStatement p = con.prepareStatement("INSERT INTO deltas " +
-                "(gameID, commands) " + "VALUES (?, ?);");
+        PreparedStatement p = con.prepareStatement("SELECT count(*) " +
+                "FROM deltas " + "WHERE gameID = '" + gameid + "'");
 
-        p.setString(1, gameid);
-        p.setString(2, gson.toJson(delta));
+        ResultSet result = p.executeQuery();
 
-        p.executeUpdate();
+        int count = result.getInt("count(*)");
+
+        if (count == 0) {
+            List<Command> deltas = new ArrayList<>();
+            deltas.add(delta);
+            p = con.prepareStatement("INSERT INTO deltas " +
+                    "(gameID, commands) " + "VALUES (?, ?);");
+
+            p.setString(1, gameid);
+            p.setString(2, gson.toJson(deltas));
+
+            p.executeUpdate();
+        } else {
+            List<Command> deltas = getDeltas(gameid);
+            deltas.add(delta);
+            p = con.prepareStatement("UPDATE deltas " +
+                    "SET gameID = ?, commands = ? " +
+                    "WHERE gameID = '" + gameid + "'");
+
+            p.setString(1, gameid);
+            p.setString(2, gson.toJson(deltas));
+        }
 
         con.close();
     }
@@ -76,6 +112,23 @@ public class SQLGameDao implements IGameDao {
         return commands;
     }
 
+    @Override
+    public void clearDeltas(String gameid) throws Exception {
+        Connection con = SQLManager.getConnected();
+
+        List<Command> deltas = new ArrayList<>();
+        PreparedStatement p = con.prepareStatement("UPDATE deltas " +
+                "SET gameID = ?, commands = ? " +
+                "WHERE gameID = '" + gameid + "'");
+
+        p.setString(1, gameid);
+        p.setString(2, gson.toJson(deltas));
+
+        p.executeUpdate();
+
+        con.close();
+    }
+
     public void clear() throws SQLException {
         Connection con = SQLManager.getConnected();
 
@@ -83,6 +136,16 @@ public class SQLGameDao implements IGameDao {
 
         p.execute();
 
+        p = con.prepareStatement("DELETE FROM deltas");
+
+        p.execute();
+
         con.close();
+    }
+
+    @Override
+    public int getDeltaCount(String gameid) throws Exception {
+        List<Command> deltas = getDeltas(gameid);
+        return deltas.size();
     }
 }
