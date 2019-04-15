@@ -12,7 +12,7 @@ public class SQLUserDao implements IUserDao {
     public void registerUser(User user) throws SQLException {
         Connection con = SQLManager.getConnected();
 
-        PreparedStatement p = con.prepareStatement("INSERT INTO user " +
+        PreparedStatement p = con.prepareStatement("INSERT INTO authentication " +
                 "(username, password) " + "VALUES (?, ?);");
 
         p.setString(1, user.getUserName());
@@ -28,7 +28,7 @@ public class SQLUserDao implements IUserDao {
         Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("SELECT password " +
-                "FROM user " + "WHERE username = '"+username+"'");
+                "FROM authentication " + "WHERE username = '"+username+"'");
 
         ResultSet result = p.executeQuery();
         User user;
@@ -50,7 +50,7 @@ public class SQLUserDao implements IUserDao {
     public void clear() throws SQLException {
         Connection con = SQLManager.getConnected();
 
-        PreparedStatement p = con.prepareStatement("DELETE FROM user");
+        PreparedStatement p = con.prepareStatement("DELETE FROM authentication");
 
         p.execute();
 
