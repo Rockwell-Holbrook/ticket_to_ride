@@ -1,7 +1,10 @@
 package communication;
 
 import com.example.shared.commands.Command;
+import com.example.shared.interfaces.IDaoFactory;
+import com.example.shared.interfaces.IGameDao;
 import com.google.gson.Gson;
+import database.PluginManager;
 import game.GameManager;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -21,11 +24,21 @@ public class SocketServer extends WebSocketServer {
     private static Gson gson = new Gson();
     private Set<WebSocket> managementConnections;
     private Map<String, Set<WebSocket>> gameConnections;
+    IDaoFactory factory;
+    IGameDao dao;
 
     public SocketServer(int port) {
         super(new InetSocketAddress(port));
         managementConnections = new HashSet<>();
         gameConnections = new HashMap<>();
+
+        try {
+            factory = PluginManager.getInstance().getFactory();
+            dao = factory.createGameDao();
+        }
+        catch(Exception exception) {
+            System.out.println("OH NO I DIED!");
+        }
     }
 
     public static SocketServer getInstance() {
@@ -81,6 +94,17 @@ public class SocketServer extends WebSocketServer {
     public void onMessage(WebSocket conn, String message) {
         System.out.println("Got command: " + message);
         Command cmd = new Command(message);
+
+        try {
+            dao.saveDelta(cmd.getGameId(), cmd);
+        }
+
+        catch(Exception e) {
+            System.out.print("OH NO I DIED!");
+        }
+
+        //todo: If statement for 10 deltas
+
         cmd.execute(ServerFacade.getInstance());
     }
 
