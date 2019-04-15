@@ -1,8 +1,7 @@
 package authentication;
 
-import com.example.shared.database.PluginManager;
+import database.PluginManager;
 import com.example.shared.interfaces.IDaoFactory;
-import com.example.shared.interfaces.IGameDao;
 import com.example.shared.interfaces.IUserDao;
 import com.example.shared.model.Message;
 import com.example.shared.model.User;

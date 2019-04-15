@@ -1,4 +1,4 @@
-package com.example.shared.database;
+package database;
 
 import com.example.shared.interfaces.IDaoFactory;
 

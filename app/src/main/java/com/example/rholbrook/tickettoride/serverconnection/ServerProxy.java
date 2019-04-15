@@ -3,9 +3,6 @@ package com.example.rholbrook.tickettoride.serverconnection;
 import android.util.Log;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.shared.commands.Command;
-import com.example.shared.database.PluginManager;
-import com.example.shared.interfaces.IDaoFactory;
-import com.example.shared.interfaces.IGameDao;
 import com.example.shared.interfaces.IServer;
 import com.example.shared.model.*;
 import com.google.gson.Gson;
@@ -16,22 +13,11 @@ import java.util.List;
 
 public class ServerProxy implements IServer {
     private final String TAG = "ticket_to_ride";
-
-
     private static ServerProxy instance;
     private SocketClientCommunicator socketClientCommunicator;
     private static Gson gson = new Gson();
-    private IDaoFactory factory;
-    private IGameDao dao;
 
-    public ServerProxy() {
-        try {
-            factory = PluginManager.getInstance().getFactory();
-            dao = factory.createGameDao();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    public ServerProxy() { }
 
     public static synchronized ServerProxy getInstance() {
         if (instance == null) {
@@ -92,13 +78,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), Player.class.getName()};
         Object[] paramValues = {gameId, player};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -107,13 +89,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -122,13 +100,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -137,13 +111,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {Chat.class.getName(), String.class.getName(), boolean.class.getName()};
         Object[] paramValues = {chat, gameId, gameStarted};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -152,13 +122,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -167,13 +133,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameId, username};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -182,13 +144,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameId, username};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -197,13 +155,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameId, username};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -212,13 +166,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName(), ArrayList.class.getName()};
         Object[] paramValues = {gameId, username, returned};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -227,13 +177,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameID, username};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameID, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameID);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -242,13 +188,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName()};
         Object[] paramValues = {gameId, username, index};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -257,13 +199,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName(), List.class.getName()};
         Object[] paramValues = {gameId, username, routeId, selectedCards};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameId, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -272,13 +210,9 @@ public class ServerProxy implements IServer {
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameID, username};
 
-        Command command = new Command(methodName, paramTypes, paramValues);
-        try {
-            dao.saveDelta(gameID, command);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        socketClientCommunicator.send(gson.toJson(command));
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameID);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
