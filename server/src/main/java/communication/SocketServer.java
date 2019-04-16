@@ -3,6 +3,7 @@ package communication;
 import com.example.shared.commands.Command;
 import com.example.shared.interfaces.IDaoFactory;
 import com.example.shared.interfaces.IGameDao;
+import com.example.shared.model.Game;
 import com.google.gson.Gson;
 import database.PluginManager;
 import game.GameManager;
@@ -51,12 +52,24 @@ public class SocketServer extends WebSocketServer {
 
     public void recover(){
         recovering = true;
-        // TODO ---- RECOVERY ---
-        // Get all games from database
-        // For each game from db:
-        // Put into lists in GameManager based on isPlaying
-        // Check number of deltas for that game
-        // Execute deltas
+        GameManager gm = GameManager.getInstance();
+        try {
+            for (Game game : dao.getAllGames()) {
+                if(game.isPlaying()) {
+                   gm.addToPlayingGameList(game);
+                }
+                else {
+                    gm.addToNotPlayingGameList(game);
+                }
+
+                for(Command command : dao.getDeltas(game.getGameId())) {
+                    command.execute(ServerFacade.getInstance());
+                }
+            }
+        }
+        catch(Exception e) {
+            System.out.println("SQL ERROR");
+        }
         recovering = false;
     }
 
@@ -81,9 +94,6 @@ public class SocketServer extends WebSocketServer {
             gameConnections.get(gameId).add(conn);
             conn.send("Game:" + gameId);
         }
-
-
-
     }
 
     @Override
@@ -103,7 +113,12 @@ public class SocketServer extends WebSocketServer {
             if (gameConnections.get(gameId).size() == 0){
                 System.out.println(gameId + " is inactive. Deleting it.");
                 gameConnections.remove(gameId);
-                // TODO get rid of game in database
+                try {
+                    dao.deleteGame(gameId);
+                }
+                catch(Exception e) {
+                    System.out.println("SQL ERROR!");
+                }
                 GameManager.getInstance().removeGame(gameId);
             }
         }

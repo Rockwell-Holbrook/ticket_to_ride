@@ -392,4 +392,12 @@ public class GameManager {
         }
         return found;
     }
+
+    public void addToPlayingGameList(Game game) {
+        this.playingGameList.put(game.getGameId(), game);
+    }
+
+    public void addToNotPlayingGameList(Game game) {
+        this.notPlayingGameList.put(game.getGameId(), game);
+    }
 }
