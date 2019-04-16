@@ -115,6 +115,31 @@ public class FFGameDao implements IGameDao {
     }
 
     @Override
+    public List<Game> getAllGames() throws Exception {
+        List<Game> games = new ArrayList<>();
+
+        Path dir = Paths.get(dblocation, "games");
+        try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
+            for (Path path : files) {
+                File file = path.toFile();
+                try (FileReader reader = new FileReader(file)) {
+                    CharBuffer buf = CharBuffer.allocate((int) file.length());
+                    int numRead = reader.read(buf);
+                    String json = buf.toString();
+                    games.add(gson.fromJson(json, Game.class));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw e;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return games;
+    }
+
+    @Override
     public List<Command> getDeltas(String gameid) throws IOException {
         Path dir = Paths.get(dblocation,"deltas");
         Path deltaPath = null;
@@ -187,6 +212,47 @@ public class FFGameDao implements IGameDao {
         File[] deltaFiles = deltaDir.listFiles();
         for (int i = 0; i < deltaDir.length(); i++) {
             deltaFiles[i].delete();
+        }
+    }
+
+    @Override
+    public void deleteGame(String gameid) throws Exception {
+        Path dir = Paths.get(dblocation, "games");
+        Path gamePath = null;
+        try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
+            for (Path path: files) {
+                String fileName = path.getFileName().toString();
+                if (fileName.equals(gameid)) {
+                    gamePath = path;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        if (gamePath != null) {
+            File file = gamePath.toFile();
+            file.delete();
+        }
+
+        dir = Paths.get(dblocation, "deltas");
+        Path deltaPath = null;
+        try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
+            for (Path path: files) {
+                String fileName = path.getFileName().toString();
+                if (fileName.equals(gameid)) {
+                    gamePath = path;
+                    break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        if (gamePath != null) {
+            File file = gamePath.toFile();
+            file.delete();
         }
     }
 

@@ -97,6 +97,21 @@ public class SQLGameDao implements IGameDao {
         return game;
     }
 
+    @Override
+    public List<Game> getAllGames() throws SQLException {
+        Connection con = SQLManager.getConnected();
+
+        PreparedStatement p = con.prepareStatement("SELECT game " +
+                "FROM game");
+
+        List<Game> games = new ArrayList<>();
+        ResultSet result = p.executeQuery();
+        while (result.next()) {
+            games.add(gson.fromJson(result.getString("game"), Game.class));
+        }
+        return games;
+    }
+
     public List<Command> getDeltas(String gameid) throws SQLException {
         Connection con = SQLManager.getConnected();
 
@@ -113,7 +128,7 @@ public class SQLGameDao implements IGameDao {
     }
 
     @Override
-    public void clearDeltas(String gameid) throws Exception {
+    public void clearDeltas(String gameid) throws SQLException {
         Connection con = SQLManager.getConnected();
 
         List<Command> deltas = new ArrayList<>();
@@ -144,7 +159,18 @@ public class SQLGameDao implements IGameDao {
     }
 
     @Override
-    public int getDeltaCount(String gameid) throws Exception {
+    public void deleteGame(String gameid) throws SQLException {
+        Connection con = SQLManager.getConnected();
+
+        PreparedStatement p = con.prepareStatement("DELETE FROM game " +
+                "WHERE gameID = '" + gameid + "'");
+
+        p.executeUpdate();
+
+    }
+
+    @Override
+    public int getDeltaCount(String gameid) throws SQLException {
         List<Command> deltas = getDeltas(gameid);
         return deltas.size();
     }
