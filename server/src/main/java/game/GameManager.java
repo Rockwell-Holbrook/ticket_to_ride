@@ -384,4 +384,12 @@ public class GameManager {
         notPlayingGameList.remove(gameId);
         playingGameList.remove(gameId);
     }
+
+    public Game getGameById(String gameId) {
+        Game found = notPlayingGameList.get(gameId);
+        if (found == null){
+            found = playingGameList.get(gameId);
+        }
+        return found;
+    }
 }

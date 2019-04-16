@@ -17,5 +17,14 @@ public class Server {
         pluginManager.setPluginClassName(args[3]);
         AuthenticationServer.getInstance().run(portNumber);
         SocketServer.getInstance().start();
+        int deltaVal;
+        try {
+            deltaVal = Integer.parseInt(args[4]);
+        }
+        catch (Exception e){
+            deltaVal = 10;
+        }
+        SocketServer.getInstance().setDeltaVal(deltaVal);
+        SocketServer.getInstance().recover();
     }
 }

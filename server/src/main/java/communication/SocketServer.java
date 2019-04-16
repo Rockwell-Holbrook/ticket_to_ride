@@ -24,8 +24,11 @@ public class SocketServer extends WebSocketServer {
     private static Gson gson = new Gson();
     private Set<WebSocket> managementConnections;
     private Map<String, Set<WebSocket>> gameConnections;
-    IDaoFactory factory;
-    IGameDao dao;
+    private IDaoFactory factory;
+    private IGameDao dao;
+    private boolean recovering;
+    private int deltaVal;
+
 
     public SocketServer(int port) {
         super(new InetSocketAddress(port));
@@ -35,6 +38,7 @@ public class SocketServer extends WebSocketServer {
         try {
             factory = PluginManager.getInstance().getFactory();
             dao = factory.createGameDao();
+
         }
         catch(Exception exception) {
             System.out.println("OH NO I DIED!");
@@ -43,6 +47,21 @@ public class SocketServer extends WebSocketServer {
 
     public static SocketServer getInstance() {
         return instance;
+    }
+
+    public void recover(){
+        recovering = true;
+        // TODO ---- RECOVERY ---
+        // Get all games from database
+        // For each game from db:
+        // Put into lists in GameManager based on isPlaying
+        // Check number of deltas for that game
+        // Execute deltas
+        recovering = false;
+    }
+
+    public void setDeltaVal(int deltaVal){
+        this.deltaVal = deltaVal;
     }
 
     @Override
@@ -84,6 +103,7 @@ public class SocketServer extends WebSocketServer {
             if (gameConnections.get(gameId).size() == 0){
                 System.out.println(gameId + " is inactive. Deleting it.");
                 gameConnections.remove(gameId);
+                // TODO get rid of game in database
                 GameManager.getInstance().removeGame(gameId);
             }
         }
@@ -97,13 +117,16 @@ public class SocketServer extends WebSocketServer {
 
         try {
             dao.saveDelta(cmd.getGameId(), cmd);
+
+            if(dao.getDeltaCount(cmd.getGameId()) == deltaVal) {
+                dao.saveGame(GameManager.getInstance().getGameById(cmd.getGameId()));
+                dao.clearDeltas(cmd.getGameId());
+            }
         }
 
         catch(Exception e) {
             System.out.print("OH NO I DIED!");
         }
-
-        //todo: If statement for 10 deltas
 
         cmd.execute(ServerFacade.getInstance());
     }
@@ -126,7 +149,8 @@ public class SocketServer extends WebSocketServer {
      * @param cmd CommandToClient to be run on all clients connected to management
      */
     public void broadcastToManagement(Command cmd) {
-
+        if (recovering)
+            return;
         String serializedCmd = gson.toJson(cmd);
         System.out.println("Sending cmd to management: " + serializedCmd);
         broadcast(serializedCmd, managementConnections);
@@ -139,6 +163,8 @@ public class SocketServer extends WebSocketServer {
      * @param gameId Id of game in question
      */
     public void broadcastToGame(Command cmd, String gameId) {
+        if (recovering)
+            return;
         String serializedCmd = gson.toJson(cmd);
         System.out.println("Sending cmd to game at " + gameId + ": " + serializedCmd);
         broadcast(serializedCmd, gameConnections.get(gameId));
@@ -159,6 +185,8 @@ public class SocketServer extends WebSocketServer {
      * @param username Name of connected user
      */
     public void sendToUser(Command cmd, String username) {
+        if (recovering)
+            return;
         for(WebSocket ws : managementConnections) {
             if(ws.getAttachment().equals(username)){
                 String serialized = gson.toJson(cmd);
@@ -176,6 +204,8 @@ public class SocketServer extends WebSocketServer {
      * @param gameId Id of the game the user is in
      */
     public void sendToUser(Command cmd, String username, String gameId){
+        if (recovering)
+            return;
         for(WebSocket ws : gameConnections.get(gameId)) {
             if(ws.getAttachment().equals(username)){
                 String serialized = gson.toJson(cmd);
