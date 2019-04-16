@@ -14,6 +14,7 @@ public class Command {
     private Object[] parameters = null; //Only used on the server side
     private String[] parametersAsJsonStrings;
     private Class<?>[] parameterTypes; //Only used on server side.
+    private String gameId;
     //I don't generate the parameter type names from the
     //parameters because some of the parameters might be
     //null.
@@ -150,4 +151,13 @@ public class Command {
         }
         return result;
     }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
 }

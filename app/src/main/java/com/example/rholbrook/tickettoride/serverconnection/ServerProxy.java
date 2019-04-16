@@ -13,8 +13,6 @@ import java.util.List;
 
 public class ServerProxy implements IServer {
     private final String TAG = "ticket_to_ride";
-
-
     private static ServerProxy instance;
     private SocketClientCommunicator socketClientCommunicator;
     private static Gson gson = new Gson();
@@ -79,7 +77,10 @@ public class ServerProxy implements IServer {
         String methodName = "joinGame";
         String[] paramTypes = {String.class.getName(), Player.class.getName()};
         Object[] paramValues = {gameId, player};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -87,7 +88,10 @@ public class ServerProxy implements IServer {
         String methodName = "startGame";
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -95,7 +99,10 @@ public class ServerProxy implements IServer {
         String methodName = "getPlayerList";
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -103,7 +110,10 @@ public class ServerProxy implements IServer {
         String methodName = "sendChat";
         String[] paramTypes = {Chat.class.getName(), String.class.getName(), boolean.class.getName()};
         Object[] paramValues = {chat, gameId, gameStarted};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -111,7 +121,10 @@ public class ServerProxy implements IServer {
         String methodName = "getChatHistory";
         String[] paramTypes = {String.class.getName()};
         Object[] paramValues = {gameId};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -119,7 +132,10 @@ public class ServerProxy implements IServer {
         String methodName = "getGameHistory";
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameId, username};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -127,7 +143,10 @@ public class ServerProxy implements IServer {
         String methodName = "readyToInitialize";
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameId, username};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -135,7 +154,10 @@ public class ServerProxy implements IServer {
         String methodName = "initializeComplete";
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameId, username};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -143,7 +165,10 @@ public class ServerProxy implements IServer {
         String methodName = "ticketsReturned";
         String[] paramTypes = {String.class.getName(), String.class.getName(), ArrayList.class.getName()};
         Object[] paramValues = {gameId, username, returned};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -151,7 +176,10 @@ public class ServerProxy implements IServer {
         String methodName = "turnEnded";
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameID, username};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameID);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -159,7 +187,10 @@ public class ServerProxy implements IServer {
         String methodName = "getCard";
         String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName()};
         Object[] paramValues = {gameId, username, index};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -167,7 +198,10 @@ public class ServerProxy implements IServer {
         String methodName = "claimRoute";
         String[] paramTypes = {String.class.getName(), String.class.getName(), int.class.getName(), List.class.getName()};
         Object[] paramValues = {gameId, username, routeId, selectedCards};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameId);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
@@ -175,7 +209,10 @@ public class ServerProxy implements IServer {
         String methodName = "requestTickets";
         String[] paramTypes = {String.class.getName(), String.class.getName()};
         Object[] paramValues = {gameID, username};
-        socketClientCommunicator.send(gson.toJson(new Command(methodName, paramTypes, paramValues)));
+
+        Command cmd = new Command(methodName, paramTypes, paramValues);
+        cmd.setGameId(gameID);
+        socketClientCommunicator.send(gson.toJson(cmd));
     }
 
     @Override
