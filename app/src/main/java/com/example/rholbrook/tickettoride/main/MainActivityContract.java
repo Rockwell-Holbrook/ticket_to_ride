@@ -14,6 +14,8 @@ public class MainActivityContract {
         void joinGame();
         void selectGame(Game gameNumber);
         void startGameLobbyFragment(String gameId);
+        void showServerDisconnectedFragment();
+        void hideServerDisconnectedFragment();
     }
 
     public interface Presenter {

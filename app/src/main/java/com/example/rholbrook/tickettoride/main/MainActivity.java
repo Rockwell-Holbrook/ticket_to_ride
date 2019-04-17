@@ -17,6 +17,8 @@ import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.gamelobby.GameLobbyActivity;
 import com.example.rholbrook.tickettoride.login.LoginFragment;
 import com.example.rholbrook.tickettoride.register.RegisterFragment;
+import com.example.rholbrook.tickettoride.serverconnection.ClientFacade;
+import com.example.rholbrook.tickettoride.serverconnection.ServerDisconnectedDialogFragment;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Game;
 import com.example.shared.model.Player;
@@ -24,12 +26,15 @@ import com.example.shared.model.Player;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity implements
         MainActivityContract.View,
         View.OnClickListener,
         CreateGameDialogFragment.CreateGameDialogInterface,
-        JoinGameDialogFragment.JoinGameDialogInterface {
+        JoinGameDialogFragment.JoinGameDialogInterface,
+        Observer {
 
     private MainActivityContract.Presenter mPresenter;
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView gameListRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private FrameLayout fragmentContainer;
+    private DialogFragment serverDisconnectedFragment;
     private static CountingIdlingResource mainActivityIdlingResource;
 
 
@@ -62,7 +68,10 @@ public class MainActivity extends AppCompatActivity implements
 
         mPresenter = new MainActivityPresenter(this);
 
+        serverDisconnectedFragment = new ServerDisconnectedDialogFragment();
         mPresenter.init();
+
+        ClientFacade.getInstance().addObserver(this);
     }
 
     @Override
@@ -99,6 +108,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onStop() {
+        ClientFacade.getInstance().deleteObserver(this);
+        super.onStop();
+    }
+
+    @Override
     public void selectGame(Game game) {
         joinGameButton.setEnabled(true);
         mPresenter.setSelectedGame(game);
@@ -120,6 +135,16 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+    }
+
+    @Override
+    public void showServerDisconnectedFragment() {
+        serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+    }
+
+    @Override
+    public void hideServerDisconnectedFragment() {
+        serverDisconnectedFragment.dismiss();
     }
 
     @Override
@@ -152,5 +177,20 @@ public class MainActivity extends AppCompatActivity implements
 
     public static CountingIdlingResource getIdlingResourceInTest() {
         return mainActivityIdlingResource;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!ClientFacade.getInstance().isConnected()) {
+            showServerDisconnectedFragment();
+            while (!ClientFacade.getInstance().isConnected()) {
+                try {
+                    MainActivityModel.getInstance().connectToManagementServer();
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+            hideServerDisconnectedFragment();
+        }
     }
 }

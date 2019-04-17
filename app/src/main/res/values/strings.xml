@@ -70,4 +70,5 @@
     <string name="tickets_empty">There aren\'t enough tickets</string>
     <string name="fatal_server_error">There was a fatal server error!</string>
     <string name="finish_game">Finish Game</string>
+    <string name="server_disconnected">Trying to Connect to the Server</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.rholbrook.tickettoride.gamelobby;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,9 @@ import com.example.rholbrook.tickettoride.chat.ChatPresenter;
 import com.example.rholbrook.tickettoride.game.GameActivity;
 import com.example.rholbrook.tickettoride.main.Authentication;
 import com.example.rholbrook.tickettoride.main.MainActivity;
+import com.example.rholbrook.tickettoride.main.MainActivityModel;
+import com.example.rholbrook.tickettoride.serverconnection.ClientFacade;
+import com.example.rholbrook.tickettoride.serverconnection.ServerDisconnectedDialogFragment;
 import com.example.rholbrook.tickettoride.serverconnection.ServerProxy;
 import com.example.shared.model.Chat;
 import com.example.shared.model.Player;
@@ -23,14 +27,18 @@ import com.example.shared.model.Player;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public class GameLobbyActivity extends AppCompatActivity implements
-        GameLobbyActivityContract.View, ChatContract.ChatView {
+        GameLobbyActivityContract.View,
+        ChatContract.ChatView,
+        Observer {
 
     private static final int MINIMUM_CONNECTED_PLAYERS = 2;
     private GameLobbyActivityContract.Presenter mPresenter;
     private ChatContract.ChatPresenter chatPresenter;
-
+    private DialogFragment serverDisconnectedFragment;
     private RecyclerView playerRecyclerView;
     private RecyclerView chatRecyclerView;
     private Button chatSendButton;
@@ -81,11 +89,21 @@ public class GameLobbyActivity extends AppCompatActivity implements
                 chatEditText.getText().clear();
             }
         });
+
+        serverDisconnectedFragment = new ServerDisconnectedDialogFragment();
+
+        ClientFacade.getInstance().addObserver(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        ClientFacade.getInstance().deleteObserver(this);
+        super.onStop();
     }
 
     @Override
@@ -137,5 +155,35 @@ public class GameLobbyActivity extends AppCompatActivity implements
         intent.putExtra("gameId", gameId);
         startActivity(intent);
         this.finish();
+    }
+
+    @Override
+    public void showServerDisconnectedFragment() {
+        serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+    }
+
+    @Override
+    public void hideServerDisconnectedFragment() {
+        serverDisconnectedFragment.dismiss();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!ClientFacade.getInstance().isConnected()) {
+            showServerDisconnectedFragment();
+            while (!ClientFacade.getInstance().isConnected()) {
+                try {
+                    MainActivityModel.getInstance().connectToGameServer(mPresenter.getGameId());
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+            hideServerDisconnectedFragment();
+        }
     }
 }

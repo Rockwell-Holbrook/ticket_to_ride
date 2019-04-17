@@ -11,10 +11,15 @@ public class GameLobbyActivityContract {
         void setHostStartButtonUsername(boolean isHost);
         void updatePlayerList(ArrayList<Player> connectedPlayers);
         void startGameActivity(String gameId);
+        void showServerDisconnectedFragment();
+        void hideServerDisconnectedFragment();
     }
     public interface Presenter {
         void init();
         void setGameId(String gameId);
+
+        String getGameId();
+
         void updatePlayerList(ArrayList<Player> connectedPlayers);
         void startGame();
         void gameStarted();

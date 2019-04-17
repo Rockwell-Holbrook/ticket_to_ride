@@ -31,7 +31,7 @@ public class ServerProxy implements IServer {
             if (socketClientCommunicator != null) {
                 socketClientCommunicator.close();
             }
-            String url = "ws://ec2-3-19-11-239.us-east-2.compute.amazonaws.com:7777/management?user=" + username;
+            String url = "ws://10.0.2.2:7777/management?user=" + username;
             socketClientCommunicator = new SocketClientCommunicator(new URI(url));
             socketClientCommunicator.connectBlocking();
         } catch (URISyntaxException e) {
@@ -46,7 +46,7 @@ public class ServerProxy implements IServer {
             if (socketClientCommunicator != null) {
                 socketClientCommunicator.close();
             }
-            String url = "ws://ec2-3-19-11-239.us-east-2.compute.amazonaws.com:7777/game/" + gameId + "?user=" + username;
+            String url = "ws://10.0.2.2:7777/game/" + gameId + "?user=" + username;
             socketClientCommunicator = new SocketClientCommunicator(new URI(url));
             socketClientCommunicator.connectBlocking();
         } catch (URISyntaxException e) {

@@ -268,6 +268,11 @@ public class GameActivityPresenter implements
     }
 
     @Override
+    public String getGameId() {
+        return mModel.getGameId();
+    }
+
+    @Override
     public void readyToInitialize() {
         mModel.readyToInitialize();
     }

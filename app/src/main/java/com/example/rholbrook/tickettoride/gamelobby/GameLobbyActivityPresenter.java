@@ -32,6 +32,11 @@ public class GameLobbyActivityPresenter implements GameLobbyActivityContract.Pre
     }
 
     @Override
+    public String getGameId() {
+        return mModel.getGameId();
+    }
+
+    @Override
     public void updatePlayerList(ArrayList<Player> connectedPlayers) {
         viewCallback.updatePlayerList(connectedPlayers);
     }

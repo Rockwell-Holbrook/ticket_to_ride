@@ -37,6 +37,8 @@ public class GameActivityContract {
         void endGame();
         void sendMessageNotification(Chat chat);
         void showFatalError();
+        void showServerDisconnectedFragment();
+        void hideServerDisconnectedFragment();
     }
 
     public interface Presenter {
@@ -61,6 +63,9 @@ public class GameActivityContract {
         void addTicketsToPlayer(List<Ticket> keptCards);
         void returnTickets(List<Ticket> returnedCards);
         void setGameId(String gameId);
+
+        String getGameId();
+
         void readyToInitialize();
         List<TrainCard> getPlayerHand();
         List<Ticket> getPlayerTickets();

@@ -12,6 +12,7 @@ import org.java_websocket.server.WebSocketServer;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Observable;
 
 public class SocketClientCommunicator extends WebSocketClient {
     private ClientFacade facadeCallback;
@@ -25,6 +26,7 @@ public class SocketClientCommunicator extends WebSocketClient {
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println(handshakedata.getHttpStatusMessage());
         System.out.println(handshakedata.getHttpStatus());
+        facadeCallback.serverConnected();
     }
 
     @Override
@@ -44,6 +46,7 @@ public class SocketClientCommunicator extends WebSocketClient {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         System.out.println("Disconnected from Websocket: " + reason);
+        facadeCallback.serverDisconnected();
     }
 
     @Override

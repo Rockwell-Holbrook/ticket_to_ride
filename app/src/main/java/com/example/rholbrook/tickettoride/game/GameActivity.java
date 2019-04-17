@@ -22,9 +22,15 @@ import android.widget.*;
 import com.example.rholbrook.tickettoride.R;
 import com.example.rholbrook.tickettoride.finishgame.FinishGameActivity;
 import com.example.rholbrook.tickettoride.main.Authentication;
+import com.example.rholbrook.tickettoride.main.MainActivityModel;
+import com.example.rholbrook.tickettoride.serverconnection.ClientFacade;
+import com.example.rholbrook.tickettoride.serverconnection.ServerDisconnectedDialogFragment;
 import com.example.shared.model.*;
 
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements
@@ -33,13 +39,16 @@ public class GameActivity extends AppCompatActivity implements
         ViewTrainCardsDialogFragment.ViewTrainCardsDialogInterface,
         ViewTicketsDialogFragment.ViewTicketsDialogInterface,
         ClaimRouteDialogFragment.ClaimRouteDialogFragmentInterface,
-        LastRoundDialogFragment.LastRoundDialogFragmentInterface {
+        LastRoundDialogFragment.LastRoundDialogFragmentInterface,
+        Observer {
+
     private GameActivityContract.Presenter mPresenter;
     private final static String CHANNEL_ID = "chat_channel";
 
     private Button demoButton;
 
     private RelativeLayout playerHandLayout;
+    private ServerDisconnectedDialogFragment serverDisconnectedDialogFragment;
     private FrameLayout gameMapFrameLayout;
     private ConstraintLayout opponentOneConstraintLayout;
     private ImageView opponentOneAvatarImageView;
@@ -415,12 +424,23 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardFour.setEnabled(false);
         faceUpCardFive.setEnabled(false);
         mPresenter.readyToInitialize();
+
+        serverDisconnectedDialogFragment = new ServerDisconnectedDialogFragment();
+
+        ClientFacade.getInstance().addObserver(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
     }
+
+    @Override
+    public void onStop() {
+        ClientFacade.getInstance().deleteObserver(this);
+        super.onStop();
+    }
+
 
     @Override
     public void setHandCards(final List<TrainCard> handCards) {
@@ -864,6 +884,16 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void showServerDisconnectedFragment() {
+        serverDisconnectedDialogFragment.show(getSupportFragmentManager(), "Server Disconnected");
+    }
+
+    @Override
+    public void hideServerDisconnectedFragment() {
+        serverDisconnectedDialogFragment.dismiss();
+    }
+
+    @Override
     public void onReturnPressed(DialogFragment dialogFragment, List<Ticket> keptCards, List<Ticket> returnedCards, int indicator) {
         dialogFragment.dismiss();
         mPresenter.addTicketsToPlayer(keptCards);
@@ -894,5 +924,25 @@ public class GameActivity extends AppCompatActivity implements
         mPresenter.claimRoute(route.getGroupId(), selectedCards);
         endUserTurn();
         mPresenter.endTurn();
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.out.println("Back button pressed");
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (!ClientFacade.getInstance().isConnected()) {
+            showServerDisconnectedFragment();
+            while (!ClientFacade.getInstance().isConnected()) {
+                try {
+                    MainActivityModel.getInstance().connectToGameServer(mPresenter.getGameId());
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+            hideServerDisconnectedFragment();
+        }
     }
 }

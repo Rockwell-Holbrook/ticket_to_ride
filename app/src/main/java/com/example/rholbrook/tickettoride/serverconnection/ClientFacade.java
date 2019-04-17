@@ -15,12 +15,14 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Set;
 
-public class ClientFacade implements IClientInGame, IClientNotInGame {
+public class ClientFacade extends Observable implements IClientInGame, IClientNotInGame {
     private final String TAG = "ticket_to_ride";
 
     private static ClientFacade instance;
+    private boolean connected = false;
     private static Gson gson = new Gson();
 
     public ClientFacade() {}
@@ -30,6 +32,14 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
             instance = new ClientFacade();
         }
         return instance;
+    }
+
+    private void toggleBoolean(boolean connected) {
+        this.connected = connected;
+    }
+
+    public boolean isConnected() {
+        return connected;
     }
 
     //    MainActivity
@@ -196,4 +206,15 @@ public class ClientFacade implements IClientInGame, IClientNotInGame {
     public void fatalError(String message) {
         GameActivityModel.getInstance().fatalError(message);
     }
+
+    public void serverConnected() {
+        toggleBoolean(true);
+    }
+
+    public void serverDisconnected() {
+        toggleBoolean(false);
+        if (countObservers() > 0)
+        notifyObservers(connected);
+    }
+
 }
