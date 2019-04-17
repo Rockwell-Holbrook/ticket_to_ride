@@ -131,19 +131,23 @@ public class FFGameDao implements IGameDao {
         try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
             for (Path path : files) {
                 File file = path.toFile();
-                try (FileReader reader = new FileReader(file)) {
-                    BufferedReader bufferedReader = new BufferedReader(reader);
-                    String line = null;
-                    while((line = bufferedReader.readLine()) != null) {
-                        //do something with line
-                        games.add(gson.fromJson(line, Game.class));
-                    }
+                if (!file.getPath().contains(".")) {
+                    try (FileReader reader = new FileReader(file)) {
+                        String fileContents = "";
+                        BufferedReader bufferedReader = new BufferedReader(reader);
+                        String line = null;
+                        while((line = bufferedReader.readLine()) != null) {
+                            //do something with line
+                            fileContents += line;
+                        }
 //                    CharBuffer buf = CharBuffer.allocate((int) file.length());
 //                    int numRead = reader.read(buf);
 //                    String json = buf.toString();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    throw e;
+                        games.add(gson.fromJson(fileContents, Game.class));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        throw e;
+                    }
                 }
             }
         } catch (IOException e) {

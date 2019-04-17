@@ -109,18 +109,18 @@ public class SocketServer extends WebSocketServer {
             System.out.println(conn.getAttachment() + " has left game: " + gameId);
             gameConnections.get(gameId).remove(conn);
 
-            // Get rid of inactive games
-            if (gameConnections.get(gameId).size() == 0){
-                System.out.println(gameId + " is inactive. Deleting it.");
-                gameConnections.remove(gameId);
-                try {
-                    dao.deleteGame(gameId);
-                }
-                catch(Exception e) {
-                    System.out.println("SQL ERROR!");
-                }
-                GameManager.getInstance().removeGame(gameId);
-            }
+//            // Get rid of inactive games
+//            if (gameConnections.get(gameId).size() == 0){
+//                System.out.println(gameId + " is inactive. Deleting it.");
+//                gameConnections.remove(gameId);
+//                try {
+//                    dao.deleteGame(gameId);
+//                }
+//                catch(Exception e) {
+//                    System.out.println("SQL ERROR!");
+//                }
+//                GameManager.getInstance().removeGame(gameId);
+//            }
         }
 
     }
