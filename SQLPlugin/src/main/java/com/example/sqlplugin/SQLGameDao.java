@@ -137,13 +137,12 @@ public class SQLGameDao implements IGameDao {
     public void clearDeltas(String gameid) throws SQLException {
         Connection con = SQLManager.getConnected();
 
-        List<Command> deltas = new ArrayList<>();
         PreparedStatement p = con.prepareStatement("UPDATE deltas " +
                 "SET gameID = ?, commands = ? " +
                 "WHERE gameID = '" + gameid + "'");
 
         p.setString(1, gameid);
-        p.setString(2, gson.toJson(deltas));
+        p.setString(2, gson.toJson(new Deltas()));
 
         p.executeUpdate();
 
