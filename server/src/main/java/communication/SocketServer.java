@@ -62,7 +62,7 @@ public class SocketServer extends WebSocketServer {
                     gm.addToNotPlayingGameList(game);
                 }
 
-                for(Command command : dao.getDeltas(game.getGameId())) {
+                for(Command command : dao.getDeltas(game.getGameId()).getList()) {
                     command.execute(ServerFacade.getInstance());
                 }
             }
@@ -131,11 +131,13 @@ public class SocketServer extends WebSocketServer {
         Command cmd = new Command(message);
 
         try {
-            dao.saveDelta(cmd.getGameId(), cmd);
+            if (cmd.getGameId() != null){
+                dao.saveDelta(cmd.getGameId(), message);
 
-            if(dao.getDeltaCount(cmd.getGameId()) == deltaVal) {
-                dao.saveGame(GameManager.getInstance().getGameById(cmd.getGameId()));
-                dao.clearDeltas(cmd.getGameId());
+                if(dao.getDeltaCount(cmd.getGameId()) == deltaVal) {
+                    dao.saveGame(GameManager.getInstance().getGameById(cmd.getGameId()));
+                    dao.clearDeltas(cmd.getGameId());
+                }
             }
         }
 
