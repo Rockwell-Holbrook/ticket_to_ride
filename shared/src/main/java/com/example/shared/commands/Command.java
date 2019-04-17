@@ -35,6 +35,7 @@ public class Command {
         methodName = tempCommand.getMethodName();
         parameterTypeNames = tempCommand.getParameterTypeNames();
         parametersAsJsonStrings = tempCommand.getParametersAsJsonStrings();
+        gameId = tempCommand.gameId;
         createParameterTypes();
         parameters = new Object[parametersAsJsonStrings.length];
         for(int i = 0; i < parametersAsJsonStrings.length; i++) {
