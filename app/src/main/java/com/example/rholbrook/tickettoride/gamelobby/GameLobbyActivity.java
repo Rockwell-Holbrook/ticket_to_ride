@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -159,7 +160,11 @@ public class GameLobbyActivity extends AppCompatActivity implements
 
     @Override
     public void showServerDisconnectedFragment() {
-        serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+        Fragment fragmentA = getSupportFragmentManager().findFragmentByTag("Server Disconnected Fragment");
+        if (fragmentA == null) {
+            serverDisconnectedFragment.setCancelable(false);
+            serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+        }
     }
 
     @Override

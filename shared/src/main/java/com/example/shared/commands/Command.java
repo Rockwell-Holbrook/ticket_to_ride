@@ -1,10 +1,11 @@
 package com.example.shared.commands;
 
 
-import com.google.gson.Gson;
+import com.google.gson.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 public class Command {
     private static Gson gson = new Gson();
@@ -160,5 +161,4 @@ public class Command {
     public void setGameId(String gameId) {
         this.gameId = gameId;
     }
-
 }

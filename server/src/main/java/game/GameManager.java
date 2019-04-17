@@ -52,16 +52,6 @@ public class GameManager {
         SocketServer.getInstance().addGame(game.getGameId());
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
 
-        try {
-            IDaoFactory factory = PluginManager.getInstance().getFactory();
-            IGameDao dao = factory.createGameDao();
-            
-            dao.saveGame(game);
-        }
-        catch(Exception exception) {
-            exception.printStackTrace();
-        }
-
         return game.getGameId();
     }
 
@@ -113,6 +103,16 @@ public class GameManager {
         this.playingGameList.put(game.getGameId(), game);
         clientProxy.gameStarted(gameId);
         clientProxy.updateGameList(new ArrayList<>(notPlayingGameList.values()));
+
+        try {
+            IDaoFactory factory = PluginManager.getInstance().getFactory();
+            IGameDao dao = factory.createGameDao();
+
+            dao.saveGame(game);
+        }
+        catch(Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**

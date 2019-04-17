@@ -1,15 +1,13 @@
 package com.example.flatfileplugin;
 
 import com.example.shared.commands.Command;
+import com.example.shared.commands.Deltas;
 import com.example.shared.interfaces.IGameDao;
 import com.example.shared.model.Game;
-import com.google.gson.Gson;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.CharBuffer;
 import java.nio.file.DirectoryStream;
@@ -20,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FFGameDao implements IGameDao {
-    private final String dblocation = "C:\\Users\\taylo\\StudioProjects\\ticket_to_ride\\FFDatabase";
+    private final String dblocation = "/Users/adamure/Documents/ticket_to_ride/FFDatabase";
     private Gson gson = new Gson();
 
     @Override
@@ -52,8 +50,8 @@ public class FFGameDao implements IGameDao {
     }
 
     @Override
-    public void saveDelta(String gameid, Command delta) throws IOException {
-        List<Command> deltas;
+    public void saveDelta(String gameid, String delta) throws IOException {
+        Deltas deltas;
         Path dir = Paths.get(dblocation, "deltas");
         Path deltaPath = null;
         try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
@@ -64,22 +62,26 @@ public class FFGameDao implements IGameDao {
                     break;
                 }
             }
-            deltas = new ArrayList<>();
+            deltas = new Deltas();
             if (deltaPath != null) {
                 deltas = getDeltas(gameid);
                 Files.delete(deltaPath);
             }
-            deltas.add(delta);
+            deltas.addCmd(delta);
+
+            if (gameid != null)
             deltaPath = Files.createFile(Paths.get(dir.toString(), gameid));
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
         }
-        try (FileWriter writer = new FileWriter(deltaPath.toFile())) {
-            writer.write(gson.toJson(deltas));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
+        if (deltaPath != null) {
+            try (FileWriter writer = new FileWriter(deltaPath.toFile())) {
+                writer.write(gson.toJson(deltas));
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw e;
+            }
         }
     }
 
@@ -104,10 +106,17 @@ public class FFGameDao implements IGameDao {
         }
         File file = gamePath.toFile();
         try (FileReader reader = new FileReader(file)) {
-            CharBuffer buf = CharBuffer.allocate((int) file.length());      // Error if game exceeds maximum num bytes?
-            int numRead = reader.read(buf);
-            String json = buf.toString();
-            return gson.fromJson(json, Game.class);
+            String fileContents = "";
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line = null;
+            while((line = bufferedReader.readLine()) != null) {
+                //do something with line
+                fileContents += line;
+            }
+//            CharBuffer buf = CharBuffer.allocate((int) file.length());      // Error if game exceeds maximum num bytes?
+//            int numRead = reader.read(buf);
+//            String json = buf.toString();
+            return gson.fromJson(fileContents, Game.class);
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
@@ -123,10 +132,15 @@ public class FFGameDao implements IGameDao {
             for (Path path : files) {
                 File file = path.toFile();
                 try (FileReader reader = new FileReader(file)) {
-                    CharBuffer buf = CharBuffer.allocate((int) file.length());
-                    int numRead = reader.read(buf);
-                    String json = buf.toString();
-                    games.add(gson.fromJson(json, Game.class));
+                    BufferedReader bufferedReader = new BufferedReader(reader);
+                    String line = null;
+                    while((line = bufferedReader.readLine()) != null) {
+                        //do something with line
+                        games.add(gson.fromJson(line, Game.class));
+                    }
+//                    CharBuffer buf = CharBuffer.allocate((int) file.length());
+//                    int numRead = reader.read(buf);
+//                    String json = buf.toString();
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw e;
@@ -140,7 +154,7 @@ public class FFGameDao implements IGameDao {
     }
 
     @Override
-    public List<Command> getDeltas(String gameid) throws IOException {
+    public Deltas getDeltas(String gameid) throws IOException {
         Path dir = Paths.get(dblocation,"deltas");
         Path deltaPath = null;
         try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
@@ -152,7 +166,7 @@ public class FFGameDao implements IGameDao {
                 }
             }
             if (deltaPath == null) {
-                return null;
+                return new Deltas();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -160,11 +174,19 @@ public class FFGameDao implements IGameDao {
         }
         File file = deltaPath.toFile();
         try (FileReader reader = new FileReader(file)) {
-            CharBuffer buf = CharBuffer.allocate((int) file.length());      // Error if game exceeds maximum num bytes?
-            int numRead = reader.read(buf);
-            String json = buf.toString();
-            Type type = new TypeToken<List<Command>>() {}.getType();
-            return gson.fromJson(json, type);
+            Deltas fileContents = new Deltas();
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line = null;
+            while((line = bufferedReader.readLine()) != null) {
+                //do something with line
+                fileContents.addCmd(line);
+            }
+//            CharBuffer buf = CharBuffer.allocate((int) file.length());      // Error if game exceeds maximum num bytes?
+//            int numRead = reader.read(buf);
+//            String json = buf.toString();
+//            Type type = new TypeToken<List<Command>>() {}.getType();
+//            return gson.fromJson(fileContents, type);
+            return fileContents;
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
@@ -173,7 +195,7 @@ public class FFGameDao implements IGameDao {
 
     @Override
     public void clearDeltas(String gameid) throws Exception {
-        List<Command> deltas;
+        Deltas deltas;
         Path dir = Paths.get(dblocation, "deltas");
         Path deltaPath = null;
         try (DirectoryStream<Path> files = Files.newDirectoryStream(dir)) {
@@ -184,7 +206,7 @@ public class FFGameDao implements IGameDao {
                     break;
                 }
             }
-            deltas = new ArrayList<>();
+            deltas = new Deltas();
             if (deltaPath != null) {
                 Files.delete(deltaPath);
             }
@@ -258,7 +280,7 @@ public class FFGameDao implements IGameDao {
 
     @Override
     public int getDeltaCount(String gameid) throws Exception {
-        List<Command> deltas = getDeltas(gameid);
+        Deltas deltas = getDeltas(gameid);
         return deltas.size();
     }
 }

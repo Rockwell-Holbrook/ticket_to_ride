@@ -885,7 +885,11 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void showServerDisconnectedFragment() {
-        serverDisconnectedDialogFragment.show(getSupportFragmentManager(), "Server Disconnected");
+        Fragment fragmentA = getSupportFragmentManager().findFragmentByTag("Server Disconnected Fragment");
+        if (fragmentA == null) {
+            serverDisconnectedDialogFragment.setCancelable(false);
+            serverDisconnectedDialogFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+        }
     }
 
     @Override

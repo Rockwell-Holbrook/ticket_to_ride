@@ -213,8 +213,11 @@ public class ClientFacade extends Observable implements IClientInGame, IClientNo
 
     public void serverDisconnected() {
         toggleBoolean(false);
-        if (countObservers() > 0)
-        notifyObservers(connected);
+        setChanged();
+        if (countObservers() > 0) {
+            notifyObservers(connected);
+        }
+        clearChanged();
     }
 
 }

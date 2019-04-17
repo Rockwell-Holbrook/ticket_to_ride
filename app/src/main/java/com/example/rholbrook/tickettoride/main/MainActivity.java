@@ -139,7 +139,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void showServerDisconnectedFragment() {
-        serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+        Fragment fragmentA = getSupportFragmentManager().findFragmentByTag("Server Disconnected Fragment");
+        if (fragmentA == null) {
+            serverDisconnectedFragment.setCancelable(false);
+            serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+        }
     }
 
     @Override
@@ -185,8 +189,11 @@ public class MainActivity extends AppCompatActivity implements
             showServerDisconnectedFragment();
             while (!ClientFacade.getInstance().isConnected()) {
                 try {
+                    Thread.sleep(10000);
                     MainActivityModel.getInstance().connectToManagementServer();
                 } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }

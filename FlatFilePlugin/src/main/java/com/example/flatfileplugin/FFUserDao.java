@@ -5,24 +5,25 @@ import com.example.shared.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.CharBuffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FFUserDao implements IUserDao {
-    private final String dblocation = "C:\\Users\\taylo\\StudioProjects\\ticket_to_ride\\FFDatabase";
+    private final String dblocation = "/Users/adamure/Documents/ticket_to_ride/FFDatabase";
     private Gson gson = new Gson();
 
     @Override
     public void registerUser(User user) throws IOException {
         List<User> users = getUsers();
+        if (users == null) {
+            users = new ArrayList<>();
+        }
         users.add(user);
         putUsers(users);
     }
@@ -30,6 +31,9 @@ public class FFUserDao implements IUserDao {
     @Override
     public User getUser(String username) throws IOException {
         List<User> users = getUsers();
+        if (users == null) {
+            return null;
+        }
         for (User user : users) {
             if (user.getUserName().equals(username)) {
                 return user;
@@ -46,11 +50,18 @@ public class FFUserDao implements IUserDao {
     private List<User> getUsers() throws IOException {
         File userFile = new File(dblocation, "users");
         try (FileReader reader = new FileReader(userFile)) {
-            CharBuffer buf = CharBuffer.allocate((int) userFile.length());      // Error if game exceeds maximum num bytes?
-            int numRead = reader.read(buf);
-            String json = buf.toString();
+            String fileContents = "";
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String line = null;
+            while((line = bufferedReader.readLine()) != null) {
+                //do something with line
+                fileContents += line;
+            }
+//            CharBuffer buf = CharBuffer.allocate((int) userFile.length());      // Error if game exceeds maximum num bytes?
+//            int numRead = reader.read(buf);
+//            String json = buf.toString();
             Type type = new TypeToken<List<User>>() {}.getType();
-            return gson.fromJson(json, type);
+            return gson.fromJson(fileContents, type);
         } catch (IOException e) {
             e.printStackTrace();
             throw e;
