@@ -59,7 +59,7 @@ public class GameManager {
             dao.saveGame(game);
         }
         catch(Exception exception) {
-            System.out.println("OH NO I DIED!");
+            exception.printStackTrace();
         }
 
         return game.getGameId();

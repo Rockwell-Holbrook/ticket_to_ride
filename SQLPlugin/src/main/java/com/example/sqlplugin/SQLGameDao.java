@@ -60,7 +60,7 @@ public class SQLGameDao implements IGameDao {
         int count = result.getInt("count(*)");
 
         if (count == 0) {
-            List<Command> deltas = new ArrayList<>();
+            List<Command> deltas = new ArrayList<Command>();
             deltas.add(delta);
             p = con.prepareStatement("INSERT INTO deltas " +
                     "(gameID, commands) " + "VALUES (?, ?);");

@@ -42,7 +42,7 @@ public class SocketServer extends WebSocketServer {
 
         }
         catch(Exception exception) {
-            System.out.println("OH NO I DIED!");
+            exception.printStackTrace();
         }
     }
 
@@ -68,7 +68,7 @@ public class SocketServer extends WebSocketServer {
             }
         }
         catch(Exception e) {
-            System.out.println("SQL ERROR");
+            e.printStackTrace();
         }
         recovering = false;
     }
@@ -140,7 +140,7 @@ public class SocketServer extends WebSocketServer {
         }
 
         catch(Exception e) {
-            System.out.print("OH NO I DIED!");
+            e.printStackTrace();
         }
 
         cmd.execute(ServerFacade.getInstance());

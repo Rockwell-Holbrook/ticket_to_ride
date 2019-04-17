@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class FFUserDao implements IUserDao {
-    private final String dblocation = "C:\\Users\\Blaine Johnson\\StudioProjects\\ticket_to_ride\\FFDatabase";
+    private final String dblocation = "C:\\Users\\taylo\\StudioProjects\\ticket_to_ride\\FFDatabase";
     private Gson gson = new Gson();
 
     @Override

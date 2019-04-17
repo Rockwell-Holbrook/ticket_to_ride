@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FFGameDao implements IGameDao {
-    private final String dblocation = "C:\\Users\\Blaine Johnson\\StudioProjects\\ticket_to_ride\\FFDatabase";
+    private final String dblocation = "C:\\Users\\taylo\\StudioProjects\\ticket_to_ride\\FFDatabase";
     private Gson gson = new Gson();
 
     @Override

@@ -3,6 +3,9 @@ package database;
 
 import com.example.shared.interfaces.IDaoFactory;
 import com.example.shared.interfaces.IGameDao;
+import com.example.shared.model.Game;
+import com.example.shared.model.Player;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
@@ -11,15 +14,35 @@ import java.net.URLClassLoader;
 
 public class DaoFactoryTest {
     @Test
-    public void factoryTest() {
+    public void sqlFactoryTest() {
         try{
-            IDaoFactory ourFac = getFactory("C:\\Users\\Blaine Johnson\\StudioProjects\\ticket_to_ride\\server", "SQLPlugin.jar", "com.example.sqlplugin.SQLDaoFactory");
+            IDaoFactory ourFac = getFactory("C:\\Users\\taylo\\StudioProjects\\ticket_to_ride\\server", "SQLPlugin.jar", "com.example.sqlplugin.SQLDaoFactory");
             IGameDao ourGD = ourFac.createGameDao();
+            Game ourGame = new Game(new Player("testing", true, Player.PlayerColor.BLUE), 5, "testing game");
+            ourGD.saveGame(ourGame);
+            Game fromDB = ourGD.getGame(ourGame.getGameId());
+            Assert.assertEquals(fromDB, ourGame);
         }
         catch (Exception e){
             e.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void ffFactoryTest() {
+        try{
+            IDaoFactory ourFac = getFactory("C:\\Users\\taylo\\StudioProjects\\ticket_to_ride\\server",
+                    "FlatFilePlugin.jar", "com.example.flatfileplugin.FFDaoFactory");
+            IGameDao ourGD = ourFac.createGameDao();
+            Game ourGame = new Game(new Player("testing", true, Player.PlayerColor.BLUE), 5, "testing game");
+            ourGD.saveGame(ourGame);
+            Game fromDB = ourGD.getGame(ourGame.getGameId());
+            Assert.assertEquals(fromDB, ourGame);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private IDaoFactory getFactory(String pluginDirectory, String pluginJarName, String pluginClassName) throws Exception {
