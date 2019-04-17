@@ -1,6 +1,7 @@
 package com.example.sqlplugin;
 
 import com.example.shared.commands.Command;
+import com.example.shared.commands.Deltas;
 import com.example.shared.interfaces.IGameDao;
 import com.example.shared.model.Game;
 import com.google.gson.Gson;
@@ -49,7 +50,7 @@ public class SQLGameDao implements IGameDao {
         con.close();
     }
 
-    public void saveDelta(String gameid, Command delta) throws SQLException {
+    public void saveDelta(String gameid, String delta) throws SQLException {
         Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("SELECT count(*) " +
@@ -60,24 +61,27 @@ public class SQLGameDao implements IGameDao {
         int count = result.getInt("count(*)");
 
         if (count == 0) {
-            List<Command> deltas = new ArrayList<Command>();
-            deltas.add(delta);
+            Deltas deltas = new Deltas();
+            deltas.addCmd(delta);
             p = con.prepareStatement("INSERT INTO deltas " +
                     "(gameID, commands) " + "VALUES (?, ?);");
 
             p.setString(1, gameid);
-            p.setString(2, gson.toJson(deltas));
+            String serial = gson.toJson(deltas);
+            p.setString(2,serial );
 
             p.executeUpdate();
         } else {
-            List<Command> deltas = getDeltas(gameid);
-            deltas.add(delta);
+            Deltas deltas = getDeltas(gameid);
+            deltas.addCmd(delta);
             p = con.prepareStatement("UPDATE deltas " +
                     "SET gameID = ?, commands = ? " +
                     "WHERE gameID = '" + gameid + "'");
 
             p.setString(1, gameid);
             p.setString(2, gson.toJson(deltas));
+
+            p.executeUpdate();
         }
 
         con.close();
@@ -109,18 +113,20 @@ public class SQLGameDao implements IGameDao {
         while (result.next()) {
             games.add(gson.fromJson(result.getString("game"), Game.class));
         }
+
+        con.close();
         return games;
     }
 
-    public List<Command> getDeltas(String gameid) throws SQLException {
+    public Deltas getDeltas(String gameid) throws SQLException {
         Connection con = SQLManager.getConnected();
 
         PreparedStatement p = con.prepareStatement("SELECT commands " +
                 "FROM deltas " + "WHERE gameID = '" + gameid + "'");
 
         ResultSet result = p.executeQuery();
-        Type type = new TypeToken<List<Command>>() {}.getType();
-        List<Command> commands = gson.fromJson(result.getString("game"), type);
+
+        Deltas commands = gson.fromJson(result.getString("commands"), Deltas.class);
 
         con.close();
 
@@ -167,11 +173,13 @@ public class SQLGameDao implements IGameDao {
 
         p.executeUpdate();
 
+        con.close();
+
     }
 
     @Override
     public int getDeltaCount(String gameid) throws SQLException {
-        List<Command> deltas = getDeltas(gameid);
+        Deltas deltas = getDeltas(gameid);
         return deltas.size();
     }
 }
