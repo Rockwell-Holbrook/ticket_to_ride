@@ -160,10 +160,10 @@ public class GameLobbyActivity extends AppCompatActivity implements
 
     @Override
     public void showServerDisconnectedFragment() {
-        Fragment fragmentA = getSupportFragmentManager().findFragmentByTag("Server Disconnected Fragment");
+        Fragment fragmentA = getSupportFragmentManager().findFragmentByTag("Server Disconnected Fragment Game Lobby");
         if (fragmentA == null) {
             serverDisconnectedFragment.setCancelable(false);
-            serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+            serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment Game Lobby");
         }
     }
 

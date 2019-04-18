@@ -48,7 +48,7 @@ public class GameActivity extends AppCompatActivity implements
     private Button demoButton;
 
     private RelativeLayout playerHandLayout;
-    private ServerDisconnectedDialogFragment serverDisconnectedDialogFragment;
+    private ServerDisconnectedDialogFragment serverDisconnectedFragment;
     private FrameLayout gameMapFrameLayout;
     private ConstraintLayout opponentOneConstraintLayout;
     private ImageView opponentOneAvatarImageView;
@@ -425,7 +425,7 @@ public class GameActivity extends AppCompatActivity implements
         faceUpCardFive.setEnabled(false);
         mPresenter.readyToInitialize();
 
-        serverDisconnectedDialogFragment = new ServerDisconnectedDialogFragment();
+        serverDisconnectedFragment = new ServerDisconnectedDialogFragment();
 
         ClientFacade.getInstance().addObserver(this);
     }
@@ -885,16 +885,16 @@ public class GameActivity extends AppCompatActivity implements
 
     @Override
     public void showServerDisconnectedFragment() {
-        Fragment fragmentA = getSupportFragmentManager().findFragmentByTag("Server Disconnected Fragment");
+        Fragment fragmentA = getSupportFragmentManager().findFragmentByTag("Server Disconnected Fragment Game Activity");
         if (fragmentA == null) {
-            serverDisconnectedDialogFragment.setCancelable(false);
-            serverDisconnectedDialogFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment");
+            serverDisconnectedFragment.setCancelable(false);
+            serverDisconnectedFragment.show(getSupportFragmentManager(), "Server Disconnected Fragment Game Activity");
         }
     }
 
     @Override
     public void hideServerDisconnectedFragment() {
-        serverDisconnectedDialogFragment.dismiss();
+        serverDisconnectedFragment.dismiss();
     }
 
     @Override

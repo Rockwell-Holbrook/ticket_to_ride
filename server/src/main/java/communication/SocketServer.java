@@ -135,6 +135,7 @@ public class SocketServer extends WebSocketServer {
                 dao.saveDelta(cmd.getGameId(), message);
 
                 if(dao.getDeltaCount(cmd.getGameId()) == deltaVal) {
+                    System.out.println("Saving Game State after Deltas");
                     dao.saveGame(GameManager.getInstance().getGameById(cmd.getGameId()));
                     dao.clearDeltas(cmd.getGameId());
                 }
